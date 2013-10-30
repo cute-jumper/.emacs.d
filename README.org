@@ -1,0 +1,12 @@
+* My Emacs's Configuration
+This is a repository to place my Emacs's configuration.
+
+I changed my old configuration totally after I upgraded my Emacs to version 24,
+and I moved all my settings to a private repository in Bitbucket. Now I plan to
+create a new set of configuration based on [[https://github.com/bbatsov/prelude][Prelude]] and [[https://github.com/eschulte/emacs24-starter-kit][Emacs24-starter-kit]], as
+well as other excellent Emacs settings, and put all my settings back to GitHub.
+
+My current settings work fine, and what I wanna to do is rearrange all my
+settings and manage them in a more elegant way. However, it will be a huge
+amount of work migrating my old settings to the new ones. I will slowly update
+this repo since this is *NOT* an urgent task.:-)
