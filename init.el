@@ -55,7 +55,7 @@
 
 ;; Add to load path
 (add-to-list 'load-path qjp-startup-dir)
-(add-to-list 'load-path qjp-module-dir)
+(qjp-add-subdirectories-to-load-path qjp-module-dir)
 (qjp-add-subdirectories-to-load-path qjp-site-lisp-dir)
 ;; Now we are done with the load path
 
@@ -67,6 +67,9 @@
 
 ;; Require all the features in startup
 (mapc 'require (mapcar 'intern (qjp-get-feature-list qjp-startup-dir)))
+
+;; Requrire module features as you want
+(require 'qjp-keybindings)              ;key bindings
 
 ;; Welcome message
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)
