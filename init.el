@@ -34,7 +34,7 @@
 (defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
   "The directory to hold personal packages.")
 
-;; Declare variables. Change values in startup/qjp-global-variables.el
+;; Declare variables. Change values in startup/qjp-global-settings.el
 (defvar qjp-document-dir "" "Personal document base directory.")
 
 (defun qjp-filter (condp lst)
@@ -55,7 +55,7 @@
 
 ;; Add to load path
 (add-to-list 'load-path qjp-startup-dir)
-(qjp-add-subdirectories-to-load-path qjp-module-dir)
+(add-to-list 'load-path qjp-modules-dir)
 (qjp-add-subdirectories-to-load-path qjp-site-lisp-dir)
 ;; Now we are done with the load path
 
@@ -70,6 +70,7 @@
 
 ;; Requrire module features as you want
 (require 'qjp-keybindings)              ;key bindings
+(require 'qjp-misc)                     ;various modes
 
 ;; Welcome message
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)

@@ -24,6 +24,16 @@
 
 ;;; Code:
 
+;; Require sub-directory when I don't want to put all sub-directories in
+;; `load-path'
+(defun qjp-require-subdir-feature (subdir feature)
+  (require
+   (intern feature)
+   (expand-file-name
+    (concat
+     (file-name-as-directory qjp-modules-dir)
+     (file-name-as-directory subdir) feature))))
+
 ;; auto byte-compile
 (defun qjp-byte-compile-current-buffer ()
   "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
@@ -46,7 +56,18 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-
+;; Maximize
+(defun qjp-maximized ()
+  (interactive)
+  (if (eq window-system 'x)
+      (progn
+        (x-send-client-message
+         nil 0 nil "_NET_WM_STATE" 32
+         '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+        (x-send-client-message
+         nil 0 nil "_NET_WM_STATE" 32
+         '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
+    (message "Only support X window.")))
 
 (provide 'qjp-global-defuns)
 ;;; qjp-global-defuns.el ends here

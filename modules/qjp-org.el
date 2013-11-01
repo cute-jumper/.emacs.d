@@ -1,4 +1,4 @@
-;;; qjp-global-variables.el --- Define some global variables
+;;; qjp-org.el --- Settings for org-mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,12 +24,7 @@
 
 ;;; Code:
 
-;; User information
-(setq user-full-name "Junpeng Qiu")
-(setq user-mail-address "qjpchmail@gmail.com")
 
-;; Personal document directory
-(setq qjp-document-dir (expand-file-name "~/Documents/Personal/"))
 
-(provide 'qjp-global-variables)
-;;; qjp-global-variables.el ends here
+(provide 'qjp-org)
+;;; qjp-org.el ends here

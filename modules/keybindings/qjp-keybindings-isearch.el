@@ -26,19 +26,18 @@
 
 ;; key binding from starter kit bindings
 ;; occur easily inside isearch from starter kit bindings
-(define-key isearch-mode-map (kbd "C-o")
-  (lambda () (interactive)
-    (let ((case-fold-search isearch-case-fold-search))
-      (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
+(defun qjp-isearch-occur ()
+  (interactive)
+  (let ((case-fold-search isearch-case-fold-search))
+      (occur
+       (if isearch-regexp isearch-string (regexp-quote isearch-string)))))
 
-(defun kill-isearch-match ()
+(defun qjp-kill-isearch-match ()
   "Kill the current isearch match string and continue searching."
   (interactive)
   (kill-region isearch-other-end (point)))
 
-(define-key isearch-mode-map [(control k)] 'kill-isearch-match)
-
-(defun zap-to-isearch (rbeg rend)
+(defun qjp-zap-to-isearch (rbeg rend)
   "Kill the region between the mark and the closest portion of
   the isearch match string. The behaviour is meant to be analogous
   to zap-to-char; let's call it zap-to-isearch. The deleted region
@@ -64,28 +63,20 @@
       (if (> (mark) ismax)
           (kill-region ismax (mark))
         (error "Internal error in isearch kill function.")))
-    (isearch-exit)
-    ))
-
-(define-key isearch-mode-map [(meta z)] 'zap-to-isearch)
+    (isearch-exit)))
 
 ;; isearch in other window
-(defun isearch-other-window ()
+(defun qjp-isearch-other-window ()
   (interactive)
   (save-selected-window
     (other-window 1)
     (isearch-forward)))
 
-(global-set-key (kbd "M-o s") 'isearch-other-window)
-
 ;; isearch yank active region
-(defun isearch-yank-region ()
+(defun qjp-isearch-yank-region ()
   (interactive)
   (when (region-active-p)
-      (isearch-yank-internal (lambda () (mark)))))
-
-(define-key isearch-mode-map (kbd "C-p") 'isearch-yank-region)
-
+    (isearch-yank-internal (lambda () (mark)))))
 
 (provide 'qjp-keybindings-isearch)
 ;;; qjp-keybindings-isearch.el ends here

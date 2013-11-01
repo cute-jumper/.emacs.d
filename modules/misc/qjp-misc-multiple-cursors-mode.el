@@ -1,4 +1,4 @@
-;;; qjp-keybindings.el --- Require all key bindings here
+;;; qjp-misc-multiple-cursors-mode.el --- Settings for multiple-cursors mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,17 +24,20 @@
 
 ;;; Code:
 
-(require 'qjp-keybindings-edit)
-(require 'qjp-keybindings-isearch)
-;; Basic key bindings
-(global-set-key (kbd "C-h") 'backward-delete-char)
-(global-set-key (kbd "M-h") 'backward-kill-word)
-(global-set-key (kbd "M-s r") 'replace-string)
-(global-set-key (kbd "C-x I") 'imenu)
-(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
-(global-set-key [f5] 'compile)
+(require 'multiple-cursors)
 
+;; Region key bindings
+(define-key region-bindings-mode-map "a" 'mc/mark-all-like-this)
+(define-key region-bindings-mode-map "p" 'mc/mark-previous-like-this)
+(define-key region-bindings-mode-map "n" 'mc/mark-next-like-this)
+(define-key region-bindings-mode-map "e" 'mc/edit-lines)
 
-(provide 'qjp-keybindings)
-;;; qjp-keybindings.el ends here
+;; Normal key bindings
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+
+;; Using mouse!
+(global-set-key (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
+
+(provide 'qjp-misc-multiple-cursors-mode)
+;;; qjp-misc-multiple-cursors-mode.el ends here
