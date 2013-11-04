@@ -24,13 +24,6 @@
 
 ;;; Code:
 
-;; User information
-(setq user-full-name "Junpeng Qiu")
-(setq user-mail-address "qjpchmail@gmail.com")
-
-;; Personal document directory
-(setq qjp-document-dir (expand-file-name "~/Documents/Personal/"))
-
 ;; The default value is 0.78MB, which is kind of too small.
 ;; Making this larger could result in reducing the frequency of GC.
 (setq gc-cons-threshold 50000000)

@@ -34,8 +34,12 @@
 (defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
   "The directory to hold personal packages.")
 
-;; Declare variables. Change values in startup/qjp-global-settings.el
-(defvar qjp-document-dir "" "Personal document base directory.")
+(defvar qjp-document-dir (expand-file-name "~/Documents/Personal/")
+  "Personal document base directory.")
+
+;; User information
+(setq user-full-name "Junpeng Qiu")
+(setq user-mail-address "qjpchmail@gmail.com")
 
 (defun qjp-filter (condp lst)
     "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"

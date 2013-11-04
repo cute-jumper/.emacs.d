@@ -1,4 +1,4 @@
-;;; qjp-org.el --- Settings for org-mode
+;;; qjp-org-deft.el --- Combine org-mode with deft
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,17 +24,13 @@
 
 ;;; Code:
 
-;; Quick way to open root directory in Dired 
-(defun org-open-personal ()
-  (interactive)
-  (dired qjp-document-dir))
+;; ----------------------- ;;
+;; Deft, modified version! ;;
+;; ----------------------- ;;
+(require 'deft)
+(setq deft-directory qjp-document-dir)
+(setq deft-extension "org")
+(setq deft-text-mode 'org-mode)
 
-(qjp-require-subdir-feature "org" "qjp-org-edit")
-(qjp-require-subdir-feature "org" "qjp-org-src")
-(qjp-require-subdir-feature "org" "qjp-org-export")
-(qjp-require-subdir-feature "org" "qjp-org-misc")
-(qjp-require-subdir-feature "org" "qjp-org-deft")
-(qjp-require-subdir-feature "org" "qjp-org-publish")
-
-(provide 'qjp-org)
-;;; qjp-org.el ends here
+(provide 'qjp-org-deft)
+;;; qjp-org-deft.el ends here

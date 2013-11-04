@@ -188,15 +188,6 @@
 ;; site-lisp ;;
 ;; --------- ;;
 
-;; ----------------------- ;;
-;; Deft, modified version! ;;
-;; ----------------------- ;;
-(defun qjp-misc-deft ()
-  (require 'deft)
-  (setq deft-directory qjp-document-dir)
-  (setq deft-extension "org")
-  (setq deft-text-mode 'org-mode))
-
 ;; ------------ ;;
 ;; fetch-bibtex ;;
 ;; ------------ ;;
@@ -225,8 +216,7 @@
 (defvar qjp-enabled-misc-settings-list
   '(builtin key-chord region-bindings goto-last-change ace-jump ace-jump-buffer
             jump-char expand-region multiple-cursors easypg dictionary w3m
-            command-log calfw markdown sr-speedbar evil term dired hs deft
-            fetch-bibtex)
+            command-log calfw markdown sr-speedbar evil term dired hs fetch-bibtex)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings
