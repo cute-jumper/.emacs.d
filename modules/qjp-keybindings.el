@@ -29,7 +29,7 @@
 ;; -------------------------------- ;;
 
 ;; Require `qjp-keybindings-edit'
-(qjp-require-subdir-feature "keybindings" "qjp-keybindings-edit")
+(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-edit")
 
 ;; Keybindings for editing
 (global-set-key (kbd "C-h") 'backward-delete-char)
@@ -48,7 +48,7 @@
 (global-set-key (kbd "M-m") 'qjp-kill-back-to-indentation)
 
 ;; Require `qjp-keybindings-isearch'
-(qjp-require-subdir-feature "keybindings" "qjp-keybindings-isearch")
+(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-isearch")
 
 ;; Keybindings for isearch
 (define-key isearch-mode-map (kbd "C-o") 'qjp-isearch-occur)

@@ -1,4 +1,4 @@
-;;; qjp-elpa-settings.el --- Settings for package management
+;;; 03qjp-package-manager.el --- Settings for package management
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -79,5 +79,5 @@ to maintain the right list."
   (qjp-update-installed-package-list))
 (ad-activate 'package-install)
 
-(provide 'qjp-package-manager)
-;;; qjp-elpa-settings.el ends here
+(provide '03qjp-package-manager)
+;;; 03qjp-package-manager.el ends here

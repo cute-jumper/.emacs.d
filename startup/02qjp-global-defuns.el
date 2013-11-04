@@ -1,4 +1,4 @@
-;;; qjp-global-defuns.el --- Define some useful functions globally
+;;; 02qjp-global-defuns.el --- Define some useful functions globally
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,17 +24,31 @@
 
 ;;; Code:
 
+;; Used for `load-path'
+(defun qjp-add-subdirectories-to-load-path (base-directory)
+  "Add all subdirectories to load path."
+  (interactive)
+  (mapc
+   (lambda (subdir)
+     (add-to-list 'load-path subdir))
+   (qjp-filter
+    (lambda (x)
+      (and (file-directory-p x) (not (string-match "\\.$" x)) (not (string= "\\.\\.$" x))))
+    (directory-files base-directory t))))
+
 ;; Require sub-directory when I don't want to put all sub-directories in
 ;; `load-path'
-(defun qjp-require-subdir-feature (subdir feature)
+(defun qjp-require-subdir-feature (current-dir subdir feature)
   (require
    (intern feature)
    (expand-file-name
     (concat
-     (file-name-as-directory qjp-modules-dir)
+     (file-name-as-directory current-dir)
      (file-name-as-directory subdir) feature))))
 
-;; auto byte-compile
+(defalias 'qjp-modules-require-subdir-feature (apply-partially 'qjp-require-subdir-feature qjp-modules-dir))
+
+;; Auto byte-compile
 (defun qjp-byte-compile-current-buffer ()
   "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
   (interactive)
@@ -69,5 +83,5 @@
          '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
     (message "Only support X window.")))
 
-(provide 'qjp-global-defuns)
-;;; qjp-global-defuns.el ends here
+(provide '02qjp-global-defuns)
+;;; 02qjp-global-defuns.el ends here

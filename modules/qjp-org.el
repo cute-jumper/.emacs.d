@@ -29,12 +29,12 @@
   (interactive)
   (dired qjp-document-dir))
 
-(qjp-require-subdir-feature "org" "qjp-org-edit")
-(qjp-require-subdir-feature "org" "qjp-org-src")
-(qjp-require-subdir-feature "org" "qjp-org-export")
-(qjp-require-subdir-feature "org" "qjp-org-misc")
-(qjp-require-subdir-feature "org" "qjp-org-deft")
-(qjp-require-subdir-feature "org" "qjp-org-publish")
+(qjp-modules-require-subdir-feature "org" "qjp-org-edit")
+(qjp-modules-require-subdir-feature "org" "qjp-org-src")
+(qjp-modules-require-subdir-feature "org" "qjp-org-export")
+(qjp-modules-require-subdir-feature "org" "qjp-org-misc")
+(qjp-modules-require-subdir-feature "org" "qjp-org-deft")
+(qjp-modules-require-subdir-feature "org" "qjp-org-publish")
 
 (provide 'qjp-org)
 ;;; qjp-org.el ends here

@@ -33,7 +33,7 @@
   sub-directory"
   (let ((func-name (intern (concat "qjp-misc-" (symbol-name mode-name)))))
     `(defun ,func-name ()
-       (qjp-require-subdir-feature
+       (qjp-modules-require-subdir-feature
         "misc"
         (concat "qjp-misc-" ,(symbol-name mode-name) "-mode")))))
 

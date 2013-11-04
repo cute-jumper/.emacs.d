@@ -1,4 +1,4 @@
-;;; qjp-global-settings.el --- Miscellaneous global settings stuffs
+;;; 01qjp-global-settings.el --- Miscellaneous global settings stuffs
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -23,6 +23,19 @@
 ;; 
 
 ;;; Code:
+
+;; User information
+(setq user-full-name "Junpeng Qiu")
+(setq user-mail-address "qjpchmail@gmail.com")
+
+;; Directories for modules and other configuration
+(defvar qjp-modules-dir (expand-file-name "modules" qjp-base-dir)
+  "The directory to place configuration for various modules.")
+(defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
+  "The directory to hold personal packages.")
+
+(defvar qjp-document-dir (expand-file-name "~/Documents/Personal/")
+  "Personal document base directory.")
 
 ;; The default value is 0.78MB, which is kind of too small.
 ;; Making this larger could result in reducing the frequency of GC.
@@ -58,5 +71,5 @@
             (when server-buffer-clients
               (local-set-key (kbd "C-x k") 'server-edit))))
 
-(provide 'qjp-global-settings)
-;;; qjp-global-settings.el ends here
+(provide '01qjp-global-settings)
+;;; 01qjp-global-settings.el ends here
