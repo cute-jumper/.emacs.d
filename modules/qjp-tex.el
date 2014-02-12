@@ -85,5 +85,28 @@
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
 
+;; ----------------------- ;;
+;; Auto update when saving ;;
+;; ----------------------- ;;
+(setq qjp-latex-auto-command "latexmk")
+(setq qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
+(defun qjp-latex-auto-update ()
+  (interactive)
+  (when (and (eq major-mode 'latex-mode)
+             (string-match "\\.tex$" buffer-file-name))
+    (let* ((latex-process-name "latex-auto-compile")
+           (latex-buffer-name "*latex-auto-buffer*")
+           (latex-process (get-process latex-process-name)))
+      (when latex-process
+        (delete-process latex-process))
+      (when (get-buffer latex-buffer-name)
+        (save-excursion
+          (set-buffer latex-buffer-name)
+          (erase-buffer)))
+      (message "%s" latex-buffer-name)
+      (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
+             (append qjp-latex-auto-command-options (list buffer-file-name))))))
+(add-hook 'after-save-hook 'qjp-latex-auto-update)
+
 (provide 'qjp-tex)
 ;;; qjp-tex.el ends here
