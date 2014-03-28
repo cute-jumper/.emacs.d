@@ -24,13 +24,14 @@
 
 ;;; Code:
 
+
 ;; --------------- ;;
 ;; AUCTeX settings ;;
 ;; --------------- ;;
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq TeX-master nil)
-(setq preview-scale-function 1)
+(setq preview-scale-function 2)
 
 ;; Add option `-file-line-error' to avoid `TeX-next-error' error
 ;; See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695282 for details
@@ -85,9 +86,11 @@
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
 
-;; ----------------------- ;;
-;; Auto update when saving ;;
-;; ----------------------- ;;
+;; ---------------------- ;;
+;; User Defined Functions ;;
+;; ---------------------- ;;
+
+;; Auto update when saving
 (setq qjp-latex-auto-command "latexmk")
 (setq qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
 (defun qjp-latex-auto-update ()
@@ -107,6 +110,20 @@
       (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
              (append qjp-latex-auto-command-options (list buffer-file-name))))))
 (add-hook 'after-save-hook 'qjp-latex-auto-update)
+
+;; Insert \usepackage in the front of the file
+(defun qjp-latex-add-pkg (pkg-name pkg-options)
+  (interactive "sPackage name: \nsOptions: ")
+  (save-excursion
+    (goto-char (point-max))
+    (unless (search-backward "\\usepackage" 0 t)
+      (search-backward "\\documentclass" 0 t))
+    (end-of-line)
+    (newline-and-indent)
+    (if (string= pkg-options "")
+        (insert "\\usepackage{" pkg-name "}")
+      (insert "\\usepackage[" pkg-options "]{" pkg-name "}"))))
+
 
 (provide 'qjp-tex)
 ;;; qjp-tex.el ends here

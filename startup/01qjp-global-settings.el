@@ -55,10 +55,10 @@
   (cond ((string= desktop-env "ubuntu") (menu-bar-mode))
         (t (menu-bar-mode -1))))
 ;; Font settings
-(set-frame-font "monaco:pixelsize=14")
+(set-frame-font "Liberation Mono:pixelsize=22")
 (if (display-graphic-p)
     (set-fontset-font (frame-parameter nil 'font) 'han
-                  (font-spec :family "Microsoft Yahei" :size 16)))
+                       (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))
 
 ;; Start server
 (require 'server)
