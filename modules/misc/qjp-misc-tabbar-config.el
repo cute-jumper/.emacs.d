@@ -1,4 +1,4 @@
-;;; qjp-misc-tabbar-mode.el --- Settings for tabbar-mode
+;;; qjp-misc-tabbar-config.el --- Settings for tabbar-mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -102,5 +102,5 @@
         (set tabset (sort (cons tab tabs)
                           (lambda (a b) (string< (buffer-name (car a)) (buffer-name (car b))))))))))
 
-(provide 'qjp-misc-tabbar-mode)
-;;; qjp-misc-tabbar-mode.el ends here
+(provide 'qjp-misc-tabbar-config)
+;;; qjp-misc-tabbar-config.el ends here

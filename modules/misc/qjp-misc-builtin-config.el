@@ -1,4 +1,4 @@
-;;; qjp-misc-evil-mode.el --- Settings for evil-mode
+;;; qjp-misc-builtin-config.el --- Enable or disable some built-in modes
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,23 +24,20 @@
 
 ;;; Code:
 
-;; Hope this to be awesome:)
-(require 'evil)
-(evil-mode 1)
+(which-function-mode)
+(tooltip-mode)
+(electric-pair-mode)
+(column-number-mode)
+(display-battery-mode)
+(tool-bar-mode -1)
 
-;; remove all keybindings from insert-state keymap
-(setcdr evil-insert-state-map nil) 
+;; show-paren-mode
+(show-paren-mode)
+(setq show-paren-style 'mixed)
 
-;; but [escape] should switch back to normal state
-(define-key evil-insert-state-map [escape] 'evil-normal-state)
+;; ibuffer
+(setq ibuffer-use-other-window t)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;; map "jj" to "ESC"
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-
-;; map "c-e" to end-of-line because it's kind of more convenient than $
-(define-key evil-normal-state-map "\C-e" 'end-of-line)
-(define-key evil-normal-state-map "\C-f" 'forward-char)
-(define-key evil-normal-state-map "\C-b" 'backward-char)
-
-(provide 'qjp-misc-evil-mode)
-;;; qjp-misc-evil.el ends here
+(provide 'qjp-misc-builtin-config)
+;;; qjp-misc-builtin-config.el ends here

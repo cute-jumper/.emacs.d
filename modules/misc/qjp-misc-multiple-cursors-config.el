@@ -1,4 +1,4 @@
-;;; qjp-misc-builtin-mode.el --- Enable or disable some built-in modes
+;;; qjp-misc-multiple-cursors-config.el --- Settings for multiple-cursors mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,20 +24,20 @@
 
 ;;; Code:
 
-(which-function-mode)
-(tooltip-mode)
-(electric-pair-mode)
-(column-number-mode)
-(display-battery-mode)
-(tool-bar-mode -1)
+(require 'multiple-cursors)
 
-;; show-paren-mode
-(show-paren-mode)
-(setq show-paren-style 'mixed)
+;; Region key bindings
+(define-key region-bindings-mode-map "a" 'mc/mark-all-like-this)
+(define-key region-bindings-mode-map "p" 'mc/mark-previous-like-this)
+(define-key region-bindings-mode-map "n" 'mc/mark-next-like-this)
+(define-key region-bindings-mode-map "e" 'mc/edit-lines)
 
-;; ibuffer
-(setq ibuffer-use-other-window t)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; Normal key bindings
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 
-(provide 'qjp-misc-builtin-mode)
-;;; qjp-misc-builtin-mode.el ends here
+;; Using mouse!
+(global-set-key (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
+
+(provide 'qjp-misc-multiple-cursors-config)
+;;; qjp-misc-multiple-cursors-config.el ends here

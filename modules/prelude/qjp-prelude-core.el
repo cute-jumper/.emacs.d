@@ -24,6 +24,7 @@
 
 ;;; Code:
 
+(require 'thingatpt)
 (require 'dash)
 
 (defun prelude-search (query-url prompt)

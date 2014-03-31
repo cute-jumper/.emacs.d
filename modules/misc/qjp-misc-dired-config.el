@@ -1,4 +1,4 @@
-;;; qjp-misc-dired-mode.el --- Settings for dired related modes
+;;; qjp-misc-dired-config.el --- Settings for dired related modes
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -61,8 +61,8 @@
 (add-hook 'dired-mode-hook
           (lambda()
             (setq dired-guess-shell-alist-user
-                  (list (list "\\.pdf$" "evince") ;; fixed rule
+                  (list (list "\\.pdf$" "okular") ;; fixed rule
                         ))))
 
-(provide 'qjp-misc-dired-mode)
-;;; qjp-misc-dired-mode.el ends here
+(provide 'qjp-misc-dired-config)
+;;; qjp-misc-dired-config.el ends here

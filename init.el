@@ -57,7 +57,7 @@
 ;; Second Part: Load selected settings to complete configuration. ;;
 ;; -------------------------------------------------------------- ;;
 
-;; Add `modules' and `site-list' to `loat-path'
+;; Add `modules' and `site-lisp' to `loat-path'
 (add-to-list 'load-path qjp-modules-dir)
 (qjp-add-subdirectories-to-load-path qjp-site-lisp-dir)
 ;; Note: Now we are done with the load path

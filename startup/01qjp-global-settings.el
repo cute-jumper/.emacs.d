@@ -47,6 +47,16 @@
 ;; Set `fill-column' to wrap
 (setq-default fill-column 80)
 
+;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
+;; `qjp-NOP'. Navigating using doulbe-click is still available.
+(defun qjp-NOP ()
+  (interactive)
+  (message "Cursor: %s, Column %d" (what-line) (current-column)))
+(global-unset-key [down-mouse-1])
+(global-set-key [mouse-1] 'qjp-NOP)
+(global-set-key (kbd "<C-mouse-1>") 'qjp-NOP)
+(global-set-key (kbd "<C-down-mouse-1>" 'qjp-NOP))
+
 ;; Customize the looking!
 ;; Set title
 (setq frame-title-format (format "%%b@%s:%%f" (system-name)))

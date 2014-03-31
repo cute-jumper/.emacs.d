@@ -1,4 +1,4 @@
-;;; qjp-misc.el --- Simple settings for various modes
+;;; qjp-misc.el --- Simple settings for various modes/features
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -28,14 +28,14 @@
 ;;; Code:
 
 ;; Macro definition
-(defmacro qjp-misc-subdir-defun-macro (mode-name)
+(defmacro qjp-misc-subdir-defun-macro (feature-name)
   "A macro to simplify the `defun' for requiring feature in
   sub-directory"
-  (let ((func-name (intern (concat "qjp-misc-" (symbol-name mode-name)))))
+  (let ((func-name (intern (concat "qjp-misc-" (symbol-name feature-name)))))
     `(defun ,func-name ()
        (qjp-modules-require-subdir-feature
         "misc"
-        (concat "qjp-misc-" ,(symbol-name mode-name) "-mode")))))
+        (concat "qjp-misc-" ,(symbol-name feature-name) "-config")))))
 
 ;; ------------------------------------- ;;
 ;; Enable or disable some built-in modes ;;
@@ -80,8 +80,8 @@
 ;; jump-char ;;
 ;; --------- ;;
 (defun qjp-misc-jump-char ()
-  (key-chord-define-global "jk" 'jump-char-forward)
-  (key-chord-define-global "kl" 'jump-char-backward))
+  (key-chord-define-global "fg" 'jump-char-forward)
+  (key-chord-define-global "gg" 'jump-char-backward))
 
 ;; ------------- ;;
 ;; expand-region ;;
@@ -92,20 +92,22 @@
   ;; (pending-delete-mode)
   )
 
-;; ----------------------------------------------------- ;;
+;; --------------------------------------------------------- ;;
 ;; multiple-cursors, using region, global and mouse bindings ;;
-;; ----------------------------------------------------- ;;
+;; --------------------------------------------------------- ;;
 (qjp-misc-subdir-defun-macro multiple-cursors)
 
 ;; ------ ;;
 ;; EasyPG ;;
 ;; ------ ;;
-(defun qjp-misc-easypg ()
-  (setenv "GPG_AGENT_INFO" nil)
-  ;; save the password
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-  ;; auto-save
-  (setq epa-file-inhibit-auto-save nil))
+(qjp-misc-subdir-defun-macro easypg)
+
+;; ------ ;;
+;; ispell ;;
+;; ------ ;;
+(defun qjp-misc-ispell ()
+  (setq ispell-program-name "hunspell")
+  (require 'rw-hunspell))
 
 ;; ---------- ;;
 ;; dictionary ;;
@@ -213,10 +215,11 @@
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
-(defvar qjp-enabled-misc-settings-list
-  '(builtin key-chord region-bindings goto-last-change ace-jump ace-jump-buffer
-            jump-char expand-region multiple-cursors easypg dictionary w3m
-            command-log calfw markdown sr-speedbar evil term dired hs fetch-bibtex)
+(defvar qjp-enabled-misc-settings-list '(builtin key-chord
+  region-bindings goto-last-change ace-jump ace-jump-buffer
+  jump-char expand-region multiple-cursors easypg ispell
+  dictionary w3m command-log calfw markdown sr-speedbar evil term
+  dired hs fetch-bibtex)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

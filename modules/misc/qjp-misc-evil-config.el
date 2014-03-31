@@ -1,4 +1,4 @@
-;;; qjp-misc-multiple-cursors-mode.el --- Settings for multiple-cursors mode
+;;; qjp-misc-evil-config.el --- Settings for evil-mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,20 +24,23 @@
 
 ;;; Code:
 
-(require 'multiple-cursors)
+;; Hope this to be awesome:)
+(require 'evil)
+(evil-mode 1)
 
-;; Region key bindings
-(define-key region-bindings-mode-map "a" 'mc/mark-all-like-this)
-(define-key region-bindings-mode-map "p" 'mc/mark-previous-like-this)
-(define-key region-bindings-mode-map "n" 'mc/mark-next-like-this)
-(define-key region-bindings-mode-map "e" 'mc/edit-lines)
+;; remove all keybindings from insert-state keymap
+(setcdr evil-insert-state-map nil) 
 
-;; Normal key bindings
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;; but [escape] should switch back to normal state
+(define-key evil-insert-state-map [escape] 'evil-normal-state)
 
-;; Using mouse!
-(global-set-key (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
+;; map "jj" to "ESC"
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 
-(provide 'qjp-misc-multiple-cursors-mode)
-;;; qjp-misc-multiple-cursors-mode.el ends here
+;; map "c-e" to end-of-line because it's kind of more convenient than $
+(define-key evil-normal-state-map "\C-e" 'end-of-line)
+(define-key evil-normal-state-map "\C-f" 'forward-char)
+(define-key evil-normal-state-map "\C-b" 'backward-char)
+
+(provide 'qjp-misc-evil-config)
+;;; qjp-misc-evil-config.el ends here
