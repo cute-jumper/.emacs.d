@@ -69,6 +69,7 @@
 (require 'qjp-org)                      ;org-mode
 (require 'qjp-tex)                      ;TeX
 (require 'qjp-programming)              ;Programmning
+(require 'qjp-site-lisp)                ;site-lisp
 
 ;; Welcome message
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)

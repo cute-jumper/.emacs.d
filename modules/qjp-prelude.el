@@ -24,7 +24,8 @@
 
 ;;; Code:
 
-
+;; Load functions in `prelude-core.el'
+(qjp-modules-require-subdir-feature "prelude" "prelude-core")
 
 (provide 'qjp-prelude)
 ;;; qjp-prelude.el ends here

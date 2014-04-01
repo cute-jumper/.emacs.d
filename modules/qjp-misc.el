@@ -37,56 +37,6 @@
         "misc"
         (concat "qjp-misc-" ,(symbol-name feature-name) "-config")))))
 
-;; -------------- ;;
-;; key-chord mode ;;
-;; -------------- ;;
-(defun qjp-misc-key-chord ()
-  (require 'key-chord)
-  (key-chord-mode t))
-
-;; -------------------- ;;
-;; region-bindings mode ;;
-;; -------------------- ;;
-(defun qjp-misc-region-bindings ()
-  (require 'region-bindings-mode)
-  (region-bindings-mode-enable))
-
-;; ---------------- ;;
-;; goto-last-change ;;
-;; ---------------- ;;
-(defun qjp-misc-goto-last-change ()
-  (require 'goto-last-change)
-  (global-set-key "\C-x\C-\\" 'goto-last-change))
-
-;; ------------- ;;
-;; ace-jump-mode ;;
-;; ------------- ;;
-(defun qjp-misc-ace-jump ()
-  (global-set-key (kbd "C-;") 'ace-jump-line-mode)
-  (global-set-key (kbd "C-:") 'ace-jump-mode))
-
-;; --------------- ;;
-;; ace-jump-buffer ;;
-;; --------------- ;;
-(defun qjp-misc-ace-jump-buffer ()
-  (key-chord-define-global "bb" 'ace-jump-buffer))
-
-;; --------- ;;
-;; jump-char ;;
-;; --------- ;;
-(defun qjp-misc-jump-char ()
-  (key-chord-define-global "fg" 'jump-char-forward)
-  (key-chord-define-global "gg" 'jump-char-backward))
-
-;; ------------- ;;
-;; expand-region ;;
-;; ------------- ;;
-(defun qjp-misc-expand-region ()
-  (require 'expand-region)
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  ;; (pending-delete-mode)
-  )
-
 ;; --------------------------------------------------------- ;;
 ;; multiple-cursors, using region, global and mouse bindings ;;
 ;; --------------------------------------------------------- ;;
@@ -97,74 +47,10 @@
 ;; ------ ;;
 (qjp-misc-subdir-defun-macro easypg)
 
-;; ------ ;;
-;; ispell ;;
-;; ------ ;;
-(defun qjp-misc-ispell ()
-  (setq ispell-program-name "hunspell")
-  (require 'rw-hunspell))
-
-;; ---------- ;;
-;; dictionary ;;
-;; ---------- ;;
-(defun qjp-misc-dictionary ()
-  (setq dictionary-tooltip-dictionary "stardic")
-  (setq dictionary-server "localhost")
-  (global-set-key (kbd "C-c d") 'dictionary-search))
-
-;; --- ;;
-;; w3m ;;
-;; --- ;;
-(defun qjp-misc-w3m ()
-  (setq w3m-default-display-inline-images t)
-  (setq w3m-home-page "http://www.google.com"))
-
-;; ---------------- ;;
-;; command-log-mode ;;
-;; ---------------- ;;
-(defun qjp-misc-command-log ()
-  (require 'command-log-mode))
-
-;; ----- ;;
-;; calfw ;;
-;; ----- ;;
-(defun qjp-misc-calfw ()
-  (require 'calfw)
-  (require 'calfw-org))
-
-;; ------------- ;;
-;; markdown-mode ;;
-;; ------------- ;;
-(defun qjp-misc-markdown ()
-  (require 'markdown-mode+)
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode)))
-
-;; ----------- ;;
-;; sr-speedbar ;;
-;; ----------- ;;
-(defun qjp-misc-sr-speedbar ()
-  (require 'sr-speedbar)
-  (setq sr-speedbar-right-side nil)
-  (setq speedbar-use-images nil)
-  (global-set-key [f8] 'sr-speedbar-toggle))
-
-;; --------------- ;;
-;; predictive mode ;;
-;; --------------- ;;
-(defun qjp-misc-predictive ()
-  (require 'predictive))
-
 ;; --------- ;;
 ;; evil-mode ;;
 ;; --------- ;;
 (qjp-misc-subdir-defun-macro evil)
-
-;; --------- ;;
-;; term-mode ;;
-;; --------- ;;
-(defun qjp-misc-term ()
-  ;; Turn of yasnippet in order to let tab behave normally
-  (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1))))
 
 ;; ----- ;;
 ;; dired ;;
@@ -181,31 +67,10 @@
 ;; --------------------- ;;
 (qjp-misc-subdir-defun-macro hs)
 
-;; --------- ;;
-;; site-lisp ;;
-;; --------- ;;
-
-;; ------------ ;;
-;; fetch-bibtex ;;
-;; ------------ ;;
-(defun qjp-misc-fetch-bibtex ()
-  (require 'fetch-bibtex)
-  (setq fetch-bibtex-script
-        (expand-file-name         
-         "fetch_bibtex.py" (expand-file-name "fetch-bibtex" qjp-site-lisp-dir))))
-
-;; ------------------ ;;
-;; My own extensions! ;;
-;; ------------------ ;;
-
-;; ------- ;;
-;; THUmacs ;;
-;; ------- ;;
-(defun qjp-misc-thumacs ()
-  (require 'deadline-util)
-  (setq dp-userid "")                   ;Demo only
-  (setq dp-userpass "")                 ;Demo only
-  (setq dp-homework-file (concat "Agenda/homework.org")))
+;; ----------------------------- ;;
+;; Settings for various packages ;;
+;; ----------------------------- ;;
+(qjp-modules-require-subdir-feature "misc" "qjp-misc-pkg-config")
 
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
