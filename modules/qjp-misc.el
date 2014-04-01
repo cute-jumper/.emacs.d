@@ -79,7 +79,7 @@
   region-bindings goto-last-change ace-jump ace-jump-buffer
   jump-char expand-region multiple-cursors easypg ispell
   dictionary w3m command-log calfw markdown sr-speedbar evil term
-  dired hs fetch-bibtex)
+  dired hs)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

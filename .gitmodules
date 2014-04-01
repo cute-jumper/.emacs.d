@@ -1,0 +1,6 @@
+[submodule "site-lisp/deft"]
+	path = site-lisp/deft
+	url = git@github.com:cute-jumper/deft.git
+[submodule "site-lisp/fetch-bibtex"]
+	path = site-lisp/fetch-bibtex
+	url = git@github.com:cute-jumper/fetch-bibtex.git

@@ -28,6 +28,15 @@
 ;; site-lisp ;;
 ;; --------- ;;
 
+;; ----------------------- ;;
+;; Deft, modified version! ;;
+;; ----------------------- ;;
+(defun qjpj-site-lisp-deft ()
+  (require 'deft)
+  (setq deft-directory (expand-file-name "~/Documents/Personal"))
+  (setq deft-extension "org")
+  (setq deft-text-mode 'org-mode))
+
 ;; ------------ ;;
 ;; fetch-bibtex ;;
 ;; ------------ ;;
@@ -36,10 +45,6 @@
   (setq fetch-bibtex-script
         (expand-file-name
          "fetch_bibtex.py" (expand-file-name "fetch-bibtex" qjp-site-lisp-dir))))
-
-;; ------------------ ;;
-;; My own extensions! ;;
-;; ------------------ ;;
 
 ;; ------- ;;
 ;; THUmacs ;;
@@ -50,6 +55,7 @@
   (setq dp-userpass "")                 ;Demo only
   (setq dp-homework-file (concat "Agenda/homework.org")))
 
+(qjp-site-lisp-deft)
 (qjp-site-lisp-fetch-bibtex)
 
 (provide 'qjp-site-lisp)
