@@ -37,11 +37,6 @@
         "misc"
         (concat "qjp-misc-" ,(symbol-name feature-name) "-config")))))
 
-;; ------------------------------------- ;;
-;; Enable or disable some built-in modes ;;
-;; ------------------------------------- ;;
-(qjp-misc-subdir-defun-macro builtin)
-
 ;; -------------- ;;
 ;; key-chord mode ;;
 ;; -------------- ;;

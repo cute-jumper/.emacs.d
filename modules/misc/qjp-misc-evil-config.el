@@ -41,6 +41,7 @@
 (define-key evil-normal-state-map "\C-e" 'end-of-line)
 (define-key evil-normal-state-map "\C-f" 'forward-char)
 (define-key evil-normal-state-map "\C-b" 'backward-char)
+(define-key evil-normal-state-map [down-mouse-1] 'qjp-NOP)
 
 (provide 'qjp-misc-evil-config)
 ;;; qjp-misc-evil-config.el ends here

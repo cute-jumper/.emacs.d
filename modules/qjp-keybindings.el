@@ -66,5 +66,12 @@
 (global-set-key (kbd "C-c e") 'qjp-esk-eval-and-replace)
 (global-set-key [f5] 'compile)
 
+;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
+;; `qjp-NOP'. Navigating using doulbe-click is still available.
+(global-unset-key [down-mouse-1])
+(global-set-key [mouse-1] 'qjp-NOP)
+(global-set-key (kbd "<C-mouse-1>") 'qjp-NOP)
+(global-set-key (kbd "<C-down-mouse-1>" 'qjp-NOP))
+
 (provide 'qjp-keybindings)
 ;;; qjp-keybindings.el ends here

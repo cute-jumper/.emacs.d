@@ -63,8 +63,9 @@
 ;; Note: Now we are done with the load path
 
 ;; Requrire module features as you want
+(require 'qjp-basic)                    ;basic settings
 (require 'qjp-keybindings)              ;key bindings
-(require 'qjp-misc)                     ;various modes
+(require 'qjp-misc)                     ;various modes/features
 (require 'qjp-org)                      ;org-mode
 (require 'qjp-tex)                      ;TeX
 (require 'qjp-programming)              ;Programmning

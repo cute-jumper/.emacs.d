@@ -41,35 +41,6 @@
 ;; Making this larger could result in reducing the frequency of GC.
 (setq gc-cons-threshold 50000000)
 
-;; Show keystrokes
-(setq echo-keystrokes 0.1)
-
-;; Set `fill-column' to wrap
-(setq-default fill-column 80)
-
-;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
-;; `qjp-NOP'. Navigating using doulbe-click is still available.
-(defun qjp-NOP ()
-  (interactive)
-  (message "Cursor: %s, Column %d" (what-line) (current-column)))
-(global-unset-key [down-mouse-1])
-(global-set-key [mouse-1] 'qjp-NOP)
-(global-set-key (kbd "<C-mouse-1>") 'qjp-NOP)
-(global-set-key (kbd "<C-down-mouse-1>" 'qjp-NOP))
-
-;; Customize the looking!
-;; Set title
-(setq frame-title-format (format "%%b@%s:%%f" (system-name)))
-;; Show menu bar if `ubuntu'
-(let ((desktop-env (getenv "DESKTOP_SESSION")))
-  (cond ((string= desktop-env "ubuntu") (menu-bar-mode))
-        (t (menu-bar-mode -1))))
-;; Font settings
-(set-frame-font "Liberation Mono:pixelsize=22")
-(if (display-graphic-p)
-    (set-fontset-font (frame-parameter nil 'font) 'han
-                       (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))
-
 ;; Start server
 (require 'server)
 (unless (server-running-p)
