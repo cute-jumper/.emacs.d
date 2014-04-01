@@ -33,7 +33,7 @@
 ;; ----------------------- ;;
 (defun qjpj-site-lisp-deft ()
   (require 'deft)
-  (setq deft-directory (expand-file-name "~/Documents/Personal"))
+  (setq deft-directory qjp-document-dir)
   (setq deft-extension "org")
   (setq deft-text-mode 'org-mode))
 

@@ -33,7 +33,6 @@
 (qjp-modules-require-subdir-feature "org" "qjp-org-src")
 (qjp-modules-require-subdir-feature "org" "qjp-org-export")
 (qjp-modules-require-subdir-feature "org" "qjp-org-misc")
-(qjp-modules-require-subdir-feature "org" "qjp-org-deft")
 (qjp-modules-require-subdir-feature "org" "qjp-org-publish")
 
 (provide 'qjp-org)
