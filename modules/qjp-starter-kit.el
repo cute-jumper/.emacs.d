@@ -1,4 +1,4 @@
-;;; qjp-starter-kit.el --- Functions learned from Emacs34-starter-kit
+;;; qjp-starter-kit.el --- Functions learned from Emacs24-starter-kit
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -23,6 +23,18 @@
 ;; 
 
 ;;; Code:
+
+;; uniquify
+(require 'uniquify)
+
+;; Enable saveplace
+(require 'saveplace)
+(setq save-place t)
+
+(setq smex-save-file (concat qjp-base-dir ".smex-items"))
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
 
 ;; Should be able to eval-and-replace anywhere.
 ;; From emacs-starter-kit

@@ -53,6 +53,9 @@
 ;; Enable tooltip
 (tooltip-mode)
 
+;; Enable mouse wheel support
+(mouse-wheel-mode t)
+
 ;; Nice scrolling
 (setq scroll-margin 0
       scroll-conservatively 100000

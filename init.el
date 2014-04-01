@@ -64,6 +64,7 @@
 
 ;; Requrire module features as you want
 (require 'qjp-basic)                    ;basic settings
+(require 'qjp-functions)                ;useful functions
 (require 'qjp-keybindings)              ;key bindings
 (require 'qjp-misc)                     ;various modes/features
 (require 'qjp-org)                      ;org-mode

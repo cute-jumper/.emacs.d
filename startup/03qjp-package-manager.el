@@ -57,7 +57,8 @@ then it will install these packages one by one."
             (progn
               (package-install pkg)
               (message "Installing %s done." pkg)))
-        (message "Package %s already installed!" pkg)))))
+        (message "Package %s already installed!" pkg))))
+  (qjp-update-prelude-core))
 
 ;; This function should be used when maintaining the settings, not at the first initialization.
 (defun qjp-update-installed-package-list ()
@@ -78,6 +79,20 @@ to maintain the right list."
 (defadvice package-install (after update-installed-package-list)
   (qjp-update-installed-package-list))
 (ad-activate 'package-install)
+
+;; Update `prelude-core.el'
+(defun qjp-update-prelude-core ()
+  (interactive)
+  (let ((prelude-core-url
+         "https://raw.githubusercontent.com/bbatsov/prelude/master/core/prelude-core.el")
+        (prelude-core-file-name
+         (expand-file-name "modules/prelude/prelude-core.el" qjp-base-dir)))
+    (when (file-exists-p prelude-core-file-name)
+      (rename-file prelude-core-file-name (concat prelude-core-file-name ".bak") t))
+    (if (url-copy-file prelude-core-url prelude-core-file-name t)
+        (message "Update prelude-core.el successfully. Use `diff' to see the differences.")
+      (error "Failed to download prelude-core.el!"))))
+
 
 (provide '03qjp-package-manager)
 ;;; 03qjp-package-manager.el ends here
