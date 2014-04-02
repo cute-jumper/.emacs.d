@@ -71,7 +71,7 @@
 (global-unset-key [down-mouse-1])
 (global-set-key [mouse-1] 'qjp-NOP)
 (global-set-key (kbd "<C-mouse-1>") 'qjp-NOP)
-(global-set-key (kbd "<C-down-mouse-1>" 'qjp-NOP))
+(global-set-key (kbd "<C-down-mouse-1>") 'qjp-NOP)
 
 (provide 'qjp-keybindings)
 ;;; qjp-keybindings.el ends here

@@ -91,8 +91,9 @@ to maintain the right list."
       (rename-file prelude-core-file-name (concat prelude-core-file-name ".bak") t))
     (if (url-copy-file prelude-core-url prelude-core-file-name t)
         (message "Update prelude-core.el successfully. Use `diff' to see the differences.")
-      (error "Failed to download prelude-core.el!"))))
+      (error (message "Failed to download prelude-core.el!")))))
 
+(package-initialize)
 
 (provide '03qjp-package-manager)
 ;;; 03qjp-package-manager.el ends here

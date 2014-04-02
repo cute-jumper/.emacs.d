@@ -63,6 +63,7 @@
 ;; Note: Now we are done with the load path
 
 ;; Requrire module features as you want
+(require 'qjp-esk)                      ;Emacs starter kit
 (require 'qjp-basic)                    ;basic settings
 (require 'qjp-functions)                ;useful functions
 (require 'qjp-keybindings)              ;key bindings

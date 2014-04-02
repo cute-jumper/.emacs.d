@@ -113,7 +113,6 @@
 ;; markdown-mode ;;
 ;; ------------- ;;
 (defun qjp-misc-markdown ()
-  (require 'markdown-mode+)
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode)))
 
 ;; ----------- ;;
@@ -135,8 +134,27 @@
 ;; term-mode ;;
 ;; --------- ;;
 (defun qjp-misc-term ()
-  ;; Turn of yasnippet in order to let tab behave normally
+  "Turn of yasnippet in order to let tab behave normally"
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1))))
+
+;; ---------- ;;
+;; rebox-mode ;;
+;; ---------- ;;
+(defun qjp-misc-rebox ()
+  "See the source code to find out styles"
+  (setq rebox-style-loop '(21 23 25)))
+
+;; ------------------- ;;
+;; idle-highlight-mode ;;
+;; ------------------- ;;
+(defun qjp-misc-idle-highlight ()
+  "Use bold and underline instead of `region' color to
+highlight."
+  (require 'idle-highlight-mode)
+  (set-face-attribute 'idle-highlight nil
+                      :weight 'semi-bold :underline
+                      '(:color foreground-color :style line)
+                      :inherit nil))
 
 
 (provide 'qjp-misc-pkg-config)

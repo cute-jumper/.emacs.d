@@ -1,4 +1,4 @@
-;;; qjp-starter-kit.el --- Functions learned from Emacs24-starter-kit
+;;; qjp-esk.el --- Functions learned from Emacs24-starter-kit
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -24,29 +24,10 @@
 
 ;;; Code:
 
-;; uniquify
-(require 'uniquify)
+;; Require features for prog-mode
+(qjp-modules-require-subdir-feature "esk" "esk-prog")
+(qjp-modules-require-subdir-feature "esk" "esk-helpers")
+(qjp-modules-require-subdir-feature "esk" "esk-config")
 
-;; Enable saveplace
-(require 'saveplace)
-(setq save-place t)
-
-(setq smex-save-file (concat qjp-base-dir ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
-
-;; Should be able to eval-and-replace anywhere.
-;; From emacs-starter-kit
-(defun starter-kit-eval-and-replace ()
-  "Replace the preceding sexp with its value."
-  (interactive)
-  (backward-kill-sexp)
-  (condition-case nil
-      (prin1 (eval (read (current-kill 0)))
-             (current-buffer))
-    (error (message "Invalid expression")
-           (insert (current-kill 0)))))
-
-(provide 'qjp-starter-kit)
-;;; qjp-starter-kit.el ends here
+(provide 'qjp-esk)
+;;; qjp-esk.el ends here

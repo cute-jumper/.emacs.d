@@ -61,7 +61,7 @@
 ;; NOP function. Just show the cursor position!
 (defun qjp-NOP ()
   (interactive)
-  (message "Cursor: %s, Column %d" (what-line) (current-column)))
+  (message "Cursor: Line %d, Column %d" (line-number-at-pos) (current-column)))
 
 ;; Maximize
 (defun qjp-maximized ()

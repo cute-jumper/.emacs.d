@@ -27,11 +27,11 @@
 ;; fast forward/backward lines
 (defun qjp-fast-forward-lines ()
   (interactive)
-  (forward-line 5))
+  (next-line 5))
 
 (defun qjp-fast-backward-lines ()
   (interactive)
-  (forward-lines -5))
+  (previous-line 5))
 
 ;; C-a to be `back-to-indentation' first and then `beginning-of-line'
 (defun qjp-back-to-indentation-or-beginning () 

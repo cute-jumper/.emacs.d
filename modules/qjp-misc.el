@@ -75,11 +75,11 @@
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
-(defvar qjp-enabled-misc-settings-list '(builtin key-chord
+(defvar qjp-enabled-misc-settings-list '(key-chord
   region-bindings goto-last-change ace-jump ace-jump-buffer
   jump-char expand-region multiple-cursors easypg ispell
   dictionary w3m command-log calfw markdown sr-speedbar evil term
-  dired hs)
+  dired hs rebox idle-highlight)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

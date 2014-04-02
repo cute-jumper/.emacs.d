@@ -4,3 +4,6 @@
 [submodule "site-lisp/fetch-bibtex"]
 	path = site-lisp/fetch-bibtex
 	url = git@github.com:cute-jumper/fetch-bibtex.git
+[submodule "site-lisp/org-caldav"]
+	path = site-lisp/org-caldav
+	url = https://github.com/dengste/org-caldav.git

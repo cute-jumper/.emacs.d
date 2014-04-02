@@ -31,7 +31,7 @@
 ;; ----------------------- ;;
 ;; Deft, modified version! ;;
 ;; ----------------------- ;;
-(defun qjpj-site-lisp-deft ()
+(defun qjp-site-lisp-deft ()
   (require 'deft)
   (setq deft-directory qjp-document-dir)
   (setq deft-extension "org")

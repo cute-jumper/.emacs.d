@@ -98,17 +98,17 @@
 ;; seems adding empty-lines argument to "j" would cause error:
 ;; "Capture template `j': Invalid search bound (wrong side of point)"
 (setq org-capture-templates
-      '(("t" "TODO" entry (file+headline (concat personal-doc-base "Notes/TODO_DONE/TODO.org") "TODO")
+      '(("t" "TODO" entry (file+headline (concat qjp-document-dir "Notes/TODO_DONE/TODO.org") "TODO")
          "* TODO %?\n  %T\n" :empty-lines 1 :unnarrowed t :kill-buffer t)
-        ("p" "Problems" entry (file+headline (concat personal-doc-base "Notes/TODO_DONE/Problems.org") "Problems")
+        ("p" "Problems" entry (file+headline (concat qjp-document-dir "Notes/TODO_DONE/Problems.org") "Problems")
          "* %?\n  %T\n" :empty-lines 1 :unnarrowed t :kill-buffer t)
-        ("j" "Journal" plain (file+datetree (concat personal-doc-base "Journal/journal.org.gpg"))
+        ("j" "Journal" plain (file+datetree (concat qjp-document-dir "Journal/journal.org.gpg"))
          "" :unnarrowed t :kill-buffer t)
-        ("a" "Task" entry (file+headline (concat personal-doc-base "Agenda/tasks.org") "Tasks")
+        ("a" "Task" entry (file+headline (concat qjp-document-dir "Agenda/tasks.org") "Tasks")
          "* TODO %?\n %t\n" :empty-lines 1 :kill-buffer t)
-        ("c" "Capture" entry (file+headline (concat personal-doc-base "capture.org") "Capture")
+        ("c" "Capture" entry (file+headline (concat qjp-document-dir "capture.org") "Capture")
          "* %^{Title}\n  Source: %u, %c\n  %i" :empty-lines 1 :kill-buffer t)
-        ("l" "Timeline" plain (file+datetree (concat personal-doc-base "Journal/timeline.org"))
+        ("l" "Timeline" plain (file+datetree (concat qjp-document-dir "Journal/timeline.org"))
          "" :unnarrowed t :kill-buffer t)))
 
 (provide 'qjp-org-edit)

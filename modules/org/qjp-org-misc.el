@@ -46,9 +46,9 @@
 (setq org-caldav-calendar-id "qjpchmail@gmail.com")
 (setq org-caldav-files 
       (mapcar (lambda (x)
-                (concat personal-doc-base x))
+                (concat qjp-document-dir x))
               '("Agenda/homework.org" "Agenda/tasks.org")))
-(setq org-caldav-inbox (concat personal-doc-base "Agenda/GoogleCalendar.org"))
+(setq org-caldav-inbox (concat qjp-document-dir "Agenda/GoogleCalendar.org"))
 
 (provide 'qjp-org-misc)
 ;;; qjp-org-misc.el ends here

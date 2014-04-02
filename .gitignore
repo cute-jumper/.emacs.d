@@ -2,3 +2,7 @@
 \#*
 *.elc
 prelude-core*
+backups
+.smex-items
+elpa
+places
