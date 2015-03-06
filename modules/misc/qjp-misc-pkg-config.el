@@ -49,8 +49,8 @@
 ;; ace-jump-mode ;;
 ;; ------------- ;;
 (defun qjp-misc-ace-jump ()
-  (global-set-key (kbd "C-;") 'ace-jump-line-mode)
-  (global-set-key (kbd "C-:") 'ace-jump-mode))
+  (global-set-key (kbd "C-'") 'ace-jump-mode)
+  (global-set-key (kbd "C-\"") 'ace-jump-line-mode))
 
 ;; --------------- ;;
 ;; ace-jump-buffer ;;
@@ -155,6 +155,53 @@ highlight."
                       :weight 'semi-bold :underline
                       '(:color foreground-color :style line)
                       :inherit nil))
+
+;; --------------- ;;
+;; smart mode line ;;
+;; --------------- ;;
+(defun qjp-misc-sml ()
+  "Setup smart mode line"
+  (sml/setup)
+  (sml/apply-theme "powerline"))
+
+;; ------------------------------------------------------------
+;; nyan-mode
+(defun qjp-misc-nyan ()
+    (nyan-mode))
+
+;; ------------------------------------------------------------
+;; hl-sentence
+(defun qjp-misc-hl-sentence ()
+  (require 'hl-sentence)
+  (set-face-attribute 'hl-sentence-face nil
+                      :foreground "white")
+  (set-face-attribute 'variable-pitch nil
+                      :foreground "gray40"))
+
+;; --------- ;;
+;; anzu-mode ;;
+;; --------- ;;
+(defun qjp-misc-anzu ()
+  (global-anzu-mode +1))
+
+;; -------------------- ;;
+;; whole-line-or-region ;;
+;; -------------------- ;;
+(defun qjp-misc-whole-line-or-region ()
+  (whole-line-or-region-mode +1))
+
+;; ------------------ ;;
+;; anchored-transpose ;;
+;; ------------------ ;;
+(defun qjp-misc-anchored-transpose ()
+  (global-set-key (kbd "C-x t") 'anchored-transpose))
+
+;; ------- ;;
+;; lacarte ;;
+;; ------- ;;
+(defun qjp-misc-lacarte ()
+  (require 'lacarte)
+  (global-set-key (kbd "C-x M-x") 'lacarte-execute-menu-command))
 
 
 (provide 'qjp-misc-pkg-config)

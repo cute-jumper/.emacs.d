@@ -80,9 +80,15 @@
 
 ;; Now, let's set the fonts for English and Chinese
 (set-frame-font "Liberation Mono:pixelsize=22")
+(setq default-frame-alist
+      '((font . "Liberation Mono:pixelsize=22")
+	(cursor-color . "white")))
 (if (display-graphic-p)
     (set-fontset-font (frame-parameter nil 'font) 'han
                        (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))
+
+;; Put auto save file to temporary file directory
+(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 (load-theme 'zenburn t)
@@ -91,16 +97,26 @@
 ;; Some useful built-in modes ;;
 ;; -------------------------- ;;
 
-;; electric-pair-mode
-(electric-pair-mode)
-
 ;; show-paren-mode
 (show-paren-mode)
 (setq show-paren-style 'mixed)
 
-;; ibuffer
-(setq ibuffer-use-other-window t)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; ---------------------------------- ;;
+;; Some useful functions from prelude ;;
+;; ---------------------------------- ;;
+
+(qjp-modules-require-subdir-feature "prelude" "qjp-basic-prelude")
+
+;; ----------------------------- ;;
+;; Put Unused configuration here ;;
+;; ----------------------------- ;;
+
+;; electric-pair-mode --> smartparens
+; (electric-pair-mode)
+
+;; ibuffer --> helm
+; (setq ibuffer-use-other-window t)
+; (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (provide 'qjp-basic)
 ;;; qjp-basic.el ends here

@@ -28,12 +28,7 @@
 (setq user-full-name "Junpeng Qiu")
 (setq user-mail-address "qjpchmail@gmail.com")
 
-;; Directories for modules and other configuration
-(defvar qjp-modules-dir (expand-file-name "modules" qjp-base-dir)
-  "The directory to place configuration for various modules.")
-(defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
-  "The directory to hold personal packages.")
-
+;; Set the root for org files
 (defvar qjp-document-dir (expand-file-name "~/Documents/Personal/")
   "Personal document base directory.")
 

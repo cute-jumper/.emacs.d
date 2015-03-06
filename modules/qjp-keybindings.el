@@ -57,8 +57,12 @@
 (define-key isearch-mode-map (kbd "C-p") 'qjp-isearch-yank-region)
 (global-set-key (kbd "M-o s") 'qjp-isearch-other-window)
 
+;; Require `qjp-keybindings-misc'
+(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-misc")
+(global-set-key (kbd "C-x M-=") 'qjp-calc-eval-and-replace)
+
 ;; ----------------- ;;
-;; Misc key bindings ;;
+;; Other key bindings ;;
 ;; ----------------- ;;
 (global-set-key (kbd "C-x I") 'imenu)
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))

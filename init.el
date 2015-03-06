@@ -24,54 +24,26 @@
 
 ;;; Code:
 
-;; ----------------------------------------------------------------------- ;;
-;; First Part: Load all settings under `startup' to finish initialization. ;;
-;; ----------------------------------------------------------------------- ;;
-
-;; Define the very root and the startup code directory
+;; Define directories for the very root, the startup code , modules and other
+;; configuration
 (defvar qjp-base-dir (file-name-directory load-file-name)
   "The base directory for configuration files.")
 (defvar qjp-startup-dir (expand-file-name "startup" qjp-base-dir)
   "The directory to store elisp scripts that runs at the very beginning.")
+(defvar qjp-modules-dir (expand-file-name "modules" qjp-base-dir)
+  "The directory to place configuration for various modules.")
+(defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
+  "The directory to hold personal packages.")
 
-;; Add `startup' to load path
+;; Add `startup', `modules' and `site-lisp' to load path
 (add-to-list 'load-path qjp-startup-dir)
-
-;; Filter function
-(defun qjp-filter (condp lst)
-    "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"
-    (delq nil
-          (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
-
-;; Function to get feature list
-(defun qjp-get-feature-list (dir)
-  "List file names under dir after removing .el suffix"
-  (qjp-filter
-   (lambda (dir) (not (or (string= "." x) (string= ".." x) (string-match "#" x))))
-   (mapcar (lambda (x) (substring x 0 (string-match "\\.el" x))) (directory-files dir))))
-
-;; Require all the features in startup
-(mapc 'require (mapcar 'intern (qjp-get-feature-list qjp-startup-dir)))
-
-;; -------------------------------------------------------------- ;;
-;; Second Part: Load selected settings to complete configuration. ;;
-;; -------------------------------------------------------------- ;;
-
-;; Add `modules' and `site-lisp' to `loat-path'
 (add-to-list 'load-path qjp-modules-dir)
-(qjp-add-subdirectories-to-load-path qjp-site-lisp-dir)
-;; Note: Now we are done with the load path
+(add-to-list 'load-path qjp-site-lisp-dir)
 
-;; Requrire module features as you want
-(require 'qjp-esk)                      ;Emacs starter kit
-(require 'qjp-basic)                    ;basic settings
-(require 'qjp-functions)                ;useful functions
-(require 'qjp-keybindings)              ;key bindings
-(require 'qjp-misc)                     ;various modes/features
-(require 'qjp-org)                      ;org-mode
-(require 'qjp-tex)                      ;TeX
-(require 'qjp-programming)              ;Programmning
-(require 'qjp-site-lisp)                ;site-lisp
+;; Require the init file in each directory
+(require 'qjp-startup-init)
+(require 'qjp-modules-init)
+(require 'qjp-site-lisp-init)
 
 ;; Welcome message
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)

@@ -26,10 +26,12 @@
 
 ;; fast forward/backward lines
 (defun qjp-fast-forward-lines ()
+  "Use `next-line' because I want the effect of visual movement"
   (interactive)
   (next-line 5))
 
 (defun qjp-fast-backward-lines ()
+  "Use `previous-line' because I want the effect of visual movement"
   (interactive)
   (previous-line 5))
 
@@ -84,20 +86,20 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
            (qjp-backward-up-sexp (1- arg)))
           ((backward-up-list arg)))))
 
+;; I put this `require' here because in prelude it said...See following comments...
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
+(diminish 'volatile-highlights-mode)
+
+;; note - this should be after volatile-highlights is required
 ;; new copy/cut
 (defadvice kill-ring-save (before slickcopy activate compile)
   "When called interactively with no active region, copy a single line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
+     (message "Copied line")
      (list (line-beginning-position)
-           (line-beginning-position 2)))))
-
-(defadvice kill-region (before slickcut activate compile)
-  "When called interactively with no active region, kill a single line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-     (list (line-beginning-position)
-           (line-beginning-position 2)))))
+           (line-end-position)))))
 
 ;; new command my-kill-to-word, which I think is very helpful
 ;; bind to C-\

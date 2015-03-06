@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;; Mainly from starter-kit-misc.el
 
 ;;; Code:
 
@@ -60,16 +60,17 @@
 ;; -------- ;;
 ;; ido-mode ;;
 ;; -------- ;;
-(ido-mode t)
-(ido-ubiquitous-mode)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-auto-merge-work-directories-length nil
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point 'guess
-      ido-use-virtual-buffers t
-      ido-handle-duplicate-virtual-buffers 2
-      ido-max-prospects 10)
+;; Obsolete. Use helm instead
+;; (ido-mode t)
+;; (ido-ubiquitous-mode)
+;; (setq ido-enable-prefix nil
+;;       ido-enable-flex-matching t
+;;       ido-auto-merge-work-directories-length nil
+;;       ido-create-new-buffer 'always
+;;       ido-use-filename-at-point 'guess
+;;       ido-use-virtual-buffers t
+;;       ido-handle-duplicate-virtual-buffers 2
+;;       ido-max-prospects 10)
 
 ;; ---- ;;
 ;; ffap ;;
@@ -133,16 +134,16 @@ comment as a filename."
      (set-face-foreground 'magit-diff-del "red3")))
 
 ;; Get around the emacswiki spam protection
-(eval-after-load 'oddmuse
-  (add-hook 'oddmuse-mode-hook
-            (lambda ()
-              (unless (string-match "question" oddmuse-post)
-                (setq oddmuse-post (concat "uihnscuskc=1;" oddmuse-post))))))
+;; (eval-after-load 'oddmuse
+;;   (add-hook 'oddmuse-mode-hook
+;;             (lambda ()
+;;               (unless (string-match "question" oddmuse-post)
+;;                 (setq oddmuse-post (concat "uihnscuskc=1;" oddmuse-post))))))
 
 ;; smex
-(setq smex-save-file (concat qjp-base-dir ".smex-items"))
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
+;; (setq smex-save-file (concat qjp-base-dir ".smex-items"))
+;; (smex-initialize)
+;; (global-set-key (kbd "M-x") 'smex)
 
 (provide 'esk-config)
 ;;; esk-config.el ends here

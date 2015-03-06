@@ -24,7 +24,13 @@
 
 ;;; Code:
 
-;; Used for `load-path'
+;; Filter function
+(defun qjp-filter (condp lst)
+    "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"
+    (delq nil
+          (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
+
+;; Utility function for adding `load-path'
 (defun qjp-add-subdirectories-to-load-path (base-directory)
   "Add all subdirectories to load path."
   (interactive)
@@ -33,7 +39,7 @@
      (add-to-list 'load-path subdir))
    (qjp-filter
     (lambda (x)
-      (and (file-directory-p x) (not (string-match "\\.$" x)) (not (string= "\\.\\.$" x))))
+      (and (file-directory-p x) (not (string-prefix-p "\\." x))))
     (directory-files base-directory t))))
 
 ;; Require sub-directory when I don't want to put all sub-directories in
@@ -60,8 +66,9 @@
 
 ;; NOP function. Just show the cursor position!
 (defun qjp-NOP ()
+  "Don't use `what-line' because it would output a message in minibuffer"
   (interactive)
-  (message "Cursor: Line %d, Column %d" (line-number-at-pos) (current-column)))
+  (message "Cursor at (%d, %d)" (line-number-at-pos) (current-column)))
 
 ;; Maximize
 (defun qjp-maximized ()

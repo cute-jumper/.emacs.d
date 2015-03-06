@@ -67,6 +67,16 @@
 ;; --------------------- ;;
 (qjp-misc-subdir-defun-macro hs)
 
+;; ---- ;;
+;; helm ;;
+;; ---- ;;
+(qjp-misc-subdir-defun-macro helm)
+
+;; ----- ;;
+;; Hydra ;;
+;; ----- ;;
+(qjp-misc-subdir-defun-macro hydra)
+
 ;; ----------------------------- ;;
 ;; Settings for various packages ;;
 ;; ----------------------------- ;;
@@ -75,11 +85,12 @@
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
-(defvar qjp-enabled-misc-settings-list '(key-chord
+(defvar qjp-enabled-misc-settings-list '(key-chord helm hydra
   region-bindings goto-last-change ace-jump ace-jump-buffer
   jump-char expand-region multiple-cursors easypg ispell
   dictionary w3m command-log calfw markdown sr-speedbar evil term
-  dired hs rebox idle-highlight)
+  dired hs rebox idle-highlight sml nyan hl-sentence anzu
+  whole-line-or-region anchored-transpose lacarte)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

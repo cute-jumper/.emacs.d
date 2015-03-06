@@ -86,6 +86,25 @@
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
 
+;; ----------- ;;
+;; latex-extra ;;
+;; ----------- ;;
+(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+
+;; ------------------ ;;
+;; magic-latex-buffer ;;
+;; ------------------ ;;
+(add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
+
+;; Tricks: let synctex work with Okular
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (push '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory))))
+                  TeX-expand-list)
+            (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
+                  TeX-view-program-list)
+            (push '(output-pdf "Okular") TeX-view-program-selection)))
+
 ;; ---------------------- ;;
 ;; User Defined Functions ;;
 ;; ---------------------- ;;
@@ -108,7 +127,7 @@
           (erase-buffer)))
       (message "%s" latex-buffer-name)
       (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
-             (append qjp-latex-auto-command-options (list buffer-file-name))))))
+             (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
 (add-hook 'after-save-hook 'qjp-latex-auto-update)
 
 ;; Insert \usepackage in the front of the file
@@ -123,6 +142,27 @@
     (if (string= pkg-options "")
         (insert "\\usepackage{" pkg-name "}")
       (insert "\\usepackage[" pkg-options "]{" pkg-name "}"))))
+
+;; Facility for \maketitle 
+(defun qjp-latex-maketitle (title author date)
+  (interactive "sTitle: \nsAuthor: \nsDate: ")
+  (save-excursion
+    (goto-char (point-max))
+    (if (search-backward "\\begin{document}" 0 t)
+        (progn
+          (save-excursion
+            (previous-line)
+            (end-of-line)
+            (newline-and-indent)
+            (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n"))
+          (end-of-line)
+          (newline-and-indent)
+          (insert "\\maketitle"))
+      (unless (search-backward "\\usepackage" 0 t)
+        (search-backward "\\documentclass" 0 t))
+      (end-of-line)
+      (newline-and-indent)
+      (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n\n\\begin{document}\n\\maketitle"))))
 
 
 (provide 'qjp-tex)

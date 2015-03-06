@@ -27,7 +27,7 @@
 ;; Package sources
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("melpa" . "http://melpa.milkbox.net/packages/")
+			 ("melpa" . "http://melpa.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")))
 
 ;; Update installed package list and install them at first initialization,
@@ -46,7 +46,7 @@ then it will install these packages one by one."
     (read
      (with-current-buffer
          (find-file-noselect
-          (get-package-list-filename))
+          (qjp-get-package-list-filename))
        (buffer-substring-no-properties (point-min) (point-max)))))
   (interactive)
   (package-refresh-contents)
@@ -71,14 +71,15 @@ to maintain the right list."
     (dolist (pkg package-alist)
       (if (assoc (car pkg) package-archive-contents)
           (add-to-list 'installed-package-list (car pkg))))
-    (with-temp-file (get-package-list-filename)
+    (with-temp-file (qjp-get-package-list-filename)
       (prin1 installed-package-list (current-buffer)))
     (message "Successfully update installed-package-list!")))
 
 ;; define advice for package-install to automatically update list
 (defadvice package-install (after update-installed-package-list)
   (qjp-update-installed-package-list))
-(ad-activate 'package-install)
+;; Disable defadvice
+;; (ad-activate 'package-install)
 
 ;; Update `prelude-core.el'
 (defun qjp-update-prelude-core ()

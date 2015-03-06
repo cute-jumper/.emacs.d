@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;; Part of starter-kit-defuns.el
 
 ;;; Code:
 
