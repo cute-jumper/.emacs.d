@@ -90,7 +90,20 @@
 ;; Put auto save file to temporary file directory
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-;; Settings modified from esk
+;; Finally, use `zenburn' as the default theme. It's a really cool theme!
+(load-theme 'zenburn t)
+
+;; -------------------------- ;;
+;; Some useful built-in modes ;;
+;; -------------------------- ;;
+
+;; show-paren-mode
+(show-paren-mode)
+(setq show-paren-style 'mixed)
+
+;; -------------------------- ;;
+;; Settings modified from esk ;;
+;; -------------------------- ;;
 (setq visible-bell t
       inhibit-startup-message t
       color-theme-is-global t
@@ -108,16 +121,11 @@
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
 
-;; Finally, use `zenburn' as the default theme. It's a really cool theme!
-(load-theme 'zenburn t)
+(set-default 'indent-tabs-mode nil)
+(set-default 'indicate-empty-lines t)
+(set-default 'imenu-auto-rescan t)
 
-;; -------------------------- ;;
-;; Some useful built-in modes ;;
-;; -------------------------- ;;
-
-;; show-paren-mode
-(show-paren-mode)
-(setq show-paren-style 'mixed)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; ---------------------------------- ;;
 ;; Some useful functions from prelude ;;

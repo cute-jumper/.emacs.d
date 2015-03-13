@@ -37,9 +37,9 @@
   (let* ((func-name-string (qjp-misc-make-func-name-string feature-name))
          (func-name (intern func-name-string))
          (flag-name (intern (concat func-name-string "-flag"))))
-    `(defsubst ,func-name ()
-       (defvar ,flag-name t)
-       (when ,flag-name
+    (defvar flag-name t)
+    `(defsubst ,func-name (&optional v)
+       (when (or ,flag-name v)
          (setq ,flag-name nil)
          ,@body))))
   

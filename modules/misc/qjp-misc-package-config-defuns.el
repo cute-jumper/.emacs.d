@@ -109,7 +109,9 @@
 ;; ------ ;;
 (d ispell
    (setq ispell-program-name "hunspell")
-   (require 'rw-hunspell))
+   (require 'rw-hunspell)
+   (when (executable-find ispell-program-name)
+     (add-hook 'text-mode-hook 'turn-on-flyspell)))
 
 ;; ---------- ;;
 ;; dictionary ;;

@@ -61,20 +61,15 @@
 ;; --------- ;;
 ;; Variables ;;
 ;; --------- ;;
-(set-default 'indent-tabs-mode nil)
-(set-default 'indicate-empty-lines t)
-(set-default 'imenu-auto-rescan t)
-
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; ------ ;;
 ;; ispell ;;
 ;; ------ ;;
-(eval-after-load "ispell"
-  '(when (executable-find ispell-program-name)
-     (add-hook 'text-mode-hook 'turn-on-flyspell)))
+;; (eval-after-load "ispell"
+;;   '(when (executable-find ispell-program-name)
+;;      (add-hook 'text-mode-hook 'turn-on-flyspell)))
 
-(defalias 'auto-tail-revert-mode 'tail-mode)
+;; (defalias 'auto-tail-revert-mode 'tail-mode)
 
 (eval-after-load 'hippie-exp
   '(progn
