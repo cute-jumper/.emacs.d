@@ -44,17 +44,5 @@
     (newline arg)
     (indent-according-to-mode)))
 
-;; --------- ;;
-;; yasnippet ;;
-;; --------- ;;
-(yas-global-mode)
-
-;; ------------------ ;;
-;; auto-complete-mode ;;
-;; ------------------ ;;
-(require 'auto-complete-config)
-(ac-config-default)
-(global-auto-complete-mode)
-
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here

@@ -65,7 +65,7 @@
 (add-hook 'after-save-hook 'qjp-byte-compile-current-buffer)
 
 ;; NOP function. Just show the cursor position!
-(defun qjp-NOP ()
+(defun qjp-nop ()
   "Don't use `what-line' because it would output a message in minibuffer"
   (interactive)
   (message "Cursor at (%d, %d)" (line-number-at-pos) (current-column)))

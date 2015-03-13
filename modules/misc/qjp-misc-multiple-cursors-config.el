@@ -26,6 +26,9 @@
 
 (require 'multiple-cursors)
 
+;; Rely on region-bindings-mode
+(qjp-misc-region-bindings)
+
 ;; Region key bindings
 (define-key region-bindings-mode-map "a" 'mc/mark-all-like-this)
 (define-key region-bindings-mode-map "p" 'mc/mark-previous-like-this)

@@ -28,77 +28,70 @@
 ;;; Code:
 
 ;; Macro definition
-(defmacro qjp-misc-subdir-defun-macro (feature-name)
-  "A macro to simplify the `defun' for requiring feature in
-  sub-directory"
-  (let ((func-name (intern (concat "qjp-misc-" (symbol-name feature-name)))))
-    `(defun ,func-name ()
-       (qjp-modules-require-subdir-feature
-        "misc"
-        (concat "qjp-misc-" ,(symbol-name feature-name) "-config")))))
+(defun qjp-misc-make-func-name-string (feature-name)
+  "Helper function to construct function name of `misc' module"
+  (concat "qjp-misc-" (symbol-name feature-name)))
 
-;; --------------------------------------------------------- ;;
-;; multiple-cursors, using region, global and mouse bindings ;;
-;; --------------------------------------------------------- ;;
-(qjp-misc-subdir-defun-macro multiple-cursors)
+(defmacro qjp-misc-make-macro (feature-name &rest body)
+  "Toplevel macro to define macro of `misc' module"
+  (let* ((func-name-string (qjp-misc-make-func-name-string feature-name))
+         (func-name (intern func-name-string))
+         (flag-name (intern (concat func-name-string "-flag"))))
+    `(defsubst ,func-name ()
+       (defvar ,flag-name t)
+       (when ,flag-name
+         (setq ,flag-name nil)
+         ,@body))))
+  
+(defmacro qjp-misc-inline-defun (feature-name &rest args)
+  "The `defun' macro for inline settings"
+  `(qjp-misc-make-macro ,feature-name
+         ,@args))
 
-;; ------ ;;
-;; EasyPG ;;
-;; ------ ;;
-(qjp-misc-subdir-defun-macro easypg)
+(defmacro qjp-misc-file-defun (feature-name)
+  "The `defun' macro for inline settings"
+  `(qjp-misc-make-macro
+    ,feature-name
+    (qjp-modules-require-subdir-feature
+     "misc"
+     (concat ,(qjp-misc-make-func-name-string feature-name) "-config"))))
 
-;; --------- ;;
-;; evil-mode ;;
-;; --------- ;;
-(qjp-misc-subdir-defun-macro evil)
-
-;; ----- ;;
-;; dired ;;
-;; ----- ;;
-(qjp-misc-subdir-defun-macro dired)
-
-;; ----------- ;;
-;; tabbar-mode ;;
-;; ----------- ;;
-(qjp-misc-subdir-defun-macro tabbar)
-
-;; --------------------- ;;
-;; hideshow, hideshowvis ;;
-;; --------------------- ;;
-(qjp-misc-subdir-defun-macro hs)
-
-;; ---- ;;
-;; helm ;;
-;; ---- ;;
-(qjp-misc-subdir-defun-macro helm)
-
-;; ----- ;;
-;; Hydra ;;
-;; ----- ;;
-(qjp-misc-subdir-defun-macro hydra)
-
-;; ----------------------------- ;;
-;; Settings for various packages ;;
-;; ----------------------------- ;;
-(qjp-modules-require-subdir-feature "misc" "qjp-misc-pkg-config")
+;; ---------------------------------- ;;
+;; Load settings for various packages ;;
+;; ---------------------------------- ;;
+(qjp-modules-require-subdir-feature "misc" "qjp-misc-package-config-defuns")
 
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
-(defvar qjp-enabled-misc-settings-list '(key-chord helm hydra
-  region-bindings goto-last-change ace-jump ace-jump-buffer
-  jump-char expand-region multiple-cursors easypg ispell
-  dictionary w3m command-log calfw markdown sr-speedbar evil term
-  dired hs rebox idle-highlight sml nyan hl-sentence anzu
-  whole-line-or-region anchored-transpose lacarte)
+(defvar qjp-enabled-misc-settings-list
+  '(ace-jump ace-jump-buffer anchored-transpose anzu
+    calfw command-log company
+    dictionary dired
+    easypg evil expand-region
+    goto-last-change
+    helm hl-sentence hs hydra
+    idle-highlight ispell
+    jump-char
+    key-chord
+    lacarte
+    markdown multiple-cursors
+    nyan
+    rebox region-bindings
+    sml sr-speedbar
+    term
+    w3m whole-line-or-region
+    yasnippet)
   "The short mode function name that should be enabled")
 
 ;; Enable these settings
-(defun qjp-enable-misc-settings ()
-  (mapc (lambda (m) (funcall (intern (concat "qjp-misc-" (symbol-name m)))))
-        qjp-enabled-misc-settings-list))
+(defun qjp-misc-enable-setting (feature-name)
+  (funcall (intern (qjp-misc-make-func-name-string feature-name))))
 
-(qjp-enable-misc-settings)
+(defun qjp-misc-enable-all ()
+  (mapc 'qjp-misc-enable-setting qjp-enabled-misc-settings-list))
+
+(qjp-misc-enable-all)
 
 (provide 'qjp-misc)
 ;;; qjp-misc.el ends here
