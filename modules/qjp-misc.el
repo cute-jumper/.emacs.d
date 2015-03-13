@@ -65,7 +65,7 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(ace-jump ace-jump-buffer anchored-transpose anzu
+  '(ace-jump ace-jump-buffer anchored-transpose anzu auto-insert
     calfw command-log company
     dictionary dired
     easypg evil expand-region
@@ -81,7 +81,8 @@
     sml sr-speedbar
     term
     w3m whole-line-or-region
-    yasnippet)
+    ;;yasnippet
+    )
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

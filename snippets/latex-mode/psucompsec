@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: psucompsec
+# --
+\documentclass[11pt]{psucompsec}
+% Combine Yasnippet and \LaTeX{}!
+\usepackage[scale=0.75]{geometry}
+\papertitle{$1}
+\author{\qjp}
+\date{}
+\begin{document}
+\maketitle
+
+\reviewsec{Contribution}{$0}
+
+\reviewsec{Motivation}{}
+
+\reviewsec{Related Work}{}
+
+\reviewsec{Methodology}{}
+
+\reviewsec{Results}{}
+
+\reviewsec{Take away}{}
+
+\end{document}

@@ -1,6 +1,6 @@
-;;; qjp-functions.el --- Some useful functions
+;;; qjp-defuns-misc.el --- Misc defuns               -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Junpeng Qiu
+;; Copyright (C) 2015  Junpeng Qiu
 
 ;; Author: Junpeng Qiu <qjpchmail@gmail.com>
 ;; Keywords: convenience
@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(defun rename-this-file-and-buffer (new-name)
+(defun qjp-rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -39,7 +39,7 @@
         (set-visited-file-name new-name)
         (set-buffer-modified-p nil)))))
 
-(defun delete-this-file-and-buffer ()
+(defun qjp-delete-this-file-and-buffer ()
   "Kill the current buffer and deletes the file it is visiting."
   (interactive)
   (let ((filename (buffer-file-name)))
@@ -49,5 +49,12 @@
         (message "Deleted file %s" filename)
         (kill-buffer)))))
 
-(provide 'qjp-functions)
-;;; qjp-functions.el ends here
+;; eval and replace using calc
+(defun qjp-calc-eval-and-replace (&optional start end)
+  (interactive "r")
+  (let ((result (calc-eval (buffer-substring-no-properties start end))))
+    (kill-region start end)
+    (insert result)))
+
+(provide 'qjp-defuns-misc)
+;;; qjp-defuns-misc.el ends here

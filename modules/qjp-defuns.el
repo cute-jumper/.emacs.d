@@ -1,4 +1,4 @@
-;;; qjp-keybindings-misc.el --- Misc functions for key bindings  -*- lexical-binding: t; -*-
+;;; qjp-defuns.el --- Various defuns                 -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -24,12 +24,9 @@
 
 ;;; Code:
 
-;; eval and replace using calc
-(defun qjp-calc-eval-and-replace (&optional start end)
-  (interactive "r")
-  (let ((result (calc-eval (buffer-substring-no-properties start end))))
-    (kill-region start end)
-    (insert result)))
+(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-edit")
+(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-isearch")
+(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-misc")
 
-(provide 'qjp-keybindings-misc)
-;;; qjp-keybindings-misc.el ends here
+(provide 'qjp-defuns)
+;;; qjp-defuns.el ends here

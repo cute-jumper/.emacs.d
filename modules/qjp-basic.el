@@ -90,6 +90,24 @@
 ;; Put auto save file to temporary file directory
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
+;; Settings modified from esk
+(setq visible-bell t
+      inhibit-startup-message t
+      color-theme-is-global t
+      sentence-end-double-space nil
+      shift-select-mode nil
+      mouse-yank-at-point t
+      uniquify-buffer-name-style 'forward
+      whitespace-style '(face trailing lines-tail tabs)
+      whitespace-line-column 80
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      save-place-file (concat qjp-base-dir "places")
+      backup-directory-alist `(("." . ,(concat qjp-base-dir "backups")))
+      diff-switches "-u")
+
+(add-to-list 'safe-local-variable-values '(lexical-binding . t))
+(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 (load-theme 'zenburn t)
 

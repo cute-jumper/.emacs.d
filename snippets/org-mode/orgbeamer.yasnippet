@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: orgbeamer
+# --
+#+STARTUP: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [${1:11}pt,presentation]
+#+BEAMER_FRAME_LEVEL: ${2:2}
+#+BEAMER_HEADER_EXTRA: \usetheme{${3:$$(yas/choose-value 
+'("default" "Bergen" "Boadilla" "Madrid" "Pittsburgh" "Rochester"
+"Antibes" "JuanLesPins" "Montpellier" "Berkeley" "PaloAlto" "Goettingen"
+"Marburg" "Hannover" "Berlin" "Ilmenau" "Dresden" "Darmstadt" "Frankfurt"
+"Singapore" "Szeged" "Copenhagen" "Luebeck" "Malmoe" "Warsaw" "JLTree" "umbc1" "umbc2" "umbc3" "umbc4"))default}}\usecolortheme{${4:$$(yas/choose-value
+'("default" "structure" "sidebartab" "albatross" "beetle" "crane" "dove"
+ "fly" "seagull" "lily" "orchid" "rose" "whale" "seahorse" "dolphin"))default}}
+#+BEAMER_HEADER_EXTRA: \usepackage{listings}${5:\beamerdefaultoverlayspecification{<+->}}
+#+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_envargs(Env Args) %4BEAMER_col(Col) %8BEAMER_extra(Extra)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 :ETC
+${6:#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{${7:Topic}}\tableofcontents[currentsection]\end{frame}}}
+$0

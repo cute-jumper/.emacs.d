@@ -240,6 +240,11 @@ highlight."
 ;; FIX: I don't know whether this method is elegant or not...
 (defalias 'd 'qjp-misc-file-defun)
 
+;; ----------- ;;
+;; auto-insert ;;
+;; ----------- ;;
+(d auto-insert)
+
 ;; --------------------------------------------------------- ;;
 ;; multiple-cursors, using region, global and mouse bindings ;;
 ;; --------------------------------------------------------- ;;

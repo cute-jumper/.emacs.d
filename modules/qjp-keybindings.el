@@ -24,14 +24,10 @@
 
 ;;; Code:
 
-;; -------------------------------- ;;
-;; From `keybindings' sub-directory ;;
-;; -------------------------------- ;;
+;; Must make sure defuns are loaded
+(require 'qjp-defuns)
 
-;; Require `qjp-keybindings-edit'
-(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-edit")
-
-;; Keybindings for editing
+;; Bindings for `qjp-defuns-edit'
 (global-set-key (kbd "C-h") 'backward-delete-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 (global-set-key (kbd "M-s r") 'replace-string)
@@ -47,18 +43,14 @@
 (global-set-key (kbd "C-\\") 'qjp-kill-to-word)
 (global-set-key (kbd "M-m") 'qjp-kill-back-to-indentation)
 
-;; Require `qjp-keybindings-isearch'
-(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-isearch")
-
-;; Keybindings for isearch
+;; Bindings `qjp-defuns-isearch'
 (define-key isearch-mode-map (kbd "C-o") 'qjp-isearch-occur)
 (define-key isearch-mode-map [(control k)] 'qjp-kill-isearch-match)
 (define-key isearch-mode-map [(meta z)] 'qjp-zap-to-isearch)
 (define-key isearch-mode-map (kbd "C-p") 'qjp-isearch-yank-region)
 (global-set-key (kbd "M-o s") 'qjp-isearch-other-window)
 
-;; Require `qjp-keybindings-misc'
-(qjp-modules-require-subdir-feature "keybindings" "qjp-keybindings-misc")
+;; Bindings for `qjp-defuns-misc'
 (global-set-key (kbd "C-x M-=") 'qjp-calc-eval-and-replace)
 
 ;; ----------------- ;;

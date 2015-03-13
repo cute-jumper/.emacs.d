@@ -1,4 +1,4 @@
-;;; qjp-modules-init.el --- init file for modules directory  -*- lexical-binding: t; -*-
+;;; qjp-misc-ido-config.el --- Config for ido-mode   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -23,16 +23,25 @@
 ;; 
 
 ;;; Code:
+;; -------- ;;
+;; ido-mode ;;
+;; -------- ;;
+;; Obsolete. Use helm instead
+(ido-mode t)
+(ido-ubiquitous-mode)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-auto-merge-work-directories-length nil
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-use-virtual-buffers t
+      ido-handle-duplicate-virtual-buffers 2
+      ido-max-prospects 10)
 
-;; Require module features as you want
-(require 'qjp-esk)                      ;Emacs starter kit
-(require 'qjp-basic)                    ;basic settings
-(require 'qjp-defuns)                   ;useful defuns
-(require 'qjp-keybindings)              ;key bindings
-(require 'qjp-misc)                     ;various modes/features
-(require 'qjp-org)                      ;org-mode
-(require 'qjp-tex)                      ;TeX
-(require 'qjp-programming)              ;Programmning
+;; smex
+(setq smex-save-file (concat qjp-base-dir ".smex-items"))
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
 
-(provide 'qjp-modules-init)
-;;; qjp-modules-init.el ends here
+(provide 'qjp-misc-ido-config)
+;;; qjp-misc-ido-config.el ends here

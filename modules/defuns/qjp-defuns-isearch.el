@@ -1,6 +1,6 @@
-;;; qjp-keybindings-isearch.el --- Define key bindings for isearch
+;;; qjp-defuns-isearch.el --- Defuns to enhance isearch  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Junpeng Qiu
+;; Copyright (C) 2015  Junpeng Qiu
 
 ;; Author: Junpeng Qiu <qjpchmail@gmail.com>
 ;; Keywords: convenience
@@ -78,5 +78,5 @@
   (when (region-active-p)
     (isearch-yank-internal (lambda () (mark)))))
 
-(provide 'qjp-keybindings-isearch)
-;;; qjp-keybindings-isearch.el ends here
+(provide 'qjp-defuns-isearch)
+;;; qjp-defuns-isearch.el ends here

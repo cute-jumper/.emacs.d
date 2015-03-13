@@ -1,6 +1,6 @@
-;;; qjp-keybindings-edit.el --- Define key bindings for editing
+;;; qjp-defuns-edit.el --- Defuns for editting       -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Junpeng Qiu
+;; Copyright (C) 2015  Junpeng Qiu
 
 ;; Author: Junpeng Qiu <qjpchmail@gmail.com>
 ;; Keywords: convenience
@@ -120,5 +120,5 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;; Require package `misc' for `zap-up-to-char'
 (require 'misc)
 
-(provide 'qjp-keybindings-edit)
-;;; qjp-keybindings-edit.el ends here
+(provide 'qjp-defuns-edit)
+;;; qjp-defuns-edit.el ends here

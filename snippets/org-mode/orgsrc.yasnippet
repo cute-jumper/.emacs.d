@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: orgsrc
+# --
+#+begin_src ${1:language} :file ${2:graphics} :results ${3:$$(yas/choose-value
+'("value" "output"))value} ${4:$$(yas/choose-value '("table" "file" "latex" "verbatim" "pp" "code" "html" "wrap" "vector" "list" "scalar" "raw" "org"))table} ${5:$$(yas/choose-value '("replace" "silent" "append" "prepend"))replace} :exports ${6:$$(yas/choose-value '("code" "results" "both" "none"))code} :eval ${7:$$(yas/choose-value '("no-export" "query-export" "no" "query"))no-export} $0:var
+
+#+end_src
