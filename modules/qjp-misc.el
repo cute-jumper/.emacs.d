@@ -77,6 +77,7 @@
     lacarte
     markdown multiple-cursors
     nyan
+    projectile
     rebox region-bindings
     sml sr-speedbar
     term

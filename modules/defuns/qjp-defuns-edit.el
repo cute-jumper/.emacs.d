@@ -117,8 +117,8 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
     (back-to-indentation)
     (kill-region (point) prev-pos)))
 
-;; Require package `misc' for `zap-up-to-char'
-(require 'misc)
+;; autoload `zap-up-to-char' in `misc'
+(autoload 'zap-up-to-char "misc")
 
 (provide 'qjp-defuns-edit)
 ;;; qjp-defuns-edit.el ends here

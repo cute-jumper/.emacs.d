@@ -121,7 +121,6 @@
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
 
-(set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines t)
 (set-default 'imenu-auto-rescan t)
 
@@ -131,7 +130,33 @@
 ;; Some useful functions from prelude ;;
 ;; ---------------------------------- ;;
 
-(qjp-modules-require-subdir-feature "prelude" "qjp-basic-prelude")
+;; Death to the tabs!  However, tabs historically indent to the next
+;; 8-character offset; specifying anything else will cause *mass*
+;; confusion, as it will change the appearance of every existing file.
+;; In some cases (python), even worse -- it will change the semantics
+;; (meaning) of the program.
+;;
+;; Emacs modes typically provide a standard means to change the
+;; indentation width -- eg. c-basic-offset: use that to adjust your
+;; personal indentation width, while maintaining the style (and
+;; meaning) of any files you load.
+(setq-default indent-tabs-mode nil)   ;; don't use tabs to indent
+(setq-default tab-width 8)            ;; but maintain correct appearance
+
+;; hippie expand is dabbrev expand on steroids
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+;; smart tab behavior - indent or complete
+(setq tab-always-indent 'complete)
 
 ;; ----------------------------- ;;
 ;; Put Unused configuration here ;;

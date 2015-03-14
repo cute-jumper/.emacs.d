@@ -26,7 +26,7 @@
 
 ;; I don't want to override existing things so save the original version of `d'
 ;; if it exists
-(if (fboundp 'd)
+(when (fboundp 'd)
     (defalias 'orig-d 'd))
 
 ;; First part: simple settings
@@ -236,60 +236,23 @@ highlight."
    (require 'lacarte)
    (global-set-key (kbd "C-x M-x") 'lacarte-execute-menu-command))
 
-;; Second part: settings in files
-
-;; Redefine `d' to point to another macro
-;; FIX: I don't know whether this method is elegant or not...
-(defalias 'd 'qjp-misc-file-defun)
-
-;; ----------- ;;
-;; auto-insert ;;
-;; ----------- ;;
-(d auto-insert)
-
-;; --------------------------------------------------------- ;;
-;; multiple-cursors, using region, global and mouse bindings ;;
-;; --------------------------------------------------------- ;;
-(d multiple-cursors)
-
-;; ------ ;;
-;; EasyPG ;;
-;; ------ ;;
-(d easypg)
-
-;; --------- ;;
-;; evil-mode ;;
-;; --------- ;;
-(d evil)
-
-;; ----- ;;
-;; dired ;;
-;; ----- ;;
-(d dired)
-
-;; ----------- ;;
-;; tabbar-mode ;;
-;; ----------- ;;
-(d tabbar)
-
-;; --------------------- ;;
-;; hideshow, hideshowvis ;;
-;; --------------------- ;;
-(d hs)
-
-;; ---- ;;
-;; helm ;;
-;; ---- ;;
-(d helm)
-
-;; ----- ;;
-;; Hydra ;;
-;; ----- ;;
-(d hydra)
-
 ;; Restore the original version of `d'
 (if (fboundp 'orig-d)
-    (defalias 'd 'orig-d))
+    (defalias 'd 'orig-d)
+  (defalias 'd nil))
+
+;; Second part: make defuns for settings in files
+  
+(let ((file-basenames
+       (mapcar
+        'file-name-base
+        (directory-files
+         (concat qjp-modules-dir "/misc") t "^[^#]*config.el$"))))
+  (dolist (basename file-basenames)
+    (eval
+     `(qjp-misc-file-defun
+       ,(intern
+         (replace-regexp-in-string "qjp-misc-\\|-config" "" basename))))))
 
 (provide 'qjp-misc-package-config-defuns)
 ;;; qjp-misc-package-config-defuns.el ends here

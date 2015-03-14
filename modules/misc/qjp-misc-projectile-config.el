@@ -1,6 +1,6 @@
-;;; qjp-esk.el --- Functions learned from Emacs24-starter-kit
+;;; qjp-misc-projectile-config.el --- Config for projectile  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Junpeng Qiu
+;; Copyright (C) 2015  Junpeng Qiu
 
 ;; Author: Junpeng Qiu <qjpchmail@gmail.com>
 ;; Keywords: convenience
@@ -24,8 +24,18 @@
 
 ;;; Code:
 
-;; Require features for prog-mode
-(qjp-modules-require-subdir-feature "esk" "esk-config")
+;; ---------- ;;
+;; projectile ;;
+;; ---------- ;;
 
-(provide 'qjp-esk)
-;;; qjp-esk.el ends here
+(require 'projectile)
+(setq projectile-cache-file (expand-file-name "projectile.cache"
+                                              qjp-base-dir))
+(projectile-global-mode t)
+
+;; Helm support
+(setq projectile-compilation-command 'helm)
+(helm-projectile-on)
+
+(provide 'qjp-misc-projectile-config)
+;;; qjp-misc-projectile-config.el ends here
