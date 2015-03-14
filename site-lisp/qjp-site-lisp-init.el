@@ -24,7 +24,35 @@
 
 ;;; Code:
 
+;; ----------------------- ;;
+;; Deft, modified version! ;;
+;; ----------------------- ;;
+(defun qjp-site-lisp-deft ()
+  (require 'deft)
+  (setq deft-directory qjp-document-dir)
+  (setq deft-extension "org")
+  (setq deft-text-mode 'org-mode))
 
+;; ------------ ;;
+;; fetch-bibtex ;;
+;; ------------ ;;
+(defun qjp-site-lisp-fetch-bibtex ()
+  (require 'fetch-bibtex)
+  (setq fetch-bibtex-script
+        (expand-file-name
+         "fetch_bibtex.py" (expand-file-name "fetch-bibtex" qjp-site-lisp-dir))))
+
+;; ------- ;;
+;; THUmacs ;;
+;; ------- ;;
+(defun qjp-site-lisp-thumacs ()
+  (require 'deadline-util)
+  (setq dp-userid "")                   ;Demo only
+  (setq dp-userpass "")                 ;Demo only
+  (setq dp-homework-file (concat qjp-document-dir "Agenda/homework.org")))
+
+(qjp-site-lisp-deft)
+(qjp-site-lisp-fetch-bibtex)
 
 (provide 'qjp-site-lisp-init)
 ;;; qjp-site-lisp-init.el ends here

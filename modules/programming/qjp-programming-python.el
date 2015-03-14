@@ -40,7 +40,5 @@
 ;; (pymacs-load "ropemacs" "rope-")
 ;; (setq ropemacs-enable-autoimport t)
 
-(add-hook 'python-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
-
 (provide 'qjp-programming-python)
 ;;; qjp-programming-python.el ends here
