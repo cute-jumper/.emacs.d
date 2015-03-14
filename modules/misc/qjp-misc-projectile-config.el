@@ -31,6 +31,7 @@
 (require 'projectile)
 (setq projectile-cache-file (expand-file-name "projectile.cache"
                                               qjp-base-dir))
+(setq  projectile-enable-caching t)
 (projectile-global-mode t)
 
 ;; Helm support
