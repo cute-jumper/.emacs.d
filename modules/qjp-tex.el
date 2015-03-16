@@ -85,6 +85,7 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
+(setq reftex-default-bibliography `(,(expand-file-name "~/texmf/bibtex/bib/refs.bib")))
 
 ;; ----------- ;;
 ;; latex-extra ;;
@@ -163,7 +164,6 @@
       (end-of-line)
       (newline-and-indent)
       (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n\n\\begin{document}\n\\maketitle"))))
-
 
 (provide 'qjp-tex)
 ;;; qjp-tex.el ends here

@@ -46,6 +46,9 @@
       helm-ff-file-name-history-use-recentf t)
 (helm-autoresize-mode t)
 (helm-mode t)
+(helm-descbinds-mode)
+
+(setq helm-bibtex-bibliography (expand-file-name "~/texmf/bibtex/bib/refs.bib"))
 
 (provide 'qjp-misc-helm-config)
 ;;; qjp-misc-helm-config.el ends here
