@@ -1,6 +1,3 @@
 [submodule "site-lisp/deft"]
 	path = site-lisp/deft
 	url = git@github.com:cute-jumper/deft.git
-[submodule "site-lisp/org-caldav"]
-	path = site-lisp/org-caldav
-	url = https://github.com/dengste/org-caldav.git
