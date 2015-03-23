@@ -194,6 +194,7 @@ highlight."
 (d sml
    "Setup smart mode line"
    (setq custom-safe-themes '("e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" default))
+   (require 'powerline)
    (setq sml/theme "powerline")
    (sml/setup))
 
@@ -235,6 +236,14 @@ highlight."
 (d lacarte
    (require 'lacarte)
    (global-set-key (kbd "C-x M-x") 'lacarte-execute-menu-command))
+
+;; ------ ;;
+;; swiper ;;
+;; ------ ;;
+(d swiper
+   (global-set-key (kbd "C-r") 'swiper)
+   (global-set-key (kbd "C-s") 'swiper)
+   (setq swiper-completion-method 'helm))
 
 ;; Restore the original version of `d'
 (if (fboundp 'orig-d)

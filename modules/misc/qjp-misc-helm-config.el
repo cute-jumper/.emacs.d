@@ -48,7 +48,7 @@
 (helm-mode t)
 (helm-descbinds-mode)
 
-(setq helm-bibtex-bibliography (expand-file-name "~/texmf/bibtex/bib/refs.bib"))
+(setq helm-bibtex-bibliography qjp-bibtex-database-file)
 
 (provide 'qjp-misc-helm-config)
 ;;; qjp-misc-helm-config.el ends here

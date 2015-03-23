@@ -73,13 +73,13 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () 
                                   (hl-line-mode -1)
-                                  (turn-on-eldoc-mode)
+                                  (eldoc-mode 1)
                                   (highlight-parentheses-mode)
                                   (paredit-mode)
                                   (hideshowvis-minor-mode)
                                   (local-set-key (kbd "RET") 'electrify-return-if-match)))
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
+(add-hook 'ielm-mode-hook 'eldoc-mode)
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here

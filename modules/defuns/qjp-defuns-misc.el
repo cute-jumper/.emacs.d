@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -59,24 +59,22 @@
 ;; ------------------ ;;
 ;; functions from esk ;;
 ;; ------------------ ;;
-(defun esk-untabify-buffer ()
+(defun qjp-untabify-buffer ()
   (interactive)
   (untabify (point-min) (point-max)))
 
-(defun esk-indent-buffer ()
+(defun qjp-indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
 
-(defun esk-cleanup-buffer ()
+(defun qjp-cleanup-buffer ()
   "Perform a bunch of operations on the whitespace content of a buffer."
   (interactive)
-  (esk-indent-buffer)
-  (esk-untabify-buffer)
+  (qjp-indent-buffer)
+  (qjp-untabify-buffer)
   (delete-trailing-whitespace))
 
-;; Commands
-
-(defun esk-eval-and-replace ()
+(defun qjp-eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
   (backward-kill-sexp)
@@ -86,13 +84,13 @@
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
-(defun esk-sudo-edit (&optional arg)
+(defun qjp-sudo-edit (&optional arg)
   (interactive "P")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (helm-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(defun esk-lorem ()
+(defun qjp-lorem ()
   "Insert a lorem ipsum."
   (interactive)
   (insert "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
@@ -103,7 +101,7 @@
           "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
           "culpa qui officia deserunt mollit anim id est laborum."))
 
-(defun esk-suck-it (suckee)
+(defun qjp-suck-it (suckee)
   "Insert a comment of appropriate length about what can suck it."
   (interactive "MWhat can suck it? ")
   (let ((prefix (concat ";; " suckee " can s"))
@@ -113,17 +111,12 @@
     (dotimes (_ (- 80 col (length prefix) (length postfix))) (insert "u"))
     (insert postfix)))
 
-(defun esk-insert-date ()
+(defun qjp-insert-date ()
   "Insert a time-stamp according to locale's date and time format."
   (interactive)
   (insert (format-time-string "%c" (current-time))))
 
-(defun esk-pairing-bot ()
-  "If you can't pair program with a human, use this instead."
-  (interactive)
-  (message (if (y-or-n-p "Do you have a test for that? ") "Good." "Bad!")))
-
-(defun esk-paredit-nonlisp ()
+(defun qjp-paredit-nonlisp ()
   "Turn on paredit mode for non-lisps."
   (interactive)
   (set (make-local-variable 'paredit-space-for-delimiter-predicates)
@@ -134,6 +127,32 @@
 (defun vc-git-annotate-command (file buf &optional rev)
   (let ((name (file-relative-name file)))
     (vc-git-command buf 0 name "blame" "-w" rev)))
+
+;; ---------------------- ;;
+;; Functions from prelude ;;
+;; ---------------------- ;;
+(defun qjp-search (query-url prompt)
+  "Open the search url constructed with the QUERY-URL.
+PROMPT sets the `read-string prompt.
+
+Modified the original function. Always put the word at prompt."
+  (browse-url
+   (concat query-url
+           (url-hexify-string
+            (read-string prompt
+                         (if mark-active
+                             (buffer-substring (region-beginning) (region-end))
+                           (word-at-point)))))))
+
+(defmacro qjp-install-search-engine (search-engine-name search-engine-url search-engine-prompt)
+  "Given some information regarding a search engine, install the interactive command to search through them"
+  `(defun ,(intern (format "qjp-search-%s" search-engine-name)) ()
+     ,(format "Search %s with a query or region if any." search-engine-name)
+     (interactive)
+     (qjp-search ,search-engine-url ,search-engine-prompt)))
+
+(qjp-install-search-engine "google" "http://www.google.com/search?q=" "Google: ")
+(qjp-install-search-engine "bing-dict" "http://www.bing.com/dict/search?q=" "Bing Dict: ")
 
 (provide 'qjp-defuns-misc)
 ;;; qjp-defuns-misc.el ends here

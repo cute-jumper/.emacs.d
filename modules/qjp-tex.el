@@ -85,7 +85,7 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
-(setq reftex-default-bibliography `(,(expand-file-name "~/texmf/bibtex/bib/refs.bib")))
+(setq reftex-default-bibliography `(,qjp-bibtex-database-file))
 
 ;; ----------- ;;
 ;; latex-extra ;;

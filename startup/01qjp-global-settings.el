@@ -32,6 +32,9 @@
 (defvar qjp-document-dir (expand-file-name "~/Documents/Personal/")
   "Personal document base directory.")
 
+(defvar qjp-bibtex-database-file (expand-file-name "~/texmf/bibtex/bib/refs.bib")
+  "Bibtex database")
+
 ;; The default value is 0.78MB, which is kind of too small.
 ;; Making this larger could result in reducing the frequency of GC.
 (setq gc-cons-threshold 50000000)
