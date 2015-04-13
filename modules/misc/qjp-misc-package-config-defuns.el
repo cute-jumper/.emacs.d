@@ -79,8 +79,8 @@
 ;; ace-jump-mode ;;
 ;; ------------- ;;
 (d ace-jump
-   (global-set-key (kbd "C-'") 'ace-jump-mode)
-   (global-set-key (kbd "C-\"") 'ace-jump-line-mode))
+   (global-set-key (kbd "C-;") 'ace-jump-mode)
+   (global-set-key (kbd "C-:") 'ace-jump-char-mode))
 
 ;; --------------- ;;
 ;; ace-jump-buffer ;;
@@ -88,12 +88,24 @@
 (d ace-jump-buffer
    (key-chord-define-global "jb" 'ace-jump-buffer))
 
+;; ------------ ;;
+;; ace-jump-zap ;;
+;; ------------ ;;
+(d ace-jump-zap
+   (global-set-key (kbd "M-z") 'ace-jump-zap-to-char-dwim)
+   (global-set-key (kbd "M-Z") 'ace-jump-zap-up-to-char-dwim))
+
+;; ------------ ;;
+;; ace-flyspell ;;
+;; ------------ ;;
+(d ace-flyspell
+   (ace-flyspell-setup))
+
 ;; --------- ;;
 ;; jump-char ;;
 ;; --------- ;;
 (d jump-char
-   (key-chord-define-global "jc" 'jump-char-forward)
-   (key-chord-define-global "gg" 'jump-char-backward))
+   (key-chord-define-global "jc" 'jump-char-forward))
 
 ;; ------------- ;;
 ;; expand-region ;;
@@ -112,6 +124,15 @@
    (require 'rw-hunspell)
    (when (executable-find ispell-program-name)
      (add-hook 'text-mode-hook 'turn-on-flyspell)))
+
+;; -------- ;;
+;; flyspell ;;
+;; -------- ;;
+(d flyspell
+   (eval-after-load "flyspell"
+     '(progn (define-key flyspell-mode-map (kbd "C-,") nil)
+             (define-key flyspell-mode-map (kbd "C-M-i") nil)
+             (define-key flyspell-mode-map (kbd "C-;") nil))))
 
 ;; ---------- ;;
 ;; dictionary ;;
@@ -244,6 +265,13 @@ highlight."
    (global-set-key (kbd "C-r") 'swiper)
    (global-set-key (kbd "C-s") 'swiper)
    (setq swiper-completion-method 'helm))
+
+;; --------------- ;;
+;; gscholar-bibtex ;;
+;; --------------- ;;
+(d gscholar-bibtex
+   (setq gscholar-bibtex-database-file
+         (expand-file-name "~/texmf/bibtex/bib/refs.bib")))
 
 ;; Restore the original version of `d'
 (if (fboundp 'orig-d)

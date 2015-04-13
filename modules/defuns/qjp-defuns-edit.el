@@ -118,7 +118,8 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
     (kill-region (point) prev-pos)))
 
 ;; autoload `zap-up-to-char' in `misc'
-(autoload 'zap-up-to-char "misc")
+;; obsolete. Use `ace-jump-zap' instead
+;; (autoload 'zap-up-to-char "misc")
 
 (provide 'qjp-defuns-edit)
 ;;; qjp-defuns-edit.el ends here

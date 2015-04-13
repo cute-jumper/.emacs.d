@@ -41,6 +41,7 @@
   "Use this command to install all the packages.
 It will read from the file and get the installed packages's list, 
 then it will install these packages one by one."
+  (interactive)
   (defun read-installed-package-list ()
     "Read the installed packages' list"
     (read
@@ -48,7 +49,6 @@ then it will install these packages one by one."
          (find-file-noselect
           (qjp-get-package-list-filename))
        (buffer-substring-no-properties (point-min) (point-max)))))
-  (interactive)
   (package-refresh-contents)
   (let ((installed-packages (read-installed-package-list)))
     (dolist (pkg installed-packages)
@@ -76,8 +76,8 @@ to maintain the right list."
     (message "Successfully update installed-package-list!")))
 
 ;; define advice for package-install to automatically update list
-(defadvice package-install (after update-installed-package-list)
-  (qjp-update-installed-package-list))
+;; (defadvice package-install (after update-installed-package-list)
+;;   (qjp-update-installed-package-list))
 ;; Disable defadvice
 ;; (ad-activate 'package-install)
 

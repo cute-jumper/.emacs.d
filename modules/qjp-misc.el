@@ -65,12 +65,13 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(ace-jump ace-jump-buffer anchored-transpose anzu auto-insert
+  '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell flyspell anchored-transpose anzu auto-insert
     calfw command-log company
     dictionary dired
     easypg evil expand-region
-    goto-last-change
-    helm hl-sentence hs hydra
+    flyspell
+    goto-last-change gscholar-bibtex
+    helm hl-sentence hs
     idle-highlight ispell
     jump-char
     key-chord

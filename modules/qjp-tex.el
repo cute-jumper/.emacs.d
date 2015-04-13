@@ -126,7 +126,6 @@
         (save-excursion
           (set-buffer latex-buffer-name)
           (erase-buffer)))
-      (message "%s" latex-buffer-name)
       (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
              (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
 (add-hook 'after-save-hook 'qjp-latex-auto-update)
