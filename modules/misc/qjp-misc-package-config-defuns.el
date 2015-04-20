@@ -101,6 +101,19 @@
 (d ace-flyspell
    (ace-flyspell-setup))
 
+;; ------------------ ;;
+;; ace-jump-helm-line ;;
+;; ------------------ ;;
+(d ace-jump-helm-line
+   (eval-after-load "helm"
+     '(define-key helm-map (kbd "C-'") 'ace-jump-helm-line)))
+
+;; ---------- ;;
+;; ace-pinyin ;;
+;; ---------- ;;
+(d ace-pinyin
+   (ace-pinyin-global-mode))
+
 ;; --------- ;;
 ;; jump-char ;;
 ;; --------- ;;
@@ -141,6 +154,12 @@
    (setq dictionary-tooltip-dictionary "stardic")
    (setq dictionary-server "localhost")
    (global-set-key (kbd "C-c d") 'dictionary-search))
+
+;; ----- ;;
+;; magit ;;
+;; ----- ;;
+(d magit
+   (setq magit-last-seen-setup-instructions "1.4.0"))
 
 ;; --- ;;
 ;; w3m ;;
@@ -214,10 +233,16 @@ highlight."
 ;; --------------- ;;
 (d sml
    "Setup smart mode line"
-   (setq custom-safe-themes '("e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" default))
+   (setq custom-safe-themes '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" default))
    (require 'powerline)
    (setq sml/theme "powerline")
    (sml/setup))
+
+;; -------- ;;
+;; fcitx.el ;;
+;; -------- ;;
+(d fcitx
+   (fcitx-default-setup))
 
 ;; ------------------------------------------------------------
 ;; nyan-mode
@@ -237,7 +262,8 @@ highlight."
 ;; anzu-mode ;;
 ;; --------- ;;
 (d anzu
-   (global-anzu-mode +1))
+   (global-anzu-mode +1)
+   (setq anzu-minimum-input-length 3))
 
 ;; -------------------- ;;
 ;; whole-line-or-region ;;

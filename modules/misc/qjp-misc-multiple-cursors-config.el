@@ -34,6 +34,9 @@
 (define-key region-bindings-mode-map "p" 'mc/mark-previous-like-this)
 (define-key region-bindings-mode-map "n" 'mc/mark-next-like-this)
 (define-key region-bindings-mode-map "e" 'mc/edit-lines)
+(define-key region-bindings-mode-map "s" 'mc/mark-all-symbols-like-this)
+(define-key region-bindings-mode-map "S" 'mc/mark-all-symbols-like-this-in-defun)
+(define-key region-bindings-mode-map "d" 'mc/mark-all-like-this-dwim)
 
 ;; Normal key bindings
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)

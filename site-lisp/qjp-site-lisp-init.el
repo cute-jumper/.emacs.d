@@ -35,14 +35,15 @@
   (setq deft-extension "org")
   (setq deft-text-mode 'org-mode))
 
-;; --------------- ;;
-;; gscholar-bibtex ;;
-;; --------------- ;;
-(defun qjp-site-lisp-gscholar-bibtex ()
-  (add-to-list 'load-path (expand-file-name "~/Programs/EmacsLisp/gscholar-bibtex/"))
-  (require 'gscholar-bibtex))
+;; -------------------------------------------------------- ;;
+;; matlab mode from https://github.com/pronobis/matlab-mode ;;
+;; -------------------------------------------------------- ;;
+(defun qjp-site-lisp-matlab-mode ()
+  (load-file
+   (concat qjp-modules-dir "/programming/qjp-programming-matlab.el")))
 
 (qjp-site-lisp-deft)
+(qjp-site-lisp-matlab-mode)
 
 (provide 'qjp-site-lisp-init)
 ;;; qjp-site-lisp-init.el ends here

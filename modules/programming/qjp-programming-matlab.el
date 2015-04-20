@@ -27,18 +27,27 @@
 ;; ------ ;;
 ;; MATLAB ;;
 ;; ------ ;;
-(autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
-(add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
-(add-hook 'matlab-mode-hook
-          (lambda ()
-            (local-set-key (kbd "M-;") 'my-comment-dwim-line)
-            (local-set-key [return] 'electrify-return-if-match)
-            (local-set-key (kbd "C-h") 'backward-delete-char)
-            (local-set-key (kbd "M-h") 'backward-kill-word)
-            (local-set-key (kbd "C-x I") 'imenu)
-            (local-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
-            (local-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
-            ))
+;; (autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
+;; (add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
+;; (add-hook 'matlab-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "M-;") 'my-comment-dwim-line)
+;;             (local-set-key [return] 'electrify-return-if-match)
+;;             (define-key matlab-mode-map (kbd "C-h") 'backward-delete-char)
+;;             (local-set-key (kbd "M-h") 'backward-kill-word)
+;;             (local-set-key (kbd "C-x I") 'imenu)
+;;             (local-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
+;;             (local-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
+;;             ))
+(push "/opt/MATLAB/R2010b/bin" exec-path)
+(load-library "matlab-load")
+(add-to-list 'company-backends 'company-matlab)
+(add-to-list 'company-backends 'company-matlab-shell)
+;; (require 'matlab)
+;; (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)
+(add-hook 'matlab-mode-hook 'flycheck-mode)
+(eval-after-load "flycheck"
+  '(require 'flycheck-matlab-mlint))
 
 (provide 'qjp-programming-matlab)
 ;;; qjp-programming-matlab.el ends here

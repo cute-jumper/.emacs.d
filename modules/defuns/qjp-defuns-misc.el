@@ -50,10 +50,11 @@
         (kill-buffer)))))
 
 ;; eval and replace using calc
-(defun qjp-calc-eval-and-replace (&optional start end)
-  (interactive "r")
+(defun qjp-calc-eval-and-replace (&optional prefix start end)
+  (interactive "P\nr")
   (let ((result (calc-eval (buffer-substring-no-properties start end))))
-    (kill-region start end)
+    (when prefix
+      (kill-region start end))
     (insert result)))
 
 ;; ------------------ ;;
@@ -153,6 +154,23 @@ Modified the original function. Always put the word at prompt."
 
 (qjp-install-search-engine "google" "http://www.google.com/search?q=" "Google: ")
 (qjp-install-search-engine "bing-dict" "http://www.bing.com/dict/search?q=" "Bing Dict: ")
+
+;; Change themes
+(defun qjp-switch-theme ()
+  (interactive)
+  (let ((word
+         (completing-read
+          "Choose a theme set(dark or light):"
+          '(dark light))))
+    (cond
+     ((string= word "dark")
+      (require 'zenburn-theme)
+      (require 'smart-mode-line)
+      (load-theme 'zenburn t)
+      (sml/apply-theme 'powerline))
+     ((string= word "light")
+      (disable-theme 'zenburn)
+      (sml/apply-theme 'light)))))
 
 (provide 'qjp-defuns-misc)
 ;;; qjp-defuns-misc.el ends here

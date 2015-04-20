@@ -65,18 +65,18 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell flyspell anchored-transpose anzu auto-insert
+  '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
     calfw command-log company
-    dictionary dired
+    dired
     easypg evil expand-region
     flyspell
     goto-last-change gscholar-bibtex
-    helm hl-sentence hs
+    helm hl-sentence hs fcitx;; loaded after helm 
     idle-highlight ispell
     jump-char
     key-chord
     lacarte
-    markdown multiple-cursors
+    magit markdown multiple-cursors
     nyan
     projectile
     rebox region-bindings
