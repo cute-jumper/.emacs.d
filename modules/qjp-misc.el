@@ -71,7 +71,7 @@
     easypg evil expand-region
     flyspell
     goto-last-change gscholar-bibtex
-    helm hl-sentence hs fcitx;; loaded after helm 
+    helm hl-sentence hs fcitx;; loaded after helm
     idle-highlight ispell
     jump-char
     key-chord

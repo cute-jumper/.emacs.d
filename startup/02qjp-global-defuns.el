@@ -64,6 +64,19 @@
 
 (add-hook 'after-save-hook 'qjp-byte-compile-current-buffer)
 
+(defmacro qjp--flet (binding &rest body)
+  "Temporarily override BINDING and execute BODY."
+  (declare (indent 1))
+  (let* ((name (car binding))
+         (old (cl-gensym (symbol-name name))))
+    `(let ((,old (symbol-function ',name)))
+       (unwind-protect
+           (progn
+             (fset ',name (lambda ,@(cdr binding)))
+             ,@body)
+         (fset ',name ,old)))))
+
+
 ;; NOP function. Just show the cursor position!
 (defun qjp-nop ()
   "Don't use `what-line' because it would output a message in minibuffer"

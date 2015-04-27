@@ -233,7 +233,6 @@ highlight."
 ;; --------------- ;;
 (d sml
    "Setup smart mode line"
-   (setq custom-safe-themes '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "e56f1b1c1daec5dbddc50abd00fcd00f6ce4079f4a7f66052cf16d96412a09a9" default))
    (require 'powerline)
    (setq sml/theme "powerline")
    (sml/setup))
@@ -242,7 +241,7 @@ highlight."
 ;; fcitx.el ;;
 ;; -------- ;;
 (d fcitx
-   (fcitx-default-setup))
+   (fcitx-aggressive-setup))
 
 ;; ------------------------------------------------------------
 ;; nyan-mode
