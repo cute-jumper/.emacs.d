@@ -32,7 +32,7 @@
 ;; First part: simple settings
 
 ;; Define short name to simplify typing
-(fset 'd (symbol-function qjp-misc-inline-defun))
+(fset 'd (symbol-function 'qjp-misc-inline-defun))
 
 ;; ------------------ ;;
 ;; auto-complete-mode ;;
@@ -58,21 +58,19 @@
 ;; key-chord mode ;;
 ;; -------------- ;;
 (d key-chord
-   (require 'key-chord)
    (key-chord-mode t))
 
 ;; -------------------- ;;
 ;; region-bindings mode ;;
 ;; -------------------- ;;
 (d region-bindings
-   (require 'region-bindings-mode)
+   (autoload 'region-bindings-mode-enable "region-bindings-mode")
    (region-bindings-mode-enable))
 
 ;; ---------------- ;;
 ;; goto-last-change ;;
 ;; ---------------- ;;
 (d goto-last-change
-   (require 'goto-last-change)
    (global-set-key "\C-x\C-\\" 'goto-last-change))
 
 ;; ------------- ;;
@@ -124,10 +122,7 @@
 ;; expand-region ;;
 ;; ------------- ;;
 (d expand-region
-   (require 'expand-region)
-   (global-set-key (kbd "C-=") 'er/expand-region)
-   ;; (pending-delete-mode)
-   )
+   (global-set-key (kbd "C-=") 'er/expand-region))
 
 ;; ------ ;;
 ;; ispell ;;
@@ -147,14 +142,6 @@
              (define-key flyspell-mode-map (kbd "C-M-i") nil)
              (define-key flyspell-mode-map (kbd "C-;") nil))))
 
-;; ---------- ;;
-;; dictionary ;;
-;; ---------- ;;
-(d dictionary
-   (setq dictionary-tooltip-dictionary "stardic")
-   (setq dictionary-server "localhost")
-   (global-set-key (kbd "C-c d") 'dictionary-search))
-
 ;; ----- ;;
 ;; magit ;;
 ;; ----- ;;
@@ -169,13 +156,6 @@
    (setq w3m-default-display-inline-images t)
    (setq w3m-home-page "http://www.google.com"))
 
-;; ----- ;;
-;; calfw ;;
-;; ----- ;;
-(d calfw
-   (require 'calfw)
-   (require 'calfw-org))
-
 ;; ------------- ;;
 ;; markdown-mode ;;
 ;; ------------- ;;
@@ -186,7 +166,6 @@
 ;; sr-speedbar ;;
 ;; ----------- ;;
 (d sr-speedbar
-   (require 'sr-speedbar)
    (setq sr-speedbar-right-side nil)
    (setq speedbar-use-images nil)
    (global-set-key [f8] 'sr-speedbar-toggle))
@@ -217,20 +196,18 @@
 (d idle-highlight
    "Use bold and underline instead of `region' color to
 highlight."
-   (require 'idle-highlight-mode)
-   (set-face-attribute 'idle-highlight nil
+   (eval-after-load "idle-highlight-mode"
+     '(set-face-attribute 'idle-highlight nil
                        :weight 'semi-bold :underline
                        '(:color foreground-color :style line)
-                       :inherit nil))
+                       :inherit nil)))
 
 ;; --------------- ;;
 ;; smart mode line ;;
 ;; --------------- ;;
-(d sml
-   "Setup smart mode line"
-   (require 'powerline)
+(d sml   
    (setq sml/theme "powerline")
-   (sml/setup))
+   (add-hook 'after-init-hook 'sml/setup))
 
 ;; -------- ;;
 ;; fcitx.el ;;
@@ -275,7 +252,6 @@ highlight."
 ;; lacarte ;;
 ;; ------- ;;
 (d lacarte
-   (require 'lacarte)
    (global-set-key (kbd "C-x M-x") 'lacarte-execute-menu-command))
 
 ;; ------ ;;

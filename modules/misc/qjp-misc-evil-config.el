@@ -25,24 +25,22 @@
 ;;; Code:
 
 ;; Hope this to be awesome:)
-(require 'evil)
-(evil-mode 1)
 
-;; remove all keybindings from insert-state keymap
-(setcdr evil-insert-state-map nil) 
+(add-hook 'after-init-hook
+          (lambda () (evil-mode 1)                             
+            (setcdr evil-insert-state-map nil)
+            ;; but [escape] should switch back to normal state
+            (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
-;; but [escape] should switch back to normal state
-(define-key evil-insert-state-map [escape] 'evil-normal-state)
+            ;; map "jj" to "ESC"
+            (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 
-;; map "jj" to "ESC"
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-
-;; map "c-e" to end-of-line because it's kind of more convenient than $
-(define-key evil-normal-state-map "\C-e" 'end-of-line)
-(define-key evil-normal-state-map "\C-f" 'forward-char)
-(define-key evil-normal-state-map "\C-b" 'backward-char)
-(define-key evil-normal-state-map [down-mouse-1] 'qjp-nop)
-(setq evil-emacs-state-cursor 'bar)
+            ;; map "c-e" to end-of-line because it's kind of more convenient than $
+            (define-key evil-normal-state-map "\C-e" 'end-of-line)
+            (define-key evil-normal-state-map "\C-f" 'forward-char)
+            (define-key evil-normal-state-map "\C-b" 'backward-char)
+            (define-key evil-normal-state-map [down-mouse-1] 'qjp-nop)
+            (setq evil-emacs-state-cursor 'bar)))
 
 (provide 'qjp-misc-evil-config)
 ;;; qjp-misc-evil-config.el ends here

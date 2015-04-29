@@ -66,7 +66,7 @@
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
-    calfw company
+    company
     dired
     easypg evil expand-region
     flyspell
@@ -89,7 +89,8 @@
 
 ;; Enable these settings
 (defun qjp-misc-enable-setting (feature-name)
-  (funcall (intern (qjp-misc-make-func-name-string feature-name))))
+  (let ((func-name (qjp-misc-make-func-name-string feature-name)))
+    (qjp-timed (funcall (intern func-name)) func-name)))
 
 (defun qjp-misc-enable-all ()
   (mapc 'qjp-misc-enable-setting qjp-enabled-misc-settings-list))

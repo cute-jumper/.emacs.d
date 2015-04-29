@@ -27,8 +27,6 @@
 ;; --------------------- ;;
 ;; hideshow, hideshowvis ;;
 ;; --------------------- ;;
-(require 'hideshow)
-(require 'hideshowvis)
 
 ;; I don't need hideshow-org.el any more with this one
 (global-set-key [(control tab)] 'hs-toggle-hiding)

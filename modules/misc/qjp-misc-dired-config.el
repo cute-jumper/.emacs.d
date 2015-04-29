@@ -61,8 +61,8 @@
 (add-hook 'dired-mode-hook
           (lambda()
             (setq dired-guess-shell-alist-user
-                  (list (list "\\.pdf$" "okular") ;; fixed rule
-                        ))))
+                   ;; fixed rule
+                  (list (list "\\.pdf$" "okular")))))
 
 (provide 'qjp-misc-dired-config)
 ;;; qjp-misc-dired-config.el ends here

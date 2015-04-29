@@ -24,8 +24,6 @@
 
 ;;; Code:
 
-(require 'multiple-cursors)
-
 ;; Rely on region-bindings-mode
 (qjp-misc-region-bindings)
 

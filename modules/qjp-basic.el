@@ -30,7 +30,7 @@
 
 ;; Customize the looking! From up to down!
 ;; Set title first
-(setq frame-title-format (format "%%b@%s:%%f" (system-name)))
+(setq frame-title-format (format "%%b@%s" (system-name)))
 
 ;; Show menu bar if `ubuntu', otherwise disable it.
 (let ((desktop-env (getenv "DESKTOP_SESSION")))
@@ -41,7 +41,6 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 
-;; Disable splash screen
 (setq inhibit-startup-screen t)
 
 ;; Set `fill-column' to wrap at 80
@@ -79,19 +78,21 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Now, let's set the fonts for English and Chinese
-(set-frame-font "Liberation Mono:pixelsize=22")
-(setq default-frame-alist
-      '((font . "Liberation Mono:pixelsize=22")
-	(cursor-color . "white")))
-(if (display-graphic-p)
-    (set-fontset-font (frame-parameter nil 'font) 'han
-                       (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))
+(add-hook 'after-init-hook
+          (lambda ()
+            (set-frame-font "Liberation Mono:pixelsize=22")
+            (setq default-frame-alist
+                  '((font . "Liberation Mono:pixelsize=22")
+                    (cursor-color . "white")))
+            (if (display-graphic-p)
+                (set-fontset-font (frame-parameter nil 'font) 'han
+                                  (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))))
 
 ;; Put auto save file to temporary file directory
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
-(load-theme 'zenburn t)
+(add-hook 'after-init-hook (lambda () (load-theme 'zenburn t)))
 
 ;; -------------------------- ;;
 ;; Some useful built-in modes ;;

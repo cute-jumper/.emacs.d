@@ -87,7 +87,7 @@
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
 
-(eval-after-load "paredit"
+(eval-after-load "paredit-mode"
   '(progn
      (defun paredit-barf-all-the-way-backward ()
        (interactive)

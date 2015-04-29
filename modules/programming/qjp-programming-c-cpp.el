@@ -27,36 +27,36 @@
 ;; ------------------- ;;
 ;; auto-complete-clang ;;
 ;; ------------------- ;;
-(require 'auto-complete-clang)
-(define-key ac-mode-map (kbd "M-/") 'ac-complete-clang)
-(defun clang-set-gtk-flags()
-  (interactive)
-  (setq ac-clang-flags
-        (mapcar (lambda 
-                  (item)
-                  (concat "-I" item))
-                (split-string
-                 "
-/usr/include/atk-1.0
-/usr/include/cairo
-/usr/include/gdk-pixbuf-2.0
-/usr/include/pango-1.0
-/usr/include/gio-unix-2.0/
-/usr/include/glib-2.0
-/usr/lib/x86_64-linux-gnu/glib-2.0/include
-/usr/include/pixman-1
-/usr/include/freetype2
-/usr/include/libpng12
-/usr/include/gtk-3.0
-/usr/include/c++/4.6
-/usr/include/c++/4.6/x86_64-linux-gnu/.
-/usr/include/c++/4.6/backward
-/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include
-/usr/local/include
-/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include-fixed
-/usr/include/x86_64-linux-gnu
-/usr/include
-"))))
+;; (require 'auto-complete-clang)
+;; (define-key ac-mode-map (kbd "M-/") 'ac-complete-clang)
+;; (defun clang-set-gtk-flags()
+;;   (interactive)
+;;   (setq ac-clang-flags
+;;         (mapcar (lambda 
+;;                   (item)
+;;                   (concat "-I" item))
+;;                 (split-string
+;;                  "
+;; /usr/include/atk-1.0
+;; /usr/include/cairo
+;; /usr/include/gdk-pixbuf-2.0
+;; /usr/include/pango-1.0
+;; /usr/include/gio-unix-2.0/
+;; /usr/include/glib-2.0
+;; /usr/lib/x86_64-linux-gnu/glib-2.0/include
+;; /usr/include/pixman-1
+;; /usr/include/freetype2
+;; /usr/include/libpng12
+;; /usr/include/gtk-3.0
+;; /usr/include/c++/4.6
+;; /usr/include/c++/4.6/x86_64-linux-gnu/.
+;; /usr/include/c++/4.6/backward
+;; /usr/lib/gcc/x86_64-linux-gnu/4.6.1/include
+;; /usr/local/include
+;; /usr/lib/gcc/x86_64-linux-gnu/4.6.1/include-fixed
+;; /usr/include/x86_64-linux-gnu
+;; /usr/include
+;; "))))
 
 ;; cedet
 
@@ -70,7 +70,7 @@
 ;; ------ ;;
 ;; cscope ;;
 ;; ------ ;;
-(require 'xcscope)
+;; (require 'xcscope)
 
 ;; ----------------- ;;
 ;; Settings and hook ;;

@@ -25,11 +25,12 @@
 ;;; Code:
 
 ;; Python hook
-(add-hook 'python-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
+(add-hook 'python-mode-hook
+          (lambda ()
+            (local-set-key [(return)] 'electrify-return-if-match)
+            (elpy-mode)
+            (elpy-use-ipython)))
 
-;; python mode
-(elpy-enable)
-(elpy-use-ipython)
 ;; (require 'pymacs)
 ;; (autoload 'pymacs-apply "pymacs")
 ;; (autoload 'pymacs-call "pymacs")

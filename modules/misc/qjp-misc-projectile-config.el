@@ -28,15 +28,16 @@
 ;; projectile ;;
 ;; ---------- ;;
 
-(require 'projectile)
-(setq projectile-cache-file (expand-file-name "projectile.cache"
-                                              qjp-base-dir))
-(setq  projectile-enable-caching t)
-(projectile-global-mode t)
+(eval-after-load "projectile"
+  '(progn
+     (setq projectile-cache-file (expand-file-name "projectile.cache"
+                                                   qjp-base-dir))
+     (setq  projectile-enable-caching t)
+     (projectile-global-mode t)
 
-;; Helm support
-(setq projectile-compilation-command 'helm)
-(helm-projectile-on)
+     ;; Helm support
+     (setq projectile-compilation-command 'helm)
+     (helm-projectile-on)))
 
 (provide 'qjp-misc-projectile-config)
 ;;; qjp-misc-projectile-config.el ends here

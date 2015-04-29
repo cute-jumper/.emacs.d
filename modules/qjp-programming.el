@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -33,7 +33,9 @@
 
 ;; Load all settings
 (mapc (lambda (x)
-        (qjp-modules-require-subdir-feature "programming" (concat "qjp-programming-" (symbol-name x))))
+        (qjp-modules-require-subdir-feature
+         "programming"
+         (concat "qjp-programming-" (symbol-name x))))
       qjp-programming-languages)
 
 (provide 'qjp-programming)

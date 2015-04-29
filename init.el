@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(defvar qjp-before-init-time (current-time))
+
 ;; Define directories for the very root, the startup code , modules and other
 ;; configuration
 (defvar qjp-base-dir (file-name-directory load-file-name)
@@ -35,6 +37,36 @@
 (defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
   "The directory to hold personal packages.")
 
+;; My own profiler
+(defvar qjp-startup-times nil)
+
+(defmacro qjp-timed (sexp name)
+  `(let ((start-time (current-time)))
+     ,sexp
+     (let ((elapsed
+            (float-time
+             (time-subtract
+              (current-time)
+              start-time))))
+       (push (cons ,name elapsed) qjp-startup-times))))
+
+(defun qjp-show-startup-times ()
+  (interactive)
+  (let ((total-time .0)) 
+    (with-current-buffer (get-buffer-create "*qjp-startup-times*")
+      (erase-buffer)
+      (org-mode)
+      (insert "| Function Name | Elapsed Time |\n")
+      (insert "|---------------+--------------|\n")
+      (dolist (elem qjp-startup-times)
+        (insert (format "| %s | %.3f |\n" (car elem) (cdr elem)))
+        (setq total-time (+ total-time (cdr elem))))
+      (insert (format "| Total Time | %.3f |\n" total-time))
+      (goto-char (point-min))
+      (forward-line)
+      (org-cycle))
+    (switch-to-buffer "*qjp-startup-times*")))
+
 ;; Add `startup', `modules' and `site-lisp' to load path
 (add-to-list 'load-path qjp-startup-dir)
 (add-to-list 'load-path qjp-modules-dir)
@@ -43,9 +75,13 @@
 ;; Require the init file in each directory
 (require 'qjp-startup-init)
 (require 'qjp-modules-init)
-(require 'qjp-site-lisp-init)
+(qjp-timed (require 'qjp-site-lisp-init) "site-lisp")
 
 ;; Welcome message
+(message "Your initilization takes %.3f s." (float-time
+                                             (time-subtract
+                                              (current-time)
+                                              qjp-before-init-time)))
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)
 
 ;;; init.el ends here
