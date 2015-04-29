@@ -27,12 +27,12 @@
 ;; I don't want to override existing things so save the original version of `d'
 ;; if it exists
 (when (fboundp 'd)
-    (defalias 'orig-d 'd))
+  (defvar orig-d (symbol-function 'd)))
 
 ;; First part: simple settings
 
 ;; Define short name to simplify typing
-(defalias 'd 'qjp-misc-inline-defun)
+(fset 'd (symbol-function qjp-misc-inline-defun))
 
 ;; ------------------ ;;
 ;; auto-complete-mode ;;
@@ -159,7 +159,8 @@
 ;; magit ;;
 ;; ----- ;;
 (d magit
-   (setq magit-last-seen-setup-instructions "1.4.0"))
+   (setq magit-last-seen-setup-instructions "1.4.0")
+   (global-set-key (kbd "C-x m") 'magit-status))
 
 ;; --- ;;
 ;; w3m ;;
@@ -167,12 +168,6 @@
 (d w3m
    (setq w3m-default-display-inline-images t)
    (setq w3m-home-page "http://www.google.com"))
-
-;; ---------------- ;;
-;; command-log-mode ;;
-;; ---------------- ;;
-(d command-log
-   (require 'command-log-mode))
 
 ;; ----- ;;
 ;; calfw ;;
@@ -299,9 +294,9 @@ highlight."
          (expand-file-name "~/texmf/bibtex/bib/refs.bib")))
 
 ;; Restore the original version of `d'
-(if (fboundp 'orig-d)
-    (defalias 'd 'orig-d)
-  (defalias 'd nil))
+(if (boundp 'orig-d)
+    (fset 'd orig-d)
+  (fset 'd nil))
 
 ;; Second part: make defuns for settings in files
   

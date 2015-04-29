@@ -50,8 +50,9 @@
                                             'face 'font-lock-doc-face))
                      ;; TODO: currently it strips from the start of spec by
                      ;; character instead of whole arguments at a time.
-                     (fulldoc (format "%s: %s" spec docstring))
-                     (ea-width (1- (window-width (minibuffer-window)))))
+                     (fulldoc (format "%s %s" spec docstring))
+                     (ea-width (1- (window-width (minibuffer-window))))
+                     (diff (- (length fulldoc) ea-width)))
                 (cond ((or (<= (length fulldoc) ea-width)
                            (eq eldoc-echo-area-use-multiline-p t)
                            (and eldoc-echo-area-use-multiline-p
@@ -61,12 +62,14 @@
                        (substring docstring 0 ea-width))
                       ((>= (- (length fulldoc) (length spec)) ea-width)
                        docstring)
-                      (t
+                      ((<= diff (1+ (length function-name)))
                        ;; Show the end of the partial symbol name, rather
                        ;; than the beginning, since the former is more likely
                        ;; to be unique given package namespace conventions.
                        (setq spec (substring spec (- (length fulldoc) ea-width)))
-                       (format "%s: %s" spec docstring)))))
+                       (format "%s %s" spec docstring))
+                      (t
+                       (format "%s %s" doc docstring)))))
     ad-do-it))
 
 (eldoc-add-command
@@ -83,6 +86,64 @@
                                   (local-set-key (kbd "RET") 'electrify-return-if-match)))
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
+
+(eval-after-load "paredit"
+  '(progn
+     (defun paredit-barf-all-the-way-backward ()
+       (interactive)
+       (paredit-split-sexp)
+       (paredit-backward-down)
+       (paredit-splice-sexp))
+
+     (defun paredit-barf-all-the-way-forward ()
+       (interactive)
+       (paredit-split-sexp)
+       (paredit-forward-down)
+       (paredit-splice-sexp)
+       (if (eolp) (delete-horizontal-space)))
+
+     (defun paredit-slurp-all-the-way-backward ()
+       (interactive)
+       (catch 'done
+         (while (not (bobp))
+           (save-excursion
+             (paredit-backward-up)
+             (if (eq (char-before) ?\()
+                 (throw 'done t)))
+           (paredit-backward-slurp-sexp))))
+
+     (defun paredit-slurp-all-the-way-forward ()
+       (interactive)
+       (catch 'done
+         (while (not (eobp))
+           (save-excursion
+             (paredit-forward-up)
+             (if (eq (char-after) ?\))
+                 (throw 'done t)))
+           (paredit-forward-slurp-sexp))))
+
+     (nconc paredit-commands
+            '("Extreme Barfage & Slurpage"
+              (("C-M-)")
+               paredit-slurp-all-the-way-forward
+               ("(foo (bar |baz) quux zot)"
+                "(foo (bar |baz quux zot))")
+               ("(a b ((c| d)) e f)"
+                "(a b ((c| d)) e f)"))
+              (("C-M-}" "M-F")
+               paredit-barf-all-the-way-forward
+               ("(foo (bar |baz quux) zot)"
+                "(foo (bar|) baz quux zot)"))
+              (("C-M-(")
+               paredit-slurp-all-the-way-backward
+               ("(foo bar (baz| quux) zot)"
+                "((foo bar baz| quux) zot)")
+               ("(a b ((c| d)) e f)"
+                "(a b ((c| d)) e f)"))
+              (("C-M-{" "M-B")
+               paredit-barf-all-the-way-backward
+               ("(foo (bar baz |quux) zot)"
+                "(foo bar baz (|quux) zot)"))))))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here

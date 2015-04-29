@@ -172,5 +172,15 @@ Modified the original function. Always put the word at prompt."
       (disable-theme 'zenburn)
       (sml/apply-theme 'light)))))
 
+;; bing search word at mouse
+(defun qjp-search-word-at-mouse ()
+  (interactive)
+  (save-excursion
+    (require 'bing-dict)
+    (mouse-set-point last-input-event)
+    (let ((word (word-at-point)))
+      (when word
+        (bing-dict-brief word)))))
+
 (provide 'qjp-defuns-misc)
 ;;; qjp-defuns-misc.el ends here

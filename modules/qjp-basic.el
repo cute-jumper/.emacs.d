@@ -116,6 +116,7 @@
       ediff-window-setup-function 'ediff-setup-windows-plain
       save-place-file (concat qjp-base-dir "places")
       backup-directory-alist `(("." . ,(concat qjp-base-dir "backups")))
+      tramp-backup-directory-alist backup-directory-alist
       diff-switches "-u")
 
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))

@@ -29,6 +29,7 @@
   (interactive)
   (dired qjp-document-dir))
 
+(require 'org)
 (qjp-modules-require-subdir-feature "org" "qjp-org-edit")
 (qjp-modules-require-subdir-feature "org" "qjp-org-src")
 (qjp-modules-require-subdir-feature "org" "qjp-org-export")

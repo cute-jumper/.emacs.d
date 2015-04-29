@@ -66,12 +66,12 @@
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
-    calfw command-log company
+    calfw company
     dired
     easypg evil expand-region
     flyspell
     goto-last-change gscholar-bibtex
-    helm hl-sentence hs fcitx;; loaded after helm
+    helm hs fcitx;; loaded after helm
     idle-highlight ispell
     jump-char
     key-chord
@@ -82,7 +82,7 @@
     rebox region-bindings
     sml sr-speedbar
     term
-    w3m whole-line-or-region
+    whole-line-or-region
     ;;yasnippet
     )
   "The short mode function name that should be enabled")
