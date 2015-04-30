@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -163,11 +163,11 @@
 ;; ----------------------------- ;;
 
 ;; electric-pair-mode --> smartparens
-; (electric-pair-mode)
+                                        ; (electric-pair-mode)
 
 ;; ibuffer --> helm
-; (setq ibuffer-use-other-window t)
-; (global-set-key (kbd "C-x C-b") 'ibuffer)
+                                        ; (setq ibuffer-use-other-window t)
+                                        ; (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (provide 'qjp-basic)
 ;;; qjp-basic.el ends here

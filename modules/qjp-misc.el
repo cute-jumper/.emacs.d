@@ -37,16 +37,16 @@
   (let* ((func-name-string (qjp-misc-make-func-name-string feature-name))
          (func-name (intern func-name-string))
          (flag-name (intern (concat func-name-string "-flag"))))
-    `(defsubst ,func-name (&optional v)       
+    `(defsubst ,func-name (&optional v)
        (defvar ,flag-name t)
        (when (or ,flag-name v)
          (setq ,flag-name nil)
          ,@body))))
-  
+
 (defmacro qjp-misc-inline-defun (feature-name &rest args)
   "The `defun' macro for inline settings"
   `(qjp-misc-make-macro ,feature-name
-         ,@args))
+                        ,@args))
 
 (defmacro qjp-misc-file-defun (feature-name)
   "The `defun' macro for inline settings"
@@ -66,25 +66,25 @@
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
-    company
-    dired
-    easypg evil expand-region
-    flyspell
-    goto-last-change gscholar-bibtex
-    helm hs fcitx;; loaded after helm
-    idle-highlight ispell
-    jump-char
-    key-chord
-    lacarte
-    magit markdown multiple-cursors
-    nyan
-    projectile
-    rebox region-bindings
-    sml sr-speedbar
-    term
-    whole-line-or-region
-    ;;yasnippet
-    )
+             company
+             dired
+             easypg evil expand-region
+             flyspell
+             goto-last-change gscholar-bibtex
+             helm hs fcitx;; loaded after helm
+             idle-highlight ispell
+             jump-char
+             key-chord
+             lacarte
+             magit markdown multiple-cursors
+             nyan
+             projectile
+             rebox region-bindings
+             sml sr-speedbar
+             term
+             whole-line-or-region
+             ;;yasnippet
+             )
   "The short mode function name that should be enabled")
 
 ;; Enable these settings

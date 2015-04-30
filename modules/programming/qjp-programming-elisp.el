@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -32,7 +32,7 @@
 ;; Source: http://emacswiki.org/emacs/ElDoc
 ;; Since `flet' is obsolete, use `qjp--flet' instead(dynamic scoping needed)
 (defadvice eldoc-highlight-function-argument
-  (around my-formatting (sym args index) compile activate preactivate)
+    (around my-formatting (sym args index) compile activate preactivate)
   "Replace original to apply my style of formatting."
   ;; HACK: intercept the call to eldoc-docstring-format-sym-doc at the
   ;; end of the adviced function. This is obviously brittle, but the
@@ -77,7 +77,7 @@
  'paredit-close-round
  'electrify-return-if-match)
 
-(add-hook 'emacs-lisp-mode-hook (lambda () 
+(add-hook 'emacs-lisp-mode-hook (lambda ()
                                   (hl-line-mode -1)
                                   (eldoc-mode 1)
                                   (highlight-parentheses-mode)

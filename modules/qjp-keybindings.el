@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -57,6 +57,7 @@
 ;; ----------------- ;;
 ;; Other key bindings ;;
 ;; ----------------- ;;
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x I") 'imenu)
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand

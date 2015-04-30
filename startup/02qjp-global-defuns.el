@@ -20,15 +20,15 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
 ;; Filter function
 (defun qjp-filter (condp lst)
-    "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"
-    (delq nil
-          (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
+  "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"
+  (delq nil
+        (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
 ;; Utility function for adding `load-path'
 (defun qjp-add-subdirectories-to-load-path (base-directory)

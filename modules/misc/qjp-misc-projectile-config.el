@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -32,12 +32,14 @@
   '(progn
      (setq projectile-cache-file (expand-file-name "projectile.cache"
                                                    qjp-base-dir))
-     (setq  projectile-enable-caching t)
+     (setq projectile-enable-caching t)
      (projectile-global-mode t)
 
      ;; Helm support
      (setq projectile-compilation-command 'helm)
      (helm-projectile-on)))
+
+(global-set-key (kbd "C-c p h") 'helm-projectile)
 
 (provide 'qjp-misc-projectile-config)
 ;;; qjp-misc-projectile-config.el ends here

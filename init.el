@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -72,10 +72,10 @@
 (qjp-require 'qjp-site-lisp-init)
 
 (message "Your initilization takes %.3f s."
-                     (float-time
-                      (time-subtract
-                       (current-time)
-                       qjp-before-init-time)))
+         (float-time
+          (time-subtract
+           (current-time)
+           qjp-before-init-time)))
 ;; Welcome message
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)
 
