@@ -24,9 +24,9 @@
 
 ;;; Code:
 
-(require '01qjp-global-settings)
-(require '02qjp-global-defuns)
-(require '03qjp-package-manager)
+(qjp-require '01qjp-global-settings "10startup")
+(qjp-require '02qjp-global-defuns "10startup")
+(qjp-require '03qjp-package-manager "10startup")
 
 (provide 'qjp-startup-init)
 ;;; qjp-startup-init.el ends here

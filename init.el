@@ -37,35 +37,29 @@
 (defvar qjp-site-lisp-dir (expand-file-name "site-lisp" qjp-base-dir)
   "The directory to hold personal packages.")
 
-;; My own profiler
-(defvar qjp-startup-times nil)
+;; Profiler related
+(defvar qjp--init-time-alist nil
+  "Alist containing init time information")
 
-(defmacro qjp-timed (sexp name)
-  `(let ((start-time (current-time)))
-     ,sexp
-     (let ((elapsed
-            (float-time
-             (time-subtract
-              (current-time)
-              start-time))))
-       (push (cons ,name elapsed) qjp-startup-times))))
+(defmacro qjp-timed (sexp name &optional module)
+  (let* ((module-name (or module "00default")))
+    `(let ((start-time (current-time))
+           (init-times (assoc
+                        ,module-name
+                        qjp--init-time-alist)))
+       ,sexp
+       (let ((elapsed
+              (float-time
+               (time-subtract
+                (current-time)
+                start-time))))
+         (if init-times
+             (push (cons ,name elapsed) (cdr init-times))
+           (push (cons ,module-name (list (cons ,name elapsed)))
+                 qjp--init-time-alist))))))
 
-(defun qjp-show-startup-times ()
-  (interactive)
-  (let ((total-time .0)) 
-    (with-current-buffer (get-buffer-create "*qjp-startup-times*")
-      (erase-buffer)
-      (org-mode)
-      (insert "| Function Name | Elapsed Time |\n")
-      (insert "|---------------+--------------|\n")
-      (dolist (elem qjp-startup-times)
-        (insert (format "| %s | %.3f |\n" (car elem) (cdr elem)))
-        (setq total-time (+ total-time (cdr elem))))
-      (insert (format "| Total Time | %.3f |\n" total-time))
-      (goto-char (point-min))
-      (forward-line)
-      (org-cycle))
-    (switch-to-buffer "*qjp-startup-times*")))
+(defmacro qjp-require (library &optional module-name)
+  `(qjp-timed (require ,library) ,(symbol-name (cadr library)) ,module-name))
 
 ;; Add `startup', `modules' and `site-lisp' to load path
 (add-to-list 'load-path qjp-startup-dir)
@@ -73,15 +67,16 @@
 (add-to-list 'load-path qjp-site-lisp-dir)
 
 ;; Require the init file in each directory
-(require 'qjp-startup-init)
-(require 'qjp-modules-init)
-(qjp-timed (require 'qjp-site-lisp-init) "site-lisp")
+(qjp-require 'qjp-startup-init)
+(qjp-require 'qjp-modules-init)
+(qjp-require 'qjp-site-lisp-init)
 
+(message "Your initilization takes %.3f s."
+                     (float-time
+                      (time-subtract
+                       (current-time)
+                       qjp-before-init-time)))
 ;; Welcome message
-(message "Your initilization takes %.3f s." (float-time
-                                             (time-subtract
-                                              (current-time)
-                                              qjp-before-init-time)))
 (message "Welcome to Emacs %s, %s!" emacs-version user-full-name)
 
 ;;; init.el ends here

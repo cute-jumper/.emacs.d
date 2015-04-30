@@ -90,7 +90,7 @@
 ;; Enable these settings
 (defun qjp-misc-enable-setting (feature-name)
   (let ((func-name (qjp-misc-make-func-name-string feature-name)))
-    (qjp-timed (funcall (intern func-name)) func-name)))
+    (qjp-timed (funcall (intern func-name)) func-name "21qjp-misc-details")))
 
 (defun qjp-misc-enable-all ()
   (mapc 'qjp-misc-enable-setting qjp-enabled-misc-settings-list))

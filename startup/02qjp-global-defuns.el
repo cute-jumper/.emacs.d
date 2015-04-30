@@ -96,5 +96,34 @@
          '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
     (message "Only support X window.")))
 
+;; Show profiling results
+(defun qjp-show-startup-times ()
+  (interactive)
+  (let ((buf "*init-times*")
+        total-time)
+    (with-current-buffer (get-buffer-create buf)
+      (erase-buffer)
+      (org-mode)
+      (insert "* init times\n")
+      (cl-loop for (module-name . time-list) in (sort
+                                                 qjp--init-time-alist
+                                                 (lambda (x y)
+                                                   (string< (car x) (car y))))
+               do (insert "** " module-name "\n")
+               (insert "| Name | Elapsed Time |\n")
+               (insert "|------+--------------|\n")
+               (setq total-time .0)
+               (dolist (elem (nreverse time-list))
+                 (insert (format "| %s | %.3f |\n" (car elem) (cdr elem)))
+                 (setq total-time (+ total-time (cdr elem))))
+               (insert (format "| Total Time | %.3f |\n\n" total-time))
+               (save-excursion
+                 (save-match-data
+                   (goto-char (re-search-backward "^** " nil t))
+                   (forward-line)
+                   (org-cycle))))
+      (delete-char -1))
+    (switch-to-buffer buf)))
+
 (provide '02qjp-global-defuns)
 ;;; 02qjp-global-defuns.el ends here

@@ -25,14 +25,14 @@
 ;;; Code:
 
 ;; Require module features as you want
-(qjp-timed (require 'qjp-esk) "esk")                   ;Emacs starter kit
-(qjp-timed (require 'qjp-basic) "basic")                 ;basic settings
-(qjp-timed (require 'qjp-defuns) "defuns")                ;useful defuns
-(qjp-timed (require 'qjp-keybindings) "keybinginds")           ;key bindings
-(qjp-timed (require 'qjp-misc) "misc")                  ;various modes/features
-(qjp-timed (require 'qjp-org) "org")                   ;org-mode
-(qjp-timed (require 'qjp-tex) "tex")                   ;TeX
-(qjp-timed (require 'qjp-programming) "programming")           ;Programmning
+(qjp-require 'qjp-esk "20modules")                    ;Emacs starter kit
+(qjp-require 'qjp-basic "20modules")                ;basic settings
+(qjp-require 'qjp-defuns "20modules")              ;useful defuns
+(qjp-require 'qjp-keybindings "20modules")    ;key bindings
+(qjp-require 'qjp-misc "20modules")                  ;various modes/features
+(qjp-require 'qjp-org "20modules")                    ;org-mode
+(qjp-require 'qjp-tex "20modules")                    ;TeX
+(qjp-require 'qjp-programming "20modules")    ;Programmning
 
 (provide 'qjp-modules-init)
 ;;; qjp-modules-init.el ends here

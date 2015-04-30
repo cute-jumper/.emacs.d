@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -97,7 +97,10 @@
 ;; ace-flyspell ;;
 ;; ------------ ;;
 (d ace-flyspell
-   (ace-flyspell-setup))
+   ;; This is faster(1 vs 26 ms) than calling setup function. I don't know why
+   (global-set-key (kbd "C-.") 'ace-flyspell-dwim)
+   (eval-after-load "flyspell"
+     '(define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
 
 ;; ------------------ ;;
 ;; ace-jump-helm-line ;;
@@ -198,16 +201,16 @@
 highlight."
    (eval-after-load "idle-highlight-mode"
      '(set-face-attribute 'idle-highlight nil
-                       :weight 'semi-bold :underline
-                       '(:color foreground-color :style line)
-                       :inherit nil)))
+                          :weight 'semi-bold :underline
+                          '(:color foreground-color :style line)
+                          :inherit nil)))
 
 ;; --------------- ;;
 ;; smart mode line ;;
 ;; --------------- ;;
-(d sml   
+(d sml
    (setq sml/theme "powerline")
-   (add-hook 'after-init-hook 'sml/setup))
+   (sml/setup))
 
 ;; -------- ;;
 ;; fcitx.el ;;
@@ -275,7 +278,7 @@ highlight."
   (fset 'd nil))
 
 ;; Second part: make defuns for settings in files
-  
+
 (let ((file-basenames
        (mapcar
         'file-name-base
