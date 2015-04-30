@@ -84,10 +84,12 @@
                                   (paredit-mode)
                                   (hideshowvis-minor-mode)
                                   (local-set-key (kbd "RET") 'electrify-return-if-match)))
-(add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
-(add-hook 'ielm-mode-hook 'eldoc-mode)
 
-(eval-after-load "paredit-mode"
+(add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
+(add-hook 'ielm-mode-hook (lambda () (eldoc-mode) (paredit-mode)))
+(define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand)
+
+(eval-after-load "paredit"
   '(progn
      (defun paredit-barf-all-the-way-backward ()
        (interactive)
@@ -143,7 +145,13 @@
               (("C-M-{" "M-B")
                paredit-barf-all-the-way-backward
                ("(foo (bar baz |quux) zot)"
-                "(foo bar baz (|quux) zot)"))))))
+                "(foo bar baz (|quux) zot)"))))
+     (define-key paredit-mode-map (kbd "C-M-)") 'paredit-slurp-all-the-way-forward)
+     (define-key paredit-mode-map (kbd "C-M-}") 'paredit-barf-all-the-way-forward)
+     (define-key paredit-mode-map (kbd "M-F") 'paredit-barf-all-the-way-forward)
+     (define-key paredit-mode-map (kbd "C-M-(") 'paredit-slurp-all-the-way-backward)
+     (define-key paredit-mode-map (kbd "C-M-{") 'paredit-barf-all-the-way-backward)
+     (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward)))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here

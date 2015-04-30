@@ -60,7 +60,7 @@
 (global-set-key (kbd "C-x I") 'imenu)
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
-(global-set-key (kbd "C-c e") 'qjp-eval-and-replace)
+(global-set-key (kbd "C-c r") 'qjp-eval-and-replace)
 (global-set-key [f5] 'compile)
 
 ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
