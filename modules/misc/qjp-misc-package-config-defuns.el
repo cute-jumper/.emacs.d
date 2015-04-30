@@ -265,6 +265,19 @@ highlight."
    (global-set-key (kbd "C-s") 'swiper)
    (setq swiper-completion-method 'helm))
 
+;; -------- ;;
+;; quickrun ;;
+;; -------- ;;
+(d quickrun
+   (global-set-key (kbd "C-c q q") #'quickrun)
+   (defun quickrun-region-dwim (&optional prefix)
+     (interactive "P")
+     (call-interactively
+      (if prefix #'quickrun-replace-region
+        #'quickrun-region)))
+   (global-set-key (kbd "C-c q r") #'quickrun-region-dwim)
+   (add-to-list 'evil-emacs-state-modes 'quickrun/mode))
+
 ;; --------------- ;;
 ;; gscholar-bibtex ;;
 ;; --------------- ;;

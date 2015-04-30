@@ -79,6 +79,7 @@
              magit markdown multiple-cursors
              nyan
              projectile
+             quickrun
              rebox region-bindings
              sml sr-speedbar
              term
