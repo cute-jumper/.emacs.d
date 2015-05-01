@@ -140,10 +140,13 @@ Modified the original function. Always put the word at prompt."
   (browse-url
    (concat query-url
            (url-hexify-string
-            (read-string prompt
-                         (if mark-active
-                             (buffer-substring (region-beginning) (region-end))
-                           (word-at-point)))))))
+            (read-string
+             prompt
+             (if (use-region-p)
+                 (buffer-substring-no-properties
+                  (region-beginning)
+                  (region-end))
+               (thing-at-point 'word t)))))))
 
 (defmacro qjp-install-search-engine (search-engine-name search-engine-url search-engine-prompt)
   "Given some information regarding a search engine, install the interactive command to search through them"
