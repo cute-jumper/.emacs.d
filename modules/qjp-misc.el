@@ -66,6 +66,7 @@
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
+             bing-dict
              company
              dired
              easypg evil expand-region

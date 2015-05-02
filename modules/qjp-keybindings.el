@@ -68,7 +68,7 @@
 ;; `qjp-nop'. Navigating using doulbe-click is still available.
 (global-unset-key [down-mouse-1])
 (global-set-key [mouse-1] 'qjp-nop)
-(global-set-key (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
+(global-set-key (kbd "<C-mouse-1>") 'qjp-nop)
 (global-set-key (kbd "<C-down-mouse-1>") 'qjp-nop)
 
 (provide 'qjp-keybindings)

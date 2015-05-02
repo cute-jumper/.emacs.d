@@ -285,6 +285,22 @@ highlight."
    (setq gscholar-bibtex-database-file
          (expand-file-name "~/texmf/bibtex/bib/refs.bib")))
 
+;; --------- ;;
+;; bing-dict ;;
+;; --------- ;;
+(d bing-dict   
+   (defun qjp-search-word-at-mouse ()
+     "bing search word at mouse"
+     (interactive)
+     (when (featurep 'bing-dict)
+       (save-excursion
+         (mouse-set-point last-input-event)
+         (let ((word (word-at-point)))
+           (when word
+             (bing-dict-brief word))))))
+   (global-set-key (kbd "C-c d") 'bing-dict-brief)
+   (global-set-key (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse))
+
 ;; Restore the original version of `d'
 (if (boundp 'orig-d)
     (fset 'd orig-d)

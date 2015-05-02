@@ -41,12 +41,13 @@
 ;;             ))
 (push "/opt/MATLAB/R2010b/bin" exec-path)
 (load-library "matlab-load")
-(eval-after-load "company-mode"
-  '(progn
-     (add-to-list 'company-backends 'company-matlab)
-     (add-to-list 'company-backends 'company-matlab-shell)))
-;; (require 'matlab)
-;; (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)
+(with-eval-after-load "company"
+  (add-to-list 'company-backends 'company-matlab)
+  (add-to-list 'company-backends 'company-matlab-shell))
+
+(add-hook 'matlab-shell-mode-hook
+          (lambda ()
+            (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)))
 (add-hook 'matlab-mode-hook 'flycheck-mode)
 (eval-after-load "flycheck"
   '(require 'flycheck-matlab-mlint))
