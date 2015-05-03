@@ -63,10 +63,11 @@
   ("u" undo)
   ("v" set-mark-command)
   ("V" rectangle-mark-mode)
+  ("=" er/expand-region)
   ("i" nil "quit")
   ("q" nil "quit"))
 
-(with-eval-after-load "key-chord"
+(with-eval-after-load 'key-chord
   (key-chord-define-global "jj" #'qjp-hydra-vi))
 
 (defhydra hydra-goto-line (goto-map ""

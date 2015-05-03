@@ -71,15 +71,16 @@
 (qjp-require 'qjp-modules-init)
 (qjp-require 'qjp-site-lisp-init)
 
+(defvar qjp-init-duration (float-time
+                           (time-subtract
+                            (current-time)
+                            qjp-before-init-time)))
 ;; Welcome message
 (setq initial-scratch-message
       (format "%s;; Your initilization takes %.3f s.
 ;; Welcome to Emacs %s, %s~😊~\n\n"
               initial-scratch-message
-              (float-time
-               (time-subtract
-                (current-time)
-                qjp-before-init-time))
+              qjp-init-duration
               emacs-version
               user-full-name))
 

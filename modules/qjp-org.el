@@ -29,14 +29,13 @@
   (interactive)
   (dired qjp-document-dir))
 
-(eval-after-load "org"
-  '(progn
-     (qjp-modules-require-subdir-feature "org" "qjp-org-edit")
-     (qjp-modules-require-subdir-feature "org" "qjp-org-src")
-     (qjp-modules-require-subdir-feature "org" "qjp-org-export")
-     (qjp-modules-require-subdir-feature "org" "qjp-org-misc")
-     (qjp-modules-require-subdir-feature "org" "qjp-org-notes")
-     (qjp-modules-require-subdir-feature "org" "qjp-org-publish")))
+(with-eval-after-load 'org
+  (qjp-modules-require-subdir-feature "org" "qjp-org-edit")
+  (qjp-modules-require-subdir-feature "org" "qjp-org-src")
+  (qjp-modules-require-subdir-feature "org" "qjp-org-export")
+  (qjp-modules-require-subdir-feature "org" "qjp-org-misc")
+  (qjp-modules-require-subdir-feature "org" "qjp-org-notes")
+  (qjp-modules-require-subdir-feature "org" "qjp-org-publish"))
 
 (provide 'qjp-org)
 ;;; qjp-org.el ends here

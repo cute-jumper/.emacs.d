@@ -26,14 +26,13 @@
 
 ;; javascript
 ;; Fix for Greasemonkey scripts
-(eval-after-load 'js
-  '(progn
-     (setq js--regexp-literal-fix
-           "[^=][=(,:]\\(?:\\s-\\|\n\\)*\\(/\\)\\(?:\\\\.\\|[^/*\\]\\)\\(?:\\\\.\\|[^/\\]\\)*\\(/\\)")
-     (setq js-font-lock-syntactic-keywords-fix
-           ;; "|" means generic string fence
-           `((,js--regexp-literal-fix (1 "|") (2 "|"))))
-     (setq js-font-lock-syntactic-keywords js-font-lock-syntactic-keywords-fix)))
+(with-eval-after-load 'js
+  (setq js--regexp-literal-fix
+         "[^=][=(,:]\\(?:\\s-\\|\n\\)*\\(/\\)\\(?:\\\\.\\|[^/*\\]\\)\\(?:\\\\.\\|[^/\\]\\)*\\(/\\)")
+  (setq js-font-lock-syntactic-keywords-fix
+        ;; "|" means generic string fence
+        `((,js--regexp-literal-fix (1 "|") (2 "|"))))
+  (setq js-font-lock-syntactic-keywords js-font-lock-syntactic-keywords-fix))
 (add-hook 'js-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
 
 (provide 'qjp-programming-javascript)

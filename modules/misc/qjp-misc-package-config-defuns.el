@@ -58,6 +58,14 @@
 ;; key-chord mode ;;
 ;; -------------- ;;
 (d key-chord
+   (defun key-chord-define (keymap keys command)
+     "Redefine to make it have order"
+     (if (/= 2 (length keys))
+         (error "Key-chord keys must have two elements"))
+     ;; Exotic chars in a string are >255 but define-key wants 128..255 for those
+     (let ((key1 (logand 255 (aref keys 0)))
+           (key2 (logand 255 (aref keys 1))))
+       (define-key keymap (vector 'key-chord key1 key2) command)))
    (key-chord-mode t))
 
 ;; -------------------- ;;
@@ -99,15 +107,15 @@
 (d ace-flyspell
    ;; This is faster(1 vs 26 ms) than calling setup function. I don't know why
    (global-set-key (kbd "C-.") 'ace-flyspell-dwim)
-   (eval-after-load "flyspell"
-     '(define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
+   (with-eval-after-load 'flyspell
+     (define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
 
 ;; ------------------ ;;
 ;; ace-jump-helm-line ;;
 ;; ------------------ ;;
 (d ace-jump-helm-line
-   (eval-after-load "helm"
-     '(define-key helm-map (kbd "C-'") 'ace-jump-helm-line)))
+   (with-eval-after-load 'helm
+     (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -140,10 +148,10 @@
 ;; flyspell ;;
 ;; -------- ;;
 (d flyspell
-   (eval-after-load "flyspell"
-     '(progn (define-key flyspell-mode-map (kbd "C-,") nil)
-             (define-key flyspell-mode-map (kbd "C-M-i") nil)
-             (define-key flyspell-mode-map (kbd "C-;") nil))))
+   (with-eval-after-load 'flyspell
+     (define-key flyspell-mode-map (kbd "C-,") nil)
+     (define-key flyspell-mode-map (kbd "C-M-i") nil)
+     (define-key flyspell-mode-map (kbd "C-;") nil)))
 
 ;; ----- ;;
 ;; magit ;;
@@ -199,11 +207,11 @@
 (d idle-highlight
    "Use bold and underline instead of `region' color to
 highlight."
-   (eval-after-load "idle-highlight-mode"
-     '(set-face-attribute 'idle-highlight nil
-                          :weight 'semi-bold :underline
-                          '(:color foreground-color :style line)
-                          :inherit nil)))
+   (with-eval-after-load 'idle-highlight-mode
+     (set-face-attribute 'idle-highlight nil
+                         :weight 'semi-bold :underline
+                         '(:color foreground-color :style line)
+                         :inherit nil)))
 
 ;; --------------- ;;
 ;; smart mode line ;;

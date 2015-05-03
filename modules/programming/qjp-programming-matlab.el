@@ -41,7 +41,7 @@
 ;;             ))
 (push "/opt/MATLAB/R2010b/bin" exec-path)
 (load-library "matlab-load")
-(with-eval-after-load "company"
+(with-eval-after-load 'company
   (add-to-list 'company-backends 'company-matlab)
   (add-to-list 'company-backends 'company-matlab-shell))
 
@@ -49,8 +49,8 @@
           (lambda ()
             (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)))
 (add-hook 'matlab-mode-hook 'flycheck-mode)
-(eval-after-load "flycheck"
-  '(require 'flycheck-matlab-mlint))
+(with-eval-after-load 'flycheck
+  (require 'flycheck-matlab-mlint))
 
 (provide 'qjp-programming-matlab)
 ;;; qjp-programming-matlab.el ends here

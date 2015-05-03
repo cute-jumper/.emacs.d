@@ -33,14 +33,6 @@
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "C-c h g") 'helm-google-suggest)
-(eval-after-load "helm"
-  '(progn
-                                        ; rebind tab to run persistent action
-     (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-                                        ; make TAB works in terminal
-     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-                                        ; list actions using C-z
-     (define-key helm-map (kbd "C-z")  'helm-select-action)))
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 (setq helm-split-window-in-side-p t
@@ -48,11 +40,16 @@
       ;;helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
       helm-ff-file-name-history-use-recentf t)
-(autoload 'helm-autoresize-mode "helm")
 (setq helm-bibtex-bibliography qjp-bibtex-database-file)
 
 ;; Helm-mode is slow (more than 0.5s to start)
-(with-eval-after-load "helm"
+(with-eval-after-load 'helm
+  ;; rebind tab to run persistent action
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  ;; make TAB works in terminal
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  ;; list actions using C-z
+  (define-key helm-map (kbd "C-z")  'helm-select-action)
   (helm-mode)
   (helm-autoresize-mode t)
   (helm-descbinds-mode))
