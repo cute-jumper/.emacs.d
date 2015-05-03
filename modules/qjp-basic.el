@@ -30,7 +30,7 @@
 
 ;; Customize the looking! From up to down!
 ;; Set title first
-(setq frame-title-format (format "%%b@%s" (system-name)))
+;; (setq frame-title-format (format "%%b@%s" (system-name)))
 
 ;; Show menu bar if `ubuntu', otherwise disable it.
 (let ((desktop-env (getenv "DESKTOP_SESSION")))
@@ -38,8 +38,10 @@
         (t (menu-bar-mode -1))))
 
 ;; Disable toolbar if not yet
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
+(tool-bar-mode -1)
+
+;; Set cursor type
+(setq-default cursor-type 'bar)
 
 (setq inhibit-startup-screen t)
 
@@ -60,10 +62,6 @@
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-;; Fringe settings. Reduce its size from 8 to 4 pixels.
-(when (fboundp 'fringe-mode)
-  (fringe-mode 4))
-
 ;; For mode line
 (line-number-mode t)
 (column-number-mode t)
@@ -78,7 +76,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Now, let's set the fonts for English and Chinese
-(set-frame-font "Liberation Mono:pixelsize=22")
+(set-fontset-font "fontset-default" 'unicode "Symbola")
 (setq default-frame-alist
       '((font . "Liberation Mono:pixelsize=22")
         (cursor-color . "white")))

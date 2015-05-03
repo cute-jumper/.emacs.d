@@ -41,16 +41,14 @@
   "Use this command to install all the packages.
 It will read from the file and get the installed packages's list, 
 then it will install these packages one by one."
-  (interactive)
-  (defun read-installed-package-list ()
-    "Read the installed packages' list"
-    (read
-     (with-current-buffer
-         (find-file-noselect
-          (qjp-get-package-list-filename))
-       (buffer-substring-no-properties (point-min) (point-max)))))
+  (interactive)  
   (package-refresh-contents)
-  (let ((installed-packages (read-installed-package-list)))
+  (let ((installed-packages
+         (read
+          (with-current-buffer
+              (find-file-noselect
+               (qjp-get-package-list-filename))
+            (buffer-substring-no-properties (point-min) (point-max))))))
     (dolist (pkg installed-packages)
       (if (not (package-installed-p pkg))
           (ignore-errors
@@ -69,8 +67,8 @@ to maintain the right list."
   (package-initialize)
   (let ((installed-package-list nil))
     (dolist (pkg package-alist)
-      (if (assoc (car pkg) package-archive-contents)
-          (add-to-list 'installed-package-list (car pkg))))
+      (when (assoc (car pkg) package-archive-contents)
+        (add-to-list 'installed-package-list (car pkg))))
     (with-temp-file (qjp-get-package-list-filename)
       (prin1 installed-package-list (current-buffer)))
     (message "Successfully update installed-package-list!")))
@@ -80,6 +78,18 @@ to maintain the right list."
 ;;   (qjp-update-installed-package-list))
 ;; Disable defadvice
 ;; (ad-activate 'package-install)
+
+
+(defun qjp-download-site-lisp-package (pkg-name url)
+  (interactive)
+  (let ((dir-name (expand-file-name pkg-name qjp-site-lisp-dir)))
+    (unless (file-directory-p dir-name)
+      (make-directory dir-name t))
+    (when (file-exists-p dir-name)
+      (rename-file prelude-core-file-name (concat prelude-core-file-name ".bak") t))
+    (if (url-copy-file prelude-core-url prelude-core-file-name t)
+        (message "Update prelude-core.el successfully. Use `diff' to see the differences.")
+      (error (message "Failed to download prelude-core.el!")))))
 
 ;; Update `prelude-core.el'
 (defun qjp-update-prelude-core ()

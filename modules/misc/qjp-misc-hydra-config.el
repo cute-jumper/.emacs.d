@@ -20,9 +20,62 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
+
+(setq hydra-is-helpful)
+
+(defun qjp-hydra-vi ()
+  (interactive)
+  (set-cursor-color "#dfe030")
+  (setq cursor-type 'box)
+  (message "Enter hydra-vi")
+  (hydra-vi/body))
+
+(defhydra hydra-vi
+  (:post (progn
+           (set-cursor-color "#ffffff")
+           (setq cursor-type 'bar)
+           (message "Leave hydra-vi")))
+  "vi"
+  ("l" forward-char)
+  ("h" backward-char)
+  ("j" next-line)
+  ("J" qjp-fast-forward-lines)
+  ("k" previous-line)
+  ("K" qjp-fast-backward-lines)
+  ("f" forward-word)
+  ("b" backward-word)
+  ("x" delete-char)
+  ("a" qjp-back-to-indentation-or-beginning)
+  ("e" end-of-line)
+  ("d" whole-line-or-region-kill-region)
+  ("D" kill-rectangle)
+  ("w" whole-line-or-region-copy-region-as-kill)
+  ("W" copy-rectangle-as-kill)
+  ("c" qjp-duplicate-line-or-region)
+  ("s" (progn (exchange-point-and-mark) (activate-mark)))
+  ("o" qjp-open-new-line)
+  ("O" (qjp-open-new-line 1))
+  ("y" yank)
+  ("Y" yank-pop)
+  ("u" undo)
+  ("v" set-mark-command)
+  ("V" rectangle-mark-mode)
+  ("i" nil "quit")
+  ("q" nil "quit"))
+
+(with-eval-after-load "key-chord"
+  (key-chord-define-global "jj" #'qjp-hydra-vi))
+
+(defhydra hydra-goto-line (goto-map ""
+                           :pre (linum-mode 1)
+                           :post (linum-mode -1))
+  "goto-line"
+  ("g" goto-line "go")
+  ("m" set-mark-command "mark" :bind nil)
+  ("q" nil "quit"))
 
 (defun ora-ex-point-mark ()
   (interactive)
@@ -32,15 +85,16 @@
       (rectangle-mark-mode 1)
       (goto-char mk))))
 
+
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
                            :color pink
                            :post (deactivate-mark))
   "
-  ^_k_^     _d_elete    _s_tring     |\\     _,,,--,,_
-_h_   _l_   _o_pen      _y_ank       /,`.-'`'   ._  \-;;,_
-  ^_j_^     _k_ill      _r_eset     |,4-  ) )_   .;.(  `'-'
-^^^^        _e_xchange  _u_ndo     '---''(_/._)-'(_\_)
-^^^^        _c_opy      _q_uit
+  ^_k_^     _d_elete    _s_tring
+_h_   _l_   _o_pen      _y_ank
+  ^_j_^     _r_eset     _u_ndo
+^^^^        _e_xchange  _q_uit
+^^^^        _c_opy
 "
   ("h" backward-char nil)
   ("l" forward-char nil)
@@ -57,6 +111,7 @@ _h_   _l_   _o_pen      _y_ank       /,`.-'`'   ._  \-;;,_
   ("s" string-rectangle nil)
   ("o" open-rectangle nil)
   ("q" nil nil))
+
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
 (provide 'qjp-misc-hydra-config)

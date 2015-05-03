@@ -1,4 +1,4 @@
-;;; qjp-keybindings.el --- Require all key bindings here
+;; qjp-keybindings.el --- Require all key bindings here
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -31,10 +31,9 @@
 (global-set-key (kbd "C-h") 'backward-delete-char)
 (global-set-key (kbd "M-h") 'backward-kill-word)
 (global-set-key (kbd "M-s r") 'replace-string)
+(global-set-key (kbd "C-c d") 'qjp-duplicate-line-or-region)
 ;; Use ace-jump-zap instead
 ;;(global-set-key (kbd "M-Z") 'zap-up-to-char)
-(global-set-key (kbd "M-n") 'qjp-fast-forward-lines)
-(global-set-key (kbd "M-p") 'qjp-fast-backward-lines)
 (global-set-key (kbd "C-a") 'qjp-back-to-indentation-or-beginning)
 (global-set-key (kbd "M-;") 'qjp-comment-dwim-line)
 (global-set-key (kbd "C-o") 'qjp-open-new-line)

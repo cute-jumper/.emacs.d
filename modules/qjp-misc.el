@@ -69,10 +69,10 @@
              bing-dict
              company
              dired
-             easypg evil expand-region
+             easypg expand-region
              flyspell
              goto-last-change gscholar-bibtex
-             helm hs fcitx;; loaded after helm
+             helm hs fcitx hydra;; loaded after helm
              idle-highlight ispell
              jump-char
              key-chord

@@ -150,7 +150,7 @@
 ;; ----- ;;
 (d magit
    (setq magit-last-seen-setup-instructions "1.4.0")
-   (global-set-key (kbd "C-x m") 'magit-status))
+   (global-set-key (kbd "C-x g") 'magit-status))
 
 ;; --- ;;
 ;; w3m ;;
@@ -276,7 +276,8 @@ highlight."
       (if prefix #'quickrun-replace-region
         #'quickrun-region)))
    (global-set-key (kbd "C-c q r") #'quickrun-region-dwim)
-   (add-to-list 'evil-emacs-state-modes 'quickrun/mode))
+   (with-eval-after-load 'evil
+     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
 ;; --------------- ;;
 ;; gscholar-bibtex ;;
@@ -298,7 +299,7 @@ highlight."
          (let ((word (word-at-point)))
            (when word
              (bing-dict-brief word))))))
-   (global-set-key (kbd "C-c d") 'bing-dict-brief)
+   (global-set-key (kbd "C-c D") 'bing-dict-brief)
    (global-set-key (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse))
 
 ;; Restore the original version of `d'

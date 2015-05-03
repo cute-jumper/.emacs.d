@@ -52,10 +52,10 @@
 (setq helm-bibtex-bibliography qjp-bibtex-database-file)
 
 ;; Helm-mode is slow (more than 0.5s to start)
-(run-with-idle-timer 1 nil (lambda ()
-                             (helm-mode)
-                             (helm-autoresize-mode t)
-                             (helm-descbinds-mode)))
+(with-eval-after-load "helm"
+  (helm-mode)
+  (helm-autoresize-mode t)
+  (helm-descbinds-mode))
 
 (provide 'qjp-misc-helm-config)
 ;;; qjp-misc-helm-config.el ends here
