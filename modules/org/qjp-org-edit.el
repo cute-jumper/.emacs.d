@@ -28,20 +28,12 @@
 ;; org structure movement and editing ;;
 ;; ---------------------------------- ;;
 
-;; ----------------- ;;
-;; Basic key binding ;;
-;; ----------------- ;;
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
 ;; ------------- ;;
 ;; Basic setting ;;
 ;; ------------- ;;
 (setq org-use-speed-commands t)
 (setq org-cycle-separator-lines 0)      ;get rid of the blank lines when cycling
-(setq org-alphabetical-lists t)         ;enable a. b. c. as plain lists
+(setq org-list-allow-alphabetical t)         ;enable a. b. c. as plain lists
 (add-hook 'org-mode-hook (lambda () (abbrev-mode)))
 
 ;; Show next/prev heading tidily

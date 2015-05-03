@@ -76,19 +76,23 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Now, let's set the fonts for English and Chinese
-(set-fontset-font "fontset-default" 'unicode "Symbola")
-(setq default-frame-alist
-      '((font . "Liberation Mono:pixelsize=22")
-        (cursor-color . "white")))
-(if (display-graphic-p)
-    (set-fontset-font (frame-parameter nil 'font) 'han
-                      (font-spec :family "WenQuanYi Micro Hei Mono" :size 26)))
+(when (display-graphic-p)
+  (set-frame-font "Liberation Mono:pixelsize=22")
+  (setq default-frame-alist
+        '((font . "Liberation Mono:pixelsize=22")
+          (cursor-color . "white")))
+  (set-fontset-font (frame-parameter nil 'font) 'han
+                    (font-spec :family "WenQuanYi Micro Hei Mono" :size 26))
+  (set-fontset-font "fontset-default" 'unicode "Symbola"))
+
+
 
 ;; Put auto save file to temporary file directory
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 (load-theme 'zenburn t)
+(custom-theme-set-faces 'zenburn '(vhl/default-face ((t (:foreground "#E0CF9F" :background "#383838")))))
 
 ;; -------------------------- ;;
 ;; Some useful built-in modes ;;

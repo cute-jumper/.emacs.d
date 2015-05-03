@@ -127,7 +127,7 @@
 ;; jump-char ;;
 ;; --------- ;;
 (d jump-char
-   (key-chord-define-global "jc" 'jump-char-forward))
+   (key-chord-define-global "jf" 'jump-char-forward))
 
 ;; ------------- ;;
 ;; expand-region ;;
