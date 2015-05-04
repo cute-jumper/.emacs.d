@@ -14,7 +14,7 @@
 ;;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ;;; PURPOSE.  See the GNU General Public License in file COPYING
 ;;; for more details.
-;;;                        
+;;;
 ;;; You should have received a copy of the GNU General Public
 ;;; License along with this program; if not, write to the Free
 ;;; Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
@@ -125,4 +125,3 @@
       . "/* XPM */\n/* Copyright 2004 by the Free Software Foundation. See COPYING */\nstatic char * wmoku5_xpm[] = {\n\"30 30 11 1\",\n\" 	c #E79DB2CA4924\",\n\".	c #000000000000\",\n\"X	c #CF3CCF3CCF3C\",\n\"o	c #C71BC71BC71B\",\n\"O	c #D75CD75CD75C\",\n\"+	c #DF7DDF7DDF7D\",\n\"@	c #E79DE79DE79D\",\n\"#	c #EFBEEFBEEFBE\",\n\"$	c #BEFBBEFBBEFB\",\n\"%	c #B6DAB6DAB6DA\",\n\"&	c #AEBAAEBAAEBA\",\n\"              ..              \",\n\"           XXoooXOX           \",\n\"         oXXXXXXOOOOX         \",\n\"       XoXXXXXXOOOOOOXX       \",\n\"      XooXXXXXOO++++++OX      \",\n\"     XoooXXXXOO+++@@@++OX     \",\n\"    ooooooXXXOO++@@@@@+++O    \",\n\"   XooooooXXXOO+@@###@@+++X   \",\n\"   Xoo$oooXXXOO+@@####@@++O   \",\n\"  ooo$$$oooXXOO+@@#####@++OO  \",\n\"  o$$$$$oooXXOO++@####@@++OO  \",\n\" %$$$$$$$oooXXOO+@@@#@@@++OXo \",\n\" %%%%$$$$oooXX&&++@@@@@++OOXo \",\n\" %%%%$$$$oooo&..&+++@@+++OXXo \",\n\".&%%%%$$$$oo&....&O++++OOOXXo \",\n\".&&&%%%$$$oo&....&OOOOOOOOXoo \",\n\" &&&%%%%$$$oo&..&XXXOOOOXXXoo \",\n\" &&&&%%%$$$$oo&&XXXXXXXXXXXoo \",\n\" &&&&&%%%$$$$oooooXXXXXXXXooo \",\n\"  &&&&&%%$$$$$oooooooXXXXXXo  \",\n\"  &&&&&%%%$$$$$ooooooooooXXX  \",\n\"   &&&&&&%%%%$$$$$oooooooXX   \",\n\"   %&&&&&%%%%%$$$$$$$$oooXX   \",\n\"    &&&&&&%%%%%$$$$$$$ooXX    \",\n\"     &&&&&&%%%%%%%%%$$ooX     \",\n\"      &&&&&&&&%%%%%%%$oo      \",\n\"       &&&&&&&&&&%%%%$o       \",\n\"         &&&&&&&&&%%$         \",\n\"           &&&&&&%%           \",\n\"                              \"};\n")))
   "Alist of XPM images suitable for use by gnugo.el.\nKeys are (TYPE . PLACE), where TYPE is one of:\n  bmoku bpmoku empty hoshi wmoku wpmoku\nand PLACE is an integer describing a visible location:\n  1 2 3\n  4 5 6\n  7 8 9.\nThe image values are the result of `find-image'.")
 (provide 'gnugo-xpms)
-

@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -75,7 +75,7 @@
 ;; -------- ;;
 ;; org TODO ;;
 ;; -------- ;;
-(setq org-todo-keyword-faces 
+(setq org-todo-keyword-faces
       '(("STARTED". "yellow") ("CANCELED" . "red")))
 
 ;; ------- ;;

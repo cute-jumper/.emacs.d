@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -36,7 +36,7 @@
   (previous-line 5))
 
 ;; C-a to be `back-to-indentation' first and then `beginning-of-line'
-(defun qjp-back-to-indentation-or-beginning () 
+(defun qjp-back-to-indentation-or-beginning ()
   (interactive)
   (if (= (point) (progn (back-to-indentation) (point)))
       (beginning-of-line)))

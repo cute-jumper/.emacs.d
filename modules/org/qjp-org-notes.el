@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -36,7 +36,7 @@
 (setq org-agenda-custom-commands
       '(("n" . "Search in notes")
         ("nt" "Note tags search" tags ""
-         ((org-agenda-files qjp-notes-file-list))) 
+         ((org-agenda-files qjp-notes-file-list)))
         ("ns" "Note full text search" search ""
          ((org-agenda-files qjp-notes-file-list)))))
 
@@ -49,7 +49,7 @@
         :buffer "*helm org headings*"))
 
 ;; FIX: This function needs to be polished. Currently I don't know a better
-;; implementation. 
+;; implementation.
 ;; Copy and modify implementation of `helm-projectile-grep-or-ack'
 (defun qjp-helm-notes-search ()
   (interactive)

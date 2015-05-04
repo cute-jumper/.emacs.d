@@ -20,11 +20,11 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
-;; Quick way to open root directory in Dired 
+;; Quick way to open root directory in Dired
 (defun org-open-personal ()
   (interactive)
   (dired qjp-document-dir))

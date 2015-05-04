@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -42,7 +42,7 @@
             (setq TeX-save-query  nil)))
 
 ;; Add `latexmk' to command list
-(add-hook 'LaTeX-mode-hook 
+(add-hook 'LaTeX-mode-hook
           (lambda ()
             (add-to-list 'TeX-command-list
                          '("latexmk" "latexmk -pdf %s && latexmk -c" TeX-run-TeX nil t
@@ -62,12 +62,12 @@
 ;; ------------------ ;;
 ;; (add-hook 'LaTeX-mode-hook (lambda () (local-set-key [(control tab)] 'TeX-complete-symbol)))
 ;; (add-hook 'latex-mode-hook (lambda () (local-set-key [(control tab)] 'TeX-complete-symbol)))
-(add-hook 'LaTeX-mode-hook 
+(add-hook 'LaTeX-mode-hook
           (lambda ()
             (local-set-key [(return)] 'newline-and-indent)
             (local-set-key (kbd "C-c ,") 'LaTeX-mark-section)))
 (add-hook 'latex-mode-hook
-          (lambda () 
+          (lambda ()
             (local-set-key [(return)] 'newline-and-indent)
             (local-set-key (kbd "C-c ,") 'LaTeX-mark-section)))
 
@@ -143,7 +143,7 @@
         (insert "\\usepackage{" pkg-name "}")
       (insert "\\usepackage[" pkg-options "]{" pkg-name "}"))))
 
-;; Facility for \maketitle 
+;; Facility for \maketitle
 (defun qjp-latex-maketitle (title author date)
   (interactive "sTitle: \nsAuthor: \nsDate: ")
   (save-excursion

@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -44,7 +44,7 @@
 (require 'org-caldav)
 (setq org-caldav-url "https://www.google.com/calendar/dav")
 (setq org-caldav-calendar-id "qjpchmail@gmail.com")
-(setq org-caldav-files 
+(setq org-caldav-files
       (mapcar (lambda (x)
                 (concat qjp-document-dir x))
               '("Agenda/homework.org" "Agenda/tasks.org")))

@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -33,15 +33,15 @@
 ;; Update installed package list and install them at first initialization,
 ;; Besides, they can be used to sync the newly installed packages.
 ;; Idea from: http://blub.co.za/posts/Installing-packages-on-Emacs-startup.html
-(defun qjp-get-package-list-filename () 
+(defun qjp-get-package-list-filename ()
   "return the filename containing the installed packages' list"
   (expand-file-name "installed-package-list" qjp-base-dir))
 
 (defun qjp-install-all-packages ()
   "Use this command to install all the packages.
-It will read from the file and get the installed packages's list, 
+It will read from the file and get the installed packages's list,
 then it will install these packages one by one."
-  (interactive)  
+  (interactive)
   (package-refresh-contents)
   (let ((installed-packages
          (read

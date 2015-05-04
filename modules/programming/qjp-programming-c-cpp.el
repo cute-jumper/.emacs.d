@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;;
 
 ;;; Code:
 
@@ -32,7 +32,7 @@
 ;; (defun clang-set-gtk-flags()
 ;;   (interactive)
 ;;   (setq ac-clang-flags
-;;         (mapcar (lambda 
+;;         (mapcar (lambda
 ;;                   (item)
 ;;                   (concat "-I" item))
 ;;                 (split-string
@@ -85,7 +85,7 @@
    ((not (eq c ?\()) (insert-pair 0 c c))
    (t (insert-pair 0 ?\( ?\)))))
 
-(defun qjp-c-cpp-mode-hook ()  
+(defun qjp-c-cpp-mode-hook ()
   (local-set-key [(return)] 'electrify-return-if-match)
   (local-set-key [C-backspace] 'c-hungry-delete)
   (local-set-key (kbd "M-(") 'qjp-insert-parentheses)

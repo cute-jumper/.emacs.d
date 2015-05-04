@@ -109,7 +109,8 @@
 ;; ------------------ ;;
 (d ace-jump-helm-line
    (with-eval-after-load 'helm
-     (define-key helm-map (kbd "C-'") 'ace-jump-helm-line)))
+     (with-eval-after-load 'key-chord
+       (key-chord-define helm-map "jj" 'ace-jump-helm-line))))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -294,7 +295,7 @@ highlight."
 ;; --------- ;;
 ;; bing-dict ;;
 ;; --------- ;;
-(d bing-dict   
+(d bing-dict
    (defun qjp-search-word-at-mouse ()
      "bing search word at mouse"
      (interactive)
