@@ -45,6 +45,8 @@
   ("J" qjp-fast-forward-lines)
   ("k" previous-line)
   ("K" qjp-fast-backward-lines)
+  ("n" (scroll-up-command))
+  ("p" (scroll-up-command '-))
   ("f" forward-word)
   ("b" backward-word)
   ("x" delete-char)

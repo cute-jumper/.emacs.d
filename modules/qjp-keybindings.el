@@ -71,5 +71,10 @@
 (global-set-key (kbd "<C-mouse-1>") 'qjp-nop)
 (global-set-key (kbd "<C-down-mouse-1>") 'qjp-nop)
 
+;; key-chord-mode
+(with-eval-after-load 'key-chord
+  (key-chord-define-global "bb" 'helm-mini)
+  (key-chord-define-global "xf" 'helm-find-files))
+
 (provide 'qjp-keybindings)
 ;;; qjp-keybindings.el ends here

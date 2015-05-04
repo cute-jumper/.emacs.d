@@ -129,7 +129,7 @@
 ;; ---------------------- ;;
 
 ;; show-paren-mode
-(show-paren-mode)
+(show-paren-mode +1)
 (setq show-paren-style 'mixed)
 
 ;; uniquify

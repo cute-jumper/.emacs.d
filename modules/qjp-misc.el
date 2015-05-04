@@ -65,7 +65,7 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(ace-jump ace-jump-buffer ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
+  '(ace-jump ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
              bing-dict
              company
              dired
@@ -92,7 +92,7 @@
 ;; Enable these settings
 (defun qjp-misc-enable-setting (feature-name)
   (let ((func-name (qjp-misc-make-func-name-string feature-name)))
-    (qjp-timed (funcall (intern func-name)) func-name "21qjp-misc-details")))
+    (qjp-timed (funcall (intern func-name)) func-name "21qjp-misc-details"))))
 
 (defun qjp-misc-enable-all ()
   (mapc 'qjp-misc-enable-setting qjp-enabled-misc-settings-list))

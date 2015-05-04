@@ -88,12 +88,6 @@
    (global-set-key (kbd "C-;") 'ace-jump-mode)
    (global-set-key (kbd "C-:") 'ace-jump-char-mode))
 
-;; --------------- ;;
-;; ace-jump-buffer ;;
-;; --------------- ;;
-(d ace-jump-buffer
-   (key-chord-define-global "jb" 'ace-jump-buffer))
-
 ;; ------------ ;;
 ;; ace-jump-zap ;;
 ;; ------------ ;;
@@ -127,7 +121,8 @@
 ;; jump-char ;;
 ;; --------- ;;
 (d jump-char
-   (key-chord-define-global "jf" 'jump-char-forward))
+   (key-chord-define-global "jf" 'jump-char-forward)
+   (key-chord-define-global "jb" 'jump-char-backward))
 
 ;; ------------- ;;
 ;; expand-region ;;
@@ -294,8 +289,7 @@ highlight."
 ;; gscholar-bibtex ;;
 ;; --------------- ;;
 (d gscholar-bibtex
-   (setq gscholar-bibtex-database-file
-         (expand-file-name "~/texmf/bibtex/bib/refs.bib")))
+   (setq gscholar-bibtex-database-file qjp-bibtex-database-file))
 
 ;; --------- ;;
 ;; bing-dict ;;
