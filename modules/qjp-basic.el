@@ -150,6 +150,10 @@
 ;; imenu
 (setq-default imenu-auto-rescan t)
 
+;; grep
+(with-eval-after-load 'grep
+  (add-to-list 'grep-find-ignored-files "*.class"))
+
 ;; hippie expand is dabbrev expand on steroids
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
