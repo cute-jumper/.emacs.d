@@ -146,6 +146,7 @@
 (setq
  whitespace-line-column 80
  whitespace-style '(face tabs empty trailing lines-tail))
+(global-whitespace-mode)
 
 ;; imenu
 (setq-default imenu-auto-rescan t)

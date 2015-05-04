@@ -76,12 +76,18 @@
              ,@body)
          (fset ',name ,old)))))
 
-
 ;; NOP function. Just show the cursor position!
+(defvar qjp--nop-counter 0)
 (defun qjp-nop ()
-  "Don't use `what-line' because it would output a message in minibuffer"
+  "Show uptime"
   (interactive)
-  (message "Cursor at (%d, %d)" (line-number-at-pos) (current-column)))
+  (let ((branch-count 2))
+    (cond
+     ((= qjp--nop-counter 0) (message "Buffer %s has %d lines"
+                                      (buffer-name)
+                                      (line-number-at-pos (point-max))))
+     (t (message "Emacs uptime: %s" (emacs-uptime))))
+    (setq qjp--nop-counter (mod (1+ qjp--nop-counter) branch-count))))
 
 ;; Maximize
 (defun qjp-maximized ()

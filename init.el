@@ -42,7 +42,7 @@
   "Alist containing init time information")
 
 (defmacro qjp-timed (sexp name &optional module)
-  (let* ((module-name (or module "00default")))
+  (let ((module-name (or module "00default")))
     `(let ((start-time (current-time))
            (init-times (assoc
                         ,module-name
@@ -83,5 +83,4 @@
               qjp-init-duration
               emacs-version
               user-full-name))
-
 ;;; init.el ends here
