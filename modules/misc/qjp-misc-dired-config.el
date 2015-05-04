@@ -57,6 +57,27 @@
        (dired-insert-set-properties (point-min) (point-max)))
   (set-buffer-modified-p nil))
 
+(defun dired-do-eval (form)
+  "Evaluate FORM in each of the buffers."
+  (interactive (list
+                (read-from-minibuffer
+                 "Eval in files (form): "
+                 nil
+                 read-expression-map
+                 t
+                 'read-expression-history)))
+  (dired-map-over-marks
+   (let* ((filename (dired-get-file-for-visit))
+          (buf (find-file-noselect filename))
+          (kill-buffer-query-functions nil))
+     (unwind-protect
+         (with-current-buffer buf
+           (eval form lexical-binding)
+           (save-buffer))
+       (kill-buffer buf)))
+   nil))
+(define-key dired-mode-map "E" #'dired-do-eval)
+
 (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
 (add-hook 'dired-mode-hook
           (lambda()
