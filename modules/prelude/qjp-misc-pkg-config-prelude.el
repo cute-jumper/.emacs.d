@@ -124,18 +124,6 @@
 (add-hook 'text-mode-hook 'prelude-enable-flyspell)
 (add-hook 'text-mode-hook 'prelude-enable-whitespace)
 
-;; enable narrowing commands
-(put 'narrow-to-region 'disabled nil)
-(put 'narrow-to-page 'disabled nil)
-(put 'narrow-to-defun 'disabled nil)
-
-;; enabled change region case commands
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-;; enable erase-buffer command
-(put 'erase-buffer 'disabled nil)
-
 (require 'expand-region)
 
 ;; bookmarks
@@ -185,53 +173,12 @@
 (browse-kill-ring-default-keybindings)
 (global-set-key (kbd "s-y") 'browse-kill-ring)
 
-;; automatically indenting yanked text if in programming-modes
-(defvar yank-indent-modes
-  '(LaTeX-mode TeX-mode)
-  "Modes in which to indent regions that are yanked (or yank-popped).
-Only modes that don't derive from `prog-mode' should be listed here.")
-
-(defvar yank-indent-blacklisted-modes
-  '(python-mode slim-mode haml-mode)
-  "Modes for which auto-indenting is suppressed.")
-
-(defvar yank-advised-indent-threshold 1000
-  "Threshold (# chars) over which indentation does not automatically occur.")
-
-(defun yank-advised-indent-function (beg end)
-  "Do indentation, as long as the region isn't too large."
-  (if (<= (- end beg) yank-advised-indent-threshold)
-      (indent-region beg end nil)))
-
-(defadvice yank (after yank-indent activate)
-  "If current mode is one of 'yank-indent-modes,
-indent yanked text (with prefix arg don't indent)."
-  (if (and (not (ad-get-arg 0))
-           (not (member major-mode yank-indent-blacklisted-modes))
-           (or (derived-mode-p 'prog-mode)
-               (member major-mode yank-indent-modes)))
-      (let ((transient-mark-mode nil))
-    (yank-advised-indent-function (region-beginning) (region-end)))))
-
-(defadvice yank-pop (after yank-pop-indent activate)
-  "If current mode is one of `yank-indent-modes',
-indent yanked text (with prefix arg don't indent)."
-  (when (and (not (ad-get-arg 0))
-             (not (member major-mode yank-indent-blacklisted-modes))
-             (or (derived-mode-p 'prog-mode)
-                 (member major-mode yank-indent-modes)))
-    (let ((transient-mark-mode nil))
-      (yank-advised-indent-function (region-beginning) (region-end)))))
-
 ;; abbrev config
 (add-hook 'text-mode-hook 'abbrev-mode)
 
 ;; make a shell script executable automatically on save
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
-
-;; .zsh file is shell script too
-(add-to-list 'auto-mode-alist '("\\.zsh\\'" . shell-script-mode))
 
 ;; whitespace-mode config
 (require 'whitespace)
@@ -254,9 +201,6 @@ indent yanked text (with prefix arg don't indent)."
 ;; sensible undo
 (global-undo-tree-mode)
 (diminish 'undo-tree-mode)
-
-;; enable winner-mode to manage window configurations
-(winner-mode +1)
 
 (provide 'qjp-misc-pkg-config-prelude)
 ;;; qjp-misc-pkg-config-prelude.el ends here

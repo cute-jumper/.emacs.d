@@ -27,6 +27,9 @@
 ;; Require basic feature
 (qjp-modules-require-subdir-feature "programming" "qjp-programming-basic")
 
+;; shell-mode
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+
 ;; Define lauguages to be configured
 (defvar qjp-programming-languages '(c-cpp java python ruby scala haskell elisp javascript lua)
   "My programming lauguages")

@@ -24,18 +24,25 @@
 
 ;;; Code:
 
-;; ---------------------------------------------- ;;
-;; UI part. Some code borrowed from prelude-ui.el ;;
-;; ---------------------------------------------- ;;
+;; ------- ;;
+;; UI part ;;
+;; ------- ;;
 
 ;; Customize the looking! From up to down!
 ;; Set title first
-;; (setq frame-title-format (format "%%b@%s" (system-name)))
+(setq frame-title-format
+      '((:eval
+         (concat (if (buffer-file-name)
+                     (abbreviate-file-name (buffer-file-name))
+                   "%b")
+                 "@"
+                 (system-name)))))
 
 ;; Show menu bar if `ubuntu', otherwise disable it.
 (let ((desktop-env (getenv "DESKTOP_SESSION")))
-  (cond ((string= desktop-env "ubuntu") (menu-bar-mode))
-        (t (menu-bar-mode -1))))
+  (if (string= desktop-env "ubuntu")
+      (menu-bar-mode +1)
+    (menu-bar-mode -1)))
 
 ;; Disable toolbar if not yet
 (tool-bar-mode -1)
@@ -43,19 +50,11 @@
 ;; Set cursor type
 (setq-default cursor-type 'bar)
 
-(setq inhibit-startup-screen t)
-
 ;; Set `fill-column' to wrap at 80
 (setq-default fill-column 80)
 
 ;; Disable blinking cursor
 (blink-cursor-mode -1)
-
-;; Enable tooltip
-(tooltip-mode)
-
-;; Enable mouse wheel support
-(mouse-wheel-mode t)
 
 ;; Nice scrolling
 (setq scroll-margin 0
@@ -66,14 +65,19 @@
 (line-number-mode t)
 (column-number-mode t)
 (size-indication-mode t)
-(which-function-mode)
 (display-battery-mode)
+
+;; Draw underline lower
+(setq x-underline-at-descent-line t)
+
+;; Show me empty lines
+(setq-default indicate-empty-lines t)
 
 ;; Show keystrokes in minibuffer
 (setq echo-keystrokes 0.1)
 
-;; Use y/n instead of yes/no
-(fset 'yes-or-no-p 'y-or-n-p)
+;; Show visible bell
+(setq visible-bell t)
 
 ;; Now, let's set the fonts for English and Chinese
 (when (display-graphic-p)
@@ -85,65 +89,66 @@
                     (font-spec :family "WenQuanYi Micro Hei Mono" :size 26))
   (set-fontset-font "fontset-default" 'unicode "Symbola"))
 
-
-
-;; Put auto save file to temporary file directory
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 (load-theme 'zenburn t)
-(custom-theme-set-faces 'zenburn '(vhl/default-face ((t (:foreground "#E0CF9F" :background "#383838")))))
+;; Minor fix for volitile-highlight
+(custom-theme-set-faces
+ 'zenburn
+ '(vhl/default-face ((t (:foreground "#E0CF9F" :background "#383838")))))
 
-;; -------------------------- ;;
-;; Some useful built-in modes ;;
-;; -------------------------- ;;
+;; -------------------- ;;
+;; Some useful settings ;;
+;; -------------------- ;;
+
+;; Use y/n instead of yes/no
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Single space ends sentences
+(setq sentence-end-double-space nil)
+
+;; Don't use shift to select
+(setq shift-select-mode nil)
+
+;; Don't use tabs pleeeeeeeeese!
+(setq-default indent-tabs-mode nil)
+
+;; use 'complete when auto-complete is disabled
+(setq tab-always-indent 'complete)
+
+;; auto save and backups
+(setq
+ ;; Put auto save file to temporary file directory
+ auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+ ;; Backups
+ backup-directory-alist `(("." . ,(concat qjp-base-dir "backups")))
+ ;; Tramp backups
+ tramp-backup-directory-alist backup-directory-alist)
+
+;; ---------------------- ;;
+;; Built-in functionality ;;
+;; ---------------------- ;;
 
 ;; show-paren-mode
 (show-paren-mode)
 (setq show-paren-style 'mixed)
 
-;; -------------------------- ;;
-;; Settings modified from esk ;;
-;; -------------------------- ;;
-(setq visible-bell t
-      inhibit-startup-message t
-      color-theme-is-global t
-      sentence-end-double-space nil
-      shift-select-mode nil
-      mouse-yank-at-point t
-      uniquify-buffer-name-style 'forward
-      whitespace-style '(face trailing lines-tail tabs)
-      whitespace-line-column 80
-      ediff-window-setup-function 'ediff-setup-windows-plain
-      save-place-file (concat qjp-base-dir "places")
-      backup-directory-alist `(("." . ,(concat qjp-base-dir "backups")))
-      tramp-backup-directory-alist backup-directory-alist
-      diff-switches "-u")
+;; uniquify
+(setq uniquify-buffer-name-style 'forward
+      uniquify-ignore-buffers-re "^\\*")
 
-(add-to-list 'safe-local-variable-values '(lexical-binding . t))
-(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+;; winner-mode for window configurations
+(winner-mode +1)
 
-(set-default 'indicate-empty-lines t)
-(set-default 'imenu-auto-rescan t)
+;; ediff in same frame
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;; whitespace-mode
+(setq
+ whitespace-line-column 80
+ whitespace-style '(face tabs empty trailing lines-tail))
 
-;; ---------------------------------- ;;
-;; Some useful functions from prelude ;;
-;; ---------------------------------- ;;
-
-;; Death to the tabs!  However, tabs historically indent to the next
-;; 8-character offset; specifying anything else will cause *mass*
-;; confusion, as it will change the appearance of every existing file.
-;; In some cases (python), even worse -- it will change the semantics
-;; (meaning) of the program.
-;;
-;; Emacs modes typically provide a standard means to change the
-;; indentation width -- eg. c-basic-offset: use that to adjust your
-;; personal indentation width, while maintaining the style (and
-;; meaning) of any files you load.
-(setq-default indent-tabs-mode nil)   ;; don't use tabs to indent
-(setq-default tab-width 8)            ;; but maintain correct appearance
+;; imenu
+(setq-default imenu-auto-rescan t)
 
 ;; hippie expand is dabbrev expand on steroids
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
@@ -157,19 +162,24 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-;; smart tab behavior - indent or complete
-(setq tab-always-indent 'complete)
+;; ----------- ;;
+;; Basic hooks ;;
+;; ----------- ;;
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
-;; ----------------------------- ;;
-;; Put Unused configuration here ;;
-;; ----------------------------- ;;
+;; -------------- ;;
+;; Remove warning ;;
+;; -------------- ;;
 
-;; electric-pair-mode --> smartparens
-                                        ; (electric-pair-mode)
-
-;; ibuffer --> helm
-                                        ; (setq ibuffer-use-other-window t)
-                                        ; (global-set-key (kbd "C-x C-b") 'ibuffer)
+;; Narrowing commands
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-defun 'disabled nil)
+;; Change region case commands
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+;; Erase-buffer command
+(put 'erase-buffer 'disabled nil)
 
 (provide 'qjp-basic)
 ;;; qjp-basic.el ends here

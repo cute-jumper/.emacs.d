@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+;; Remove ellipsis when evaling sexp in message buffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil)
+
 ;; --------------- ;;
 ;; emacs lisp mode ;;
 ;; --------------- ;;

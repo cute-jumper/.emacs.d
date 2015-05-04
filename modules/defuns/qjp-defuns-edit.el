@@ -140,6 +140,43 @@ With negative N, comment out original line and use the absolute value."
     (back-to-indentation)
     (kill-region (point) prev-pos)))
 
+(defvar qjp-yank-indent-modes
+  '(LaTeX-mode TeX-mode)
+  "Modes in which to indent regions that are yanked (or yank-popped).
+Only modes that don't derive from `prog-mode' should be listed here.")
+
+(defvar qjp-yank-indent-blacklisted-modes
+  '(python-mode slim-mode haml-mode)
+  "Modes for which auto-indenting is suppressed.")
+
+(defvar qjp-yank-advised-indent-threshold 1000
+  "Threshold (# chars) over which indentation does not automatically occur.")
+
+(defun qjp-yank-advised-indent-function (beg end)
+  "Do indentation, as long as the region isn't too large."
+  (if (<= (- end beg) qjp-yank-advised-indent-threshold)
+      (indent-region beg end nil)))
+
+(defadvice yank (after yank-indent activate)
+  "If current mode is one of 'qjp-yank-indent-modes,
+indent yanked text (with prefix arg don't indent)."
+  (if (and (not (ad-get-arg 0))
+           (not (member major-mode qjp-yank-indent-blacklisted-modes))
+           (or (derived-mode-p 'prog-mode)
+               (member major-mode qjp-yank-indent-modes)))
+      (let ((transient-mark-mode nil))
+    (qjp-yank-advised-indent-function (region-beginning) (region-end)))))
+
+(defadvice yank-pop (after yank-pop-indent activate)
+  "If current mode is one of `qjp-yank-indent-modes',
+indent yanked text (with prefix arg don't indent)."
+  (when (and (not (ad-get-arg 0))
+             (not (member major-mode qjp-yank-indent-blacklisted-modes))
+             (or (derived-mode-p 'prog-mode)
+                 (member major-mode qjp-yank-indent-modes)))
+    (let ((transient-mark-mode nil))
+      (qjp-yank-advised-indent-function (region-beginning) (region-end)))))
+
 ;; autoload `zap-up-to-char' in `misc'
 ;; obsolete. Use `ace-jump-zap' instead
 ;; (autoload 'zap-up-to-char "misc")

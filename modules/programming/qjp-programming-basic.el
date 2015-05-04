@@ -24,6 +24,9 @@
 
 ;;; Code:
 
+;; Enable which-function-mode
+(which-function-mode +1)
+
 ;; -------------------------------------------- ;;
 ;; electriy-return, useful function copied from ;;
 ;; -------------------------------------------- ;;

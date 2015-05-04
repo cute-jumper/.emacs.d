@@ -39,6 +39,10 @@
 ;; Making this larger could result in reducing the frequency of GC.
 (setq gc-cons-threshold 50000000)
 
+;; inhibit startup related
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
+
 ;; Treat all custom theme safe
 (setq custom-safe-themes t)
 
