@@ -26,18 +26,15 @@
 
 (setq hydra-is-helpful)
 
-(defun qjp-hydra-vi ()
-  (interactive)
-  (set-cursor-color "#dfe030")
-  (setq cursor-type 'box)
-  (message "Enter hydra-vi")
-  (hydra-vi/body))
-
 (defhydra hydra-vi
-  (:post (progn
-           (set-cursor-color "#ffffff")
-           (setq cursor-type 'bar)
-           (message "Leave hydra-vi")))
+  (:body-pre (progn
+               (set-cursor-color "#dfe030")
+               (setq cursor-type 'box)
+               (message "Enter hydra-vi"))
+             :post (progn
+                     (set-cursor-color "#ffffff")
+                     (setq cursor-type 'bar)
+                     (message "Leave hydra-vi")))
   "vi"
   ("l" forward-char)
   ("h" backward-char)
@@ -70,8 +67,9 @@
   ("q" nil "quit"))
 
 (with-eval-after-load 'key-chord
-  (key-chord-define-global "jj" #'qjp-hydra-vi))
+  (key-chord-define-global "jj" #'hydra-vi/body))
 
+;; This reserves the behavior for M-g M-g
 (defhydra hydra-goto-line (goto-map ""
                            :pre (linum-mode 1)
                            :post (linum-mode -1))
@@ -116,6 +114,16 @@ _h_   _l_   _o_pen      _y_ank
   ("q" nil nil))
 
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+
+(defhydra hydra-number
+  (;; :body-pre (if (= last-command-event ?+)
+   ;;               (call-interactively #'evil-numbers/inc-at-pt)
+   ;;             (call-interactively #'evil-numbers/dec-at-pt))
+   global-map "C-c"
+             )
+  "hydra increase/decrease number"
+  ("+" evil-numbers/inc-at-pt)
+  ("-" evil-numbers/dec-at-pt))
 
 (provide 'qjp-misc-hydra-config)
 ;;; qjp-misc-hydra-config.el ends here

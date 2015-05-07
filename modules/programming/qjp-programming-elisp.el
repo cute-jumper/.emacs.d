@@ -87,7 +87,8 @@
                                   (highlight-parentheses-mode)
                                   (paredit-mode)
                                   (hideshowvis-minor-mode)
-                                  (local-set-key (kbd "RET") 'electrify-return-if-match)))
+                                  ;; (local-set-key (kbd "RET") 'electrify-return-if-match)
+                                  ))
 
 (add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
 (add-hook 'ielm-mode-hook (lambda () (eldoc-mode) (paredit-mode)))
