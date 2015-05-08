@@ -24,16 +24,19 @@
 
 ;;; Code:
 
+(defvar qjp-fast-moving-line-number 5
+  "How many line should fast moving command should use")
+
 ;; fast forward/backward lines
 (defun qjp-fast-forward-lines ()
   "Use `next-line' because I want the effect of visual movement"
   (interactive)
-  (next-line 5))
+  (next-line qjp-fast-moving-line-number))
 
 (defun qjp-fast-backward-lines ()
   "Use `previous-line' because I want the effect of visual movement"
   (interactive)
-  (previous-line 5))
+  (previous-line qjp-fast-moving-line-number))
 
 ;; C-a to be `back-to-indentation' first and then `beginning-of-line'
 (defun qjp-back-to-indentation-or-beginning ()
@@ -99,15 +102,6 @@ With negative N, comment out original line and use the absolute value."
   (transpose-lines 1)
   (forward-line -1)
   (indent-according-to-mode))
-
-;; Fix backward-up-list to understand quotes, see http://bit.ly/h7mdIL
-(defun qjp-backward-up-sexp (arg)
-  (interactive "p")
-  (let ((ppss (syntax-ppss)))
-    (cond ((elt ppss 3)
-           (goto-char (elt ppss 8))
-           (qjp-backward-up-sexp (1- arg)))
-          ((backward-up-list arg)))))
 
 (defun qjp-kill-back-to-indentation ()
   "Kill from point back to the first non-whitespace character on the line."

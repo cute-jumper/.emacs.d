@@ -20,17 +20,25 @@
 
 ;;; Commentary:
 
-;;
+;; - `eldoc-eval' seems unnecessary because of
+;;   `eval-expression-minibuffer-setup-hook'
+;; - pp-print
+;; - ipretty
+;; - Maybe ielm in other window like purcell or prelude?
+;; - rainbow-delimiters-mode vs highlight-parentheses-mode
+;; - red-shank
+;; - conditionally enable rainbow-mode
+;; - hl-sexp? Maybe. A little intrusive though.
 
 ;;; Code:
 
-;; Remove ellipsis when evaling sexp in message buffer
+;; Remove ellipsis when evaling sexp in minibuffer
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
-;; --------------- ;;
-;; emacs lisp mode ;;
-;; --------------- ;;
+;; ---------- ;;
+;; eldoc mode ;;
+;; ---------- ;;
 (require 'eldoc)
 
 ;; Source: http://emacswiki.org/emacs/ElDoc
@@ -76,24 +84,56 @@
                        (format "%s %s" doc docstring)))))
     ad-do-it))
 
-(eldoc-add-command
- 'paredit-backward-delete
- 'paredit-close-round
- 'electrify-return-if-match)
+;; ------------------------------------ ;;
+;; Emacs lisp, ielm and eval-expression ;;
+;; ------------------------------------ ;;
+(defun qjp-emacs-lisp-mode-hook ()
+  (eldoc-mode +1)
+  (paredit-mode +1)
+  (highlight-parentheses-mode +1)
+  (hideshowvis-minor-mode +1))
 
-(add-hook 'emacs-lisp-mode-hook (lambda ()
-                                  (hl-line-mode -1)
-                                  (eldoc-mode 1)
-                                  (highlight-parentheses-mode)
-                                  (paredit-mode)
-                                  (hideshowvis-minor-mode)
-                                  ;; (local-set-key (kbd "RET") 'electrify-return-if-match)
-                                  ))
+(defun qjp-ielm-mode-hook ()
+  (eldoc-mode +1)
+  (paredit-mode +1)
+  (highlight-parentheses-mode +1))
 
-(add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
-(add-hook 'ielm-mode-hook (lambda () (eldoc-mode) (paredit-mode)))
-(define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand)
+(add-hook 'emacs-lisp-mode-hook #'qjp-emacs-lisp-mode-hook)
+(add-hook 'ielm-mode-hook #'qjp-ielm-mode-hook)
 
+;; macrostep
+(with-eval-after-load 'lisp-mode
+  (define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand))
+
+;; switch between ielm and emacs lisp buffer
+(defvar qjp-ielm-from-buffer nil
+  "From where we switch to ielm")
+(make-variable-buffer-local 'qjp-ielm-from-buffer)
+
+(defun qjp-switch-to-ielm ()
+  (interactive)
+  (let ((from-buffer (current-buffer)))
+    (ielm)
+    (setq qjp-ielm-from-buffer from-buffer)))
+
+(defun qjp-switch-from-ielm ()
+  (interactive)
+  (if qjp-ielm-from-buffer
+      (switch-to-buffer qjp-ielm-from-buffer)
+    (message "No previous buffer for switching back.")))
+
+(with-eval-after-load 'lisp-mode
+  (define-key emacs-lisp-mode-map (kbd "C-z") #'qjp-switch-to-ielm)
+  (define-key lisp-interaction-mode-map (kbd "C-z") #'qjp-switch-to-ielm))
+(with-eval-after-load 'ielm
+  (define-key ielm-map (kbd "C-z") #'qjp-switch-from-ielm))
+
+;; Enable eldoc-mode when eval-expression
+(add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+
+;; -------------- ;;
+;; Paredit addons ;;
+;; -------------- ;;
 (with-eval-after-load 'paredit
   (defun paredit-barf-all-the-way-backward ()
      (interactive)

@@ -159,7 +159,11 @@
      (set-face-foreground 'magit-diff-add "green4")
      (set-face-foreground 'magit-diff-del "red3")))
 
+;; ------------------- ;;
+;; volatile-highlights ;;
+;; ------------------- ;;
 (d volatile-highlights
+   (autoload 'volatile-highlights-mode "volatile-highlights")
    (volatile-highlights-mode +1)
    (diminish 'volatile-highlights-mode))
 

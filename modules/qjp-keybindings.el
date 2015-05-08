@@ -40,7 +40,6 @@
 (global-set-key (kbd "C-o") 'qjp-open-new-line)
 (global-set-key [M-up] 'qjp-move-line-up)
 (global-set-key [M-down] 'qjp-move-line-down)
-(global-set-key [remap backward-up-list] 'qjp-backward-up-sexp)
 (global-set-key (kbd "M-m") 'qjp-kill-back-to-indentation)
 
 ;; Bindings `qjp-defuns-isearch'
