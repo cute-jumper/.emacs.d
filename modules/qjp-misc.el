@@ -84,6 +84,7 @@
              rebox region-bindings
              sml sr-speedbar
              term
+             volatile-highlights
              whole-line-or-region
              ;;yasnippet
              )

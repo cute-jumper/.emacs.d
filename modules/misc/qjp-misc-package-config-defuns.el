@@ -159,12 +159,9 @@
      (set-face-foreground 'magit-diff-add "green4")
      (set-face-foreground 'magit-diff-del "red3")))
 
-;; --- ;;
-;; w3m ;;
-;; --- ;;
-(d w3m
-   (setq w3m-default-display-inline-images t)
-   (setq w3m-home-page "http://www.google.com"))
+(d volatile-highlights
+   (volatile-highlights-mode +1)
+   (diminish 'volatile-highlights-mode))
 
 ;; ------------- ;;
 ;; markdown-mode ;;

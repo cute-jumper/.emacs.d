@@ -109,30 +109,6 @@ With negative N, comment out original line and use the absolute value."
            (qjp-backward-up-sexp (1- arg)))
           ((backward-up-list arg)))))
 
-;; I put this `require' here because in prelude it said...See following comments...
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
-(diminish 'volatile-highlights-mode)
-
-;; note - this should be after volatile-highlights is required
-;; new copy/cut
-(defadvice kill-ring-save (before slickcopy activate compile)
-  "When called interactively with no active region, copy a single line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-     (message "Copied line")
-     (list (line-beginning-position)
-           (line-end-position)))))
-
-;; new command my-kill-to-word, which I think is very helpful
-;; bind to C-\
-(defun qjp-kill-to-word ()
-  (interactive)
-  (save-excursion
-    (let ((beg (point)) (end (isearch-forward-word)))
-      (if end
-        (kill-region beg end)))))
-
 (defun qjp-kill-back-to-indentation ()
   "Kill from point back to the first non-whitespace character on the line."
   (interactive)

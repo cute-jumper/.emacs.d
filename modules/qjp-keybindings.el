@@ -34,13 +34,13 @@
 (global-set-key (kbd "C-c d") 'qjp-duplicate-line-or-region)
 ;; Use ace-jump-zap instead
 ;;(global-set-key (kbd "M-Z") 'zap-up-to-char)
-(global-set-key (kbd "C-a") 'qjp-back-to-indentation-or-beginning)
+(global-set-key [remap move-beginning-of-line]
+                #'qjp-back-to-indentation-or-beginning)
 (global-set-key (kbd "M-;") 'qjp-comment-dwim-line)
 (global-set-key (kbd "C-o") 'qjp-open-new-line)
 (global-set-key [M-up] 'qjp-move-line-up)
 (global-set-key [M-down] 'qjp-move-line-down)
 (global-set-key [remap backward-up-list] 'qjp-backward-up-sexp)
-(global-set-key (kbd "C-\\") 'qjp-kill-to-word)
 (global-set-key (kbd "M-m") 'qjp-kill-back-to-indentation)
 
 ;; Bindings `qjp-defuns-isearch'
@@ -58,11 +58,11 @@
 ;; ----------------- ;;
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x C-r") 'revert-buffer)
+(global-set-key [remap just-one-space] 'cycle-spacing)
 (global-set-key (kbd "C-x I") 'imenu)
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
-(global-set-key (kbd "C-c r") 'qjp-eval-and-replace)
-(global-set-key [f5] 'compile)
+(global-set-key (kbd "C-c e") 'qjp-eval-and-replace)
 
 ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
 ;; `qjp-nop'. Navigating using doulbe-click is still available.

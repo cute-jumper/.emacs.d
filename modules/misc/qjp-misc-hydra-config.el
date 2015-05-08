@@ -26,6 +26,9 @@
 
 (setq hydra-is-helpful)
 
+;; ------------------------ ;;
+;; My own vi-style bindings ;;
+;; ------------------------ ;;
 (defhydra hydra-vi
   (:body-pre (progn
                (set-cursor-color "#dfe030")
@@ -63,6 +66,9 @@
   ("v" set-mark-command)
   ("V" rectangle-mark-mode)
   ("=" er/expand-region)
+  ;; Must call `isearch-forward' non-interactively
+  ("/" (progn
+         (isearch-forward)))
   ("i" nil "quit")
   ("q" nil "quit"))
 
@@ -78,6 +84,9 @@
   ("m" set-mark-command "mark" :bind nil)
   ("q" nil "quit"))
 
+;; ----------------------------- ;;
+;; Hydra for rectangle operation ;;
+;; ----------------------------- ;;
 (defun ora-ex-point-mark ()
   (interactive)
   (if rectangle-mark-mode
@@ -85,7 +94,6 @@
     (let ((mk (mark)))
       (rectangle-mark-mode 1)
       (goto-char mk))))
-
 
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
                            :color pink
@@ -115,12 +123,12 @@ _h_   _l_   _o_pen      _y_ank
 
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
+;; ---------------------- ;;
+;; Hydra for evil numbers ;;
+;; ---------------------- ;;
+;; (maybe-require 'evil-numbers)
 (defhydra hydra-number
-  (;; :body-pre (if (= last-command-event ?+)
-   ;;               (call-interactively #'evil-numbers/inc-at-pt)
-   ;;             (call-interactively #'evil-numbers/dec-at-pt))
-   global-map "C-c"
-             )
+  (global-map "C-c")
   "hydra increase/decrease number"
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))
