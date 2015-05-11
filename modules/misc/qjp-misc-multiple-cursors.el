@@ -1,4 +1,4 @@
-;;; qjp-misc-multiple-cursors-config.el --- Settings for multiple-cursors mode
+;;; qjp-misc-multiple-cursors.el --- Settings for multiple-cursors mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -43,5 +43,5 @@
 ;; Using mouse!
 (global-set-key (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
 
-(provide 'qjp-misc-multiple-cursors-config)
-;;; qjp-misc-multiple-cursors-config.el ends here
+(provide 'qjp-misc-multiple-cursors)
+;;; qjp-misc-multiple-cursors.el ends here

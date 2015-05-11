@@ -1,4 +1,4 @@
-;;; qjp-misc-helm-config.el --- Helm configuration   -*- lexical-binding: t; -*-
+;;; qjp-misc-helm.el --- Helm configuration   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -55,5 +55,5 @@
   (helm-autoresize-mode t)
   (helm-descbinds-mode))
 
-(provide 'qjp-misc-helm-config)
-;;; qjp-misc-helm-config.el ends here
+(provide 'qjp-misc-helm)
+;;; qjp-misc-helm.el ends here

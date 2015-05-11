@@ -1,4 +1,4 @@
-;;; qjp-misc-dired-config.el --- Settings for dired related modes
+;;; qjp-misc-dired.el --- Settings for dired related modes
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -85,5 +85,5 @@
                    ;; fixed rule
                   (list (list "\\.pdf$" "okular")))))
 
-(provide 'qjp-misc-dired-config)
-;;; qjp-misc-dired-config.el ends here
+(provide 'qjp-misc-dired)
+;;; qjp-misc-dired.el ends here

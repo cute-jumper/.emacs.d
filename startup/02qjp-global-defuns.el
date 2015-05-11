@@ -31,28 +31,20 @@
         (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
 ;; Utility function for adding `load-path'
-(defun qjp-add-subdirectories-to-load-path (base-directory)
+(defun qjp-load-path-add-subdirs (&optional base-directory)
   "Add all subdirectories to load path."
   (interactive)
-  (mapc
-   (lambda (subdir)
-     (add-to-list 'load-path subdir))
-   (qjp-filter
-    (lambda (x)
-      (and (file-directory-p x) (not (string-prefix-p "\\." x))))
-    (directory-files base-directory t))))
-
-;; Require sub-directory when I don't want to put all sub-directories in
-;; `load-path'
-(defun qjp-require-subdir-feature (current-dir subdir feature)
-  (require
-   (intern feature)
-   (expand-file-name
-    (concat
-     (file-name-as-directory current-dir)
-     (file-name-as-directory subdir) feature))))
-
-(defalias 'qjp-modules-require-subdir-feature (apply-partially 'qjp-require-subdir-feature qjp-modules-dir))
+  (let ((current-directory (file-name-as-directory
+                            (or base-directory default-directory))))
+    (mapc
+     (lambda (subdir)
+       (add-to-list 'load-path subdir))
+     (qjp-filter
+      (lambda (x)
+        (and (file-directory-p x)
+             (not (string-prefix-p
+                   (concat current-directory ".") x))))
+      (directory-files current-directory t)))))
 
 ;; Auto byte-compile
 (defun qjp-byte-compile-current-buffer ()

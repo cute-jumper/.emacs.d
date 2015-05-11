@@ -1,4 +1,4 @@
-;;; qjp-misc-ido-config.el --- Config for ido-mode   -*- lexical-binding: t; -*-
+;;; qjp-misc-ido.el --- Config for ido-mode   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -43,5 +43,5 @@
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 
-(provide 'qjp-misc-ido-config)
-;;; qjp-misc-ido-config.el ends here
+(provide 'qjp-misc-ido)
+;;; qjp-misc-ido.el ends here

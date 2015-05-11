@@ -1,4 +1,4 @@
-;;; qjp-misc-smartparens-config.el --- Smartparens configurations  -*- lexical-binding: t; -*-
+;;; qjp-misc-smartparens.el --- Smartparens configurations  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -35,5 +35,5 @@
 (smartparens-mode)
 
 
-(provide 'qjp-misc-smartparens-config)
-;;; qjp-misc-smartparens-config.el ends here
+(provide 'qjp-misc-smartparens)
+;;; qjp-misc-smartparens.el ends here

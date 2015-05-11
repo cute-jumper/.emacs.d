@@ -1,4 +1,4 @@
-;;; qjp-misc-evil-config.el --- Settings for evil-mode
+;;; qjp-misc-evil.el --- Settings for evil-mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -42,5 +42,5 @@
 (define-key evil-normal-state-map [down-mouse-1] 'qjp-nop)
 (setq evil-emacs-state-cursor 'bar)
 
-(provide 'qjp-misc-evil-config)
-;;; qjp-misc-evil-config.el ends here
+(provide 'qjp-misc-evil)
+;;; qjp-misc-evil.el ends here

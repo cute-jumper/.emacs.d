@@ -1,4 +1,4 @@
-;;; qjp-misc-easypg-config.el --- Settings for EasyPG
+;;; qjp-misc-easypg.el --- Settings for EasyPG
 
 ;; Copyright (C) 2014  Junpeng Qiu
 
@@ -35,5 +35,5 @@
 (setq epa-file-inhibit-auto-save nil)
 
 
-(provide 'qjp-misc-easypg-config)
-;;; qjp-misc-easypg-config.el ends here
+(provide 'qjp-misc-easypg)
+;;; qjp-misc-easypg.el ends here

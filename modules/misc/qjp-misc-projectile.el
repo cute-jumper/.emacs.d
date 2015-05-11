@@ -1,4 +1,4 @@
-;;; qjp-misc-projectile-config.el --- Config for projectile  -*- lexical-binding: t; -*-
+;;; qjp-misc-projectile.el --- Config for projectile  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -40,5 +40,5 @@
 
 (global-set-key (kbd "C-c p h") 'helm-projectile)
 
-(provide 'qjp-misc-projectile-config)
-;;; qjp-misc-projectile-config.el ends here
+(provide 'qjp-misc-projectile)
+;;; qjp-misc-projectile.el ends here

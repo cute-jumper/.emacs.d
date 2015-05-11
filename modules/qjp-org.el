@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(add-to-list 'load-path (concat qjp-modules-dir "/org"))
+
 ;; Quick way to open root directory in Dired
 (defun org-open-personal ()
   (interactive)
@@ -38,12 +40,12 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 (with-eval-after-load 'org
-  (qjp-modules-require-subdir-feature "org" "qjp-org-edit")
-  (qjp-modules-require-subdir-feature "org" "qjp-org-src")
-  (qjp-modules-require-subdir-feature "org" "qjp-org-export")
-  (qjp-modules-require-subdir-feature "org" "qjp-org-misc")
-  (qjp-modules-require-subdir-feature "org" "qjp-org-notes")
-  (qjp-modules-require-subdir-feature "org" "qjp-org-publish"))
+  (require 'qjp-org-edit)
+  (require 'qjp-org-src)
+  (require 'qjp-org-export)
+  (require 'qjp-org-misc)
+  (require 'qjp-org-notes)
+  (require 'qjp-org-publish))
 
 (provide 'qjp-org)
 ;;; qjp-org.el ends here

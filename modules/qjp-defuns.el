@@ -24,9 +24,10 @@
 
 ;;; Code:
 
-(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-edit")
-(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-isearch")
-(qjp-modules-require-subdir-feature "defuns" "qjp-defuns-misc")
+(add-to-list 'load-path (concat qjp-modules-dir "/defuns"))
+(require 'qjp-defuns-edit)
+(require 'qjp-defuns-isearch)
+(require 'qjp-defuns-misc)
 
 (provide 'qjp-defuns)
 ;;; qjp-defuns.el ends here

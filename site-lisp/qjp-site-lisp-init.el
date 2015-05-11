@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(qjp-add-subdirectories-to-load-path qjp-site-lisp-dir)
+(qjp-load-path-add-subdirs qjp-site-lisp-dir)
 
 ;; ----------------------- ;;
 ;; Deft, modified version! ;;

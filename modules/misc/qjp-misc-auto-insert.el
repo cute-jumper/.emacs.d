@@ -1,4 +1,4 @@
-;;; qjp-misc-auto-insert-config.el --- Config for auto insert mode  -*- lexical-binding: t; -*-
+;;; qjp-misc-auto-insert.el --- Config for auto insert mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -45,5 +45,5 @@
 (define-auto-insert '("\\.sh\\'" . "shell scripts")  ["bash.tpl" my/autoinsert-current-date])
 (define-auto-insert '("\\.org\\'" . "org-mode")  ["org.tpl" my/autoinsert-yas-expand])
 
-(provide 'qjp-misc-auto-insert-config)
-;;; qjp-misc-auto-insert-config.el ends here
+(provide 'qjp-misc-auto-insert)
+;;; qjp-misc-auto-insert.el ends here

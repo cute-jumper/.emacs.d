@@ -1,4 +1,4 @@
-;;; qjp-misc-hydra-config.el --- Hydra configuration  -*- lexical-binding: t; -*-
+;;; qjp-misc-hydra.el --- Hydra configuration  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015  Junpeng Qiu
 
@@ -133,5 +133,5 @@ _h_   _l_   _o_pen      _y_ank
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))
 
-(provide 'qjp-misc-hydra-config)
-;;; qjp-misc-hydra-config.el ends here
+(provide 'qjp-misc-hydra)
+;;; qjp-misc-hydra.el ends here

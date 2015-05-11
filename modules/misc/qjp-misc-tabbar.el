@@ -1,4 +1,4 @@
-;;; qjp-misc-tabbar-config.el --- Settings for tabbar-mode
+;;; qjp-misc-tabbar.el --- Settings for tabbar-mode
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -41,7 +41,6 @@
                     :foreground "gray20"
                     :inherit 'tabbar-default
                     :box '(:line-width 3 :color "grey95" :style nil))
-                 :box '(:line-width 2 :color "white" :style released-button))
 (set-face-attribute 'tabbar-unselected nil
                     :inherit 'tabbar-default
                     :background "gray80"
@@ -102,5 +101,4 @@
         (set tabset (sort (cons tab tabs)
                           (lambda (a b) (string< (buffer-name (car a)) (buffer-name (car b))))))))))
 
-(provide 'qjp-misc-tabbar-config)
-;;; qjp-misc-tabbar-config.el ends here
+(provide 'qjp-misc-tabbar qjp-misc-tabbar.el ends here

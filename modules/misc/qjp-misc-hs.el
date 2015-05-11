@@ -1,4 +1,4 @@
-;;; qjp-misc-hs-config.el --- Settings for hideshow related packages
+;;; qjp-misc-hs.el --- Settings for hideshow related packages
 
 ;; Copyright (C) 2013  Junpeng Qiu
 
@@ -86,5 +86,5 @@ EmacsWiki's content about hideshow-mode. <2012-10-25 Thu>"
 
 (qjp-hideshow-overlay-enhanced)
 
-(provide 'qjp-misc-hs-config)
-;;; qjp-misc-hs-config.el ends here
+(provide 'qjp-misc-hs)
+;;; qjp-misc-hs.el ends here

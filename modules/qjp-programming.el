@@ -24,8 +24,10 @@
 
 ;;; Code:
 
+(add-to-list 'load-path (concat qjp-modules-dir "/programming"))
+
 ;; Require basic feature
-(qjp-modules-require-subdir-feature "programming" "qjp-programming-basic")
+(require 'qjp-programming-basic)
 
 ;; shell-mode
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
@@ -35,10 +37,11 @@
   "My programming lauguages")
 
 ;; Load all settings
-(mapc (lambda (x)
-        (qjp-modules-require-subdir-feature
-         "programming"
-         (concat "qjp-programming-" (symbol-name x))))
+(mapc #'(lambda (x)
+          (require
+           (intern
+            (concat "qjp-programming-"
+                    (symbol-name x)))))
       qjp-programming-languages)
 
 (provide 'qjp-programming)
