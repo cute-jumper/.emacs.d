@@ -56,7 +56,7 @@
   (declare (indent 1))
   `(defun ,feature ()
      (require ',feature)))
-
+
 ;; ---------------------------------- ;;
 ;; Load settings for various packages ;;
 ;; ---------------------------------- ;;
@@ -246,7 +246,7 @@ highlight."
 ;; smart mode line ;;
 ;; --------------- ;;
 (qjp-misc-config-inline sml
-  (setq sml/theme "powerline")
+  ;;(setq sml/theme "powerline")
   (sml/setup))
 
 ;; -------- ;;
@@ -347,7 +347,7 @@ highlight."
          (concat qjp-modules-dir "/misc") t "^[^#]*.el$"))))
   (dolist (basename file-basenames)
     (eval `(qjp-misc-config-infile ,basename))))
-
+
 ;; -------------------------------------- ;;
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
@@ -365,11 +365,11 @@ highlight."
              key-chord
              lacarte
              magit markdown multiple-cursors
-             nyan
              projectile
              quickrun
              rebox region-bindings
-             sml sr-speedbar
+             sml nyan
+             sr-speedbar
              term
              volatile-highlights
              whole-line-or-region
