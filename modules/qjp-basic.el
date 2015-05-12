@@ -106,6 +106,9 @@
 ;; Single space ends sentences
 (setq sentence-end-double-space nil)
 
+;; Require new at the end of a file
+(setq require-final-newline t)
+
 ;; Don't use shift to select
 (setq shift-select-mode nil)
 
@@ -120,7 +123,7 @@
  ;; Put auto save file to temporary file directory
  auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
  ;; Backups
- backup-directory-alist `(("." . ,(concat qjp-base-dir "backups")))
+ backup-directory-alist `((".*" . ,temporary-file-directory))
  ;; Tramp backups
  tramp-backup-directory-alist backup-directory-alist)
 
@@ -138,6 +141,10 @@
 
 ;; winner-mode for window configurations
 (winner-mode +1)
+
+;; recentf settings
+;; ignore magit's commit message files
+(add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")
 
 ;; ediff in same frame
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)

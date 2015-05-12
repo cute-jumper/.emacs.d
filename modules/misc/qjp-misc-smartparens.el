@@ -34,6 +34,5 @@
 (show-smartparens-global-mode 1)
 (smartparens-mode)
 
-
 (provide 'qjp-misc-smartparens)
 ;;; qjp-misc-smartparens.el ends here

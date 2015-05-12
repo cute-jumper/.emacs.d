@@ -91,12 +91,14 @@
   (eldoc-mode +1)
   (paredit-mode +1)
   (highlight-parentheses-mode +1)
-  (hideshowvis-minor-mode +1))
+  (hideshowvis-minor-mode +1)
+  (elisp-slime-nav-mode +1))
 
 (defun qjp-ielm-mode-hook ()
   (eldoc-mode +1)
   (paredit-mode +1)
-  (highlight-parentheses-mode +1))
+  (highlight-parentheses-mode +1)
+  (elisp-slime-nav-mode +1))
 
 (add-hook 'emacs-lisp-mode-hook #'qjp-emacs-lisp-mode-hook)
 (add-hook 'ielm-mode-hook #'qjp-ielm-mode-hook)

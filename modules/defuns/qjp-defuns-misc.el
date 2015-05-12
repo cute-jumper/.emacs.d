@@ -20,135 +20,71 @@
 
 ;;; Commentary:
 
-;;
+;; In prelude:
+;; - `prelude-switch-to-previous-buffer'
+;; - `prelude-kill-other-buffers'
+;; - `prelude-wrap-with'
+;; - `prelude-goto-symbol'
 
 ;;; Code:
 
-(defun qjp-rename-this-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (unless filename
-      (error "Buffer '%s' is not visiting a file!" name))
-    (if (get-buffer new-name)
-        (message "A buffer named '%s' already exists!" new-name)
-      (progn
-        (rename-file filename new-name 1)
-        (rename-buffer new-name)
-        (set-visited-file-name new-name)
-        (set-buffer-modified-p nil)))))
-
-(defun qjp-delete-this-file-and-buffer ()
-  "Kill the current buffer and deletes the file it is visiting."
+;; ------------ ;;
+;; Swap windows ;;
+;; ------------ ;;
+(defun qjp-swap-windows ()
+  "If you have 2 windows, it swaps them."
   (interactive)
-  (let ((filename (buffer-file-name)))
-    (when filename
-      (when (y-or-n-p (format "Are you sure you want to delete %s? " filename))
-        (delete-file filename)
-        (message "Deleted file %s" filename)
-        (kill-buffer)))))
+  (if (/= (count-windows) 2)
+      (message "You need exactly 2 windows to do this.")
+    (let* ((w1 (car (window-list)))
+           (w2 (cadr (window-list)))
+           (b1 (window-buffer w1))
+           (b2 (window-buffer w2))
+           (s1 (window-start w1))
+           (s2 (window-start w2)))
+      (set-window-buffer w1 b2)
+      (set-window-buffer w2 b1)
+      (set-window-start w1 s2)
+      (set-window-start w2 s1)))
+  (other-window 1))
 
-;; eval and replace using calc
-(defun qjp-calc-eval-and-replace (&optional prefix start end)
-  (interactive "P\nr")
-  (let ((result (calc-eval (buffer-substring-no-properties start end))))
-    (when prefix
-      (kill-region start end))
-    (insert result)))
+;; -------------------- ;;
+;; Find shell init file ;;
+;; -------------------- ;;
+(defun qjp-find-shell-init-file ()
+  "Edit the shell init file in another window."
+  (interactive)
+  (let* ((shell (car (reverse (split-string (getenv "SHELL") "/"))))
+         (shell-init-file (cond
+                           ((string= "zsh" shell) ".zshrc")
+                           ((string= "bash" shell) ".bashrc")
+                           (t (error "Unknown shell")))))
+    (find-file
+     (expand-file-name shell-init-file (getenv "HOME")))))
 
-;; Change themes
+;; ------------- ;;
+;; Change themes ;;
+;; ------------- ;;
+;; TODO: generalize it maybe!
 (defun qjp-switch-theme ()
   (interactive)
+  (require 'zenburn-theme)
+  (require 'smart-mode-line)
   (let ((word
          (completing-read
           "Choose a theme set(dark or light):"
           '(dark light))))
     (cond
      ((string= word "dark")
-      (require 'zenburn-theme)
-      (require 'smart-mode-line)
       (load-theme 'zenburn t)
-      (sml/apply-theme 'powerline))
+      (sml/apply-theme 'dark))
      ((string= word "light")
       (disable-theme 'zenburn)
       (sml/apply-theme 'light)))))
 
-;; ------------------ ;;
-;; functions from esk ;;
-;; ------------------ ;;
-(defun qjp-untabify-buffer ()
-  (interactive)
-  (untabify (point-min) (point-max)))
-
-(defun qjp-indent-buffer ()
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun qjp-cleanup-buffer ()
-  "Perform a bunch of operations on the whitespace content of a buffer."
-  (interactive)
-  (qjp-indent-buffer)
-  (qjp-untabify-buffer)
-  (delete-trailing-whitespace))
-
-(defun qjp-eval-and-replace ()
-  "Replace the preceding sexp with its value."
-  (interactive)
-  (backward-kill-sexp)
-  (condition-case nil
-      (prin1 (eval (read (current-kill 0)))
-             (current-buffer))
-    (error (message "Invalid expression")
-           (insert (current-kill 0)))))
-
-(defun qjp-sudo-edit (&optional arg)
-  (interactive "P")
-  (if (or arg (not buffer-file-name))
-      (find-file (concat "/sudo:root@localhost:" (helm-read-file-name "File: ")))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
-(defun qjp-lorem ()
-  "Insert a lorem ipsum."
-  (interactive)
-  (insert "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
-          "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim"
-          "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "
-          "aliquip ex ea commodo consequat. Duis aute irure dolor in "
-          "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
-          "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
-          "culpa qui officia deserunt mollit anim id est laborum."))
-
-(defun qjp-suck-it (suckee)
-  "Insert a comment of appropriate length about what can suck it."
-  (interactive "MWhat can suck it? ")
-  (let ((prefix (concat ";; " suckee " can s"))
-        (postfix "ck it!")
-        (col (current-column)))
-    (insert prefix)
-    (dotimes (_ (- 80 col (length prefix) (length postfix))) (insert "u"))
-    (insert postfix)))
-
-(defun qjp-insert-date ()
-  "Insert a time-stamp according to locale's date and time format."
-  (interactive)
-  (insert (format-time-string "%c" (current-time))))
-
-(defun qjp-paredit-nonlisp ()
-  "Turn on paredit mode for non-lisps."
-  (interactive)
-  (set (make-local-variable 'paredit-space-for-delimiter-predicates)
-       '((lambda (endp delimiter) nil)))
-  (paredit-mode 1))
-
-;; A monkeypatch to cause annotate to ignore whitespace
-(defun vc-git-annotate-command (file buf &optional rev)
-  (let ((name (file-relative-name file)))
-    (vc-git-command buf 0 name "blame" "-w" rev)))
-
-;; ---------------------- ;;
-;; Functions from prelude ;;
-;; ---------------------- ;;
+;; ---------- ;;
+;; Web search ;;
+;; ---------- ;;
 (defun qjp-search (query-url prompt)
   "Open the search url constructed with the QUERY-URL.
 PROMPT sets the `read-string prompt.

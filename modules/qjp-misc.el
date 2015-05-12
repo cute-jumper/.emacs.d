@@ -27,7 +27,9 @@
 
 ;;; Code:
 
-;; Macro definition
+;; ------------------------------- ;;
+;; Macro and functions definitions ;;
+;; ------------------------------- ;;
 (defsubst qjp-misc--make-func-name (feature)
   "Helper function to construct function name of `misc' module"
   (concat "qjp-misc-" (symbol-name feature)))
@@ -139,7 +141,7 @@
 (qjp-misc-config-inline ace-jump-helm-line
   (with-eval-after-load 'helm
     (with-eval-after-load 'key-chord
-      (key-chord-define helm-map "jj" 'ace-jump-helm-line))))
+      (key-chord-define helm-map "jj" #'ace-jump-helm-line))))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -210,11 +212,14 @@
   (setq speedbar-use-images nil)
   (global-set-key [f8] 'sr-speedbar-toggle))
 
-;; --------------- ;;
-;; predictive mode ;;
-;; --------------- ;;
-(qjp-misc-config-inline predictive
-  (require 'predictive))
+;; --------- ;;
+;; undo-tree ;;
+;; --------- ;;
+(qjp-misc-config-inline undo-tree
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t)
+  (global-undo-tree-mode))
 
 ;; --------- ;;
 ;; term-mode ;;
@@ -255,13 +260,15 @@ highlight."
 (qjp-misc-config-inline fcitx
   (fcitx-aggressive-setup))
 
-;; ------------------------------------------------------------
-;; nyan-mode
+;; --------- ;;
+;; nyan-mode ;;
+;; --------- ;;
 (qjp-misc-config-inline nyan
   (nyan-mode))
 
-;; ------------------------------------------------------------
-;; hl-sentence
+;; ----------- ;;
+;; hl-sentence ;;
+;; ----------- ;;
 (qjp-misc-config-inline hl-sentence
   (require 'hl-sentence)
   (set-face-attribute 'hl-sentence-face nil
@@ -371,6 +378,7 @@ highlight."
              sml nyan
              sr-speedbar
              term
+             undo-tree
              volatile-highlights
              whole-line-or-region
              ;;yasnippet
