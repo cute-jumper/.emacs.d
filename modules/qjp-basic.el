@@ -81,13 +81,26 @@
 
 ;; Now, let's set the fonts for English and Chinese
 (when (display-graphic-p)
-  (set-frame-font "Liberation Mono:pixelsize=22")
-  (setq default-frame-alist
-        '((font . "Liberation Mono:pixelsize=22")
-          (cursor-color . "white")))
-  (set-fontset-font (frame-parameter nil 'font) 'han
-                    (font-spec :family "WenQuanYi Micro Hei Mono" :size 26))
-  (set-fontset-font "fontset-default" 'unicode "Symbola"))
+  (let (en-font zh-font zh-size unicode-font)
+    (when (cond ((eq system-type 'gnu/linux)
+                 (setq en-font "Liberation Mono:pixelsize=22")
+                 (setq zh-font "WenQuanYi Micro Hei Mono")
+                 (setq zh-size 26)
+                 (setq unicode-font "Symbola"))
+                ((eq system-type 'windows-nt)
+                 (setq en-font "Consolas:pixelsize=16")
+                 (setq zh-font "Microsoft YaHei")
+                 (setq zh-size 18)
+                 (setq unicode-font "Arial Unicode MS")))
+      (set-frame-font en-font)
+      (setq default-frame-alist
+            '((font . en-font)
+              (cursor-color . "white")))
+      (set-fontset-font
+       (frame-parameter nil 'font)
+       'han
+       (font-spec :family zh-font :size zh-size))
+      (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 (load-theme 'zenburn t)
