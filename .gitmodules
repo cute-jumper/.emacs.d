@@ -1,6 +1,6 @@
 [submodule "site-lisp/deft"]
 	path = site-lisp/deft
-	url = git@github.com:cute-jumper/deft.git
+	url = https://github.com/cute-jumper/deft.git
 [submodule "site-lisp/matlab-mode"]
 	path = site-lisp/matlab-mode
-	url = git@github.com:cute-jumper/matlab-mode.git
+	url = https://github.com/cute-jumper/matlab-mode.git
