@@ -5,9 +5,9 @@
 
 emacs -Q\
       --batch\
-      -l "~/.emacs.d/startup/03qjp-package-manager.el"\
       --eval "(defvar qjp-base-dir user-emacs-directory)" \
-      --eval "(package-list-packages)"\
+      -l "~/.emacs.d/startup/03qjp-package-manager.el"\
+       --eval "(package-list-packages)"\
       --eval "(package-menu-mark-upgrades)"\
       --eval "(package-menu-mark-obsolete-for-deletion)"\
       --eval '(message ">> Start upgrading...")'\

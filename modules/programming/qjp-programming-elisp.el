@@ -29,12 +29,9 @@
 ;; - red-shank
 ;; - conditionally enable rainbow-mode
 ;; - hl-sexp? Maybe. A little intrusive though.
+;; - lively
 
 ;;; Code:
-
-;; Remove ellipsis when evaling sexp in minibuffer
-(setq eval-expression-print-length nil
-      eval-expression-print-level nil)
 
 ;; ---------- ;;
 ;; eldoc mode ;;
@@ -84,6 +81,32 @@
                        (format "%s %s" doc docstring)))))
     ad-do-it))
 
+;; ------------------ ;;
+;; Evaluation related ;;
+;; ------------------ ;;
+;; Remove ellipsis when evaling sexp in minibuffer
+(setq eval-expression-print-length nil
+      eval-expression-print-level nil)
+
+;; Enable eldoc-mode when eval-expression
+(add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+
+;; Use pp-eval-expression
+(global-set-key (kbd "M-:") 'pp-eval-expression)
+
+;; Make C-x C-e run `eval-region' if the region is active
+(defun qjp-eval-last-sexp-or-region (prefix)
+  "Eval region from BEG to END if active, otherwise the last sexp."
+  (interactive "P")
+  (if (and (mark) (use-region-p))
+      (eval-region (min (point) (mark)) (max (point) (mark)))
+    (pp-eval-last-sexp prefix)))
+
+(with-eval-after-load 'lisp-mode
+  (define-key emacs-lisp-mode-map
+    (kbd "C-x C-e")
+    'qjp-eval-last-sexp-or-region))
+
 ;; ------------------------------------ ;;
 ;; Emacs lisp, ielm and eval-expression ;;
 ;; ------------------------------------ ;;
@@ -129,9 +152,6 @@
   (define-key lisp-interaction-mode-map (kbd "C-z") #'qjp-switch-to-ielm))
 (with-eval-after-load 'ielm
   (define-key ielm-map (kbd "C-z") #'qjp-switch-from-ielm))
-
-;; Enable eldoc-mode when eval-expression
-(add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
 
 ;; -------------- ;;
 ;; Paredit addons ;;

@@ -33,30 +33,39 @@
 ;; Update installed package list and install them at first initialization,
 ;; Besides, they can be used to sync the newly installed packages.
 ;; Idea from: http://blub.co.za/posts/Installing-packages-on-Emacs-startup.html
-(defun qjp-get-package-list-filename ()
-  "return the filename containing the installed packages' list"
-  (expand-file-name "installed-package-list" qjp-base-dir))
+(defvar qjp-installed-package-list-filename
+  (expand-file-name "installed-package-list" qjp-base-dir)
+  "Filename of storing the installed package list")
+
+(defvar qjp-installed-package-list
+  (if (file-exists-p qjp-installed-package-list-filename)
+      (read
+       (with-current-buffer
+           (find-file-noselect qjp-installed-package-list-filename)
+         (buffer-substring-no-properties (point-min) (point-max))))
+    nil)
+  "A list of installed packages")
 
 (defun qjp-install-all-packages ()
   "Use this command to install all the packages.
-It will read from the file and get the installed packages's list,
-then it will install these packages one by one."
+It reads from the file and get the installed packages's list,
+and installs these packages one by one."
   (interactive)
   (package-refresh-contents)
-  (let ((installed-packages
-         (read
-          (with-current-buffer
-              (find-file-noselect
-               (qjp-get-package-list-filename))
-            (buffer-substring-no-properties (point-min) (point-max))))))
-    (dolist (pkg installed-packages)
-      (if (not (package-installed-p pkg))
-          (ignore-errors
-            (progn
-              (package-install pkg)
-              (message "Installing %s done." pkg)))
-        (message "Package %s already installed!" pkg))))
-  (qjp-update-prelude-core))
+  (let ((counter 0)
+        (total (length qjp-installed-package-list)))
+    (switch-to-buffer (get-buffer-create "*Installing Packages*"))
+    (insert
+     (format "Installing %d packages...\n" total))
+    (dolist (pkg qjp-installed-package-list)
+      (setq counter (1+ counter))
+      (insert (format "\t--> [%d/%d] Installing %s..." counter total pkg))
+      (when (not (package-installed-p pkg))
+        (ignore-errors
+          (package-install pkg)))
+      (insert "done.\n"))
+    (insert "Package installation is done. \
+Enjoy your journey with Emacs:-)\n")))
 
 ;; This function should be used when maintaining the settings, not at the first initialization.
 (defun qjp-update-installed-package-list ()
@@ -65,46 +74,21 @@ It should be used after new packages are installed in order
 to maintain the right list."
   (interactive)
   (package-initialize)
-  (let ((installed-package-list nil))
-    (dolist (pkg package-alist)
-      (when (assoc (car pkg) package-archive-contents)
-        (add-to-list 'installed-package-list (car pkg))))
-    (with-temp-file (qjp-get-package-list-filename)
-      (prin1 installed-package-list (current-buffer)))
-    (message "Successfully update installed-package-list!")))
-
-;; define advice for package-install to automatically update list
-;; (defadvice package-install (after update-installed-package-list)
-;;   (qjp-update-installed-package-list))
-;; Disable defadvice
-;; (ad-activate 'package-install)
-
-
-(defun qjp-download-site-lisp-package (pkg-name url)
-  (interactive)
-  (let ((dir-name (expand-file-name pkg-name qjp-site-lisp-dir)))
-    (unless (file-directory-p dir-name)
-      (make-directory dir-name t))
-    (when (file-exists-p dir-name)
-      (rename-file prelude-core-file-name (concat prelude-core-file-name ".bak") t))
-    (if (url-copy-file prelude-core-url prelude-core-file-name t)
-        (message "Update prelude-core.el successfully. Use `diff' to see the differences.")
-      (error (message "Failed to download prelude-core.el!")))))
-
-;; Update `prelude-core.el'
-(defun qjp-update-prelude-core ()
-  (interactive)
-  (let ((prelude-core-url
-         "https://raw.githubusercontent.com/bbatsov/prelude/master/core/prelude-core.el")
-        (prelude-core-file-name
-         (expand-file-name "modules/prelude/prelude-core.el" qjp-base-dir)))
-    (when (file-exists-p prelude-core-file-name)
-      (rename-file prelude-core-file-name (concat prelude-core-file-name ".bak") t))
-    (if (url-copy-file prelude-core-url prelude-core-file-name t)
-        (message "Update prelude-core.el successfully. Use `diff' to see the differences.")
-      (error (message "Failed to download prelude-core.el!")))))
+  (setq qjp-installed-package-list)
+  (dolist (pkg package-alist)
+    (when (assoc (car pkg) package-archive-contents)
+      (add-to-list 'qjp-installed-package-list (car pkg))))
+  (with-temp-file qjp-installed-package-list-filename
+    (prin1 qjp-installed-package-list (current-buffer)))
+  (message "Successfully update installed-package-list!"))
 
 (package-initialize)
+
+(when (catch 'break
+        (dolist (pkg qjp-installed-package-list)
+          (unless (package-installed-p pkg)
+            (throw 'break t))))
+  (qjp-install-all-packages))
 
 (provide '03qjp-package-manager)
 ;;; 03qjp-package-manager.el ends here

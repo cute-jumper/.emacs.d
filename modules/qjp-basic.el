@@ -144,7 +144,8 @@
 
 ;; recentf settings
 ;; ignore magit's commit message files
-(add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")
+(with-eval-after-load 'recentf
+  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
 ;; ediff in same frame
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)

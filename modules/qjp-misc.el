@@ -166,10 +166,20 @@
 ;; ispell ;;
 ;; ------ ;;
 (qjp-misc-config-inline ispell
-  (setq ispell-program-name "hunspell")
-  (require 'rw-hunspell)
-  (when (executable-find ispell-program-name)
-    (add-hook 'text-mode-hook 'turn-on-flyspell)))
+  (if (executable-find "hunspell")
+      (with-eval-after-load 'ispell
+        (setq ispell-local-dictionary-alist '((nil
+                                                "[[:alpha:]]"
+                                                "[^[:alpha:]]"
+                                                "[']"
+                                                t
+                                                ("-d" "en_US")
+                                                nil
+                                                iso-8859-1)))
+        ;; Use hunspell to correct mistakes
+        (setq ispell-program-name "hunspell")
+        (add-hook 'text-mode-hook 'turn-on-flyspell))
+    (message "[Warning]: Please consider installing %s." ispell-program-name)))
 
 ;; -------- ;;
 ;; flyspell ;;
