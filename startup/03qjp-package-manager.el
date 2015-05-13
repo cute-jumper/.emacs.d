@@ -59,16 +59,17 @@ and installs these packages one by one."
      (format "Installing %d packages...\n" total))
     (dolist (pkg qjp-installed-package-list)
       (setq counter (1+ counter))
-      (insert (format "\t--> [%d/%d] Installing %s..." counter total pkg))
-      (when (not (package-installed-p pkg))
+      (if (package-installed-p pkg)
+          (insert (format "\t--> [%d/%d] %s has beenf installed.\n" counter total pkg))
         (ignore-errors
-          (package-install pkg)))
-      (insert "done.\n"))
+          (insert (format "\t--> [%d/%d] Installing %s..." counter total pkg))
+          (package-install pkg)
+          (insert "done.\n"))))
     (insert "Package installation is done. \
 Enjoy your journey with Emacs:-)\n")))
 
 ;; This function should be used when maintaining the settings, not at the first initialization.
-(defun qjp-update-installed-package-list ()
+(defun qjp-update-installed-package-list (&rest args)
   "Update the file with the lastest installed packages' list.
 It should be used after new packages are installed in order
 to maintain the right list."
@@ -81,6 +82,8 @@ to maintain the right list."
   (with-temp-file qjp-installed-package-list-filename
     (prin1 qjp-installed-package-list (current-buffer)))
   (message "Successfully update installed-package-list!"))
+
+(advice-add 'package-menu-execute :after #'qjp-update-installed-package-list)
 
 (package-initialize)
 

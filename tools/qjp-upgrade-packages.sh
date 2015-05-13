@@ -12,7 +12,5 @@ emacs -Q\
       --eval "(package-menu-mark-obsolete-for-deletion)"\
       --eval '(message ">> Start upgrading...")'\
       --eval "(package-menu-execute t)"\
-      --eval '(qjp-update-installed-package-list)'\
       --eval '(message ">> Finish upgrading!")' \
       && emacs --version | head -n 1 | toilet -F metal -f future
-

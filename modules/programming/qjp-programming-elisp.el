@@ -33,6 +33,9 @@
 
 ;;; Code:
 
+;; load newer code
+(setq load-prefer-newer t)
+
 ;; ---------- ;;
 ;; eldoc mode ;;
 ;; ---------- ;;
@@ -88,8 +91,13 @@
 (setq eval-expression-print-length nil
       eval-expression-print-level nil)
 
-;; Enable eldoc-mode when eval-expression
-(add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode)
+;; Minibuffer hook
+(defun qjp-eval-expression-minibuffer-setup-hook ()
+  (eldoc-mode +1)
+  (paredit-mode +1))
+
+(add-hook 'eval-expression-minibuffer-setup-hook
+          #'qjp-eval-expression-minibuffer-setup-hook)
 
 ;; Use pp-eval-expression
 (global-set-key (kbd "M-:") 'pp-eval-expression)
@@ -114,8 +122,9 @@
   (eldoc-mode +1)
   (paredit-mode +1)
   (highlight-parentheses-mode +1)
+  (elisp-slime-nav-mode +1)
   (hideshowvis-minor-mode +1)
-  (elisp-slime-nav-mode +1))
+  (add-hook 'after-save-hook #'check-parens nil t))
 
 (defun qjp-ielm-mode-hook ()
   (eldoc-mode +1)
@@ -152,6 +161,18 @@
   (define-key lisp-interaction-mode-map (kbd "C-z") #'qjp-switch-to-ielm))
 (with-eval-after-load 'ielm
   (define-key ielm-map (kbd "C-z") #'qjp-switch-from-ielm))
+
+;; ------------ ;;
+;; company-mode ;;
+;; ------------ ;;
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-elisp))
+
+;; ---------------- ;;
+;; flycheck-package ;;
+;; ---------------- ;;
+(with-eval-after-load 'flycheck
+  (flycheck-package-setup))
 
 ;; -------------- ;;
 ;; Paredit addons ;;
@@ -217,13 +238,7 @@
   (define-key paredit-mode-map (kbd "M-F") 'paredit-barf-all-the-way-forward)
   (define-key paredit-mode-map (kbd "C-M-(") 'paredit-slurp-all-the-way-backward)
   (define-key paredit-mode-map (kbd "C-M-{") 'paredit-barf-all-the-way-backward)
-  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward)
-
-  (diminish 'paredit-mode))
-
-(diminish 'eldoc-mode)
-(with-eval-after-load 'elisp-slime-nav
-  (diminish 'elisp-slime-nav-mode))
+  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here

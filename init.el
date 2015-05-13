@@ -78,7 +78,7 @@
 ;; Welcome message
 (setq initial-scratch-message
       (format "%s;; Your initilization takes %.3f s.
-;; Welcome to Emacs %s, %s~😊~\n\n"
+;; Welcome to Emacs %s, %s:-)\n\n"
               initial-scratch-message
               qjp-init-duration
               emacs-version

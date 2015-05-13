@@ -34,7 +34,6 @@
 (setq org-use-speed-commands t)
 (setq org-cycle-separator-lines 0)      ;get rid of the blank lines when cycling
 (setq org-list-allow-alphabetical t)         ;enable a. b. c. as plain lists
-(add-hook 'org-mode-hook (lambda () (abbrev-mode)))
 
 ;; Show next/prev heading tidily
 ;; From: http://orgmode.org/worg/org-hacks.html
@@ -82,7 +81,21 @@
 ;; org tag ;;
 ;; ------- ;;
 (setq org-tag-alist
-      '(("c" . ?c) ("cpp") ("emacs" . ?e) ("firefox" . ?f) ("git" . ?g) ("interesting" . ?i) ("idea") ("java" . ?j) ("linux" . ?l) ("latex") ("lisp") ("misc" . ?m) ("python" . ?p) ("shell" . ?s) ("scala")))
+      '(("c" . ?c)
+        ("cpp")
+        ("emacs" . ?e)
+        ("firefox" . ?f)
+        ("git" . ?g)
+        ("interesting" . ?i)
+        ("idea")
+        ("java" . ?j)
+        ("linux" . ?l)
+        ("latex")
+        ("lisp")
+        ("misc" . ?m)
+        ("python" . ?p)
+        ("shell" . ?s)
+        ("scala")))
 
 ;; ------------ ;;
 ;; org capture. ;;

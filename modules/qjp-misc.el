@@ -64,20 +64,11 @@
 ;; ---------------------------------- ;;
 ;; First part: simple settings
 
-;; ------------------ ;;
-;; auto-complete-mode ;;
-;; ------------------ ;;
-(qjp-misc-config-inline auto-complete
-  (require 'auto-complete-config)
-  (ac-config-default)
-  (global-auto-complete-mode))
-
 ;; ------------ ;;
 ;; company-mode ;;
 ;; ------------ ;;
 (qjp-misc-config-inline company
-  (global-company-mode)
-  (diminish 'company-mode " 🅒"))
+  (global-company-mode))
 
 ;; --------- ;;
 ;; yasnippet ;;
@@ -148,8 +139,7 @@
 ;; ace-pinyin ;;
 ;; ---------- ;;
 (qjp-misc-config-inline ace-pinyin
-  (ace-pinyin-global-mode +1)
-  (diminish 'ace-pinyin-mode))
+  (ace-pinyin-global-mode +1))
 
 ;; --------- ;;
 ;; jump-char ;;
@@ -190,8 +180,7 @@
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-,") nil)
     (define-key flyspell-mode-map (kbd "C-M-i") nil)
-    (define-key flyspell-mode-map (kbd "C-;") nil)
-    (diminish 'flyspell-mode " 🅢")))
+    (define-key flyspell-mode-map (kbd "C-;") nil)))
 
 ;; ----- ;;
 ;; magit ;;
@@ -201,16 +190,14 @@
   (global-set-key (kbd "C-x g") 'magit-status)
   (with-eval-after-load 'magit
     (set-face-foreground 'magit-diff-add "green4")
-    (set-face-foreground 'magit-diff-del "red3")
-    (diminish 'magit-auto-revert-mode)))
+    (set-face-foreground 'magit-diff-del "red3")))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
 ;; ------------------- ;;
 (qjp-misc-config-inline volatile-highlights
   (autoload 'volatile-highlights-mode "volatile-highlights")
-  (volatile-highlights-mode +1)
-  (diminish 'volatile-highlights-mode))
+  (volatile-highlights-mode +1))
 
 ;; ------------- ;;
 ;; markdown-mode ;;
@@ -233,8 +220,7 @@
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode)
-  (diminish 'undo-tree-mode))
+  (global-undo-tree-mode))
 
 ;; --------- ;;
 ;; term-mode ;;
@@ -249,8 +235,7 @@
 (qjp-misc-config-inline rebox
   "See the source code to find out styles"
   (with-eval-after-load 'rebox2
-    (setq rebox-style-loop '(21 23 25))
-    (diminish 'rebox-mode)))
+    (setq rebox-style-loop '(21 23 25))))
 
 ;; ------------------- ;;
 ;; idle-highlight-mode ;;
@@ -275,8 +260,7 @@ highlight."
 ;; flycheck ;;
 ;; -------- ;;
 (qjp-misc-config-inline flycheck
-  (with-eval-after-load 'flycheck
-    (diminish 'flycheck-mode " 🅕")))
+  nil)
 ;; -------- ;;
 ;; fcitx.el ;;
 ;; -------- ;;
@@ -305,15 +289,13 @@ highlight."
 ;; --------- ;;
 (qjp-misc-config-inline anzu
   (global-anzu-mode +1)
-  (setq anzu-minimum-input-length 3)
-  (diminish 'anzu-mode))
+  (setq anzu-minimum-input-length 3))
 
 ;; -------------------- ;;
 ;; whole-line-or-region ;;
 ;; -------------------- ;;
 (qjp-misc-config-inline whole-line-or-region
-  (whole-line-or-region-mode +1)
-  (diminish 'whole-line-or-region-mode))
+  (whole-line-or-region-mode +1))
 
 ;; ------------------ ;;
 ;; anchored-transpose ;;
@@ -401,8 +383,8 @@ highlight."
              projectile
              quickrun
              rebox region-bindings
-             sml nyan
-             sr-speedbar
+             sml nyan;; load after sml
+             sr-speedbar smartparens
              term
              undo-tree
              volatile-highlights

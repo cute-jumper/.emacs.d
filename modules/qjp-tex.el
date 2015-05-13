@@ -24,95 +24,60 @@
 
 ;;; Code:
 
-
 ;; --------------- ;;
 ;; AUCTeX settings ;;
 ;; --------------- ;;
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq TeX-master nil)
-(setq preview-scale-function 2)
+(with-eval-after-load 'latex
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq TeX-master nil)
+  (setq preview-scale-function 2)
+  (setq TeX-save-query nil)
+  (setq TeX-show-compilation nil)
 
-;; Add option `-file-line-error' to avoid `TeX-next-error' error
-;; See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695282 for details
-(add-hook 'LaTeX-mode-hook
-          (lambda()
-            (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex -file-line-error -shell-escape%(mode)%' %t" TeX-run-TeX nil t))
-            ;; (setq TeX-command-default "XeLaTeX")
-            (setq TeX-save-query  nil)))
-
-;; Add `latexmk' to command list
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (add-to-list 'TeX-command-list
-                         '("latexmk" "latexmk -pdf %s && latexmk -c" TeX-run-TeX nil t
-                           :help "Run Latexmk on file"))
-            (setq TeX-command-default "latexmk")
-            (setq TeX-save-query nil)))
-
-;; Add `pdflatex' to command list
-(add-hook 'LaTeX-mode-hook
-          (lambda()
-            (add-to-list 'TeX-command-list '("pdflatex" "%`pdflatex%(mode)%' %t" TeX-run-TeX nil t))
-            (setq TeX-save-query  nil )
-            (setq TeX-show-compilation nil)))
+  ;; Add option `-file-line-error' to avoid `TeX-next-error' error
+  ;; See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695282 for details
+  (add-to-list 'TeX-command-list
+               '("XeLaTeX" "%`xelatex -file-line-error -shell-escape%(mode)%' %t"
+                 TeX-run-TeX nil t))
+  (add-to-list 'TeX-command-list
+               '("pdflatex" "%`pdflatex%(mode)%' %t" TeX-run-TeX nil t))
+  (add-to-list 'TeX-command-list
+               '("latexmk" "latexmk -pdf %s && latexmk -c" TeX-run-TeX nil t
+                 :help "Run Latexmk on file"))
+  ;; Tricks: let synctex work with Okular
+  (push '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory))))
+        TeX-expand-list)
+  (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
+        TeX-view-program-list)
+  (push '(output-pdf "Okular") TeX-view-program-selection))
 
 ;; ------------------ ;;
 ;; Local key bindings ;;
 ;; ------------------ ;;
-;; (add-hook 'LaTeX-mode-hook (lambda () (local-set-key [(control tab)] 'TeX-complete-symbol)))
-;; (add-hook 'latex-mode-hook (lambda () (local-set-key [(control tab)] 'TeX-complete-symbol)))
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (local-set-key [(return)] 'newline-and-indent)
-            (local-set-key (kbd "C-c ,") 'LaTeX-mark-section)))
-(add-hook 'latex-mode-hook
-          (lambda ()
-            (local-set-key [(return)] 'newline-and-indent)
-            (local-set-key (kbd "C-c ,") 'LaTeX-mark-section)))
+(defun qjp-tex-set-local-key-bindings ()
+  (local-set-key [(return)] 'newline-and-indent)
+  (local-set-key (kbd "C-c ,") 'LaTeX-mark-section))
 
 ;; ------- ;;
 ;; cdlatex ;;
 ;; ------- ;;
 (autoload 'cdlatex-mode "cdlatex" "CDLaTeX Mode" t)
 (autoload 'turn-on-cdlatex "cdlatex" "CDLaTeX Mode" nil)
-(add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)   ; with AUCTeX LaTeX mode
-(add-hook 'latex-mode-hook 'turn-on-cdlatex)   ; with Emacs latex mode
 
 ;; ------ ;;
 ;; reftex ;;
 ;; ------ ;;
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex) ; with AUCTeX LaTeX mode
-(add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
 (setq reftex-plug-into-AUCTeX t)
 (setq reftex-default-bibliography `(,qjp-bibtex-database-file))
-
-;; ----------- ;;
-;; latex-extra ;;
-;; ----------- ;;
-(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
-
-;; ------------------ ;;
-;; magic-latex-buffer ;;
-;; ------------------ ;;
-(add-hook 'LaTeX-mode-hook 'magic-latex-buffer)
-
-;; Tricks: let synctex work with Okular
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (push '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory))))
-                  TeX-expand-list)
-            (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
-                  TeX-view-program-list)
-            (push '(output-pdf "Okular") TeX-view-program-selection)))
 
 ;; ---------------------- ;;
 ;; User Defined Functions ;;
 ;; ---------------------- ;;
 
 ;; Auto update when saving
-(setq qjp-latex-auto-command "latexmk")
-(setq qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
+(defvar qjp-latex-auto-command "latexmk")
+(defvar qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
 (defun qjp-latex-auto-update ()
   (interactive)
   (when (and (eq major-mode 'latex-mode)
@@ -128,7 +93,6 @@
           (erase-buffer)))
       (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
              (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
-(add-hook 'after-save-hook 'qjp-latex-auto-update)
 
 ;; Insert \usepackage in the front of the file
 (defun qjp-latex-add-pkg (pkg-name pkg-options)
@@ -163,6 +127,20 @@
       (end-of-line)
       (newline-and-indent)
       (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n\n\\begin{document}\n\\maketitle"))))
+
+;; ----- ;;
+;; Hooks ;;
+;; ----- ;;
+(defun qjp-tex-mode-hook ()
+  (qjp-tex-set-local-key-bindings)
+  (turn-on-cdlatex)
+  (turn-on-reftex)
+  (latex-extra-mode +1)
+  (magic-latex-buffer +1)
+  (add-hook 'after-save-hook 'qjp-latex-auto-update nil t))
+
+(add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
+(add-hook 'latex-mode-hook #'qjp-tex-mode-hook)
 
 (provide 'qjp-tex)
 ;;; qjp-tex.el ends here

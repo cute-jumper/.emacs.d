@@ -94,7 +94,7 @@
                  (setq unicode-font "Arial Unicode MS")))
       (set-frame-font en-font)
       (setq default-frame-alist
-            '((font . en-font)
+            `((font . ,en-font)
               (cursor-color . "white")))
       (set-fontset-font
        (frame-parameter nil 'font)
@@ -168,16 +168,12 @@
  whitespace-line-column 80
  whitespace-style '(face tabs empty trailing lines-tail))
 (global-whitespace-mode)
-(diminish 'global-whitespace-mode " 🅦")
 
 ;; imenu
 (setq-default imenu-auto-rescan t)
 
 ;; tooltip
 (setq tooltip-use-echo-area t)
-
-;; auto-fill-mode
-(diminish 'auto-fill-function " 🅵")
 
 ;; grep
 (with-eval-after-load 'grep
@@ -198,7 +194,10 @@
 ;; ----------- ;;
 ;; Basic hooks ;;
 ;; ----------- ;;
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(defun qjp-text-mode-hook ()
+  (turn-on-auto-fill)
+  (abbrev-mode +1))
+(add-hook 'text-mode-hook #'qjp-text-mode-hook)
 
 ;; -------------- ;;
 ;; Remove warning ;;

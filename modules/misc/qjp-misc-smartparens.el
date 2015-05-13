@@ -31,8 +31,6 @@
 (setq sp-base-key-bindings 'paredit)
 (setq sp-autoskip-closing-pair 'always)
 (setq sp-hybrid-kill-entire-symbol nil)
-(show-smartparens-global-mode 1)
-(smartparens-mode)
 
 (provide 'qjp-misc-smartparens)
 ;;; qjp-misc-smartparens.el ends here
