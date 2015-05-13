@@ -76,7 +76,8 @@
 ;; company-mode ;;
 ;; ------------ ;;
 (qjp-misc-config-inline company
-  (global-company-mode))
+  (global-company-mode)
+  (diminish 'company-mode " 🅒"))
 
 ;; --------- ;;
 ;; yasnippet ;;
@@ -147,7 +148,8 @@
 ;; ace-pinyin ;;
 ;; ---------- ;;
 (qjp-misc-config-inline ace-pinyin
-  (ace-pinyin-global-mode +1))
+  (ace-pinyin-global-mode +1)
+  (diminish 'ace-pinyin-mode))
 
 ;; --------- ;;
 ;; jump-char ;;
@@ -177,7 +179,6 @@
                                                  ("-d" "en_US")
                                                  nil
                                                  iso-8859-1)))
-          ;; Use hunspell to correct mistakes
           (setq ispell-program-name hunspell-name)
           (add-hook 'text-mode-hook 'turn-on-flyspell))
       (message "[Warning]: Please consider installing %s." hunspell-name))))
@@ -189,7 +190,8 @@
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-,") nil)
     (define-key flyspell-mode-map (kbd "C-M-i") nil)
-    (define-key flyspell-mode-map (kbd "C-;") nil)))
+    (define-key flyspell-mode-map (kbd "C-;") nil)
+    (diminish 'flyspell-mode " 🅢")))
 
 ;; ----- ;;
 ;; magit ;;
@@ -199,7 +201,8 @@
   (global-set-key (kbd "C-x g") 'magit-status)
   (with-eval-after-load 'magit
     (set-face-foreground 'magit-diff-add "green4")
-    (set-face-foreground 'magit-diff-del "red3")))
+    (set-face-foreground 'magit-diff-del "red3")
+    (diminish 'magit-auto-revert-mode)))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
@@ -230,7 +233,8 @@
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (diminish 'undo-tree-mode))
 
 ;; --------- ;;
 ;; term-mode ;;
@@ -244,7 +248,9 @@
 ;; ---------- ;;
 (qjp-misc-config-inline rebox
   "See the source code to find out styles"
-  (setq rebox-style-loop '(21 23 25)))
+  (with-eval-after-load 'rebox2
+    (setq rebox-style-loop '(21 23 25))
+    (diminish 'rebox-mode)))
 
 ;; ------------------- ;;
 ;; idle-highlight-mode ;;
@@ -262,9 +268,15 @@ highlight."
 ;; smart mode line ;;
 ;; --------------- ;;
 (qjp-misc-config-inline sml
-  ;;(setq sml/theme "powerline")
-  (sml/setup))
+  (sml/setup)
+  (add-to-list 'sml/replacer-regexp-list '("^~/Programs/" ":Pro:") t))
 
+;; -------- ;;
+;; flycheck ;;
+;; -------- ;;
+(qjp-misc-config-inline flycheck
+  (with-eval-after-load 'flycheck
+    (diminish 'flycheck-mode " 🅕")))
 ;; -------- ;;
 ;; fcitx.el ;;
 ;; -------- ;;
@@ -293,13 +305,15 @@ highlight."
 ;; --------- ;;
 (qjp-misc-config-inline anzu
   (global-anzu-mode +1)
-  (setq anzu-minimum-input-length 3))
+  (setq anzu-minimum-input-length 3)
+  (diminish 'anzu-mode))
 
 ;; -------------------- ;;
 ;; whole-line-or-region ;;
 ;; -------------------- ;;
 (qjp-misc-config-inline whole-line-or-region
-  (whole-line-or-region-mode +1))
+  (whole-line-or-region-mode +1)
+  (diminish 'whole-line-or-region-mode))
 
 ;; ------------------ ;;
 ;; anchored-transpose ;;
@@ -376,7 +390,7 @@ highlight."
              company
              dired
              easypg expand-region
-             flyspell
+             flyspell flycheck
              goto-last-change gscholar-bibtex
              helm hs fcitx hydra;; loaded after helm
              idle-highlight ispell

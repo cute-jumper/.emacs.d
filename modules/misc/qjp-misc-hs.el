@@ -80,11 +80,13 @@ EmacsWiki's content about hideshow-mode. <2012-10-25 Thu>"
         (put-text-property 0 marker-length 'display (list 'left-fringe 'hs-marker 'hs-fringe-face) marker-string)
         (overlay-put ov 'before-string marker-string)
         ;; (put-text-property 0 (length display-string) 'face 'hs-face display-string)
-        (overlay-put ov 'display display-string)
-        )))
+        (overlay-put ov 'display display-string))))
   (setq hs-set-up-overlay 'display-code-line-counts))
 
 (qjp-hideshow-overlay-enhanced)
+
+(with-eval-after-load 'hideshow
+  (diminish 'hs-minor-mode))
 
 (provide 'qjp-misc-hs)
 ;;; qjp-misc-hs.el ends here

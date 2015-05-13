@@ -168,9 +168,16 @@
  whitespace-line-column 80
  whitespace-style '(face tabs empty trailing lines-tail))
 (global-whitespace-mode)
+(diminish 'global-whitespace-mode " 🅦")
 
 ;; imenu
 (setq-default imenu-auto-rescan t)
+
+;; tooltip
+(setq tooltip-use-echo-area t)
+
+;; auto-fill-mode
+(diminish 'auto-fill-function " 🅵")
 
 ;; grep
 (with-eval-after-load 'grep

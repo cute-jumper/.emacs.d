@@ -53,7 +53,8 @@
   (define-key helm-map (kbd "C-z")  'helm-select-action)
   (helm-mode)
   (helm-autoresize-mode t)
-  (helm-descbinds-mode))
+  (helm-descbinds-mode)
+  (diminish 'helm-mode " 🅗"))
 
 (provide 'qjp-misc-helm)
 ;;; qjp-misc-helm.el ends here

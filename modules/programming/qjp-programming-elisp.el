@@ -107,9 +107,9 @@
     (kbd "C-x C-e")
     'qjp-eval-last-sexp-or-region))
 
-;; ------------------------------------ ;;
-;; Emacs lisp, ielm and eval-expression ;;
-;; ------------------------------------ ;;
+;; ------------------- ;;
+;; Emacs lisp and ielm ;;
+;; ------------------- ;;
 (defun qjp-emacs-lisp-mode-hook ()
   (eldoc-mode +1)
   (paredit-mode +1)
@@ -217,7 +217,13 @@
   (define-key paredit-mode-map (kbd "M-F") 'paredit-barf-all-the-way-forward)
   (define-key paredit-mode-map (kbd "C-M-(") 'paredit-slurp-all-the-way-backward)
   (define-key paredit-mode-map (kbd "C-M-{") 'paredit-barf-all-the-way-backward)
-  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward))
+  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward)
+
+  (diminish 'paredit-mode))
+
+(diminish 'eldoc-mode)
+(with-eval-after-load 'elisp-slime-nav
+  (diminish 'elisp-slime-nav-mode))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here

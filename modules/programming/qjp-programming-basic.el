@@ -24,6 +24,9 @@
 
 ;;; Code:
 
+;; save point postiion in file
+(require 'saveplace)
+
 ;; Enable which-function-mode
 (which-function-mode +1)
 
@@ -38,8 +41,8 @@
 
 (defun electrify-return-if-match (arg)
   "If the text after the cursor matches `electrify-return-match' then
-  open and indent an empty line between the cursor and the text.  Move the
-  cursor to the new line."
+open and indent an empty line between the cursor and the text.  Move the
+cursor to the new line."
   (interactive "P")
   (let ((case-fold-search nil))
     (if (looking-at electrify-return-match)
@@ -47,45 +50,25 @@
     (newline arg)
     (indent-according-to-mode)))
 
-;; defuns in esk prog
-(defun esk-local-column-number-mode ()
-  (make-local-variable 'column-number-mode)
-  (column-number-mode t))
-
-(defun esk-local-comment-auto-fill ()
+(defun qjp-local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
-  (auto-fill-mode t))
+  (auto-fill-mode +1))
 
-(defun esk-turn-on-hl-line-mode ()
-  (when (> (display-color-cells) 8)
-    (hl-line-mode t)))
-
-(defun esk-turn-on-save-place-mode ()
-  (require 'saveplace)
-  (setq save-place t))
-
-(defun esk-pretty-lambdas ()
+(defun qjp-add-watchwords ()
   (font-lock-add-keywords
-   nil `(("(?\\(lambda\\>\\)"
-          (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                    ,(make-char 'greek-iso8859-7 107))
-                    nil))))))
-
-(defun esk-add-watchwords ()
-  (font-lock-add-keywords
-   nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
+   nil '(("\\<\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\|NOCOMMIT\\)"
           1 font-lock-warning-face t))))
 
-(add-hook 'prog-mode-hook 'esk-local-column-number-mode)
-(add-hook 'prog-mode-hook 'esk-local-comment-auto-fill)
-(add-hook 'prog-mode-hook 'esk-turn-on-hl-line-mode)
-(add-hook 'prog-mode-hook 'esk-turn-on-save-place-mode)
-(add-hook 'prog-mode-hook 'esk-pretty-lambdas)
-(add-hook 'prog-mode-hook 'esk-add-watchwords)
-(add-hook 'prog-mode-hook 'idle-highlight-mode)
+(defun qjp-prog-mode-hook ()
+  (qjp-local-comment-auto-fill)
+  (qjp-add-watchwords)
+  (prettify-symbols-mode +1)
+  (setq save-place +1)
+  (idle-highlight-mode +1)
+  (hl-line-mode +1)
+  (flycheck-mode +1))
 
-(defun esk-prog-mode-hook ()
-  (run-hooks 'prog-mode-hook))
+(add-hook 'prog-mode-hook #'qjp-prog-mode-hook)
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
