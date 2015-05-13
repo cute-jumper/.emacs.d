@@ -29,7 +29,8 @@
 ;; --------------------- ;;
 
 ;; I don't need hideshow-org.el any more with this one
-(global-set-key [(control tab)] 'hs-toggle-hiding)
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map [(control tab)] 'hs-toggle-hiding))
 
 ;; Expand when goto-line
 (defadvice goto-line (after expand-after-goto-line

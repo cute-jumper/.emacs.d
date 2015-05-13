@@ -34,10 +34,11 @@
 ;; ----------------- ;;
 ;; Basic key binding ;;
 ;; ----------------- ;;
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "C-c l") 'org-store-link)
+  (define-key qjp-mode-map (kbd "C-c c") 'org-capture)
+  (define-key qjp-mode-map (kbd "C-c a") 'org-agenda)
+  (define-key qjp-mode-map (kbd "C-c b") 'org-iswitchb))
 
 (with-eval-after-load 'org
   (require 'qjp-org-edit)

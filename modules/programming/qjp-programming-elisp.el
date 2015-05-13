@@ -100,7 +100,8 @@
           #'qjp-eval-expression-minibuffer-setup-hook)
 
 ;; Use pp-eval-expression
-(global-set-key (kbd "M-:") 'pp-eval-expression)
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "M-:") 'pp-eval-expression))
 
 ;; Make C-x C-e run `eval-region' if the region is active
 (defun qjp-eval-last-sexp-or-region (prefix)

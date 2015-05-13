@@ -25,14 +25,15 @@
 ;;; Code:
 
 (require 'helm-config)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x b") 'helm-mini)
-;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "C-c h g") 'helm-google-suggest)
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "M-x") 'helm-M-x)
+  (define-key qjp-mode-map (kbd "M-y") 'helm-show-kill-ring)
+  (define-key qjp-mode-map (kbd "C-x C-f") 'helm-find-files)
+  (define-key qjp-mode-map (kbd "C-x b") 'helm-mini)
+  ;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+  (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
+  (define-key qjp-mode-map (kbd "C-x c") nil)
+  (define-key qjp-mode-map (kbd "C-c h g") 'helm-google-suggest))
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 (setq helm-split-window-in-side-p t

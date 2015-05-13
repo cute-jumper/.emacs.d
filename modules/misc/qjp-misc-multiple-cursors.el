@@ -36,12 +36,13 @@
 (define-key region-bindings-mode-map "S" 'mc/mark-all-symbols-like-this-in-defun)
 (define-key region-bindings-mode-map "d" 'mc/mark-all-like-this-dwim)
 
-;; Normal key bindings
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(with-eval-after-load 'qjp-mode
+  ;; Normal key bindings
+  (define-key qjp-mode-map (kbd "C->") 'mc/mark-next-like-this)
+  (define-key qjp-mode-map (kbd "C-<") 'mc/mark-previous-like-this)
 
-;; Using mouse!
-(global-set-key (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
+  ;; Using mouse!
+  (define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click))
 
 (provide 'qjp-misc-multiple-cursors)
 ;;; qjp-misc-multiple-cursors.el ends here

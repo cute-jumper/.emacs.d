@@ -121,7 +121,8 @@ _h_   _l_   _o_pen      _y_ank
   ("o" open-rectangle nil)
   ("q" nil nil))
 
-(global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "C-x SPC") 'hydra-rectangle/body))
 
 ;; ---------------------- ;;
 ;; Hydra for evil numbers ;;
