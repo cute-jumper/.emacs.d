@@ -58,5 +58,8 @@
 (with-eval-after-load 'hideshow
   (diminish 'hs-minor-mode))
 
+(with-eval-after-load 'qjp-mode
+  (diminish 'qjp-mode " 🅠"))
+
 (provide 'qjp-misc-diminish)
 ;;; qjp-misc-diminish.el ends here

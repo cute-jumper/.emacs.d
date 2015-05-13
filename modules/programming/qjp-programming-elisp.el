@@ -119,11 +119,10 @@
 ;; Emacs lisp and ielm ;;
 ;; ------------------- ;;
 (defun qjp-emacs-lisp-mode-hook ()
-  (eldoc-mode +1)
-  (paredit-mode +1)
-  (highlight-parentheses-mode +1)
-  (elisp-slime-nav-mode +1)
+  (qjp-ielm-mode-hook)
+  ;; Unique settings for emacs-lisp-mode
   (hideshowvis-minor-mode +1)
+  (redshank-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t))
 
 (defun qjp-ielm-mode-hook ()
