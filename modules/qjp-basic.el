@@ -39,10 +39,10 @@
                  (system-name)))))
 
 ;; Show menu bar if `ubuntu', otherwise disable it.
-(let ((desktop-env (getenv "DESKTOP_SESSION")))
-  (if (string= desktop-env "ubuntu")
-      (menu-bar-mode +1)
-    (menu-bar-mode -1)))
+;; (let ((desktop-env (getenv "DESKTOP_SESSION")))
+;;   (if (string= desktop-env "ubuntu")
+;;       (menu-bar-mode +1)
+;;     (menu-bar-mode -1)))
 
 ;; Disable toolbar if not yet
 (tool-bar-mode -1)

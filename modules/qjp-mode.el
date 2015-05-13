@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;;
+;; TODO: add tips
 
 ;;; Code:
 

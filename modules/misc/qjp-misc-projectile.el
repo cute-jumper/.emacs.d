@@ -39,6 +39,7 @@
   (helm-projectile-on))
 
 (global-set-key (kbd "C-c p h") 'helm-projectile)
+(global-set-key (kbd "C-c p p") 'helm-projectile-switch-project)
 
 (provide 'qjp-misc-projectile)
 ;;; qjp-misc-projectile.el ends here

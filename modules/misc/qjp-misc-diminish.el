@@ -57,6 +57,10 @@
     (diminish 'helm-mode " 🅗"))
 (with-eval-after-load 'hideshow
   (diminish 'hs-minor-mode))
+(with-eval-after-load 'smartparens
+  (diminish 'smartparens-mode " 🅢"))
+(with-eval-after-load 'redshank
+  (diminish 'redshank-mode))
 
 (with-eval-after-load 'qjp-mode
   (diminish 'qjp-mode " 🅠"))
