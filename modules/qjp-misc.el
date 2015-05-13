@@ -102,28 +102,33 @@
 ;; goto-last-change ;;
 ;; ---------------- ;;
 (qjp-misc-config-inline goto-last-change
-  (global-set-key "\C-x\C-\\" 'goto-last-change))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-x C-\\") 'goto-last-change)))
 
 ;; ------------- ;;
 ;; ace-jump-mode ;;
 ;; ------------- ;;
 (qjp-misc-config-inline ace-jump
-  (global-set-key (kbd "C-;") 'ace-jump-mode)
-  (global-set-key (kbd "C-:") 'ace-jump-char-mode))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-;") 'ace-jump-mode)
+    (define-key qjp-mode-map (kbd "C-:") 'ace-jump-char-mode)))
 
 ;; ------------ ;;
 ;; ace-jump-zap ;;
 ;; ------------ ;;
 (qjp-misc-config-inline ace-jump-zap
-  (global-set-key (kbd "M-z") 'ace-jump-zap-to-char-dwim)
-  (global-set-key (kbd "M-Z") 'ace-jump-zap-up-to-char-dwim))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "M-z") 'ace-jump-zap-to-char-dwim)
+    (define-key qjp-mode-map (kbd "M-Z") 'ace-jump-zap-up-to-char-dwim)))
 
 ;; ------------ ;;
 ;; ace-flyspell ;;
 ;; ------------ ;;
 (qjp-misc-config-inline ace-flyspell
   ;; This is faster(1 vs 26 ms) than calling setup function. I don't know why
-  (global-set-key (kbd "C-.") 'ace-flyspell-dwim)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-.") 'ace-flyspell-dwim))
+  ;; FIXME
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
 
@@ -131,6 +136,7 @@
 ;; ace-jump-helm-line ;;
 ;; ------------------ ;;
 (qjp-misc-config-inline ace-jump-helm-line
+  ;; FIXME
   (with-eval-after-load 'helm
     (with-eval-after-load 'key-chord
       (key-chord-define helm-map "jj" #'ace-jump-helm-line))))
@@ -145,14 +151,16 @@
 ;; jump-char ;;
 ;; --------- ;;
 (qjp-misc-config-inline jump-char
-  (key-chord-define-global "jf" 'jump-char-forward)
-  (key-chord-define-global "jb" 'jump-char-backward))
+  (with-eval-after-load 'qjp-mode
+    (key-chord-define qjp-mode-map "jf" 'jump-char-forward)
+    (key-chord-define qjp-mode-map "jb" 'jump-char-backward)))
 
 ;; ------------- ;;
 ;; expand-region ;;
 ;; ------------- ;;
 (qjp-misc-config-inline expand-region
-  (global-set-key (kbd "C-=") 'er/expand-region))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-=") 'er/expand-region)))
 
 ;; ------ ;;
 ;; ispell ;;
@@ -187,7 +195,8 @@
 ;; ----- ;;
 (qjp-misc-config-inline magit
   (setq magit-last-seen-setup-instructions "1.4.0")
-  (global-set-key (kbd "C-x g") 'magit-status)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-x g") 'magit-status))
   (with-eval-after-load 'magit
     (set-face-foreground 'magit-diff-add "green4")
     (set-face-foreground 'magit-diff-del "red3")))
@@ -211,7 +220,8 @@
 (qjp-misc-config-inline sr-speedbar
   (setq sr-speedbar-right-side nil)
   (setq speedbar-use-images nil)
-  (global-set-key [f8] 'sr-speedbar-toggle))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map [f8] 'sr-speedbar-toggle)))
 
 ;; --------- ;;
 ;; undo-tree ;;
@@ -301,33 +311,37 @@ highlight."
 ;; anchored-transpose ;;
 ;; ------------------ ;;
 (qjp-misc-config-inline anchored-transpose
-  (global-set-key (kbd "C-x t") 'anchored-transpose))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose)))
 
 ;; ------- ;;
 ;; lacarte ;;
 ;; ------- ;;
 (qjp-misc-config-inline lacarte
-  (global-set-key (kbd "C-x M-x") 'lacarte-execute-menu-command))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-x M-x") 'lacarte-execute-menu-command)))
 
 ;; ------ ;;
 ;; swiper ;;
 ;; ------ ;;
 (qjp-misc-config-inline swiper
-  (global-set-key (kbd "C-r") 'swiper)
-  (global-set-key (kbd "C-s") 'swiper)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-r") 'swiper)
+    (define-key qjp-mode-map (kbd "C-s") 'swiper))
   (setq swiper-completion-method 'helm))
 
 ;; -------- ;;
 ;; quickrun ;;
 ;; -------- ;;
 (qjp-misc-config-inline quickrun
-  (global-set-key (kbd "C-c q q") #'quickrun)
   (defun quickrun-region-dwim (&optional prefix)
     (interactive "P")
     (call-interactively
      (if prefix #'quickrun-replace-region
        #'quickrun-region)))
-  (global-set-key (kbd "C-c q r") #'quickrun-region-dwim)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-c q q") #'quickrun)
+    (define-key qjp-mode-map (kbd "C-c q r") #'quickrun-region-dwim))
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
@@ -350,8 +364,10 @@ highlight."
         (let ((word (word-at-point)))
           (when word
             (bing-dict-brief word))))))
-  (global-set-key (kbd "C-c D") 'bing-dict-brief)
-  (global-set-key (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-c D") 'bing-dict-brief))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)))
 
 ;; Second part: make defuns for settings in files
 (add-to-list 'load-path (concat qjp-modules-dir "/misc"))
