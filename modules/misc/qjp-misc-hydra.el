@@ -73,7 +73,8 @@
   ("q" nil "quit"))
 
 (with-eval-after-load 'key-chord
-  (key-chord-define-global "jj" #'hydra-vi/body))
+  (with-eval-after-load 'qjp-mode
+    (key-chord-define qjp-mode-map "jj" #'hydra-vi/body)))
 
 ;; This reserves the behavior for M-g M-g
 (defhydra hydra-goto-line (goto-map ""
@@ -129,7 +130,7 @@ _h_   _l_   _o_pen      _y_ank
 ;; ---------------------- ;;
 ;; (maybe-require 'evil-numbers)
 (defhydra hydra-number
-  (global-map "C-c")
+  (qjp-mode-map "C-c")
   "hydra increase/decrease number"
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))

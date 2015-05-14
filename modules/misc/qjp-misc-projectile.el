@@ -40,6 +40,7 @@
 
 (with-eval-after-load 'qjp-mode
   (define-key qjp-mode-map (kbd "C-c p h") 'helm-projectile)
+  (autoload 'helm-projectile-switch-project "helm-projectile")
   (define-key qjp-mode-map (kbd "C-c p p") 'helm-projectile-switch-project))
 
 (provide 'qjp-misc-projectile)

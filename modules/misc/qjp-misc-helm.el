@@ -30,7 +30,6 @@
   (define-key qjp-mode-map (kbd "M-y") 'helm-show-kill-ring)
   (define-key qjp-mode-map (kbd "C-x C-f") 'helm-find-files)
   (define-key qjp-mode-map (kbd "C-x b") 'helm-mini)
-  ;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
   (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
   (define-key qjp-mode-map (kbd "C-x c") nil)
   (define-key qjp-mode-map (kbd "C-c h g") 'helm-google-suggest))
