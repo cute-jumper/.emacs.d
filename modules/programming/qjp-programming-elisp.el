@@ -103,6 +103,12 @@
 (with-eval-after-load 'qjp-mode
   (define-key qjp-mode-map (kbd "M-:") 'pp-eval-expression))
 
+(defadvice pp-display-expression (after sanityinc/make-read-only (expression out-buffer-name) activate)
+  "Enable `view-mode' in the output buffer - if any - so it can be closed with `\"q\"."
+  (when (get-buffer out-buffer-name)
+    (with-current-buffer out-buffer-name
+      (view-mode 1))))
+
 ;; Make C-x C-e run `eval-region' if the region is active
 (defun qjp-eval-last-sexp-or-region (prefix)
   "Eval region from BEG to END if active, otherwise the last sexp."
@@ -115,6 +121,42 @@
   (define-key emacs-lisp-mode-map
     (kbd "C-x C-e")
     'qjp-eval-last-sexp-or-region))
+
+;; ----------------------- ;;
+;; hippie-expand for elisp ;;
+;; ----------------------- ;;
+(defun qjp-emacs-lisp-module-name ()
+  "Search the buffer for `provide' declaration."
+  (save-excursion
+    (goto-char (point-min))
+    (when (search-forward-regexp "^(provide '" nil t)
+      (symbol-name (symbol-at-point)))))
+
+(defun qjp-try-complete-lisp-symbol-without-namespace (old)
+  "Hippie expand \"try\" function which expands \"-foo\" to \"modname-foo\" in elisp."
+  (unless old
+    (he-init-string (he-lisp-symbol-beg) (point))
+    (when (string-prefix-p "-" he-search-string)
+      (let ((mod-name (qjp-emacs-lisp-module-name)))
+        (when mod-name
+          (setq he-expand-list (list (concat mod-name he-search-string)))))))
+  (when he-expand-list
+    (he-substitute-string (car he-expand-list))
+    (setq he-expand-list nil)
+    t))
+
+(defun qjp-hippie-expand-setup-for-elisp ()
+  "Locally set `hippie-expand' completion functions for use with Emacs Lisp."
+  (make-local-variable 'hippie-expand-try-functions-list)
+  (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol t)
+  (add-to-list 'hippie-expand-try-functions-list 'try-complete-lisp-symbol-partially t)
+  (add-to-list 'hippie-expand-try-functions-list 'qjp-try-complete-lisp-symbol-without-namespace t))
+
+;; -------- ;;
+;; redshank ;;
+;; -------- ;;
+;; Must set before redshank is loaded
+(setq redshank-prefix-key "C-c C-r")
 
 ;; ------------------- ;;
 ;; Emacs lisp and ielm ;;
@@ -130,9 +172,11 @@
   (eldoc-mode +1)
   (paredit-mode +1)
   (highlight-parentheses-mode +1)
-  (elisp-slime-nav-mode +1))
+  (elisp-slime-nav-mode +1)
+  (qjp-hippie-expand-setup-for-elisp))
 
 (add-hook 'emacs-lisp-mode-hook #'qjp-emacs-lisp-mode-hook)
+(add-hook 'lisp-interaction-mode-hook #'qjp-emacs-lisp-mode-hook)
 (add-hook 'ielm-mode-hook #'qjp-ielm-mode-hook)
 
 ;; macrostep

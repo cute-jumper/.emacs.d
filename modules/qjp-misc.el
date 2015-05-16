@@ -105,13 +105,15 @@
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "C-x C-\\") 'goto-last-change)))
 
-;; ------------- ;;
-;; ace-jump-mode ;;
-;; ------------- ;;
-(qjp-misc-config-inline ace-jump
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-;") 'ace-jump-mode)
-    (define-key qjp-mode-map (kbd "C-:") 'ace-jump-char-mode)))
+;; --- ;;
+;; avy ;;
+;; --- ;;
+(qjp-misc-config-inline avy
+  (with-eval-after-load 'key-chord
+    (with-eval-after-load 'qjp-mode
+      (setq avy-background t)
+      (key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
+      (key-chord-define qjp-mode-map "jl" 'avy-goto-char))))
 
 ;; ------------ ;;
 ;; ace-jump-zap ;;
@@ -168,17 +170,17 @@
 (qjp-misc-config-inline ispell
   (let ((hunspell-name "hunspell"))
     (if (executable-find hunspell-name)
-        (with-eval-after-load 'ispell
-          (setq ispell-local-dictionary-alist '((nil
-                                                 "[[:alpha:]]"
-                                                 "[^[:alpha:]]"
-                                                 "[']"
-                                                 t
-                                                 ("-d" "en_US")
-                                                 nil
-                                                 iso-8859-1)))
-          (setq ispell-program-name hunspell-name)
-          (add-hook 'text-mode-hook 'turn-on-flyspell))
+        (eval `(with-eval-after-load 'ispell
+                 (setq ispell-local-dictionary-alist '((nil
+                                                        "[[:alpha:]]"
+                                                        "[^[:alpha:]]"
+                                                        "[']"
+                                                        t
+                                                        ("-d" "en_US")
+                                                        nil
+                                                        iso-8859-1)))
+                 (setq ispell-program-name ,hunspell-name)
+                 (add-hook 'text-mode-hook 'turn-on-flyspell)))
       (message "[Warning]: Please consider installing %s." hunspell-name))))
 
 ;; -------- ;;
@@ -200,6 +202,13 @@
   (with-eval-after-load 'magit
     (set-face-foreground 'magit-diff-add "green4")
     (set-face-foreground 'magit-diff-del "red3")))
+
+;; --------- ;;
+;; guide-key ;;
+;; --------- ;;
+(qjp-misc-config-inline guide-key
+  (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r"))
+  (guide-key-mode 1))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
@@ -383,13 +392,13 @@ highlight."
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(ace-jump ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
+  '(avy ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
              bing-dict
              company
              dired
              easypg expand-region
              flyspell flycheck
-             goto-last-change gscholar-bibtex
+             goto-last-change gscholar-bibtex guide-key
              helm hs fcitx hydra;; loaded after helm
              idle-highlight ispell
              jump-char

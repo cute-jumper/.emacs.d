@@ -69,6 +69,8 @@
   ;; Must call `isearch-forward' non-interactively
   ("/" (progn
          (isearch-forward)))
+  ("g" avy-goto-word-1)
+  ("G" avy-goto-char)
   ("i" nil "quit")
   ("q" nil "quit"))
 

@@ -79,11 +79,13 @@
 (define-key dired-mode-map "E" #'dired-do-eval)
 
 (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
-(add-hook 'dired-mode-hook
-          (lambda()
-            (setq dired-guess-shell-alist-user
-                   ;; fixed rule
-                  (list (list "\\.pdf$" "okular")))))
+
+(defun qjp-dired-mode-hook ()
+  (setq dired-guess-shell-alist-user
+        ;; fixed rule
+        (list (list "\\.pdf$" "okular")))
+  (guide-key/add-local-guide-key-sequence "%"))
+(add-hook 'dired-mode-hook #'qjp-dired-mode-hook)
 
 (provide 'qjp-misc-dired)
 ;;; qjp-misc-dired.el ends here
