@@ -80,15 +80,6 @@
 ;; key-chord mode ;;
 ;; -------------- ;;
 (qjp-misc-config-inline key-chord
-  (with-eval-after-load 'key-chord
-    (defun key-chord-define (keymap keys command)
-      "Redefine to make it have order"
-      (if (/= 2 (length keys))
-          (error "Key-chord keys must have two elements"))
-      ;; Exotic chars in a string are >255 but define-key wants 128..255 for those
-      (let ((key1 (logand 255 (aref keys 0)))
-            (key2 (logand 255 (aref keys 1))))
-        (define-key keymap (vector 'key-chord key1 key2) command))))
   (key-chord-mode +1))
 
 ;; -------------------- ;;
@@ -208,7 +199,7 @@
 ;; --------- ;;
 (qjp-misc-config-inline guide-key
   (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r"))
-  (guide-key-mode 1))
+  (guide-key-mode +1))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
@@ -253,8 +244,9 @@
 ;; ---------- ;;
 (qjp-misc-config-inline rebox
   "See the source code to find out styles"
-  (with-eval-after-load 'rebox2
-    (setq rebox-style-loop '(21 23 25))))
+  (with-eval-after-load 'qjp-mode
+    (setq rebox-style-loop '(21 23 25))
+    (define-key qjp-mode-map (kbd "C-x ;") #'rebox-cycle)))
 
 ;; ------------------- ;;
 ;; idle-highlight-mode ;;

@@ -173,6 +173,7 @@
   (paredit-mode +1)
   (highlight-parentheses-mode +1)
   (elisp-slime-nav-mode +1)
+  (aggressive-indent-mode +1)
   (qjp-hippie-expand-setup-for-elisp))
 
 (add-hook 'emacs-lisp-mode-hook #'qjp-emacs-lisp-mode-hook)

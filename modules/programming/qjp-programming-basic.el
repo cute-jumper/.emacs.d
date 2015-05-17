@@ -29,6 +29,11 @@
 
 ;; Enable which-function-mode
 (which-function-mode +1)
+;; Set which-function-mode to show in header line
+(setq-default header-line-format
+              '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+      (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 ;; -------------------------------------------- ;;
 ;; electriy-return, useful function copied from ;;
