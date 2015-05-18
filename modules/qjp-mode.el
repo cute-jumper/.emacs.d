@@ -34,7 +34,7 @@
     (define-key map (kbd "M-s r") 'replace-string)
     (define-key map (kbd "C-c d") 'qjp-duplicate-line-or-region)
     (define-key map [remap move-beginning-of-line]
-                    #'qjp-back-to-indentation-or-beginning)
+      #'qjp-back-to-indentation-or-beginning)
     (define-key map (kbd "M-;") 'qjp-comment-dwim-line)
     (define-key map (kbd "C-o") 'qjp-open-new-line)
     (define-key map [M-up] 'qjp-move-line-up)
@@ -53,6 +53,7 @@
     (define-key map (kbd "C-x C-b") 'ibuffer)
     (define-key map (kbd "C-x C-r") 'revert-buffer)
     (define-key map [remap just-one-space] 'cycle-spacing)
+    (define-key map [remap count-words-region] 'count-words)
     (define-key map (kbd "C-x I") 'imenu)
     (define-key map (kbd "C-x O") (lambda () (interactive) (other-window -1)))
     (define-key map (kbd "M-/") 'hippie-expand) ;; hippie-expand

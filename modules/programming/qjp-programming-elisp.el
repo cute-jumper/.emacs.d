@@ -225,10 +225,10 @@
 ;; -------------- ;;
 (with-eval-after-load 'paredit
   (defun paredit-barf-all-the-way-backward ()
-     (interactive)
-     (paredit-split-sexp)
-     (paredit-backward-down)
-     (paredit-splice-sexp))
+    (interactive)
+    (paredit-split-sexp)
+    (paredit-backward-down)
+    (paredit-splice-sexp))
 
   (defun paredit-barf-all-the-way-forward ()
     (interactive)
@@ -284,7 +284,33 @@
   (define-key paredit-mode-map (kbd "M-F") 'paredit-barf-all-the-way-forward)
   (define-key paredit-mode-map (kbd "C-M-(") 'paredit-slurp-all-the-way-backward)
   (define-key paredit-mode-map (kbd "C-M-{") 'paredit-barf-all-the-way-backward)
-  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward))
+  (define-key paredit-mode-map (kbd "M-B") 'paredit-barf-all-the-way-backward)
+
+  ;; Duplicate sexp in paredit mode
+  (defun paredit--is-at-start-of-sexp ()
+    (and (looking-at "(\\|\\[")
+         (not (nth 3 (syntax-ppss)))   ;; inside string
+         (not (nth 4 (syntax-ppss))))) ;; inside comment
+
+  (defun paredit-duplicate-closest-sexp ()
+    (interactive)
+    ;; skips to start of current sexp
+    (while (not (paredit--is-at-start-of-sexp))
+      (paredit-backward))
+    (set-mark-command nil)
+    ;; while we find sexps we move forward on the line
+    (while (and (bounds-of-thing-at-point 'sexp)
+                (<= (point) (car (bounds-of-thing-at-point 'sexp)))
+                (not (= (point) (line-end-position))))
+      (forward-sexp)
+      (while (looking-at " ")
+        (forward-char)))
+    (kill-ring-save (mark) (point))
+    ;; go to the next line and copy the sexprs we encountered
+    (paredit-newline)
+    (yank)
+    (exchange-point-and-mark))
+  (define-key paredit-mode-map (kbd "C-S-d") 'paredit-duplicate-closest-sexp))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here
