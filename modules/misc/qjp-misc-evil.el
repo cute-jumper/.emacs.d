@@ -33,7 +33,7 @@
 (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
 ;; map "jj" to "ESC"
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(qjp-key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 
 ;; map "c-e" to end-of-line because it's kind of more convenient than $
 (define-key evil-normal-state-map "\C-e" 'end-of-line)

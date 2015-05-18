@@ -79,6 +79,13 @@
 ;; -------------- ;;
 ;; key-chord mode ;;
 ;; -------------- ;;
+(defun qjp-key-chord-define (keymap keys command)
+  (if (/= 2 (length keys))
+      (error "Key-chord keys must have two elements"))
+  (let ((key1 (logand 255 (aref keys 0)))
+        (key2 (logand 255 (aref keys 1))))
+    (define-key keymap (vector 'key-chord key1 key2) command)))
+
 (qjp-misc-config-inline key-chord
   (key-chord-mode +1))
 
@@ -100,11 +107,10 @@
 ;; avy ;;
 ;; --- ;;
 (qjp-misc-config-inline avy
-  (with-eval-after-load 'key-chord
-    (with-eval-after-load 'qjp-mode
-      (setq avy-background t)
-      (key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
-      (key-chord-define qjp-mode-map "jl" 'avy-goto-char))))
+  (with-eval-after-load 'qjp-mode
+    (setq avy-background t)
+    (qjp-key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
+    (qjp-key-chord-define qjp-mode-map "jl" 'avy-goto-char)))
 
 ;; ------------ ;;
 ;; ace-jump-zap ;;
@@ -131,8 +137,7 @@
 (qjp-misc-config-inline ace-jump-helm-line
   ;; FIXME
   (with-eval-after-load 'helm
-    (with-eval-after-load 'key-chord
-      (key-chord-define helm-map "jj" #'ace-jump-helm-line))))
+    (qjp-key-chord-define helm-map "jj" #'ace-jump-helm-line)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -145,8 +150,8 @@
 ;; --------- ;;
 (qjp-misc-config-inline jump-char
   (with-eval-after-load 'qjp-mode
-    (key-chord-define qjp-mode-map "jf" 'jump-char-forward)
-    (key-chord-define qjp-mode-map "jb" 'jump-char-backward)))
+    (qjp-key-chord-define qjp-mode-map "jf" 'jump-char-forward)
+    (qjp-key-chord-define qjp-mode-map "jb" 'jump-char-backward)))
 
 ;; ------------- ;;
 ;; expand-region ;;

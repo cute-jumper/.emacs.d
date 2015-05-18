@@ -74,16 +74,15 @@
   ("i" nil "quit")
   ("q" nil "quit"))
 
-(with-eval-after-load 'key-chord
-  (with-eval-after-load 'qjp-mode
-    (key-chord-define qjp-mode-map "jj" #'hydra-vi/body)))
+(with-eval-after-load 'qjp-mode
+  (qjp-key-chord-define qjp-mode-map "jj" #'hydra-vi/body))
 
 ;; This reserves the behavior for M-g M-g
 (defhydra hydra-goto-line (goto-map ""
-                           :pre (nlinum-mode 1)
-                           :post (nlinum-mode -1))
+                                    :pre (nlinum-mode 1)
+                                    :post (nlinum-mode -1))
   "goto-line"
-  ("g" goto-line "go")
+  ("g" avy-goto-line "go")
   ("m" set-mark-command "mark" :bind nil)
   ("q" nil "quit"))
 

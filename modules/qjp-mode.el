@@ -86,8 +86,8 @@
   (interactive)
   ;; key-chord-mode
   (with-eval-after-load 'key-chord
-    (key-chord-define qjp-mode-map "bb" 'helm-mini)
-    (key-chord-define qjp-mode-map "xf" 'helm-find-files))
+    (qjp-key-chord-define qjp-mode-map "bb" 'helm-mini)
+    (qjp-key-chord-define qjp-mode-map "xf" 'helm-find-files))
   ;; Bindings `qjp-defuns-isearch'
   (define-key isearch-mode-map (kbd "C-o") 'qjp-isearch-occur)
   (define-key isearch-mode-map [(control k)] 'qjp-kill-isearch-match)
