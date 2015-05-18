@@ -182,7 +182,8 @@
 
 ;; macrostep
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand))
+  (define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand)
+  (define-key lisp-interaction-mode-map (kbd "C-c e") #'macrostep-expand))
 
 ;; switch between ielm and emacs lisp buffer
 (defvar qjp-ielm-from-buffer nil

@@ -385,29 +385,29 @@ highlight."
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(avy ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
-             bing-dict
-             company
-             dired
-             easypg expand-region
-             flyspell flycheck
-             goto-last-change gscholar-bibtex guide-key
-             helm hs fcitx hydra;; loaded after helm
-             idle-highlight ispell
-             jump-char
-             key-chord
-             lacarte
-             magit markdown multiple-cursors
-             projectile
-             quickrun
-             rebox region-bindings
-             sml nyan;; load after sml
-             sr-speedbar smartparens
-             term
-             undo-tree
-             volatile-highlights
-             whole-line-or-region
-             ;;yasnippet
-             )
+        bing-dict
+        company
+        dired diminish
+        easypg expand-region
+        flyspell flycheck
+        goto-last-change gscholar-bibtex guide-key
+        helm hs fcitx hydra;; loaded after helm
+        idle-highlight ispell
+        jump-char
+        key-chord
+        lacarte
+        magit markdown multiple-cursors
+        projectile
+        quickrun
+        rebox region-bindings
+        sml nyan;; load after sml
+        sr-speedbar smartparens
+        term
+        undo-tree
+        volatile-highlights
+        whole-line-or-region
+        ;;yasnippet
+        )
   "The short names for the packages that should be enabled")
 
 ;; Enable these settings

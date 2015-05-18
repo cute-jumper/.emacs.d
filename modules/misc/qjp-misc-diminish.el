@@ -24,46 +24,59 @@
 
 ;;; Code:
 
-(diminish 'auto-fill-function " 🅵")
-(diminish 'abbrev-mode " 🅐")
-(diminish 'global-whitespace-mode " 🅦")
-(with-eval-after-load 'paredit
-  (diminish 'paredit-mode))
-(with-eval-after-load 'eldoc
-  (diminish 'eldoc-mode))
-(with-eval-after-load 'elisp-slime-nav
-  (diminish 'elisp-slime-nav-mode))
-(with-eval-after-load 'company
-    (diminish 'company-mode " 🅒"))
-(with-eval-after-load 'ace-pinyin
-    (diminish 'ace-pinyin-mode))
-(with-eval-after-load 'flyspell
-    (diminish 'flyspell-mode " 🅢"))
-(with-eval-after-load 'magit
-    (diminish 'magit-auto-revert-mode))
-(with-eval-after-load 'volatile-highlights
+(defun qjp-misc-diminish-essential ()
+  (interactive)
+  (diminish 'auto-fill-function)
+  (diminish 'abbrev-mode)
+  (with-eval-after-load 'qjp-mode
+    (diminish 'qjp-mode " Q"))
+  (with-eval-after-load 'volatile-highlights
     (diminish 'volatile-highlights-mode))
-(with-eval-after-load 'undo-tree
-    (diminish 'undo-tree-mode))
-(with-eval-after-load 'rebox2
-    (diminish 'rebox-mode))
-(with-eval-after-load 'flycheck
-    (diminish 'flycheck-mode " 🅕"))
-(with-eval-after-load 'anzu
-    (diminish 'anzu-mode))
-(with-eval-after-load 'whole-line-or-region
+  (with-eval-after-load 'whole-line-or-region
     (diminish 'whole-line-or-region-mode))
-(with-eval-after-load 'helm
-    (diminish 'helm-mode " 🅗"))
-(with-eval-after-load 'hideshow
-  (diminish 'hs-minor-mode))
-(with-eval-after-load 'smartparens
-  (diminish 'smartparens-mode " 🅢"))
-(with-eval-after-load 'redshank
-  (diminish 'redshank-mode))
+  (defun qjp-misc-diminish-helm ()
+    (diminish 'helm-mode)
+    (remove-hook 'helm-mode-hook #'qjp-misc-diminish-helm))
+  (with-eval-after-load 'helm
+    (add-hook 'helm-mode-hook #'qjp-misc-diminish-helm))
+  (with-eval-after-load 'redshank
+    (diminish 'redshank-mode))
+  (with-eval-after-load 'anzu
+    (diminish 'anzu-mode))
+  (with-eval-after-load 'hideshow
+    (diminish 'hs-minor-mode))
+  (with-eval-after-load 'magit
+    (diminish 'magit-auto-revert-mode))
+  (with-eval-after-load 'undo-tree
+    (diminish 'undo-tree-mode " UT"))
+  (with-eval-after-load 'paredit
+    (diminish 'paredit-mode " Par"))
+  (with-eval-after-load 'eldoc
+    (diminish 'eldoc-mode " ElD"))
+  (with-eval-after-load 'elisp-slime-nav
+    (diminish 'elisp-slime-nav-mode " SNav"))
+  (with-eval-after-load 'ace-pinyin
+    (diminish 'ace-pinyin-mode)))
 
-(with-eval-after-load 'qjp-mode
-  (diminish 'qjp-mode " 🅠"))
+(defun qjp-misc-diminish-spacemacs ()
+  (interactive)
+  (diminish 'auto-fill-function " 🅵")
+  (diminish 'abbrev-mode " 🅐")
+  (diminish 'global-whitespace-mode " 🅦")
+  (with-eval-after-load 'company
+    (diminish 'company-mode " 🅒"))
+  (with-eval-after-load 'flyspell
+    (diminish 'flyspell-mode " 🅢"))
+  (with-eval-after-load 'flycheck
+    (diminish 'flycheck-mode " 🅕"))
+  (with-eval-after-load 'helm
+    (diminish 'helm-mode " 🅗"))
+  (with-eval-after-load 'smartparens
+    (diminish 'smartparens-mode " 🅢"))
+  (with-eval-after-load 'qjp-mode
+    (diminish 'qjp-mode " 🅠")))
+
+(qjp-misc-diminish-essential)
 
 (provide 'qjp-misc-diminish)
 ;;; qjp-misc-diminish.el ends here
