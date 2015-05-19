@@ -5,8 +5,8 @@
 
 emacs -Q\
       --batch\
-      -l "~/.emacs.d/startup/03qjp-package-manager.el"\
       --eval "(defvar qjp-base-dir user-emacs-directory)" \
+      -l "~/.emacs.d/startup/03qjp-package-manager.el"\
       --eval "(package-list-packages)"\
       --eval "(message \">> Start installing $1!\")" \
       --eval "(package-install '$1)"\
