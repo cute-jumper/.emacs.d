@@ -37,8 +37,8 @@
       #'qjp-back-to-indentation-or-beginning)
     (define-key map (kbd "M-;") 'qjp-comment-dwim-line)
     (define-key map (kbd "C-o") 'qjp-open-new-line)
-    (define-key map [M-up] 'qjp-move-line-up)
-    (define-key map [M-down] 'qjp-move-line-down)
+    (define-key map [S-up] 'qjp-move-line-up)
+    (define-key map [S-down] 'qjp-move-line-down)
     (define-key map (kbd "M-m") 'qjp-kill-back-to-indentation)
 
     ;; Bindings `qjp-defuns-isearch'
@@ -93,7 +93,7 @@
   (define-key isearch-mode-map (kbd "C-o") 'qjp-isearch-occur)
   (define-key isearch-mode-map [(control k)] 'qjp-kill-isearch-match)
   (define-key isearch-mode-map [(meta z)] 'qjp-zap-to-isearch)
-  (define-key isearch-mode-map (kbd "C-p") 'qjp-isearch-yank-region)
+  (define-key isearch-mode-map (kbd "C-p") 'isearch-yank-x-selection)
   (qjp-mode +1))
 
 (defun qjp-mode-off ()

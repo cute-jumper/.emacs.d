@@ -55,6 +55,8 @@
     (diminish 'eldoc-mode " ElD"))
   (with-eval-after-load 'elisp-slime-nav
     (diminish 'elisp-slime-nav-mode " SNav"))
+  (with-eval-after-load 'company
+    (diminish 'company-mode " Comp"))
   (with-eval-after-load 'ace-pinyin
     (diminish 'ace-pinyin-mode)))
 

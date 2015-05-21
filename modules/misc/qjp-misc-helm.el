@@ -35,12 +35,14 @@
   (define-key qjp-mode-map (kbd "C-c h g") 'helm-google-suggest))
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
+
 (setq helm-split-window-in-side-p t
       helm-buffers-fuzzy-matching t
       ;;helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
       helm-ff-auto-update-initial-value t
       helm-ff-file-name-history-use-recentf t)
+
 (setq helm-bibtex-bibliography qjp-bibtex-database-file)
 
 ;; Helm-mode is slow (more than 0.5s to start)
