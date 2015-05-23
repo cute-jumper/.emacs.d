@@ -293,17 +293,6 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
-;; -------------- ;;
-;; Create scratch ;;
-;; -------------- ;;
-(defun qjp-create-scratch-buffer ()
-  "Create a new scratch buffer."
-  (interactive)
-  (let ((buf (generate-new-buffer "*scratch*")))
-    (switch-to-buffer buf)
-    (funcall initial-major-mode)
-    (insert initial-scratch-message)))
-
 ;; autoload `zap-up-to-char' in `misc'
 ;; obsolete. Use `ace-jump-zap' instead
 ;; (autoload 'zap-up-to-char "misc")

@@ -73,7 +73,7 @@
 ;; Show me empty lines
 (setq-default indicate-empty-lines t)
 
-;; Show keystrokes in minibuffer
+;; Show keystrokes in the echo area
 (setq echo-keystrokes 0.1)
 
 ;; Show visible bell
@@ -107,7 +107,7 @@
 ;; Minor fix for volitile-highlight
 (custom-theme-set-faces
  'zenburn
- '(vhl/default-face ((t (:foreground "#E0CF9F" :background "#383838")))))
+ '(vhl/default-face ((t (:foreground "#383838" :background "gray50")))))
 
 ;; -------------------- ;;
 ;; Some useful settings ;;

@@ -82,6 +82,32 @@
       (disable-theme 'zenburn)
       (sml/apply-theme 'light)))))
 
+;; ------------------ ;;
+;;  *scratch* related ;;
+;; ------------------ ;;
+(defun qjp-create-scratch-buffer ()
+  "Create a new scratch buffer and return it."
+  (interactive)
+  (let ((buf (generate-new-buffer "*scratch*")))
+    (switch-to-buffer buf)
+    (funcall initial-major-mode)
+    (insert initial-scratch-message)
+    buf))
+
+;; Quickly switch from and to *scratch*
+(defvar qjp-scratch-from-buffer nil
+  "From where we switch to *scratch*.")
+
+(defun qjp-switch-to-scratch-or-back ()
+  (interactive)
+  (if (string= (buffer-name) "*scratch*")
+      (when qjp-scratch-from-buffer
+        (switch-to-buffer qjp-scratch-from-buffer))
+    (let ((from-buffer (current-buffer)))
+      (switch-to-buffer (or (get-buffer "*scratch*")
+                            (qjp-create-scratch-buffer)))
+      (setq qjp-scratch-from-buffer from-buffer))))
+
 ;; ---------- ;;
 ;; Web search ;;
 ;; ---------- ;;

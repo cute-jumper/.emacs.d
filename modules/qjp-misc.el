@@ -238,6 +238,13 @@
   (setq undo-tree-auto-save-history t)
   (global-undo-tree-mode))
 
+;; ------- ;;
+;; diff-hl ;;
+;; ------- ;;
+(qjp-misc-config-inline diff-hl
+  (global-diff-hl-mode)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
+
 ;; --------- ;;
 ;; term-mode ;;
 ;; --------- ;;
@@ -249,17 +256,14 @@
 ;; rebox-mode ;;
 ;; ---------- ;;
 (qjp-misc-config-inline rebox
-  "See the source code to find out styles"
-  (with-eval-after-load 'qjp-mode
-    (setq rebox-style-loop '(21 23 25))
-    (define-key qjp-mode-map (kbd "C-x ;") #'rebox-cycle)))
+  "See the source code to find out styles. Use hydra for key bindings."
+  (setq rebox-style-loop '(21 23 25)))
 
 ;; ------------------- ;;
 ;; idle-highlight-mode ;;
 ;; ------------------- ;;
 (qjp-misc-config-inline idle-highlight
-  "Use bold and underline instead of `region' color to
-highlight."
+  "Use bold and underline instead of `region' color to highlight."
   (with-eval-after-load 'idle-highlight-mode
     (set-face-attribute 'idle-highlight nil
                         :weight 'semi-bold :underline
@@ -363,7 +367,7 @@ highlight."
 ;; --------- ;;
 (qjp-misc-config-inline bing-dict
   (defun qjp-search-word-at-mouse ()
-    "bing search word at mouse"
+    "bing search word at mouse."
     (interactive)
     (when (featurep 'bing-dict)
       (save-excursion
@@ -393,7 +397,7 @@ highlight."
   '(avy ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
         bing-dict
         company
-        dired diminish
+        dired diminish diff-hl
         easypg expand-region
         flyspell flycheck
         goto-last-change gscholar-bibtex guide-key
@@ -414,7 +418,7 @@ highlight."
         whole-line-or-region
         ;;yasnippet
         )
-  "The short names for the packages that should be enabled")
+  "The names for the packages that should be enabled.")
 
 ;; Enable these settings
 (defun qjp-misc-enable-setting (feature-name)

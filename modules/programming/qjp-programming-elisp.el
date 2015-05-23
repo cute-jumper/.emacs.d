@@ -187,7 +187,7 @@
 
 ;; switch between ielm and emacs lisp buffer
 (defvar qjp-ielm-from-buffer nil
-  "From where we switch to ielm")
+  "From where we switch to ielm.")
 (make-variable-buffer-local 'qjp-ielm-from-buffer)
 
 (defun qjp-switch-to-ielm ()

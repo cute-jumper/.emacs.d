@@ -136,5 +136,13 @@ _h_   _l_   _o_pen      _y_ank
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))
 
+;; --------------- ;;
+;; Hydra for rebox ;;
+;; --------------- ;;
+(defhydra hydra-rebox
+  (qjp-mode-map "C-x")
+  "hydra rebox-cycle"
+  (";" rebox-cycle))
+
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here
