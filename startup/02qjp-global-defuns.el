@@ -70,16 +70,18 @@
 
 ;; NOP function. Just show the cursor position!
 (defvar qjp--nop-counter 0)
+(defvar qjp--nop-functions
+  '((lambda () (message "Buffer %s has %d lines."
+                    (buffer-name)
+                    (line-number-at-pos (point-max))))
+    (lambda () (message "Emacs uptime: %s." (emacs-uptime)))))
+
 (defun qjp-nop ()
-  "Show uptime"
+  "Show one of the nop functions."
   (interactive)
-  (let ((branch-count 2))
-    (cond
-     ((= qjp--nop-counter 0) (message "Buffer %s has %d lines"
-                                      (buffer-name)
-                                      (line-number-at-pos (point-max))))
-     (t (message "Emacs uptime: %s" (emacs-uptime))))
-    (setq qjp--nop-counter (mod (1+ qjp--nop-counter) branch-count))))
+  (let ((func-num (length qjp--nop-functions)))
+    (funcall (nth (mod qjp--nop-counter func-num) qjp--nop-functions))
+    (setq qjp--nop-counter (mod (1+ qjp--nop-counter) func-num))))
 
 ;; Maximize
 (defun qjp-maximized ()

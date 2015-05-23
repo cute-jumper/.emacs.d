@@ -47,9 +47,9 @@
     ;; Bindings for `qjp-defuns-misc'
     (define-key map (kbd "C-x M-=") #'qjp-calc-eval-and-replace)
 
-    ;; ----------------- ;;
+    ;; ------------------ ;;
     ;; Other key bindings ;;
-    ;; ----------------- ;;
+    ;; ------------------ ;;
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-r") #'revert-buffer)
     (define-key map [remap just-one-space] #'cycle-spacing)
