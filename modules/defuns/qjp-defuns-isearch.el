@@ -62,6 +62,13 @@ and the point, not include the isearch word."
         (error "Internal error in isearch kill function.")))
     (isearch-exit)))
 
+(defun qjp-isearch-exit-other-end (rbeg rend)
+  "Exit isearch, but at the other end of the search string.
+This is useful when followed by an immediate kill."
+  (interactive "r")
+  (isearch-exit)
+  (goto-char isearch-other-end))
+
 ;; isearch in other window
 (defun qjp-isearch-other-window ()
   (interactive)

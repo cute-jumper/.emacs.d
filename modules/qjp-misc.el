@@ -112,13 +112,13 @@
     (qjp-key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
     (qjp-key-chord-define qjp-mode-map "jl" 'avy-goto-char)))
 
-;; ------------ ;;
-;; ace-jump-zap ;;
-;; ------------ ;;
-(qjp-misc-config-inline ace-jump-zap
+;; ------- ;;
+;; avy-zap ;;
+;; ------- ;;
+(qjp-misc-config-inline avy-zap
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "M-z") 'ace-jump-zap-to-char-dwim)
-    (define-key qjp-mode-map (kbd "M-Z") 'ace-jump-zap-up-to-char-dwim)))
+    (define-key qjp-mode-map (kbd "M-z") 'avy-zap-to-char-dwim)
+    (define-key qjp-mode-map (kbd "M-Z") 'avy-zap-up-to-char-dwim)))
 
 ;; ------------ ;;
 ;; ace-flyspell ;;
@@ -143,6 +143,7 @@
 ;; ace-pinyin ;;
 ;; ---------- ;;
 (qjp-misc-config-inline ace-pinyin
+  (setq ace-pinyin-use-avy t)
   (ace-pinyin-global-mode +1))
 
 ;; --------- ;;

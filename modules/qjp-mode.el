@@ -29,42 +29,42 @@
 (defvar qjp-mode-map
   (let ((map (make-sparse-keymap)))
     ;; Bindings for `qjp-defuns-edit'
-    (define-key map (kbd "C-h") 'backward-delete-char)
-    (define-key map (kbd "M-h") 'backward-kill-word)
-    (define-key map (kbd "M-s r") 'replace-string)
-    (define-key map (kbd "C-c d") 'qjp-duplicate-line-or-region)
+    (define-key map (kbd "C-h") #'backward-delete-char)
+    (define-key map (kbd "M-h") #'backward-kill-word)
+    (define-key map (kbd "M-s r") #'replace-string)
+    (define-key map (kbd "C-c d") #'qjp-duplicate-line-or-region)
     (define-key map [remap move-beginning-of-line]
       #'qjp-back-to-indentation-or-beginning)
-    (define-key map (kbd "M-;") 'qjp-comment-dwim-line)
-    (define-key map (kbd "C-o") 'qjp-open-new-line)
-    (define-key map [S-up] 'qjp-move-line-up)
-    (define-key map [S-down] 'qjp-move-line-down)
-    (define-key map (kbd "M-m") 'qjp-kill-back-to-indentation)
+    (define-key map (kbd "M-;") #'qjp-comment-dwim-line)
+    (define-key map (kbd "C-o") #'qjp-open-new-line)
+    (define-key map [S-up] #'qjp-move-line-up)
+    (define-key map [S-down] #'qjp-move-line-down)
+    (define-key map (kbd "M-m") #'qjp-kill-back-to-indentation)
 
     ;; Bindings `qjp-defuns-isearch'
-    (define-key map (kbd "M-o s") 'qjp-isearch-other-window)
+    (define-key map (kbd "M-o s") #'qjp-isearch-other-window)
 
     ;; Bindings for `qjp-defuns-misc'
-    (define-key map (kbd "C-x M-=") 'qjp-calc-eval-and-replace)
+    (define-key map (kbd "C-x M-=") #'qjp-calc-eval-and-replace)
 
     ;; ----------------- ;;
     ;; Other key bindings ;;
     ;; ----------------- ;;
-    (define-key map (kbd "C-x C-b") 'ibuffer)
-    (define-key map (kbd "C-x C-r") 'revert-buffer)
-    (define-key map [remap just-one-space] 'cycle-spacing)
-    (define-key map [remap count-words-region] 'count-words)
-    (define-key map (kbd "C-x I") 'imenu)
-    (define-key map (kbd "C-x O") (lambda () (interactive) (other-window -1)))
-    (define-key map (kbd "M-/") 'hippie-expand) ;; hippie-expand
-    (define-key map (kbd "C-c C-e") 'qjp-eval-and-replace)
+    (define-key map (kbd "C-x C-b") #'ibuffer)
+    (define-key map (kbd "C-x C-r") #'revert-buffer)
+    (define-key map [remap just-one-space] #'cycle-spacing)
+    (define-key map [remap count-words-region] #'count-words)
+    (define-key map (kbd "C-x I") #'imenu)
+    (define-key map (kbd "C-x O") #'(lambda () (interactive) (other-window -1)))
+    (define-key map (kbd "M-/") #'hippie-expand) ;; hippie-expand
+    (define-key map (kbd "C-c C-e") #'qjp-eval-and-replace)
 
     ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
     ;; `qjp-nop'. Navigating using doulbe-click is still available.
     (define-key map [down-mouse-1] nil)
-    (define-key map [mouse-1] 'qjp-nop)
-    (define-key map (kbd "<C-mouse-1>") 'qjp-nop)
-    (define-key map (kbd "<C-down-mouse-1>") 'qjp-nop)
+    (define-key map [mouse-1] #'qjp-nop)
+    (define-key map (kbd "<C-mouse-1>") #'qjp-nop)
+    (define-key map (kbd "<C-down-mouse-1>") #'qjp-nop)
     map))
 
 (define-minor-mode qjp-mode
@@ -86,24 +86,26 @@
   "Turn on `qjp-mode'."
   (interactive)
   ;; key-chord-mode
-  (with-eval-after-load 'key-chord
-    (qjp-key-chord-define qjp-mode-map "bb" 'helm-mini)
-    (qjp-key-chord-define qjp-mode-map "xf" 'helm-find-files))
-  ;; Bindings `qjp-defuns-isearch'
-  (define-key isearch-mode-map (kbd "C-o") 'qjp-isearch-occur)
-  (define-key isearch-mode-map [(control k)] 'qjp-kill-isearch-match)
-  (define-key isearch-mode-map [(meta z)] 'qjp-zap-to-isearch)
-  (define-key isearch-mode-map (kbd "C-p") 'isearch-yank-x-selection)
+  (with-eval-after-load 'qjp-misc
+    (qjp-key-chord-define qjp-mode-map "bb" #'helm-mini)
+    (qjp-key-chord-define qjp-mode-map "xf" #'helm-find-files))
+  ;; Bindings for `isearch'
+  (define-key isearch-mode-map (kbd "C-p") #'isearch-yank-x-selection)
+  (define-key isearch-mode-map (kbd "C-o") #'qjp-isearch-occur)
+  (define-key isearch-mode-map (kbd "C-k") #'qjp-kill-isearch-match)
+  (define-key isearch-mode-map (kbd "M-z") #'qjp-zap-to-isearch)
+  (define-key isearch-mode-map [(control return)] #'qjp-isearch-exit-other-end)
   (qjp-mode +1))
 
 (defun qjp-mode-off ()
   "Turn off `qjp-mode'."
   (interactive)
   ;; Bindings `qjp-defuns-isearch'
-  (define-key isearch-mode-map (kbd "C-o") nil)
-  (define-key isearch-mode-map [(control k)] nil)
-  (define-key isearch-mode-map [(meta z)] nil)
   (define-key isearch-mode-map (kbd "C-p") nil)
+  (define-key isearch-mode-map (kbd "C-o") nil)
+  (define-key isearch-mode-map (kbd "C-k") nil)
+  (define-key isearch-mode-map (kbd "M-z") nil)
+  (define-key isearch-mode-map [(control return)] nil)
   (qjp-mode -1))
 
 (global-qjp-mode +1)
