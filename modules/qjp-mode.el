@@ -58,7 +58,7 @@
     (define-key map (kbd "C-x O") #'(lambda () (interactive) (other-window -1)))
     (define-key map (kbd "M-/") #'hippie-expand) ;; hippie-expand
     (define-key map (kbd "C-c e") #'qjp-eval-and-replace)
-    (define-key map (kbd "C-z") #'qjp-switch-to-scratch-or-back)
+    (define-key map (kbd "C-x C-z") #'qjp-switch-to-scratch-or-back)
 
     ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
     ;; `qjp-nop'. Navigating using doulbe-click is still available.

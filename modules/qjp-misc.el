@@ -332,6 +332,13 @@
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "C-x M-x") 'lacarte-execute-menu-command)))
 
+;; --------- ;;
+;; easy-kill ;;
+;; --------- ;;
+(qjp-misc-config-inline easy-kill
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
+
 ;; ------ ;;
 ;; swiper ;;
 ;; ------ ;;
@@ -394,11 +401,11 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(avy ace-jump-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
+  '(avy avy-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
         bing-dict
         company
         dired diminish diff-hl
-        easypg expand-region
+        easypg expand-region easy-kill
         flyspell flycheck
         goto-last-change gscholar-bibtex guide-key
         helm hs fcitx hydra;; loaded after helm

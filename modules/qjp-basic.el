@@ -140,6 +140,9 @@
  ;; Tramp backups
  tramp-backup-directory-alist backup-directory-alist)
 
+;; Easier to pop up mark
+(setq set-mark-command-repeat-pop t)
+
 ;; ---------------------- ;;
 ;; Built-in functionality ;;
 ;; ---------------------- ;;
