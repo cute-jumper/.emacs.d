@@ -41,9 +41,6 @@
     (define-key map [S-down] #'qjp-move-line-down)
     (define-key map (kbd "M-m") #'qjp-kill-back-to-indentation)
 
-    ;; Bindings `qjp-defuns-isearch'
-    (define-key map (kbd "M-o s") #'qjp-isearch-other-window)
-
     ;; Bindings for `qjp-defuns-misc'
     (define-key map (kbd "C-x M-=") #'qjp-calc-eval-and-replace)
 
@@ -58,7 +55,7 @@
     (define-key map (kbd "C-x O") #'(lambda () (interactive) (other-window -1)))
     (define-key map (kbd "M-/") #'hippie-expand) ;; hippie-expand
     (define-key map (kbd "C-c e") #'qjp-eval-and-replace)
-    (define-key map (kbd "C-x C-z") #'qjp-switch-to-scratch-or-back)
+    (define-key map (kbd "C-z") #'qjp-switch-to-scratch-or-back)
 
     ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
     ;; `qjp-nop'. Navigating using doulbe-click is still available.
@@ -67,6 +64,13 @@
     (define-key map (kbd "<C-mouse-1>") #'qjp-nop)
     (define-key map (kbd "<C-down-mouse-1>") #'qjp-nop)
     map))
+
+;; `M-o' prefix keymap
+(define-prefix-command 'meta-o-map)
+(global-unset-key (kbd "M-o"))
+(define-key qjp-mode-map (kbd "M-o") 'meta-o-map)
+(define-key meta-o-map (kbd "s") #'qjp-isearch-other-window)
+(define-key meta-o-map (kbd "o") #'occur)
 
 (define-minor-mode qjp-mode
   "Minor mode designed for Junpeng Qiu!

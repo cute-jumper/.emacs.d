@@ -51,7 +51,9 @@
   ("b" backward-word)
   ("x" delete-char)
   ("a" qjp-back-to-indentation-or-beginning)
+  ("A" paredit-backward)
   ("e" end-of-line)
+  ("E" (paredit-forward))
   ("d" whole-line-or-region-kill-region)
   ("D" kill-rectangle)
   ("w" whole-line-or-region-copy-region-as-kill)
@@ -129,7 +131,6 @@ _h_   _l_   _o_pen      _y_ank
 ;; ---------------------- ;;
 ;; Hydra for evil numbers ;;
 ;; ---------------------- ;;
-;; (maybe-require 'evil-numbers)
 (defhydra hydra-number
   (qjp-mode-map "C-c")
   "hydra increase/decrease number"
@@ -143,6 +144,13 @@ _h_   _l_   _o_pen      _y_ank
   (qjp-mode-map "C-x")
   "hydra rebox-cycle"
   (";" rebox-cycle))
+
+;; ------------------------ ;;
+;; Hydra for `other-window' ;;
+;; ------------------------ ;;
+(defhydra hydra-other-window
+  (meta-o-map "")
+  ("o" other-window))
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here

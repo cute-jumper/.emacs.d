@@ -205,7 +205,7 @@
 ;; --------- ;;
 (qjp-misc-config-inline guide-key
   (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r"))
-  (guide-key-mode +1))
+  (run-with-idle-timer 2 nil #'guide-key-mode))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
@@ -282,6 +282,7 @@
 ;; -------- ;;
 (qjp-misc-config-inline flycheck
   nil)
+
 ;; -------- ;;
 ;; fcitx.el ;;
 ;; -------- ;;
@@ -294,6 +295,12 @@
 ;; --------- ;;
 (qjp-misc-config-inline nyan
   (nyan-mode))
+
+;; ------------------ ;;
+;; whitespace-cleanup ;;
+;; ------------------ ;;
+(qjp-misc-config-inline whitespace-cleanup
+  (global-whitespace-cleanup-mode))
 
 ;; ----------- ;;
 ;; hl-sentence ;;
@@ -339,14 +346,13 @@
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
 
-;; ------ ;;
-;; swiper ;;
-;; ------ ;;
-(qjp-misc-config-inline swiper
+;; ------------ ;;
+;; change-inner ;;
+;; ------------ ;;
+(qjp-misc-config-inline change-inner
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-r") 'swiper)
-    (define-key qjp-mode-map (kbd "C-s") 'swiper))
-  (setq swiper-completion-method 'helm))
+    (define-key meta-o-map (kbd "i") 'change-inner)
+    (define-key meta-o-map (kbd "o") 'change-outer)))
 
 ;; -------- ;;
 ;; quickrun ;;
@@ -403,14 +409,14 @@
 (defvar qjp-enabled-misc-settings-list
   '(avy avy-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
         bing-dict
-        company
+        company change-inner
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
         goto-last-change gscholar-bibtex guide-key
         helm hs fcitx hydra;; loaded after helm
         idle-highlight ispell
-        jump-char
+        ;;jump-char
         key-chord
         lacarte
         magit markdown multiple-cursors
@@ -422,7 +428,7 @@
         term
         undo-tree
         volatile-highlights
-        whole-line-or-region
+        whitespace-cleanup whole-line-or-region
         ;;yasnippet
         )
   "The names for the packages that should be enabled.")

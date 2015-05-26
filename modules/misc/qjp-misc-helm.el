@@ -25,14 +25,16 @@
 ;;; Code:
 
 (require 'helm-config)
+
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-x") 'helm-M-x)
-  (define-key qjp-mode-map (kbd "M-y") 'helm-show-kill-ring)
-  (define-key qjp-mode-map (kbd "C-x C-f") 'helm-find-files)
-  (define-key qjp-mode-map (kbd "C-x b") 'helm-mini)
-  (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
+  (define-key qjp-mode-map (kbd "M-x") #'helm-M-x)
+  (define-key qjp-mode-map (kbd "M-y") #'helm-show-kill-ring)
+  (define-key qjp-mode-map (kbd "C-x C-f") #'helm-find-files)
+  (define-key qjp-mode-map (kbd "C-x b") #'helm-mini)
+  (define-key qjp-mode-map (kbd "C-c h") #'helm-command-prefix)
   (define-key qjp-mode-map (kbd "C-x c") nil)
-  (define-key qjp-mode-map (kbd "C-c h g") 'helm-google-suggest))
+  (define-key qjp-mode-map (kbd "C-c h g") #'helm-google-suggest))
+
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
@@ -56,6 +58,9 @@
   (helm-mode)
   (helm-autoresize-mode t)
   (helm-descbinds-mode))
+
+;; helm-swoop
+(define-key isearch-mode-map (kbd "M-o") #'helm-swoop-from-isearch)
 
 (provide 'qjp-misc-helm)
 ;;; qjp-misc-helm.el ends here

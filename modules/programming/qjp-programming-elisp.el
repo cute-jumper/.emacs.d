@@ -107,7 +107,8 @@
   "Enable `view-mode' in the output buffer - if any - so it can be closed with `\"q\"."
   (when (get-buffer out-buffer-name)
     (with-current-buffer out-buffer-name
-      (view-mode 1))))
+      (view-mode 1)
+      (flycheck-mode -1))))
 
 ;; Make C-x C-e run `eval-region' if the region is active
 (defun qjp-eval-last-sexp-or-region (prefix)
@@ -120,7 +121,7 @@
 (with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map
     (kbd "C-x C-e")
-    'qjp-eval-last-sexp-or-region))
+    #'qjp-eval-last-sexp-or-region))
 
 ;; ----------------------- ;;
 ;; hippie-expand for elisp ;;
@@ -166,6 +167,7 @@
   ;; Unique settings for emacs-lisp-mode
   (hideshowvis-minor-mode +1)
   (redshank-mode +1)
+  (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t))
 
 (defun qjp-ielm-mode-hook ()
@@ -203,10 +205,10 @@
     (message "No previous buffer for switching back.")))
 
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-z") #'qjp-switch-to-ielm)
-  (define-key lisp-interaction-mode-map (kbd "C-z") #'qjp-switch-to-ielm))
+  (define-key emacs-lisp-mode-map (kbd "C-x C-z") #'qjp-switch-to-ielm)
+  (define-key lisp-interaction-mode-map (kbd "C-x C-z") #'qjp-switch-to-ielm))
 (with-eval-after-load 'ielm
-  (define-key ielm-map (kbd "C-z") #'qjp-switch-from-ielm))
+  (define-key ielm-map (kbd "C-x C-z") #'qjp-switch-from-ielm))
 
 ;; ------------ ;;
 ;; company-mode ;;
