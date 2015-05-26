@@ -131,6 +131,12 @@
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
 
+;; -------- ;;
+;; ace-link ;;
+;; -------- ;;
+(qjp-misc-config-inline ace-link
+  (ace-link-setup-default "j"))
+
 ;; ------------------ ;;
 ;; ace-jump-helm-line ;;
 ;; ------------------ ;;
@@ -204,7 +210,7 @@
 ;; guide-key ;;
 ;; --------- ;;
 (qjp-misc-config-inline guide-key
-  (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r"))
+  (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r" "M-s" "M-o"))
   (run-with-idle-timer 2 nil #'guide-key-mode))
 
 ;; ------------------- ;;
@@ -262,13 +268,11 @@
 ;; ------------------- ;;
 ;; idle-highlight-mode ;;
 ;; ------------------- ;;
-(qjp-misc-config-inline idle-highlight
+(qjp-misc-config-inline highlight-symbol
   "Use bold and underline instead of `region' color to highlight."
-  (with-eval-after-load 'idle-highlight-mode
-    (set-face-attribute 'idle-highlight nil
-                        :weight 'semi-bold :underline
-                        '(:color foreground-color :style line)
-                        :inherit nil)))
+  (with-eval-after-load 'highlight-symbol
+    (set-face-attribute 'highlight-symbol-face nil
+                        :weight 'semi-bold :underline t :background nil)))
 
 ;; --------------- ;;
 ;; smart mode line ;;
@@ -407,7 +411,7 @@
 ;; List the modes you want to enable here ;;
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
-  '(avy avy-zap ace-flyspell ace-jump-helm-line ace-pinyin anchored-transpose anzu auto-insert
+  '(avy avy-zap ace-flyspell ace-jump-helm-line ace-link ace-pinyin anchored-transpose anzu auto-insert
         bing-dict
         company change-inner
         dired diminish diff-hl
@@ -415,7 +419,7 @@
         flyspell flycheck
         goto-last-change gscholar-bibtex guide-key
         helm hs fcitx hydra;; loaded after helm
-        idle-highlight ispell
+        highlight-symbol ispell
         ;;jump-char
         key-chord
         lacarte

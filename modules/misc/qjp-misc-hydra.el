@@ -150,7 +150,8 @@ _h_   _l_   _o_pen      _y_ank
 ;; ------------------------ ;;
 (defhydra hydra-other-window
   (meta-o-map "")
-  ("o" other-window))
+  ("o" other-window)
+  ("M-o" other-window))
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here

@@ -71,6 +71,8 @@
 (define-key qjp-mode-map (kbd "M-o") 'meta-o-map)
 (define-key meta-o-map (kbd "s") #'qjp-isearch-other-window)
 (define-key meta-o-map (kbd "o") #'occur)
+(define-key meta-o-map (kbd "M-s") #'center-line)
+(define-key meta-o-map (kbd "M-S") #'center-paragraph)
 
 (define-minor-mode qjp-mode
   "Minor mode designed for Junpeng Qiu!

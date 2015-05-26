@@ -35,13 +35,13 @@
   (projectile-global-mode t)
 
   ;; Helm support
-  (setq projectile-compilation-command 'helm)
+  (setq projectile-compilation-command #'helm)
   (helm-projectile-on))
 
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c p h") 'helm-projectile)
+  (define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
   (autoload 'helm-projectile-switch-project "helm-projectile")
-  (define-key qjp-mode-map (kbd "C-c p p") 'helm-projectile-switch-project))
+  (define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project))
 
 (provide 'qjp-misc-projectile)
 ;;; qjp-misc-projectile.el ends here
