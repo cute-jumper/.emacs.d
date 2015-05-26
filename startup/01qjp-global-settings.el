@@ -46,6 +46,11 @@
 ;; Treat all custom theme safe
 (setq custom-safe-themes t)
 
+;; Custom file
+(setq custom-file (expand-file-name "custom.el" qjp-base-dir))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Start server
 (run-with-idle-timer
  2
