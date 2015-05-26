@@ -47,13 +47,13 @@
     ;; ------------------ ;;
     ;; Other key bindings ;;
     ;; ------------------ ;;
-    (define-key map (kbd "C-x C-b") #'ibuffer)
+    (define-key map [remap list-buffers] #'ibuffer)
     (define-key map (kbd "C-x C-r") #'revert-buffer)
     (define-key map [remap just-one-space] #'cycle-spacing)
     (define-key map [remap count-words-region] #'count-words)
     (define-key map (kbd "C-x I") #'imenu)
     (define-key map (kbd "C-x O") #'(lambda () (interactive) (other-window -1)))
-    (define-key map (kbd "M-/") #'hippie-expand) ;; hippie-expand
+    (define-key map (kbd "M-/") #'hippie-expand)
     (define-key map (kbd "C-c e") #'qjp-eval-and-replace)
     (define-key map (kbd "C-z") #'qjp-switch-to-scratch-or-back)
 

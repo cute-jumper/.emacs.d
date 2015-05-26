@@ -128,7 +128,7 @@ Modified the original function. Always put the word at prompt."
                (thing-at-point 'word t)))))))
 
 (defmacro qjp-install-search-engine (search-engine-name search-engine-url search-engine-prompt)
-  "Given some information regarding a search engine, install the interactive command to search through them"
+  "Given some information regarding a search engine, install the interactive command to search through them."
   `(defun ,(intern (format "qjp-search-%s" search-engine-name)) ()
      ,(format "Search %s with a query or region if any." search-engine-name)
      (interactive)

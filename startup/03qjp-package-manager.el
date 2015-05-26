@@ -35,16 +35,15 @@
 ;; Idea from: http://blub.co.za/posts/Installing-packages-on-Emacs-startup.html
 (defvar qjp-installed-package-list-filename
   (expand-file-name "installed-package-list" qjp-base-dir)
-  "Filename of storing the installed package list")
+  "The place to save the installed package list.")
 
 (defvar qjp-installed-package-list
-  (if (file-exists-p qjp-installed-package-list-filename)
-      (read
-       (with-current-buffer
-           (find-file-noselect qjp-installed-package-list-filename)
-         (buffer-substring-no-properties (point-min) (point-max))))
-    nil)
-  "A list of installed packages")
+  (when (file-exists-p qjp-installed-package-list-filename)
+    (read
+     (with-current-buffer
+         (find-file-noselect qjp-installed-package-list-filename)
+       (buffer-substring-no-properties (point-min) (point-max)))))
+  "A list of installed packages.")
 
 (defun qjp-install-all-packages ()
   "Use this command to install all the packages.

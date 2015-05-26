@@ -31,16 +31,16 @@
 ;; Fast moving ;;
 ;; ----------- ;;
 (defvar qjp-fast-moving-line-number 5
-  "How many line should fast moving command should use")
+  "How many line should fast moving command should use.")
 
 ;; fast forward/backward lines
 (defun qjp-fast-forward-lines ()
-  "Use `next-line' because I want the effect of visual movement"
+  "Use `next-line' because I want the effect of visual movement."
   (interactive)
   (next-line qjp-fast-moving-line-number))
 
 (defun qjp-fast-backward-lines ()
-  "Use `previous-line' because I want the effect of visual movement"
+  "Use `previous-line' because I want the effect of visual movement."
   (interactive)
   (previous-line qjp-fast-moving-line-number))
 
@@ -64,7 +64,7 @@
 ;; Moving and killing by indentation ;;
 ;; --------------------------------- ;;
 (defun qjp-back-to-indentation-or-beginning ()
-  "C-a to be `back-to-indentation' first and then `beginning-of-line'"
+  "First `back-to-indentation' and then `beginning-of-line'."
   (interactive)
   (when (= (point)
            (progn

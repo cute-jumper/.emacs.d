@@ -272,7 +272,7 @@
   "Use bold and underline instead of `region' color to highlight."
   (with-eval-after-load 'highlight-symbol
     (set-face-attribute 'highlight-symbol-face nil
-                        :weight 'semi-bold :underline t :background nil)))
+                        :weight 'semi-bold :underline t)))
 
 ;; --------------- ;;
 ;; smart mode line ;;
