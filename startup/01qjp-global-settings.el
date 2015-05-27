@@ -57,8 +57,7 @@
  nil
  (lambda ()
    (require 'server)
-   (unless (server-running-p)
-     (server-start))
+   (or (server-running-p) (server-start))
    (add-hook 'server-switch-hook
              (lambda ()
                (when (current-local-map)

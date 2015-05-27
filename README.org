@@ -1,12 +1,79 @@
 * My Emacs's Configuration
-This is a repository to place my Emacs's configuration.
+This is a repository to place my Emacs configuration, and is inteneded to be
+used only by myself:-)
 
-I changed my old configuration totally after I upgraded my Emacs to version 24,
-and I moved all my settings to a private repository in Bitbucket. Now I plan to
-create a new set of configuration based on [[https://github.com/bbatsov/prelude][Prelude]] and [[https://github.com/eschulte/emacs24-starter-kit][Emacs24-starter-kit]], as
-well as other excellent Emacs settings, and put all my settings back to GitHub.
+My Emacs setup has borrowed a lot from the following sources:
+- [[https://github.com/purcell/emacs.d][Purcell's emacs.d]]
+- [[https://github.com/bbatsov/prelude][Emacs Prelude]]
+- [[https://github.com/syl20bnr/spacemacs][Spacemacs]]
+- [[https://github.com/technomancy/emacs-starter-kit/tree/v2][Emacs Starter Kit v2]]
+- [[http://emacswiki.org/][Emacs Wiki]]
 
-My current settings work fine, and what I wanna to do is rearrange all my
-settings and manage them in a more elegant way. However, it will be a huge
-amount of work migrating my old settings to the new ones. I will slowly update
-this repo since this is *NOT* an urgent task.:-)
+I prefer using directories to structurally organize my settings.
+There are three main directories under the =.emacs.d=:
+- =startup=: Global settings that should be loaded immediately after startup.
+- =modules=: Main part. Configuring all the built-in and ELPA packages.
+- =site-lisp=: Configurations for the packages not on ELPA.
+
+Under each of the directory, there is a directory-init file named
+=qjp-*-init.el=. =*= stands for the corresponding directory name. Each
+directory-init file will be in charge of loading all the settings under its
+directory. =init.el= will load these three directory-init files in order:
+#+BEGIN_EXAMPLE
+init.el
+--> startup/qjp-startup-init.el
+--> modules/qjp-modules-init.el
+--> site-lisp/qjp-site-lisp-init.el
+#+END_EXAMPLE
+
+There are many files in different levels of the directory tree, so when I want
+to modify the settings, I use =helm-projectile= to quickly switch to a specific
+file that I want to edit. As for the ELPA packages, I mainly use [[http://melpa.org][melpa]] to
+install the latest version of the packages.
+
+* Startup
+Other than some global settings, the two important parts of this module are the
+profiler and the settings for the package manager.
+
+The profiler can measure the loading time for a specific Emacs Lisp module so
+that I can generate tables containing all the loading times in an Org-mode
+buffer. Currently on a SSD machine, Emacs takes about 1.5s to finish
+initialization.
+
+The package manager settings will keep tracking the packages currently installed
+in the machine and store the installed package list into a file. When starting
+the Emacs, install any packages that are not installed yet. Note this is not an
+on-demand installation feature as provided in [[https://github.com/bbatsov/prelude][Emacs Prelude]]. All the packages
+will be installed no matter whether I have explicitly use them in our settings
+or not. I actually prefer this way because some packages actually need
+zero-configuration(we have =autoload= s!).
+
+* Modules
+I put almost all the code for settings under this directory, and there are *8*
+submodules in it.
+1. =qjp-basic=: I put settings for UI and built-in packages here.
+2. =qjp-defuns=: Some useful function definitions. Since there are different
+   categories of such definitions, I split them into three files and put these
+   files under =defuns= subdirectory.
+3. =qjp-mode=: A minor mode which is mainly used to define my own key bindings.
+   I rarely use =global-set-key= and nearly all my customized keybindings live
+   only when the minor mode is on.
+4. =qjp-misc=: This is a very huge part. All the third-party packages installed
+   frm ELPA which are not for programming purpose, LaTeX or Org-mode should be
+   configured here. If there are only a few lines of code for a third-party
+   package, then I put the code inside =qjp-misc.el=. Otherwise if the number of
+   the lines of code is a little bit large, I prefer putting the code into a
+   file under =misc= subdirectory.
+5. =qjp-org=: There are actually several files under =org= subdirectory and each
+   file has settings for a specific functionality of the Org-mode.
+6. =qjp-tex=: Settings for AUCTeX.
+7. =qjp-programming=: Each programming language has its own config file under
+   =programming= subdirectory and the general settings for programming mode is
+   in =qjp-programming-basic.el=.
+8. =qjp-alias=: Nothing serious here. Just some short names for some commands
+   that have no keybindings. I'm considering merging this into other parts.
+
+* Site-lisp
+This module has packages that are not hosted in any package archieves. These
+packages are usually modified by myself and hosted in my own Git repos. Use
+=git-submodule= to manage them.
