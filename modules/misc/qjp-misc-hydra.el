@@ -148,10 +148,20 @@ _h_   _l_   _o_pen      _y_ank
 ;; ------------------------ ;;
 ;; Hydra for `other-window' ;;
 ;; ------------------------ ;;
-(defhydra hydra-other-window
-  (meta-o-map "")
-  ("o" other-window)
-  ("M-o" other-window))
+(defhydra hydra-manage-window
+  (:body-pre (progn
+               (other-window 1)
+               (setq hydra-is-helpful t))
+             :post (setq hydra-is-helpful))
+  "Window"
+  ("o" (other-window 1) "next window")
+  ("O" (other-window -1) "previous window")
+  ("d" delete-window "delete window")
+  ("h" split-window-horizontally "split horizontally")
+  ("v" split-window-vertically "split vertically")
+  ("b" helm-mini "switch buffer"))
+
+(define-key qjp-mode-map (kbd "C-x o") #'hydra-manage-window/body)
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here
