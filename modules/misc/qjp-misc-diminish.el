@@ -24,59 +24,44 @@
 
 ;;; Code:
 
+(defmacro qjp-diminish (file mode-name &optional new-name)
+  `(with-eval-after-load ',file
+     (diminish ',mode-name ,new-name)))
+
 (defun qjp-misc-diminish-essential ()
   (interactive)
   (diminish 'auto-fill-function)
   (diminish 'abbrev-mode)
-  (with-eval-after-load 'qjp-mode
-    (diminish 'qjp-mode " Q"))
-  (with-eval-after-load 'volatile-highlights
-    (diminish 'volatile-highlights-mode))
-  (with-eval-after-load 'whole-line-or-region
-    (diminish 'whole-line-or-region-mode))
+  (qjp-diminish qjp-mode qjp-mode " Q")
+  (qjp-diminish volatile-highlights volatile-highlights-mode)
+  (qjp-diminish whole-line-or-region whole-line-or-region-mode)
   (defun qjp-misc-diminish-helm ()
     (diminish 'helm-mode)
     (remove-hook 'helm-mode-hook #'qjp-misc-diminish-helm))
   (with-eval-after-load 'helm
     (add-hook 'helm-mode-hook #'qjp-misc-diminish-helm))
-  (with-eval-after-load 'redshank
-    (diminish 'redshank-mode))
-  (with-eval-after-load 'anzu
-    (diminish 'anzu-mode))
-  (with-eval-after-load 'hideshow
-    (diminish 'hs-minor-mode))
-  (with-eval-after-load 'magit
-    (diminish 'magit-auto-revert-mode))
-  (with-eval-after-load 'undo-tree
-    (diminish 'undo-tree-mode " UT"))
-  (with-eval-after-load 'paredit
-    (diminish 'paredit-mode " Par"))
-  (with-eval-after-load 'eldoc
-    (diminish 'eldoc-mode " ElD"))
-  (with-eval-after-load 'elisp-slime-nav
-    (diminish 'elisp-slime-nav-mode " SNav"))
-  (with-eval-after-load 'company
-    (diminish 'company-mode " Comp"))
-  (with-eval-after-load 'ace-pinyin
-    (diminish 'ace-pinyin-mode)))
+  (qjp-diminish redshank redshank-mode)
+  (qjp-diminish anzu anzu-mode)
+  (qjp-diminish hideshow hs-minor-mode)
+  (qjp-diminish magit magit-auto-revert-mode)
+  (qjp-diminish undo-tree undo-tree-mode " UT")
+  (qjp-diminish paredit paredit-mode " Par")
+  (qjp-diminish eldoc eldoc-mode " ElD")
+  (qjp-diminish elisp-slime-nav elisp-slime-nav-mode " SNav")
+  (qjp-diminish company company-mode " Comp")
+  (qjp-diminish ace-pinyin ace-pinyin-mode))
 
 (defun qjp-misc-diminish-spacemacs ()
   (interactive)
   (diminish 'auto-fill-function " 🅵")
   (diminish 'abbrev-mode " 🅐")
   (diminish 'global-whitespace-mode " 🅦")
-  (with-eval-after-load 'company
-    (diminish 'company-mode " 🅒"))
-  (with-eval-after-load 'flyspell
-    (diminish 'flyspell-mode " 🅢"))
-  (with-eval-after-load 'flycheck
-    (diminish 'flycheck-mode " 🅕"))
-  (with-eval-after-load 'helm
-    (diminish 'helm-mode " 🅗"))
-  (with-eval-after-load 'smartparens
-    (diminish 'smartparens-mode " 🅢"))
-  (with-eval-after-load 'qjp-mode
-    (diminish 'qjp-mode " 🅠")))
+  (qjp-diminish company company-mode " 🅒")
+  (qjp-diminish flyspell flyspell-mode " 🅢")
+  (qjp-diminish flycheck flycheck-mode " 🅕")
+  (qjp-diminish helm helm-mode " 🅗")
+  (qjp-diminish smartparens smartparens-mode " 🅢")
+  (qjp-diminish qjp-mode qjp-mode " 🅠"))
 
 (qjp-misc-diminish-essential)
 
