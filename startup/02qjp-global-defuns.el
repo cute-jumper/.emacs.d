@@ -26,13 +26,13 @@
 
 ;; Filter function
 (defun qjp-filter (condp lst)
-  "Filter function from http://emacswiki.org/emacs/ElispCookbook#toc46"
+  "Use CONDP to filter LST."
   (delq nil
         (mapcar (lambda (x) (and (funcall condp x) x)) lst)))
 
 ;; Utility function for adding `load-path'
 (defun qjp-load-path-add-subdirs (&optional base-directory)
-  "Add all subdirectories to load path."
+  "Add all subdirectories of BASE-DIRECTORY to load path."
   (interactive)
   (let ((current-directory (file-name-as-directory
                             (or base-directory default-directory))))
@@ -45,16 +45,6 @@
              (not (string-prefix-p
                    (concat current-directory ".") x))))
       (directory-files current-directory t)))))
-
-;; Auto byte-compile
-(defun qjp-byte-compile-current-buffer ()
-  "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
-  (interactive)
-  (when (and (eq major-mode 'emacs-lisp-mode)
-             (file-exists-p (byte-compile-dest-file buffer-file-name)))
-    (byte-compile-file buffer-file-name)))
-
-(add-hook 'after-save-hook 'qjp-byte-compile-current-buffer)
 
 (defmacro qjp--flet (binding &rest body)
   "Temporarily override BINDING and execute BODY."
@@ -82,19 +72,6 @@
   (let ((func-num (length qjp--nop-functions)))
     (funcall (nth (mod qjp--nop-counter func-num) qjp--nop-functions))
     (setq qjp--nop-counter (mod (1+ qjp--nop-counter) func-num))))
-
-;; Maximize
-(defun qjp-maximized ()
-  (interactive)
-  (if (eq window-system 'x)
-      (progn
-        (x-send-client-message
-         nil 0 nil "_NET_WM_STATE" 32
-         '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
-        (x-send-client-message
-         nil 0 nil "_NET_WM_STATE" 32
-         '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
-    (message "Only support X window.")))
 
 ;; Show profiling results
 (defun qjp-show-startup-times ()

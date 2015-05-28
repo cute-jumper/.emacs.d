@@ -36,6 +36,14 @@
 ;; load newer code
 (setq load-prefer-newer t)
 
+;; Auto byte-compile
+(defun qjp-byte-compile-current-buffer ()
+  "`byte-compile' current buffer if it's emacs-lisp-mode and compiled file exists."
+  (interactive)
+  (when (and (eq major-mode 'emacs-lisp-mode)
+             (file-exists-p (byte-compile-dest-file buffer-file-name)))
+    (byte-compile-file buffer-file-name)))
+
 ;; ---------- ;;
 ;; eldoc mode ;;
 ;; ---------- ;;
@@ -168,7 +176,8 @@
   (hideshowvis-minor-mode +1)
   (redshank-mode +1)
   (indent-guide-mode +1)
-  (add-hook 'after-save-hook #'check-parens nil t))
+  (add-hook 'after-save-hook #'check-parens nil t)
+  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t))
 
 (defun qjp-ielm-mode-hook ()
   (eldoc-mode +1)
@@ -184,7 +193,7 @@
 
 ;; macrostep
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-c e") #'macrostep-expand)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-e") #'macrostep-expand)
   (define-key lisp-interaction-mode-map (kbd "C-c e") #'macrostep-expand))
 
 ;; switch between ielm and emacs lisp buffer
