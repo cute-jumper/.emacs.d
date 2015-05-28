@@ -59,16 +59,16 @@ submodules in it.
    I rarely use =global-set-key= and nearly all my customized keybindings live
    only when the minor mode is on.
 4. =qjp-misc=: This is a very huge part. All the third-party packages installed
-   frm ELPA which are not for programming purpose, LaTeX or Org-mode should be
-   configured here. If there are only a few lines of code for a third-party
-   package, then I put the code inside =qjp-misc.el=. Otherwise if the number of
-   the lines of code is a little bit large, I prefer putting the code into a
-   file under =misc= subdirectory.
+   from ELPA which are not for programming purpose, LaTeX or Org-mode should be
+   configured here. If there are only a few lines of code of settings for a
+   third-party package, then I put the code inside =qjp-misc.el=. However, if
+   the number of the lines of code is a little bit large, I prefer putting the
+   code into a separate file under =misc= subdirectory.
 5. =qjp-org=: There are actually several files under =org= subdirectory and each
    file has settings for a specific functionality of the Org-mode.
 6. =qjp-tex=: Settings for AUCTeX.
 7. =qjp-programming=: Each programming language has its own config file under
-   =programming= subdirectory and the general settings for programming mode is
+   =programming= subdirectory and the general settings for programming mode are
    in =qjp-programming-basic.el=.
 8. =qjp-alias=: Nothing serious here. Just some short names for some commands
    that have no keybindings. I'm considering merging this into other parts.
