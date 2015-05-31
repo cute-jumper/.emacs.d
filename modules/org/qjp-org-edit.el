@@ -35,6 +35,14 @@
 (setq org-cycle-separator-lines 0)      ;get rid of the blank lines when cycling
 (setq org-list-allow-alphabetical t)         ;enable a. b. c. as plain lists
 
+;; ---- ;;
+;; hook ;;
+;; ---- ;;
+(defun qjp-org-mode-hook ()
+  (hl-line-mode +1))
+
+(add-hook 'org-mode-hook #'qjp-org-mode-hook)
+
 ;; Show next/prev heading tidily
 ;; From: http://orgmode.org/worg/org-hacks.html
 (defun qjp-org-show-next-heading-tidily ()
