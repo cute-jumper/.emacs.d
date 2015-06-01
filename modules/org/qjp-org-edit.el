@@ -35,14 +35,6 @@
 (setq org-cycle-separator-lines 0)      ;get rid of the blank lines when cycling
 (setq org-list-allow-alphabetical t)         ;enable a. b. c. as plain lists
 
-;; ---- ;;
-;; hook ;;
-;; ---- ;;
-(defun qjp-org-mode-hook ()
-  (hl-line-mode +1))
-
-(add-hook 'org-mode-hook #'qjp-org-mode-hook)
-
 ;; Show next/prev heading tidily
 ;; From: http://orgmode.org/worg/org-hacks.html
 (defun qjp-org-show-next-heading-tidily ()
@@ -123,6 +115,17 @@
          "* %^{Title}\n  Source: %u, %c\n  %i" :empty-lines 1 :kill-buffer t)
         ("l" "Timeline" plain (file+datetree (concat qjp-document-dir "Journal/timeline.org"))
          "" :unnarrowed t :kill-buffer t)))
+
+;; ------------- ;;
+;; Org-mode hook ;;
+;; ------------- ;;
+(defun qjp-org-mode-hook ()
+  ;; CDLaTeX support
+  (turn-on-org-cdlatex)
+  ;; highlight current line
+  (hl-line-mode +1))
+
+(add-hook 'org-mode-hook #'qjp-org-mode-hook)
 
 (provide 'qjp-org-edit)
 ;;; qjp-org-edit.el ends here

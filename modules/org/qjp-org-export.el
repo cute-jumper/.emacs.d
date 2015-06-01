@@ -24,11 +24,6 @@
 
 ;;; Code:
 
-;; --------- ;;
-;; org latex ;;
-;; --------- ;;
-(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
-
 ;; ---------- ;;
 ;; org export ;;
 ;; ---------- ;;

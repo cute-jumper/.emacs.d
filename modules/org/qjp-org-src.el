@@ -28,10 +28,11 @@
 ;; org babel ;;
 ;; --------- ;;
 ;; Basic settings
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-(setq org-confirm-babel-evaluate nil)
-(setq org-edit-src-content-indentation 0) ;edit source block in place without indentation
+(setq org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-confirm-babel-evaluate nil
+      org-edit-src-content-indentation 0)
+
 (org-babel-do-load-languages
  (quote org-babel-load-languages)
  (quote ((emacs-lisp . t)
