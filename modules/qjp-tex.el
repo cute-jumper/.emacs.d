@@ -56,14 +56,8 @@
 ;; Local key bindings ;;
 ;; ------------------ ;;
 (defun qjp-tex-set-local-key-bindings ()
-  (local-set-key [(return)] 'newline-and-indent)
-  (local-set-key (kbd "C-c ,") 'LaTeX-mark-section))
-
-;; ------- ;;
-;; cdlatex ;;
-;; ------- ;;
-(autoload 'cdlatex-mode "cdlatex" "CDLaTeX Mode" t)
-(autoload 'turn-on-cdlatex "cdlatex" "CDLaTeX Mode" nil)
+  (local-set-key [(return)] #'newline-and-indent)
+  (local-set-key (kbd "C-c ,") #'LaTeX-mark-section))
 
 ;; ------ ;;
 ;; reftex ;;
@@ -85,27 +79,28 @@
     (let* ((latex-process-name "latex-auto-compile")
            (latex-buffer-name "*latex-auto-buffer*")
            (latex-process (get-process latex-process-name)))
-      (when latex-process
-        (delete-process latex-process))
+      (and latex-process
+           (delete-process latex-process))
       (when (get-buffer latex-buffer-name)
         (save-excursion
           (set-buffer latex-buffer-name)
           (erase-buffer)))
-      (apply 'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
+      (apply #'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
              (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
 
 ;; Insert \usepackage in the front of the file
 (defun qjp-latex-add-pkg (pkg-name pkg-options)
-  (interactive "sPackage name: \nsOptions: ")
-  (save-excursion
-    (goto-char (point-max))
-    (unless (search-backward "\\usepackage" 0 t)
-      (search-backward "\\documentclass" 0 t))
-    (end-of-line)
-    (newline-and-indent)
-    (if (string= pkg-options "")
-        (insert "\\usepackage{" pkg-name "}")
-      (insert "\\usepackage[" pkg-options "]{" pkg-name "}"))))
+  (interactive "sPackage: \nsOptions: ")
+  (save-match-data
+    (save-excursion
+      (goto-char (point-max))
+      (unless (search-backward "\\usepackage" 0 t)
+        (search-backward "\\documentclass" 0 t))
+      (end-of-line)
+      (newline-and-indent)
+      (if (string= pkg-options "")
+          (insert "\\usepackage{" pkg-name "}")
+        (insert "\\usepackage[" pkg-options "]{" pkg-name "}")))))
 
 ;; Facility for \maketitle
 (defun qjp-latex-maketitle (title author date)
@@ -137,7 +132,7 @@
   (turn-on-reftex)
   (latex-extra-mode +1)
   (magic-latex-buffer +1)
-  (add-hook 'after-save-hook 'qjp-latex-auto-update nil t))
+  (add-hook 'after-save-hook #'qjp-latex-auto-update nil t))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
 (add-hook 'latex-mode-hook #'qjp-tex-mode-hook)
