@@ -26,8 +26,8 @@
 
 (add-to-list 'load-path (concat qjp-modules-dir "/org"))
 
-;; Quick way to open root directory in Dired
-(defun org-open-personal ()
+;; Quick way to open Personal directory in Dired
+(defun qjp-open-personal ()
   (interactive)
   (dired qjp-document-dir))
 

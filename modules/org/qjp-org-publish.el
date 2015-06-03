@@ -24,7 +24,9 @@
 
 ;;; Code:
 
-(defvar qjp-personal-publish-base (expand-file-name "~/Documents/org-publish/") "Base directory for publishing")
+(defvar qjp-personal-publish-base
+  (expand-file-name "~/Documents/org-publish/")
+  "Base directory for publishing.")
 
 ;; Add a link type to do jekyll hacking
 ;; From:
@@ -37,7 +39,9 @@
    ((eq format 'html)
     (format "<a href=\"{%% post_url %s %%}\">%s</a>" path desc))))
 
-(org-add-link-type "jekyll-post" 'qjp-org-jekyll-post-link-follow 'qjp-org-jekyll-post-link-export)
+(org-add-link-type "jekyll-post"
+                   #'qjp-org-jekyll-post-link-follow
+                   #'qjp-org-jekyll-post-link-export)
 
 (setq org-publish-project-alist
       `(("org-localhost-sources" ;; settings for sources of localhost
@@ -88,7 +92,9 @@
 ;; Steal from
 ;; http://www.gorgnegre.com/linux/using-emacs-orgmode-to-blog-with-jekyll.html
 ;; Make slight modification
-(defvar qjp-jekyll-directory (expand-file-name (concat qjp-personal-publish-base "Sites/cute-jumper.github.io/"))
+(defvar qjp-jekyll-directory
+  (expand-file-name
+   (concat qjp-personal-publish-base "Sites/cute-jumper.github.io/"))
   "Path to Jekyll blog.")
 (defvar qjp-jekyll-drafts-dir "_drafts/"
   "Relative path to drafts directory.")
@@ -98,24 +104,24 @@
   "File extension of Jekyll posts.")
 (defvar qjp-jekyll-post-template
   "BEGIN_HTML\n---\nlayout: post\ntitle: %s\nexcerpt: \ncategories:\n  -  \ntags:\n  -  \n---\n#+END_HTML\n\n* "
-  "Default template for Jekyll posts. %s will be replace by the post title.")
+  "Default template for Jekyll posts.  %s will be replace by the post title.")
 
 (defun qjp-jekyll-make-slug (s)
-  "Turn a string into a slug."
+  "Turn a string S into a slug."
   (replace-regexp-in-string
    " " "-" (downcase
             (replace-regexp-in-string
              "[^A-Za-z0-9 ]" "" s))))
 
 (defun qjp-jekyll-yaml-escape (s)
-  "Escape a string for YAML."
+  "Escape a string S for YAML."
   (if (or (string-match ":" s)
           (string-match "\"" s))
       (concat "\"" (replace-regexp-in-string "\"" "\\\\\"" s) "\"")
     s))
 
 (defun qjp-jekyll-draft-post (title)
-  "Create a new Jekyll blog post."
+  "Create a new Jekyll blog post with TITLE."
   (interactive "sPost Title: ")
   (let ((draft-file (concat qjp-jekyll-directory qjp-jekyll-drafts-dir
                             (jekyll-make-slug title)
@@ -126,8 +132,7 @@
       (insert (format qjp-jekyll-post-template (jekyll-yaml-escape title))))))
 
 (defun qjp-jekyll-publish-post ()
-  "Move a draft post to the posts directory, and rename it so that it
- contains the date."
+  "Move a draft post to the posts directory, and rename it to contain the date."
   (interactive)
   (cond
    ((not (equal

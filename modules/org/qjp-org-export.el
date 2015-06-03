@@ -33,17 +33,16 @@
                             md
                             ascii))
 (setq org-latex-pdf-process
-  '(
-    "latexmk -pdflatex=xelatex -pdf -silent -f %f && latexmk -c"
-;    "xelatex -interaction nonstopmode %f"
-;    "xelatex -interaction nonstopmode %f"
-    ))
+      '("latexmk -pdflatex=xelatex -pdf -silent -f %f && latexmk -c"))
 (setq org-latex-packages-alist nil)
 (setq org-latex-listings t)
-(setq org-latex-listings-options '(("extendedchars" "false") ; avoid having listings get entangled in the other package’s extended-character treatment
-                                          ("basicstyle" "\\ttfamily\\footnotesize")
-                                          ("escapechar" "`")
-                                          ("breaklines" "")))
+(setq org-latex-listings-options
+      ;; avoid having listings get entangled in the other package’s extended-character treatment
+      '(("extendedchars" "false")
+        ("basicstyle" "\\ttfamily\\footnotesize")
+        ("escapechar" "`")
+        ("breaklines" "")))
+
 ;; --------------------------------- ;;
 ;; TODO: LaTeX templates             ;;
 ;; Use my own LaTeX packages instead ;;
