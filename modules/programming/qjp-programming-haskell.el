@@ -27,7 +27,14 @@
 ;; ------- ;;
 ;; Haskell ;;
 ;; ------- ;;
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(defun qjp-haskell-mode-hook ()
+  "My mode hook for Haskell mode."
+  (turn-on-haskell-indentation)
+  (turn-on-haskell-doc-mode +1)
+  (subword-mode +1)
+  (eldoc-mode +1))
+
+(add-hook 'haskell-mode-hook #'qjp-haskell-mode-hook)
 
 (provide 'qjp-programming-haskell)
 ;;; qjp-programming-haskell.el ends here
