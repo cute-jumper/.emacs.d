@@ -20,28 +20,18 @@
 
 ;;; Commentary:
 
-;;
+;; Remove ruby-end and ruby-block because of smartparens
 
 ;;; Code:
 
 ;; Ruby
-(add-hook 'ruby-mode-hook 'ruby-end-mode)
-(add-hook 'ruby-mode-hook 'ruby-block-mode)
-(add-hook 'ruby-mode-hook (lambda ()
-                            (local-set-key [(return)] 'electrify-return-if-match)
-                            (require 'ruby-block)
-                            ;; do overlay
-                            (setq ruby-block-highlight-toggle 'overlay)
-                            (setq ruby-block-highlight-toggle t)))
-(add-hook 'enh-ruby-mode-hook 'ruby-end-mode)
-(add-hook 'enh-ruby-mode-hook 'ruby-block-mode)
-(add-hook 'enh-ruby-mode-hook (lambda ()
-                                (local-set-key [(return)] 'electrify-return-if-match)
-                                (local-set-key (kbd "C-c {") 'ruby-toggle-block)
-                                (require 'ruby-block)
-                                ;; do overlay
-                                (setq ruby-block-highlight-toggle 'overlay)
-                                (setq ruby-block-highlight-toggle t)))
+(defun qjp-ruby-mode-hook ()
+  "My mode hook for Ruby."
+  (local-set-key [(return)] 'electrify-return-if-match))
+
+(add-hook 'ruby-mode-hook #'qjp-ruby-mode-hook)
+
+(add-hook 'enh-ruby-mode-hook #'qjp-ruby-mode-hook)
 
 (provide 'qjp-programming-ruby)
 ;;; qjp-programming-ruby.el ends here
