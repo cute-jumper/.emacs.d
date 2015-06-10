@@ -24,10 +24,20 @@
 
 ;;; Code:
 
-;; Ruby
+;; auto-mode-alist for Ruby
+(qjp-add-auto-mode 'ruby-mode
+                   "Rakefile\\'" "\\.rake\\'" "\\.rxml\\'"
+                   "\\.rjs\\'" "\\.irbrc\\'" "\\.pryrc\\'"
+                   "\\.builder\\'" "\\.ru\\'" "\\.gemspec\\'"
+                   "Gemfile\\'" "Kirkfile\\'")
+
 (defun qjp-ruby-mode-hook ()
   "My mode hook for Ruby."
-  (local-set-key [(return)] 'electrify-return-if-match))
+  (subword-mode +1)
+  ;; Keybindings
+  (local-set-key [(return)] #'electrify-return-if-match)
+  ;; Ruby tools
+  (ruby-tools-mode +1))
 
 (add-hook 'ruby-mode-hook #'qjp-ruby-mode-hook)
 

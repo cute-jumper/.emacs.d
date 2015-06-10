@@ -58,6 +58,12 @@
              ,@body)
          (fset ',name ,old)))))
 
+;; From Purcell
+(defun qjp-add-auto-mode (mode &rest patterns)
+  "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
+  (dolist (pattern patterns)
+    (add-to-list 'auto-mode-alist (cons pattern mode))))
+
 ;; NOP function. Just show the cursor position!
 (defvar qjp--nop-counter 0)
 (defvar qjp--nop-functions
