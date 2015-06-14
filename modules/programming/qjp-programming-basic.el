@@ -37,10 +37,10 @@
 ;;       (assq-delete-all 'which-func-mode mode-line-misc-info))
 (setq which-func-unknown "n/a")
 
-;; -------------------------------------------- ;;
-;; electriy-return, useful function copied from ;;
-;; -------------------------------------------- ;;
-;; http://www.emacswiki.org/emacs/ParEdit
+;; --------------- ;;
+;; electriy-return ;;
+;; --------------- ;;
+;; From http://www.emacswiki.org/emacs/ParEdit
 (defvar electrify-return-match
   "[\]}\)\"]"
   "If this regexp matches the text after the cursor, do an \"electric\" return.")
@@ -51,8 +51,8 @@ open and indent an empty line between the cursor and the text.  Move the
 cursor to the new line."
   (interactive "P")
   (let ((case-fold-search nil))
-    (if (looking-at electrify-return-match)
-        (save-excursion (newline-and-indent)))
+    (when (looking-at electrify-return-match)
+      (save-excursion (newline-and-indent)))
     (newline arg)
     (indent-according-to-mode)))
 
