@@ -37,8 +37,8 @@ profiler and the settings for the package manager.
 
 The profiler can measure the loading time for a specific Emacs Lisp module so
 that I can generate tables containing all the loading times in an Org-mode
-buffer. Currently on a SSD machine, Emacs takes about 1.5s to finish
-initialization.
+buffer. Currently on a SSD machine, Emacs takes about 1.2s to finish the
+initialization process.
 
 The package manager settings will keep tracking the packages currently installed
 in the machine and store the installed package list into a file. When starting

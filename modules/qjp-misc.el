@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; Guideline:
+;; Guidelines:
 ;; 1. If the settings are short, put them directly in this file
 ;; 2. Otherwise, put it into a separate file under `misc' directory.
 ;;    The feature name should be `qjp-misc-{mode name}'
