@@ -31,11 +31,11 @@
 ;; Macro and functions definitions ;;
 ;; ------------------------------- ;;
 (defsubst qjp-misc--make-func-name (feature)
-  "Helper function to construct function name of `misc' module"
+  "Helper function to construct function name of `misc' module by FEATURE."
   (concat "qjp-misc-" (symbol-name feature)))
 
 (defmacro qjp-misc--defun (feature &rest body)
-  "Toplevel macro to define macro of `misc' module"
+  "Toplevel macro to define macro of `misc' module by FEATURE and BODY."
   (declare (indent 1))
   (let* ((func-name (qjp-misc--make-func-name feature))
          (func-symbol (intern func-name))
@@ -48,13 +48,13 @@
            ,@body)))))
 
 (defmacro qjp-misc-config-inline (feature &rest args)
-  "Macro for inline settings"
+  "Macro for inline settings."
   (declare (indent 1))
   `(qjp-misc--defun ,feature
      ,@args))
 
 (defmacro qjp-misc-config-infile (feature)
-  "Macro for infile settings"
+  "Macro for infile settings."
   (declare (indent 1))
   `(defun ,feature ()
      (require ',feature)))
