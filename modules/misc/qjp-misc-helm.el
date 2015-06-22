@@ -45,8 +45,6 @@
       helm-ff-auto-update-initial-value t
       helm-ff-file-name-history-use-recentf t)
 
-(setq helm-bibtex-bibliography qjp-bibtex-database-file)
-
 ;; Helm-mode is slow (more than 0.5s to start)
 (with-eval-after-load 'helm
   ;; rebind tab to run persistent action
@@ -61,6 +59,9 @@
 
 ;; helm-swoop
 (define-key isearch-mode-map (kbd "M-o") #'helm-swoop-from-isearch)
+
+;; helm-bibtex
+(setq helm-bibtex-bibliography qjp-bibtex-database-file)
 
 (provide 'qjp-misc-helm)
 ;;; qjp-misc-helm.el ends here

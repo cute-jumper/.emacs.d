@@ -24,26 +24,49 @@
 
 ;;; Code:
 
-(setq auto-insert t)
-(setq auto-insert-query t)
 (add-hook 'find-file-hooks 'auto-insert)
-(setq auto-insert-directory (concat qjp-base-dir "templates/"))
 
-;; from http://www.emacswiki.org/emacs/AutoInsertMode
-(defun my/autoinsert-yas-expand ()
-  "Replace text in yasnippet template."
-  (yas-expand-snippet (buffer-string) (point-min) (point-max)))
-;; auto insert current date
-(defun my/autoinsert-current-date ()
-  "Auto insert date string using org-mode's utilities"
-  (goto-char (1- (point-max)))
-  (org-insert-time-stamp (current-time)))
+;; ----------------------------------- ;;
+;; Auto-insert for scripting languages ;;
+;; ----------------------------------- ;;
+;; For time stamp insertion
+(autoload 'org-insert-time-stamp "org")
 
-(define-auto-insert '("\\.tex\\'" . "latex")  "xetex.tpl" )
-(define-auto-insert '("\\.py\\'" . "python") ["python.tpl" my/autoinsert-current-date])
-(define-auto-insert '("\\.rb\\'" . "ruby") ["ruby.tpl" my/autoinsert-current-date])
-(define-auto-insert '("\\.sh\\'" . "shell scripts")  ["bash.tpl" my/autoinsert-current-date])
-(define-auto-insert '("\\.org\\'" . "org-mode")  ["org.tpl" my/autoinsert-yas-expand])
+(defun qjp-misc-auto-insert-interpreter (lang)
+  "Return interpreter string according to LANG."
+  (cond ((equal lang 'python) "#! /usr/bin/env python")
+        ((equal lang 'ruby) "#! /usr/bin/env ruby")
+        ((equal lang 'bash) "#! /bin/bash")))
+
+(defun qjp-misc-auto-insert-script-template (lang)
+  "Generate template according to LANG."
+  `(
+    "Short descriptions: "
+    ,(qjp-misc-auto-insert-interpreter lang) \n
+    "#-*- coding: utf-8 -*-" \n
+    "# Author: " (user-full-name) \n
+    "# Date: " '(org-insert-time-stamp (current-time)) \n
+    "# Description: " str \n))
+
+(define-auto-insert '("\\.py\\'" . "Python skeleton")
+  (qjp-misc-auto-insert-script-template 'python))
+(define-auto-insert '("\\.rb\\'" . "Ruby skeleton")
+  (qjp-misc-auto-insert-script-template 'ruby))
+(define-auto-insert '("\\.sh\\'" . "Shell scripts skeleton")
+  (qjp-misc-auto-insert-script-template 'bash))
+
+;; ------------------------ ;;
+;; Auto-insert for Org-mode ;;
+;; ------------------------ ;;
+(define-auto-insert '("\\.org\\'" . "Org-mode skeleton")
+  '("Short description: "
+    "* " (file-name-base (buffer-file-name))))
+
+;; --------------------- ;;
+;; Auto-insert for LaTeX ;;
+;; --------------------- ;;
+;; TODO
+(define-auto-insert '("\\.tex\\'" . "latex")  "xetex.tpl")
 
 (provide 'qjp-misc-auto-insert)
 ;;; qjp-misc-auto-insert.el ends here

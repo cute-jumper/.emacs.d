@@ -231,7 +231,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 
 ;; TODO: Generalize it!
 (defun qjp-suck-it (suckee)
-  "Insert a comment of appropriate length about what can suck it."
+  "SUCKEE can suck it."
   (interactive "MWhat can suck it? ")
   (let ((prefix (concat ";; " suckee " can s"))
         (postfix "ck it!")
@@ -241,7 +241,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
     (insert postfix)))
 
 (defun qjp-insert-date ()
-  "Insert a time-stamp according to locale's date and time format."
+  "Insert a `time-stamp' according to locale's date and time format."
   (interactive)
   (insert (format-time-string "%c" (current-time))))
 
