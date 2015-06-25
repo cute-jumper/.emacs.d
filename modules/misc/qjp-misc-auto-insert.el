@@ -25,6 +25,7 @@
 ;;; Code:
 
 (add-hook 'find-file-hooks 'auto-insert)
+(setq auto-insert-directory (concat qjp-base-dir "templates/"))
 
 ;; ----------------------------------- ;;
 ;; Auto-insert for scripting languages ;;
@@ -48,25 +49,26 @@
     "# Date: " '(org-insert-time-stamp (current-time)) \n
     "# Description: " str \n))
 
-(define-auto-insert '("\\.py\\'" . "Python skeleton")
-  (qjp-misc-auto-insert-script-template 'python))
-(define-auto-insert '("\\.rb\\'" . "Ruby skeleton")
-  (qjp-misc-auto-insert-script-template 'ruby))
-(define-auto-insert '("\\.sh\\'" . "Shell scripts skeleton")
-  (qjp-misc-auto-insert-script-template 'bash))
+(with-eval-after-load 'autoinsert
+  (define-auto-insert '("\\.py\\'" . "Python skeleton")
+    (qjp-misc-auto-insert-script-template 'python))
+  (define-auto-insert '("\\.rb\\'" . "Ruby skeleton")
+    (qjp-misc-auto-insert-script-template 'ruby))
+  (define-auto-insert '("\\.sh\\'" . "Shell scripts skeleton")
+    (qjp-misc-auto-insert-script-template 'bash))
 
-;; ------------------------ ;;
-;; Auto-insert for Org-mode ;;
-;; ------------------------ ;;
-(define-auto-insert '("\\.org\\'" . "Org-mode skeleton")
-  '("Short description: "
-    "* " (file-name-base (buffer-file-name))))
+  ;; ------------------------ ;;
+  ;; Auto-insert for Org-mode ;;
+  ;; ------------------------ ;;
+  (define-auto-insert '("\\.org\\'" . "Org-mode skeleton")
+    '("Short description: "
+      "* " (file-name-base (buffer-file-name))))
 
-;; --------------------- ;;
-;; Auto-insert for LaTeX ;;
-;; --------------------- ;;
-;; TODO
-(define-auto-insert '("\\.tex\\'" . "latex")  "xetex.tpl")
+  ;; --------------------- ;;
+  ;; Auto-insert for LaTeX ;;
+  ;; --------------------- ;;
+  ;; TODO
+  (define-auto-insert '("\\.tex\\'" . "latex")  "xetex.tpl"))
 
 (provide 'qjp-misc-auto-insert)
 ;;; qjp-misc-auto-insert.el ends here
