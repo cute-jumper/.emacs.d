@@ -157,6 +157,7 @@ _h_   _l_   _o_pen      _y_ank
   ("o" (other-window 1) "next window")
   ("O" (other-window -1) "previous window")
   ("d" delete-window "delete window")
+  ("t" delete-other-windows "delete other windows")
   ("h" split-window-horizontally "split horizontally")
   ("v" split-window-vertically "split vertically")
   ("b" helm-mini "switch buffer"))
