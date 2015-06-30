@@ -56,6 +56,16 @@ cursor to the new line."
     (newline arg)
     (indent-according-to-mode)))
 
+;; Put *Shell Command Output* buffers into view-mode
+(defadvice shell-command-on-region
+    (after sanityinc/shell-command-in-view-mode
+           (start end command &optional output-buffer replace error-buffer display-error-buffer)
+           activate)
+  "Put \"*Shell Command Output*\" buffers into view-mode."
+  (unless output-buffer
+    (with-current-buffer "*Shell Command Output*"
+      (view-mode 1))))
+
 (defun qjp-local-comment-auto-fill ()
   (set (make-local-variable 'comment-auto-fill-only-comments) t)
   (auto-fill-mode +1))
