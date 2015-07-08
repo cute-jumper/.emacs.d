@@ -42,7 +42,6 @@
   (qjp-diminish redshank redshank-mode)
   (qjp-diminish anzu anzu-mode)
   (qjp-diminish hideshow hs-minor-mode)
-  (qjp-diminish magit magit-auto-revert-mode)
   (qjp-diminish ace-pinyin ace-pinyin-mode)
   (qjp-diminish guide-key guide-key-mode)
   (qjp-diminish qjp-mode qjp-mode " Q")

@@ -201,10 +201,7 @@
 (qjp-misc-config-inline magit
   (setq magit-last-seen-setup-instructions "1.4.0")
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x g") 'magit-status))
-  (with-eval-after-load 'magit
-    (set-face-foreground 'magit-diff-add "green4")
-    (set-face-foreground 'magit-diff-del "red3")))
+    (define-key qjp-mode-map (kbd "C-x g") 'magit-status)))
 
 ;; --------- ;;
 ;; guide-key ;;
