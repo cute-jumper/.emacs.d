@@ -259,7 +259,10 @@
     (paredit-newline)
     (yank)
     (exchange-point-and-mark))
-  (define-key paredit-mode-map (kbd "C-S-d") 'paredit-duplicate-closest-sexp))
+  (define-key paredit-mode-map (kbd "C-S-d") 'paredit-duplicate-closest-sexp)
+  ;; Modify kill-sentence, which is easily confused with the kill-sexp
+  ;; binding, but doesn't preserve sexp structure
+  (define-key paredit-mode-map [remap kill-sentence] 'paredit-kill))
 
 (provide 'qjp-programming-elisp)
 ;;; qjp-programming-elisp.el ends here
