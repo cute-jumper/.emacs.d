@@ -199,7 +199,9 @@
 ;; magit ;;
 ;; ----- ;;
 (qjp-misc-config-inline magit
-  (setq magit-last-seen-setup-instructions "1.4.0")
+  (with-eval-after-load 'magit
+    (add-hook 'magit-popup-mode-hook
+              (lambda () (setq show-trailing-whitespace nil))))
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "C-x g") 'magit-status)))
 
