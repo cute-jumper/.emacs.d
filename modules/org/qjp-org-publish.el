@@ -124,12 +124,12 @@
   "Create a new Jekyll blog post with TITLE."
   (interactive "sPost Title: ")
   (let ((draft-file (concat qjp-jekyll-directory qjp-jekyll-drafts-dir
-                            (jekyll-make-slug title)
+                            (qjp-jekyll-make-slug title)
                             qjp-jekyll-post-ext)))
     (if (file-exists-p draft-file)
         (find-file draft-file)
       (find-file draft-file)
-      (insert (format qjp-jekyll-post-template (jekyll-yaml-escape title))))))
+      (insert (format qjp-jekyll-post-template (qjp-jekyll-yaml-escape title))))))
 
 (defun qjp-jekyll-publish-post ()
   "Move a draft post to the posts directory, and rename it to contain the date."
