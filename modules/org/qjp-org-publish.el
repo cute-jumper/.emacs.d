@@ -94,7 +94,7 @@
 ;; Make slight modification
 (defvar qjp-jekyll-directory
   (expand-file-name
-   (concat qjp-personal-publish-base "Sites/cute-jumper.github.io/"))
+   (concat qjp-document-dir "Sites/cute-jumper.github.io/"))
   "Path to Jekyll blog.")
 (defvar qjp-jekyll-drafts-dir "_drafts/"
   "Relative path to drafts directory.")
