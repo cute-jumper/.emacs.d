@@ -132,6 +132,7 @@
   (turn-on-reftex)
   (latex-extra-mode +1)
   (magic-latex-buffer +1)
+  (flyspell-mode +1)
   (add-hook 'after-save-hook #'qjp-latex-auto-update nil t))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
