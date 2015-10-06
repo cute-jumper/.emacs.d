@@ -58,7 +58,7 @@ cursor to the new line."
 
 ;; Put *Shell Command Output* buffers into view-mode
 (defadvice shell-command-on-region
-    (after sanityinc/shell-command-in-view-mode
+    (after qjp-shell-command-in-view-mode
            (start end command &optional output-buffer replace error-buffer display-error-buffer)
            activate)
   "Put \"*Shell Command Output*\" buffers into view-mode."
