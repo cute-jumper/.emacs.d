@@ -35,5 +35,8 @@
   (setq js-font-lock-syntactic-keywords js-font-lock-syntactic-keywords-fix))
 (add-hook 'js-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
 
+;;; json-mode
+(add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
+
 (provide 'qjp-programming-javascript)
 ;;; qjp-programming-javascript.el ends here
