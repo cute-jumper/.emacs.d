@@ -123,6 +123,18 @@
       (newline-and-indent)
       (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n\n\\begin{document}\n\\maketitle"))))
 
+;; Add some frequently used envs
+(defun qjp-add-LaTeX-environments ()
+  (LaTeX-add-environments
+   '("matrix")
+   '("bmatrix")
+   '("Bmatrix")
+   '("pmatrix")
+   '("vmatrix")
+   '("Vmatrix")
+   '("smallmatrix")
+   '("code" "Programming language")))
+
 ;; ----- ;;
 ;; Hooks ;;
 ;; ----- ;;
@@ -133,6 +145,7 @@
   (latex-extra-mode +1)
   (magic-latex-buffer +1)
   (flyspell-mode +1)
+  (qjp-add-LaTeX-environments)
   (add-hook 'after-save-hook #'qjp-latex-auto-update nil t))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
