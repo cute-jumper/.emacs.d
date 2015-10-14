@@ -39,7 +39,7 @@
 
 ;; Profiler related
 (defvar qjp--init-time-alist nil
-  "Alist containing init time information")
+  "Alist containing init time information.")
 
 (defmacro qjp-timed (sexp name &optional module)
   (let ((module-name (or module "00default")))
