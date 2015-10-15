@@ -13,5 +13,3 @@ emacs -Q\
       --eval '(qjp-update-installed-package-list)'\
       --eval "(message \">> Finish installing $1!\")" \
       && emacs --version | head -n 1 | toilet -F metal -f future
-
-
