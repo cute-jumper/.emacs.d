@@ -25,6 +25,7 @@
 ;;; Code:
 
 (defalias 'plp 'package-list-packages)
+(defalias 'cp 'company-complete)
 
 (provide 'qjp-alias)
 ;;; qjp-alias.el ends here
