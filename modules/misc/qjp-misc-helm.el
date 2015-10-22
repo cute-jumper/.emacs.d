@@ -33,7 +33,8 @@
   (define-key qjp-mode-map (kbd "C-x b") #'helm-mini)
   (define-key qjp-mode-map (kbd "C-c h") #'helm-command-prefix)
   (define-key qjp-mode-map (kbd "C-x c") nil)
-  (define-key qjp-mode-map (kbd "C-c h g") #'helm-google-suggest))
+  (define-key qjp-mode-map (kbd "C-c h g") #'helm-google-suggest)
+  (define-key qjp-mode-map (kbd "C-c h d") #'helm-dash))
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
