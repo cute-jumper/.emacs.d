@@ -68,7 +68,8 @@
 ;; company-mode ;;
 ;; ------------ ;;
 (qjp-misc-config-inline company
-  (global-company-mode))
+  (global-company-mode)
+  (company-quickhelp-mode +1))
 
 ;; --------- ;;
 ;; yasnippet ;;
