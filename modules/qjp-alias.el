@@ -26,6 +26,8 @@
 
 (defalias 'plp 'package-list-packages)
 (defalias 'cp 'company-complete)
+(defalias 'tsi 'text-scale-increase)
+(defalias 'tsd 'text-scale-decrease)
 
 (provide 'qjp-alias)
 ;;; qjp-alias.el ends here
