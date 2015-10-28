@@ -88,7 +88,9 @@
     (setq dired-guess-shell-alist-user
           ;; fixed rule
           (list (list "\\.pdf$" "okular")))
-    (guide-key/add-local-guide-key-sequence "%"))
+    (guide-key/add-local-guide-key-sequence "%")
+    ;; Add stripe-buffer-mode
+    (stripe-listify-buffer))
   (add-hook 'dired-mode-hook #'qjp-dired-mode-hook))
 
 (provide 'qjp-misc-dired)

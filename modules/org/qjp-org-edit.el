@@ -116,16 +116,5 @@
         ("l" "Timeline" plain (file+datetree (concat qjp-document-dir "Journal/timeline.org"))
          "" :unnarrowed t :kill-buffer t)))
 
-;; ------------- ;;
-;; Org-mode hook ;;
-;; ------------- ;;
-(defun qjp-org-mode-hook ()
-  ;; CDLaTeX support
-  (turn-on-org-cdlatex)
-  ;; highlight current line
-  (hl-line-mode +1))
-
-(add-hook 'org-mode-hook #'qjp-org-mode-hook)
-
 (provide 'qjp-org-edit)
 ;;; qjp-org-edit.el ends here

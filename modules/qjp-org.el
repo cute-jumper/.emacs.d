@@ -40,6 +40,18 @@
   (define-key qjp-mode-map (kbd "C-c a") 'org-agenda)
   (define-key qjp-mode-map (kbd "C-c b") 'org-iswitchb))
 
+;; ------------- ;;
+;; Org-mode hook ;;
+;; ------------- ;;
+(defun qjp-org-mode-hook ()
+  ;; CDLaTeX support
+  (turn-on-org-cdlatex)
+  ;; highlight current line
+  (hl-line-mode +1)
+  (turn-on-stripe-table-mode))
+
+(add-hook 'org-mode-hook #'qjp-org-mode-hook)
+
 (with-eval-after-load 'org
   (require 'qjp-org-edit)
   (require 'qjp-org-src)
