@@ -207,11 +207,11 @@
     (define-key qjp-mode-map (kbd "C-x g") 'magit-status)))
 
 ;; --------- ;;
-;; guide-key ;;
+;; which-key ;;
 ;; --------- ;;
-(qjp-misc-config-inline guide-key
-  (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-x r" "M-s" "M-o"))
-  (run-with-idle-timer 2 nil #'guide-key-mode))
+(qjp-misc-config-inline which-key
+  (setq which-key-idle-delay 2.0)
+  (which-key-mode +1))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
@@ -417,7 +417,7 @@
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
-        goto-last-change gscholar-bibtex guide-key
+        goto-last-change gscholar-bibtex which-key
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char
