@@ -156,11 +156,11 @@ _h_   _l_   _o_pen      _y_ank
   "Window"
   ("o" (other-window 1) "next window")
   ("O" (other-window -1) "previous window")
-  ("d" delete-window "delete window")
-  ("t" delete-other-windows "delete other windows")
-  ("h" split-window-horizontally "split horizontally")
-  ("v" split-window-vertically "split vertically")
-  ("b" helm-mini "switch buffer"))
+  ("D" delete-window "delete window")
+  ("T" delete-other-windows "delete other windows")
+  ("H" split-window-horizontally "split horizontally")
+  ("V" split-window-vertically "split vertically")
+  ("B" helm-mini "switch buffer"))
 
 (define-key qjp-mode-map (kbd "C-x o") #'hydra-manage-window/body)
 
