@@ -43,7 +43,8 @@
       helm-buffers-fuzzy-matching t
       ;;helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
-      helm-ff-auto-update-initial-value t
+      ;; Following is good, but sometimes annoying
+      ;;helm-ff-auto-update-initial-value t
       helm-ff-file-name-history-use-recentf t)
 
 ;; Helm-mode is slow (more than 0.5s to start)
