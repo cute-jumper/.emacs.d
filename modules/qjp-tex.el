@@ -52,13 +52,6 @@
         TeX-view-program-list)
   (push '(output-pdf "Okular") TeX-view-program-selection))
 
-;; ------------------ ;;
-;; Local key bindings ;;
-;; ------------------ ;;
-(defun qjp-tex-set-local-key-bindings ()
-  (local-set-key [(return)] #'newline-and-indent)
-  (local-set-key (kbd "C-c ,") #'LaTeX-mark-section))
-
 ;; ------ ;;
 ;; reftex ;;
 ;; ------ ;;
@@ -72,21 +65,58 @@
 ;; Auto update when saving
 (defvar qjp-latex-auto-command "latexmk")
 (defvar qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
-(defun qjp-latex-auto-update ()
+(defvar qjp-latex-auto-compile-buffer-name "*latex-auto-compile-buffer*")
+(defvar qjp-latex-auto-compile-from-buffer nil)
+(defvar qjp-latex-error-buffer-font-lock
+  '(("--- .* ---" 0 font-lock-keyword-face)
+    ("^l\\.[0-9]+" 0 'underline)
+    ("^\\([[:alpha:]]+\\):\\(.*\\)$"
+     (1 'compilation-warning) (2 font-lock-constant-face))
+    ("^\\(<recently read>\\) \\(.*\\)$"
+     (1 'compilation-warning) (2 font-lock-constant-face)))
+  "Font lock rules used in \"*latex-auto-compile-buffer*\" buffers.
+Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
+
+(defun qjp-latex--get-or-create-auto-compile-buffer ()
+  (let ((latex-buffer-name qjp-latex-auto-compile-buffer-name))
+    (or (get-buffer latex-buffer-name)
+        (with-current-buffer (get-buffer-create latex-buffer-name)
+          (special-mode)
+          (setq buffer-read-only)
+          (font-lock-add-keywords nil qjp-latex-error-buffer-font-lock)
+          (if (fboundp 'font-lock-ensure)
+              (font-lock-ensure)
+            (with-no-warnings
+              (font-lock-fontify-buffer)))
+          (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-from-auto-compile-buffer)
+          (current-buffer)))))
+
+(defun qjp-latex-auto-compile ()
   (interactive)
-  (when (and (eq major-mode 'latex-mode)
-             (string-match "\\.tex$" buffer-file-name))
-    (let* ((latex-process-name "latex-auto-compile")
-           (latex-buffer-name "*latex-auto-buffer*")
-           (latex-process (get-process latex-process-name)))
-      (and latex-process
-           (delete-process latex-process))
-      (when (get-buffer latex-buffer-name)
-        (save-excursion
-          (set-buffer latex-buffer-name)
-          (erase-buffer)))
-      (apply #'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
-             (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
+  (and (eq major-mode 'latex-mode)
+       (string-match "\\.tex$" buffer-file-name)
+       (let* ((latex-process-name "latex-auto-compile")
+              (latex-buffer-name qjp-latex-auto-compile-buffer-name)
+              (latex-process (get-process latex-process-name)))
+         (and latex-process
+              (delete-process latex-process))
+         (with-current-buffer (qjp-latex--get-or-create-auto-compile-buffer)
+           (erase-buffer))
+         (apply #'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
+                (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
+
+(defun qjp-latex-switch-to-auto-compile-buffer ()
+  (interactive)
+  (let ((from-buffer (current-buffer)))
+    (and (eq major-mode 'latex-mode)
+         (switch-to-buffer (qjp-latex--get-or-create-auto-compile-buffer))
+         (setq qjp-latex-auto-compile-from-buffer from-buffer))))
+
+(defun qjp-latex-switch-from-auto-compile-buffer ()
+  (interactive)
+  (if qjp-latex-auto-compile-from-buffer
+      (switch-to-buffer qjp-latex-auto-compile-from-buffer)
+    (message "No previous buffer for switching back.")))
 
 ;; Insert \usepackage in the front of the file
 (defun qjp-latex-add-pkg (pkg-name pkg-options)
@@ -126,6 +156,8 @@
 ;; Add some frequently used envs
 (defun qjp-add-LaTeX-environments ()
   (LaTeX-add-environments
+   '("align" LaTeX-env-label)
+   '("align*")
    '("matrix")
    '("bmatrix")
    '("Bmatrix")
@@ -133,7 +165,24 @@
    '("vmatrix")
    '("Vmatrix")
    '("smallmatrix")
-   '("code" "Programming language")))
+   '("cases")
+   '("code" "Programming language")
+   '("comment")))
+
+;; Add company-auctex backend
+(with-eval-after-load 'company
+  (company-auctex-init))
+
+;; Settings for magic-latex-buffer
+(setq magic-latex-enable-block-align)
+
+;; ------------------ ;;
+;; Local key bindings ;;
+;; ------------------ ;;
+(defun qjp-tex-set-local-key-bindings ()
+  (local-set-key [(return)] #'newline-and-indent)
+  (local-set-key (kbd "C-c ,") #'LaTeX-mark-section)
+  (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-to-auto-compile-buffer))
 
 ;; ----- ;;
 ;; Hooks ;;
@@ -146,7 +195,7 @@
   (magic-latex-buffer +1)
   (flyspell-mode +1)
   (qjp-add-LaTeX-environments)
-  (add-hook 'after-save-hook #'qjp-latex-auto-update nil t))
+  (add-hook 'after-save-hook #'qjp-latex-auto-compile nil t))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
 (add-hook 'latex-mode-hook #'qjp-tex-mode-hook)
