@@ -265,9 +265,9 @@
   "See the source code to find out styles. Use hydra for key bindings."
   (setq rebox-style-loop '(21 23 25)))
 
-;; ------------------- ;;
-;; idle-highlight-mode ;;
-;; ------------------- ;;
+;; ---------------- ;;
+;; highlight-symbol ;;
+;; ---------------- ;;
 (qjp-misc-config-inline highlight-symbol
   "Use bold and underline instead of `region' color to highlight."
   (with-eval-after-load 'highlight-symbol
@@ -397,6 +397,24 @@
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)))
 
+;; --------- ;;
+;; gmpl-mode ;;
+;; --------- ;;
+(qjp-misc-config-inline gmpl-mode
+  (add-to-list 'auto-mode-alist '("\\.mod\\'" . gmpl-mode))
+  (with-eval-after-load 'company-keywords
+    (add-to-list 'company-keywords-alist
+                 '(gmpl-mode "and" "else" "mod" "union" "by" "if" "not" "within"
+                             "cross" "in" "or" "diff" "inter" "symdiff" "div" "less" "then"
+                             "abs" "atan" "card" "ceil" "cos" "exp" "floor"
+                             "gmtime" "length" "log" "log10"
+                             "max" "min" "round" "sin" "sqrt" "str2time" "trunc"
+                             "Irand224" "Uniform" "Normal01" "Normal"
+                             "sum" "prod"
+                             "substr" "time2str"
+                             "param" "by" "setof" "forall" "exists" "dimen"
+                             "default" "integer" "binary" "symbolic" "var"))))
+
 ;; Second part: make defuns for settings in files
 (add-to-list 'load-path (concat qjp-modules-dir "/misc"))
 (let ((file-basenames
@@ -417,7 +435,7 @@
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
-        goto-last-change gscholar-bibtex which-key
+        gmpl-mode goto-last-change gscholar-bibtex which-key
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char

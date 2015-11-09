@@ -25,14 +25,14 @@
 ;;; Code:
 
 ;; Require module features as you want
-(qjp-require 'qjp-basic "20modules")          ;basic settings
-(qjp-require 'qjp-defuns "20modules")         ;useful defuns
-(qjp-require 'qjp-mode "20modules")           ;key bindings
-(qjp-require 'qjp-misc "20modules")           ;various modes/features
-(qjp-require 'qjp-org "20modules")            ;org-mode
-(qjp-require 'qjp-tex "20modules")            ;TeX
-(qjp-require 'qjp-programming "20modules")    ;Programmning
-(qjp-require 'qjp-alias "20modules")          ;Alias
+(qjp-require 'qjp-basic "20modules")		;basic settings
+(qjp-require 'qjp-defuns "20modules")		;useful defuns
+(qjp-require 'qjp-mode "20modules")		;key bindings
+(qjp-require 'qjp-misc "20modules")		;various modes/features
+(qjp-require 'qjp-org "20modules")		;org-mode
+(qjp-require 'qjp-tex "20modules")		;TeX
+(qjp-require 'qjp-programming "20modules")	;Programmning
+(qjp-require 'qjp-alias "20modules")		;Alias
 
 (provide 'qjp-modules-init)
 ;;; qjp-modules-init.el ends here
