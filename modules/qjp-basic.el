@@ -83,7 +83,7 @@
 (when (display-graphic-p)
   (let (en-font zh-font zh-size unicode-font)
     (when (cond ((eq system-type 'gnu/linux)
-                 (setq en-font "Liberation Mono:pixelsize=22")
+                 (setq en-font "Consolas:pixelsize=22")
                  (setq zh-font "WenQuanYi Micro Hei Mono")
                  (setq zh-size 26)
                  (setq unicode-font "Symbola"))
@@ -102,12 +102,14 @@
        (font-spec :family zh-font :size zh-size))
       (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
+;; Temporarily, try out another theme other than `zenburn'
+(load-theme 'tsdh-dark t)
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
-(load-theme 'zenburn t)
+;;(load-theme 'zenburn t)
 ;; Minor fix for volitile-highlight
-(custom-theme-set-faces
- 'zenburn
- '(vhl/default-face ((t (:foreground "#383838" :background "gray50")))))
+;; (custom-theme-set-faces
+;;  'zenburn
+;;  '(vhl/default-face ((t (:foreground "#383838" :background "gray50")))))
 
 ;; -------------------- ;;
 ;; Some useful settings ;;
