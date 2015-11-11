@@ -30,7 +30,7 @@
 (with-eval-after-load 'latex
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
-  (setq TeX-master nil)
+  (setq-default TeX-master nil)
   (setq preview-scale-function 2)
   (setq TeX-save-query nil)
   (setq TeX-show-compilation nil)
