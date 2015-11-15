@@ -35,6 +35,9 @@
   (setq TeX-save-query nil)
   (setq TeX-show-compilation nil)
 
+  ;; Setup smartparens for latex
+  (require 'smartparens-latex)
+
   ;; Add option `-file-line-error' to avoid `TeX-next-error' error
   ;; See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=695282 for details
   (add-to-list 'TeX-command-list
@@ -45,6 +48,7 @@
   (add-to-list 'TeX-command-list
                '("latexmk" "latexmk -pdf %s && latexmk -c" TeX-run-TeX nil t
                  :help "Run Latexmk on file"))
+  (push "\\.fdb_latexmk" LaTeX-clean-intermediate-suffixes)
   ;; Tricks: let synctex work with Okular
   (push '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory))))
         TeX-expand-list)
@@ -58,13 +62,14 @@
 (setq reftex-plug-into-AUCTeX t)
 (setq reftex-default-bibliography `(,qjp-bibtex-database-file))
 
-;; ---------------------- ;;
-;; User Defined Functions ;;
-;; ---------------------- ;;
-
-;; Auto update when saving
-(defvar qjp-latex-auto-command "latexmk")
-(defvar qjp-latex-auto-command-options '("-shell-escape" "-pdf"))
+;; ------------------------ ;;
+;; Auto compile when saving ;;
+;; ------------------------ ;;
+(defvar qjp-latex-auto-compile-command "latexmk")
+(defvar qjp-latex-auto-compile-command-options '("-shell-escape" "-pdf"))
+;;(make-variable-buffer-local 'qjp-latex-auto-compile-command-options)
+(defvar qjp-latex-auto-compile-p t)
+;;(make-variable-buffer-local 'qjp-latex-auto-compile-p)
 (defvar qjp-latex-auto-compile-buffer-name "*latex-auto-compile-buffer*")
 (defvar qjp-latex-auto-compile-from-buffer nil)
 (defvar qjp-latex-error-buffer-font-lock
@@ -93,7 +98,8 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
 
 (defun qjp-latex-auto-compile ()
   (interactive)
-  (and (eq major-mode 'latex-mode)
+  (and qjp-latex-auto-compile-p
+       (eq major-mode 'latex-mode)
        (string-match "\\.tex\\'" buffer-file-name)
        (let* ((latex-process-name "latex-auto-compile")
               (latex-buffer-name qjp-latex-auto-compile-buffer-name)
@@ -102,8 +108,29 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
               (delete-process latex-process))
          (with-current-buffer (qjp-latex--get-or-create-auto-compile-buffer)
            (erase-buffer))
-         (apply #'start-process latex-process-name latex-buffer-name qjp-latex-auto-command
-                (append qjp-latex-auto-command-options (list (TeX-master-file)))))))
+         (let ((delete-exited-processes t))
+           (apply #'start-process latex-process-name latex-buffer-name qjp-latex-auto-compile-command
+                  (append qjp-latex-auto-compile-command-options (list (TeX-master-file))))))))
+
+(defun qjp-latex-disable-auto-compile ()
+  (interactive)
+  (add-file-local-variable 'qjp-latex-auto-compile-p
+                           (setq qjp-latex-auto-compile-p)))
+
+(defun qjp-latex-enable-auto-compile ()
+  (interactive)
+  (add-file-local-variable 'qjp-latex-auto-compile-p
+                           (setq qjp-latex-auto-compile-p t)))
+
+(defun qjp-latex-set-auto-compile-command-options (opt-str)
+  (interactive
+   (list
+    (read-string
+     (format "New value(current value is \"%s\"): "
+             (mapconcat 'identity qjp-latex-auto-compile-command-options " ")))))
+  (add-file-local-variable 'qjp-latex-auto-compile-command-options
+                           (setq qjp-latex-auto-compile-command-options
+                                 (split-string opt-str " "))))
 
 (defun qjp-latex-switch-to-auto-compile-buffer ()
   (interactive)
@@ -117,6 +144,10 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
   (if qjp-latex-auto-compile-from-buffer
       (switch-to-buffer qjp-latex-auto-compile-from-buffer)
     (message "No previous buffer for switching back.")))
+
+;; ---------------------- ;;
+;; User Defined Functions ;;
+;; ---------------------- ;;
 
 ;; Insert \usepackage in the front of the file
 (defun qjp-latex-add-pkg (pkg-name pkg-options)
@@ -153,8 +184,10 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
       (newline-and-indent)
       (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n\n\\begin{document}\n\\maketitle"))))
 
-;; Add some frequently used envs
-(defun qjp-add-LaTeX-environments ()
+;; ----------------------------- ;;
+;; Add some frequently used envs ;;
+;; ----------------------------- ;;
+(defun qjp-tex-add-LaTeX-environments ()
   (LaTeX-add-environments
    '("align" LaTeX-env-label)
    '("align*")
@@ -169,13 +202,6 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
    '("code" "Programming language")
    '("comment")))
 
-;; Add company-auctex backend
-(with-eval-after-load 'company
-  (company-auctex-init))
-
-;; Settings for magic-latex-buffer
-(setq magic-latex-enable-block-align)
-
 ;; ------------------ ;;
 ;; Local key bindings ;;
 ;; ------------------ ;;
@@ -184,17 +210,49 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
   (local-set-key (kbd "C-c ,") #'LaTeX-mark-section)
   (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-to-auto-compile-buffer))
 
+;; -------------------- ;;
+;; Third-party packages ;;
+;; -------------------- ;;
+
+;; Add company-auctex backend
+(with-eval-after-load 'company
+  (company-auctex-init))
+
+;; Settings for magic-latex-buffer
+(setq magic-latex-enable-block-align)
+
+;; latex-extra
+(setq latex/no-fill-environments '("equation"
+                                   "equation*"
+                                   "align"
+                                   "align*"
+                                   "tabular"
+                                   "tikzpicture"))
+
+(defun qjp-turn-on-cdlatex ()
+  (turn-on-cdlatex)
+  ;; Disable cdlatex-pbb to use smartparens
+  (define-key cdlatex-mode-map  "(" nil)
+  (define-key cdlatex-mode-map  "{" nil)
+  (define-key cdlatex-mode-map  "[" nil)
+  (define-key cdlatex-mode-map  "|" nil)
+  (define-key cdlatex-mode-map  "<" nil))
+
 ;; ----- ;;
 ;; Hooks ;;
 ;; ----- ;;
 (defun qjp-tex-mode-hook ()
   (qjp-tex-set-local-key-bindings)
-  (turn-on-cdlatex)
   (turn-on-reftex)
+  (qjp-turn-on-cdlatex)
   (latex-extra-mode +1)
   (magic-latex-buffer +1)
   (flyspell-mode +1)
-  (qjp-add-LaTeX-environments)
+  (flycheck-mode +1)
+  (smartparens-mode +1)
+  (qjp-tex-add-LaTeX-environments)
+  (make-local-variable 'qjp-latex-auto-compile-command-options)
+  (make-local-variable 'qjp-latex-auto-compile-p)
   (add-hook 'after-save-hook #'qjp-latex-auto-compile nil t))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
