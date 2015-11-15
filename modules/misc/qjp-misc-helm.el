@@ -34,7 +34,9 @@
   (define-key qjp-mode-map (kbd "C-c h") #'helm-command-prefix)
   (define-key qjp-mode-map (kbd "C-x c") nil)
   (define-key qjp-mode-map (kbd "C-c h g") #'helm-google-suggest)
-  (define-key qjp-mode-map (kbd "C-c h d") #'helm-dash))
+  (define-key qjp-mode-map (kbd "C-c h d") #'helm-dash)
+  ;; helm-multi-swoop
+  (define-key qjp-mode-map (kbd "C-c h M-i") #'helm-multi-swoop))
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -57,10 +59,11 @@
   (define-key helm-map (kbd "C-z")  'helm-select-action)
   (helm-mode)
   (helm-autoresize-mode t)
-  (helm-descbinds-mode))
+  (helm-descbinds-mode)
+  (require 'helm-swoop))
 
 ;; helm-swoop
-(define-key isearch-mode-map (kbd "M-o") #'helm-swoop-from-isearch)
+(setq helm-swoop-speed-or-color t) ;; Color needed
 
 ;; helm-bibtex
 (setq helm-bibtex-bibliography qjp-bibtex-database-file)
