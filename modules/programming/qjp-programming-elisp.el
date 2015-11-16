@@ -173,7 +173,6 @@
 (defun qjp-emacs-lisp-mode-hook ()
   (qjp-ielm-mode-hook)
   ;; Unique settings for emacs-lisp-mode
-  (hideshowvis-minor-mode +1)
   (redshank-mode +1)
   (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t)
