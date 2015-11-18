@@ -227,7 +227,9 @@ Steal from latex-extra: https://github.com/Malabarba/latex-extra.")
                                    "align"
                                    "align*"
                                    "tabular"
-                                   "tikzpicture"))
+                                   "tikzpicture"
+                                   "verbatim"
+                                   "verbatim*"))
 
 (defun qjp-turn-on-cdlatex ()
   (turn-on-cdlatex)
