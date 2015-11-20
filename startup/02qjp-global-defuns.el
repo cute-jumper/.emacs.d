@@ -106,7 +106,8 @@
                    (forward-line)
                    (org-cycle))))
       (delete-char -1))
-    (switch-to-buffer buf)))
+    (switch-to-buffer buf)
+    (goto-char (point-min))))
 
 (provide '02qjp-global-defuns)
 ;;; 02qjp-global-defuns.el ends here
