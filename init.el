@@ -75,8 +75,7 @@
 (qjp-require 'qjp-site-lisp-init)
 
 (defvar qjp-init-duration (float-time
-                           (time-subtract
-                            (current-time)
+                           (time-since
                             qjp-before-init-time)))
 ;; Welcome message
 (setq initial-scratch-message
