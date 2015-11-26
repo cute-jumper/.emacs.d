@@ -40,6 +40,7 @@
     (define-key map [S-up] #'qjp-move-line-up)
     (define-key map [S-down] #'qjp-move-line-down)
     (define-key map (kbd "M-m") #'qjp-kill-back-to-indentation)
+    (define-key map (kbd "C-j") #'qjp-join-next-line)
 
     ;; Bindings for `qjp-defuns-misc'
     (define-key map (kbd "C-x M-=") #'qjp-calc-eval-and-replace)
@@ -66,13 +67,16 @@
     map))
 
 ;; `M-o' prefix keymap
-(define-prefix-command 'meta-o-map)
+;;(define-prefix-command 'meta-o-map)
+(define-prefix-command 'meta-i-map)
 (global-unset-key (kbd "M-o"))
+(global-unset-key (kbd "M-i"))
 (define-key qjp-mode-map (kbd "M-o") 'meta-o-map)
-(define-key meta-o-map (kbd "s") #'qjp-isearch-other-window)
-(define-key meta-o-map (kbd "o") #'occur)
-(define-key meta-o-map (kbd "M-s") #'center-line)
-(define-key meta-o-map (kbd "M-S") #'center-paragraph)
+(define-key qjp-mode-map (kbd "M-i") 'meta-i-map)
+(define-key meta-i-map (kbd "s") #'qjp-isearch-other-window)
+(define-key meta-i-map (kbd "o") #'occur)
+(define-key meta-i-map (kbd "M-s") #'center-line)
+(define-key meta-i-map (kbd "M-S") #'center-paragraph)
 
 (define-minor-mode qjp-mode
   "Minor mode designed for Junpeng Qiu!
