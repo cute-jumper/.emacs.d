@@ -285,7 +285,8 @@
 ;; flycheck ;;
 ;; -------- ;;
 (qjp-misc-config-inline flycheck
-  nil)
+  (with-eval-after-load 'flycheck
+    (flycheck-pos-tip-mode +1)))
 
 ;; -------- ;;
 ;; fcitx.el ;;
