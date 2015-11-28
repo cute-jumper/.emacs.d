@@ -67,6 +67,29 @@
   ;; User Defined Functions ;;
   ;; ---------------------- ;;
 
+  (defvar qjp-latex-from-buffer nil)
+  (make-variable-buffer-local 'qjp-latex-from-buffer)
+
+  (defun qjp-latex-switch-to-pdf-view ()
+    (interactive)
+    (let* ((from-buffer (current-buffer))
+           (master-file-name (TeX-master-file))
+           (pdf-buffer (find-file-noselect
+                        (concat master-file-name "." (TeX-output-extension)))))
+      (switch-to-buffer pdf-buffer)
+      (setq qjp-latex-from-buffer from-buffer)))
+
+  (defun qjp-pdf-view-switch-to-tex-source ()
+    (interactive)
+    (if qjp-latex-from-buffer
+        (switch-to-buffer qjp-latex-from-buffer)
+      (let* ((pdf-file-name (buffer-file-name))
+             (tex-buffer (find-file-noselect
+                          (replace-regexp-in-string "\\.pdf" ".tex" pdf-file-name))))
+        (switch-to-buffer tex-buffer))))
+  (with-eval-after-load 'pdf-view
+    (define-key pdf-view-mode-map (kbd "C-x C-z") #'qjp-pdf-view-switch-to-tex-source))
+
   ;; Insert \usepackage in the front of the file
   (defun qjp-latex-add-pkg (pkg-name pkg-options)
     (interactive "sPackage: \nsOptions: ")
@@ -126,7 +149,7 @@
   (defun qjp-tex-set-local-key-bindings ()
     (local-set-key [(return)] #'newline-and-indent)
     (local-set-key (kbd "C-c ,") #'LaTeX-mark-section)
-    (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-to-auto-compile-buffer))
+    (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-to-pdf-view))
 
   (defun qjp-turn-on-cdlatex ()
     (turn-on-cdlatex)
@@ -168,9 +191,9 @@
 (defun qjp-tex-mode-hook ()
   (qjp-tex-set-local-key-bindings)
   (turn-on-reftex)
+  (TeX-source-correlate-mode +1)
   (qjp-turn-on-cdlatex)
   (latex-extra-mode +1)
-  (TeX-source-correlate-mode +1)
   (magic-latex-buffer +1)
   (flyspell-mode +1)
   (flycheck-mode +1)
