@@ -351,13 +351,30 @@
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
 
+;; ----------- ;;
+;; google-this ;;
+;; ----------- ;;
+(qjp-misc-config-inline google-this
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-c g") #'google-this)))
+
 ;; ------------ ;;
 ;; change-inner ;;
 ;; ------------ ;;
 (qjp-misc-config-inline change-inner
   (with-eval-after-load 'qjp-mode
-    (define-key meta-o-map (kbd "i") 'change-inner)
-    (define-key meta-o-map (kbd "o") 'change-outer)))
+    (define-key meta-i-map (kbd "i") 'change-inner)
+    (define-key meta-i-map (kbd "o") 'change-outer)))
+
+;; ---------- ;;
+;; workgroups ;;
+;; ---------- ;;
+(qjp-misc-config-inline workgroups2
+  (setq wg-emacs-exit-save-behavior 'ask)
+  (setq wg-load-last-workgroup)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "s-z") #'wg-revert-workgroup)
+    (define-key qjp-mode-map (kbd "s-/") #'wg-switch-to-workgroup)))
 
 ;; -------- ;;
 ;; quickrun ;;
