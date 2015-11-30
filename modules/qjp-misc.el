@@ -97,12 +97,20 @@
   (autoload 'region-bindings-mode-enable "region-bindings-mode")
   (region-bindings-mode-enable))
 
-;; ---------------- ;;
-;; goto-last-change ;;
-;; ---------------- ;;
-(qjp-misc-config-inline goto-last-change
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x C-\\") 'goto-last-change)))
+;; --------- ;;
+;; pdf-tools ;;
+;; --------- ;;
+(qjp-misc-config-inline pdf-tools
+  (autoload 'pdf-view-mode "pdf-view")
+  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+  (defun qjp-pdf-view-mode-hook ()
+    (pdf-tools-enable-minor-modes)
+    (key-chord-define-local "jj" nil)
+    (setq pdf-view-display-size 'fit-height))
+  (with-eval-after-load 'pdf-view
+    (add-hook 'pdf-view-mode-hook #'qjp-pdf-view-mode-hook)
+    (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
+    (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page)))
 
 ;; --- ;;
 ;; avy ;;
@@ -454,19 +462,19 @@
 ;; -------------------------------------- ;;
 (defvar qjp-enabled-misc-settings-list
   '(avy avy-zap ace-flyspell ace-jump-helm-line ace-link ace-pinyin anchored-transpose anzu auto-insert
-        bing-dict
+        beacon bing-dict
         company change-inner
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
-        gmpl-mode goto-last-change gscholar-bibtex which-key
+        gmpl-mode gscholar-bibtex which-key
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char
         key-chord
         lacarte
         magit markdown multiple-cursors
-        projectile
+        pdf-tools projectile
         quickrun
         rebox region-bindings
         sml nyan;; load after sml
