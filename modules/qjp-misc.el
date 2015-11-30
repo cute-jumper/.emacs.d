@@ -391,6 +391,12 @@
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
+;; ----------- ;;
+;; beacon-mode ;;
+;; ----------- ;;
+(qjp-misc-config-inline beacon
+  (beacon-mode +1))
+
 ;; --------------- ;;
 ;; gscholar-bibtex ;;
 ;; --------------- ;;
