@@ -218,7 +218,10 @@
 ;; which-key ;;
 ;; --------- ;;
 (qjp-misc-config-inline which-key
-  (setq which-key-idle-delay 2.0)
+  (setq which-key-idle-delay 1.0)
+  (setq which-key-special-keys)
+  (with-eval-after-load 'qjp-mode
+    (qjp-key-chord-define qjp-mode-map "??" #'which-key-show-top-level))
   (which-key-mode +1))
 
 ;; ------------------- ;;
@@ -482,7 +485,7 @@
         term
         undo-tree
         volatile-highlights
-        whitespace-cleanup whole-line-or-region
+        whitespace-cleanup whole-line-or-region workgroups2
         ;;yasnippet
         )
   "The names for the packages that should be enabled.")
