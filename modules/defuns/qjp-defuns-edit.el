@@ -229,6 +229,11 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
           "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
           "culpa qui officia deserunt mollit anim id est laborum."))
 
+(defun qjp-insert-date ()
+  "Insert a `time-stamp' according to locale's date and time format."
+  (interactive)
+  (insert (format-time-string "%c" (current-time))))
+
 ;; TODO: Generalize it!
 (defun qjp-suck-it (suckee)
   "SUCKEE can suck it."
@@ -240,10 +245,22 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
     (dotimes (_ (- 80 col (length prefix) (length postfix))) (insert "u"))
     (insert postfix)))
 
-(defun qjp-insert-date ()
-  "Insert a `time-stamp' according to locale's date and time format."
-  (interactive)
-  (insert (format-time-string "%c" (current-time))))
+;; ------------------ ;;
+;; Generate separator ;;
+;; ------------------ ;;
+(defun qjp-generate-separator (width fill-char text)
+  "Generate separator string specified by WIDTH, FILL-CHAR and TEXT."
+  (interactive "nWidth: \ncFill char: \nMText: ")
+  (setq text (format " %s " text))
+  (when (> (length text) width)
+    (error "The length of the text is larger than the specified width"))
+  (let* ((fill-char-width (- width (length text)))
+         (left-width (/ fill-char-width  2))
+         (right-width (- fill-char-width left-width)))
+    (insert (format "%s%s%s"
+                    (make-string left-width fill-char)
+                    text
+                    (make-string right-width fill-char)))))
 
 ;; -------------- ;;
 ;; Buffer cleanup ;;
@@ -292,10 +309,14 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
           (delete-file filename)
           (message "Deleted file %s" filename)
           (kill-buffer))))))
-
 ;; autoload `zap-up-to-char' in `misc'
 ;; obsolete. Use `ace-jump-zap' instead
 ;; (autoload 'zap-up-to-char "misc")
+
+;; Named lambdas
+(defun qjp-join-next-line ()
+  (interactive)
+  (join-line 1))
 
 (provide 'qjp-defuns-edit)
 ;;; qjp-defuns-edit.el ends here
