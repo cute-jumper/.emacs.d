@@ -91,11 +91,18 @@ cursor to the new line."
   (setq save-place +1)
   (highlight-symbol-mode +1)
   (highlight-symbol-nav-mode +1)
+  (hs-minor-mode +1)
   (hl-line-mode +1)
   (flycheck-mode +1)
   (smartparens-mode +1))
 
 (add-hook 'prog-mode-hook #'qjp-prog-mode-hook)
+
+;; Shell mode hook
+(defun qjp-sh-mode-hook ()
+  (shelldoc-minor-mode-on))
+
+(add-hook 'sh-mode-hook #'qjp-sh-mode-hook)
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
