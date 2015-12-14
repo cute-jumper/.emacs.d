@@ -49,6 +49,25 @@
       ad-do-it
       (kill-buffer orig)))
 
+  ;; Hunman-readable space
+  (setq dired-listing-switches "-alh")
+
+  (defun qjp--human-readable-space (ret)
+    (let ((kb (string-to-number ret)))
+      (if (> kb 1024)
+          (if (> (setq kb (/ kb 1024)) 1024)
+              (format "%.0f GB" (/ kb 1024))
+            (format "%.0f MB" kb))
+        (format "%.0f Kb" kb))))
+
+  (defun qjp-insert-directory (orig-func &rest args)
+    "modify the total/available number by dividing it by 1024"
+    (advice-add 'get-free-disk-space :filter-return 'qjp--human-readable-space)
+    (prog1 (apply orig-func args)
+      (advice-remove 'get-free-disk-space 'qjp--human-readable-space)))
+
+  (advice-add 'insert-directory :around 'qjp-insert-directory)
+
   ;; Original name -- sof/dired-sort
   (defun qjp-dired-sort ()
     "Dired sort hook to list directories first."
@@ -82,7 +101,8 @@
      nil))
   (define-key dired-mode-map "E" #'dired-do-eval)
 
-  (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
+  ;; No sort now
+  ;; (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
 
   (defun qjp-dired-mode-hook ()
     (setq dired-guess-shell-alist-user
