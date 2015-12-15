@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(setq hydra-is-helpful)
+(setq hydra-is-helpful nil)
 
 ;; ------------------------ ;;
 ;; My own vi-style bindings ;;
@@ -42,9 +42,9 @@
   ("l" forward-char)
   ("h" backward-char)
   ("j" next-line)
-  ("J" qjp-fast-forward-lines)
+  ("J" join-line)
   ("k" previous-line)
-  ("K" qjp-fast-backward-lines)
+  ("K" kill-buffer)
   ("n" (scroll-up-command))
   ("p" (scroll-up-command '-))
   ("f" forward-word)
@@ -63,7 +63,7 @@
   ("o" qjp-open-new-line)
   ("O" (qjp-open-new-line 1))
   ("y" yank)
-  ("Y" yank-pop)
+  ("Y" helm-show-kill-ring)
   ("u" undo)
   ("v" set-mark-command)
   ("V" rectangle-mark-mode)
@@ -72,11 +72,16 @@
   ("/" (progn
          (isearch-forward)))
   ("g" avy-goto-word-1)
-  ("G" avy-goto-char)
+  ("G" avy-goto-char-in-line)
+  ("M-g" avy-goto-line)
+  ("SPC f" helm-find-files)
+  ("SPC b" helm-mini)
+  ("SPC s" save-buffer)
   ("i" nil "quit")
   ("q" nil "quit"))
 
 (with-eval-after-load 'qjp-mode
+  ;;(qjp-define-keychord-with-hydra "j" "i" #'hydra-vi/body)
   (qjp-key-chord-define qjp-mode-map "jj" #'hydra-vi/body))
 
 ;; This reserves the behavior for M-g M-g
@@ -85,7 +90,7 @@
                                     :post (nlinum-mode -1))
   "goto-line"
   ("g" avy-goto-line "go")
-  ("m" set-mark-command "mark" :bind nil)
+  ("SPC" set-mark-command "mark" :bind nil)
   ("q" nil "quit"))
 
 ;; ----------------------------- ;;
@@ -100,8 +105,8 @@
       (goto-char mk))))
 
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                           :color pink
-                           :post (deactivate-mark))
+                                     :color pink
+                                     :post (deactivate-mark))
   "
   ^_k_^     _d_elete    _s_tring
 _h_   _l_   _o_pen      _y_ank
