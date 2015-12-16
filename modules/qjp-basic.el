@@ -103,7 +103,7 @@
       (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
 ;; Temporarily, try out another theme other than `zenburn'
-(load-theme 'tsdh-dark t)
+(load-theme 'ample-flat t)
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 ;;(load-theme 'zenburn t)
 ;; Minor fix for volitile-highlight
