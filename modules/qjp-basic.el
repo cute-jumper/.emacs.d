@@ -124,9 +124,6 @@
 ;; Require new at the end of a file
 (setq require-final-newline t)
 
-;; Don't use shift to select
-(setq shift-select-mode nil)
-
 ;; Don't use tabs pleeeeeeeeese!
 (setq-default indent-tabs-mode nil)
 
