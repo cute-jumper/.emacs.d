@@ -57,8 +57,9 @@
   (require 'qjp-org-src)
   (require 'qjp-org-export)
   (require 'qjp-org-misc)
-  (require 'qjp-org-notes)
-  (require 'qjp-org-publish))
+  (require 'qjp-org-notes))
+
+(require 'qjp-org-publish)
 
 (provide 'qjp-org)
 ;;; qjp-org.el ends here

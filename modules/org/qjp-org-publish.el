@@ -39,9 +39,10 @@
    ((eq format 'html)
     (format "<a href=\"{%% post_url %s %%}\">%s</a>" path desc))))
 
-(org-add-link-type "jekyll-post"
-                   #'qjp-org-jekyll-post-link-follow
-                   #'qjp-org-jekyll-post-link-export)
+(with-eval-after-load 'org
+  (org-add-link-type "jekyll-post"
+                     #'qjp-org-jekyll-post-link-follow
+                     #'qjp-org-jekyll-post-link-export))
 
 (setq org-publish-project-alist
       `(("org-localhost-sources" ;; settings for sources of localhost
@@ -103,7 +104,7 @@
 (defvar qjp-jekyll-post-ext ".org"
   "File extension of Jekyll posts.")
 (defvar qjp-jekyll-post-template
-  "BEGIN_HTML\n---\nlayout: post\ntitle: %s\nexcerpt: \ncategories:\n  -  \ntags:\n  -  \n---\n#+END_HTML\n\n* "
+  "#+BEGIN_HTML\n---\nlayout: post\ntitle: %s\nexcerpt: \ncategories:\n  -  \ntags:\n  -  \n---\n#+END_HTML\n\n* "
   "Default template for Jekyll posts.  %s will be replace by the post title.")
 
 (defun qjp-jekyll-make-slug (s)
