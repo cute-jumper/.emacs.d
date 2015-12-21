@@ -30,7 +30,7 @@
 (require 'qjp-programming-basic)
 
 ;; Define lauguages to be configured
-(defvar qjp-programming-languages '(c-cpp java python ruby scala haskell elisp javascript lua)
+(defvar qjp-programming-languages '(c-cpp java python ruby scala haskell elisp javascript lua qml)
   "My programming lauguages.")
 
 ;; Load all settings
