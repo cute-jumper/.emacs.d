@@ -52,7 +52,6 @@
     (define-key map (kbd "C-x C-r") #'revert-buffer)
     (define-key map [remap just-one-space] #'cycle-spacing)
     (define-key map [remap count-words-region] #'count-words)
-    (define-key map (kbd "C-x I") #'imenu)
     (define-key map (kbd "C-x O") #'(lambda () (interactive) (other-window -1)))
     (define-key map (kbd "M-/") #'hippie-expand)
     (define-key map (kbd "C-c e") #'qjp-eval-and-replace)
@@ -78,6 +77,14 @@
 (define-key meta-i-map (kbd "M-s") #'center-line)
 (define-key meta-i-map (kbd "M-S") #'center-paragraph)
 
+(defun qjp-mode--keychord-remap (keychord key-seq)
+  (key-chord-define-global
+   keychord
+   (lambda ()
+     (interactive)
+     (setq unread-command-events
+           (listify-key-sequence (kbd key-seq))))))
+
 (define-minor-mode qjp-mode
   "Minor mode designed for Junpeng Qiu!
 
@@ -99,7 +106,24 @@
   ;; key-chord-mode
   (with-eval-after-load 'qjp-misc
     (qjp-key-chord-define qjp-mode-map "bb" #'helm-mini)
-    (qjp-key-chord-define qjp-mode-map "xf" #'helm-find-files))
+    (qjp-key-chord-define qjp-mode-map "xf" #'helm-find-files)
+    (qjp-key-chord-define qjp-mode-map "xs" #'save-buffer)
+    ;;(qjp-key-chord-define qjp-mode-map "bn" #')
+    (qjp-mode--keychord-remap ";x" "C-x")
+    (qjp-mode--keychord-remap ";c" "C-c")
+    (qjp-mode--keychord-remap ";e" "C-e")
+    (qjp-mode--keychord-remap ";a" "C-a")
+    (qjp-mode--keychord-remap ";s" "C-s")
+    (qjp-mode--keychord-remap ";g" "C-g")
+    (qjp-mode--keychord-remap ";k" "C-k")
+    (qjp-mode--keychord-remap ";u" "C-/")
+    (qjp-mode--keychord-remap ";y" "C-y")
+    (qjp-mode--keychord-remap ";1" "C-x 1")
+    (qjp-mode--keychord-remap ";2" "C-x 2")
+    (qjp-mode--keychord-remap ";3" "C-x 3")
+    (qjp-mode--keychord-remap ";0" "C-x 0")
+    (qjp-mode--keychord-remap ";o" "C-x o"))
+
   ;; Bindings for `isearch'
   (define-key isearch-mode-map (kbd "C-p") #'isearch-yank-x-selection)
   (define-key isearch-mode-map (kbd "C-o") #'qjp-isearch-occur)
