@@ -88,7 +88,9 @@
     (define-key keymap (vector 'key-chord key1 key2) command)))
 
 (qjp-misc-config-inline key-chord
-  (key-chord-mode +1))
+  (key-chord-mode +1)
+  (setq key-chord-two-keys-delay 0.5)
+  (fset 'key-chord-define 'qjp-key-chord-define))
 
 ;; -------------------- ;;
 ;; region-bindings mode ;;
@@ -119,7 +121,9 @@
   (with-eval-after-load 'qjp-mode
     (setq avy-background t)
     (qjp-key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
-    (qjp-key-chord-define qjp-mode-map "jl" 'avy-goto-char)))
+    (setq avy-keys-alist `((avy-goto-word-1 . ,(number-sequence ?a ?z))))
+    (qjp-key-chord-define qjp-mode-map "jl" 'avy-goto-char-in-line)
+    (define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
 ;; ------- ;;
 ;; avy-zap ;;
@@ -152,7 +156,7 @@
 (qjp-misc-config-inline ace-jump-helm-line
   ;; FIXME
   (with-eval-after-load 'helm
-    (qjp-key-chord-define helm-map "jj" #'ace-jump-helm-line)))
+    (qjp-key-chord-define helm-map "jj" #'ace-jump-helm-line-execute-action)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
