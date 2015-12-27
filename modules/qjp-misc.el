@@ -263,7 +263,8 @@
 ;; diff-hl ;;
 ;; ------- ;;
 (qjp-misc-config-inline diff-hl
-  (global-diff-hl-mode)
+  (global-diff-hl-mode +1)
+  (diff-hl-margin-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
 
 ;; --------- ;;
