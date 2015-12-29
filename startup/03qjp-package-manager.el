@@ -60,7 +60,7 @@ and installs these packages one by one."
     (dolist (pkg qjp-installed-package-list)
       (setq counter (1+ counter))
       (if (package-installed-p pkg)
-          (insert (format "\t--> [%d/%d] %s has beenf installed.\n" counter total pkg))
+          (insert (format "\t--> [%d/%d] %s has been installed.\n" counter total pkg))
         (ignore-errors
           (insert (format "\t--> [%d/%d] Installing %s..." counter total pkg))
           (package-install pkg)
