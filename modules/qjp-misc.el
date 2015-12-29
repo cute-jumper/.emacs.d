@@ -432,10 +432,10 @@
         (let ((word (word-at-point)))
           (when word
             (bing-dict-brief word))))))
+  (setq bing-dict-add-to-kill-ring t)
+  (global-set-key (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c D") 'bing-dict-brief))
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)))
+    (define-key qjp-mode-map (kbd "C-c D") 'bing-dict-brief)))
 
 ;; --------- ;;
 ;; gmpl-mode ;;
