@@ -44,6 +44,7 @@
 
 (setq helm-split-window-in-side-p t
       helm-buffers-fuzzy-matching t
+      helm-M-x-fuzzy-match t
       ;;helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
       ;; Following is good, but sometimes annoying
@@ -61,7 +62,85 @@
   (helm-mode)
   (helm-autoresize-mode t)
   (helm-descbinds-mode)
+  ;; Hide header when only one source
+  ;; From: https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window
+  (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
+  (defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
+  (defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
+  (defvar helm-source-header-default-height (face-attribute 'helm-source-header :height) )
+
+  (defun helm-toggle-header-line ()
+    "Hide the `helm' header is there is only one source."
+    (if (> (length helm-sources) 1)
+        (set-face-attribute 'helm-source-header
+                            nil
+                            :foreground helm-source-header-default-foreground
+                            :background helm-source-header-default-background
+                            :box helm-source-header-default-box
+                            :height helm-source-header-default-height)
+      (set-face-attribute 'helm-source-header
+                          nil
+                          :foreground (face-attribute 'helm-selection :background)
+                          :background (face-attribute 'helm-selection :background)
+                          :box nil
+                          :height 0.1)))
+  (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+  ;; helm-swoop
   (require 'helm-swoop))
+
+(with-eval-after-load 'helm-files
+  ;; Let helm support zsh-like path expansion.
+  (defvar helm-ff-expand-valid-only-p t)
+  (defvar helm-ff-sort-expansions-p t)
+  (defun helm-ff-try-expand-fname (candidate)
+    (let ((dirparts (split-string candidate "/"))
+          valid-dir
+          fnames)
+      (catch 'break
+        (while dirparts
+          (if (file-directory-p (concat valid-dir (car dirparts) "/"))
+              (setq valid-dir (concat valid-dir (pop dirparts) "/"))
+            (throw 'break t))))
+      (setq fnames (cons candidate (helm-ff-try-expand-fname-1 valid-dir dirparts)))
+      (if helm-ff-sort-expansions-p
+          (sort fnames
+                (lambda (f1 f2) (or (file-directory-p f1)
+                                (not (file-directory-p f2)))))
+        fnames)))
+
+  (defun helm-ff-try-expand-fname-1 (parent children)
+    (if children
+        (if (equal children '(""))
+            (and (file-directory-p parent) `(,(concat parent "/")))
+          (when (file-directory-p parent)
+            (apply 'nconc
+                   (mapcar
+                    (lambda (f)
+                      (or (helm-ff-try-expand-fname-1 f (cdr children))
+                          (unless helm-ff-expand-valid-only-p
+                            (and (file-directory-p f)
+                                 `(,(concat f "/" (mapconcat 'identity
+                                                             (cdr children)
+                                                             "/")))))))
+                    (directory-files parent t (concat "^"
+                                                      (regexp-quote
+                                                       (car children))))))))
+      `(,(concat parent (and (file-directory-p parent) "/")))))
+
+  (defun qjp-helm-ff-try-expand-fname (orig-func &rest args)
+    (let* ((candidate (car args))
+           (collection (helm-ff-try-expand-fname candidate)))
+      (if (and (> (length collection) 1)
+               (not (file-exists-p candidate)))
+          (with-helm-alive-p
+            (when (helm-file-completion-source-p)
+              (helm-exit-and-execute-action
+               (lambda (_)
+                 (helm-find-files-1
+                  (helm-comp-read "Expand Path to: " collection))))))
+        (apply orig-func args))))
+
+  (advice-add 'helm-ff-kill-or-find-buffer-fname :around #'qjp-helm-ff-try-expand-fname))
 
 ;; helm-swoop
 (setq helm-swoop-speed-or-color t) ;; Color needed
