@@ -122,7 +122,8 @@
     (qjp-mode--keychord-remap ";2" "C-x 2")
     (qjp-mode--keychord-remap ";3" "C-x 3")
     (qjp-mode--keychord-remap ";0" "C-x 0")
-    (qjp-mode--keychord-remap ";o" "C-x o"))
+    (qjp-mode--keychord-remap ";o" "C-x o")
+    (qjp-mode--keychord-remap ";;" ";"))
 
   ;; Bindings for `isearch'
   (define-key isearch-mode-map (kbd "C-p") #'isearch-yank-x-selection)
