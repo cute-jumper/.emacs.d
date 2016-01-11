@@ -29,6 +29,7 @@
 
 (with-eval-after-load 'dired
   (require 'dired-x)
+  (require 'dired+)
   ;; Set files to be ommited
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*")
 
