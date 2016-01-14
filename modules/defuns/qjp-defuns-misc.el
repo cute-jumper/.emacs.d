@@ -137,22 +137,5 @@ Modified the original function.  Always put the word at prompt."
 (qjp-install-search-engine "google" "http://www.google.com/search?q=" "Google: ")
 (qjp-install-search-engine "bing-dict" "http://www.bing.com/dict/search?q=" "Bing Dict: ")
 
-;; ------------------ ;;
-;; Generate separator ;;
-;; ------------------ ;;
-(defun qjp-generate-separator (width fill-char text)
-  "Generate separator string specified by WIDTH, FILL-CHAR and TEXT."
-  (interactive "nWidth: \ncFill char: \nMText: ")
-  (setq text (format " %s " text))
-  (when (> (length text) width)
-    (error "The length of the text is larger than the specified width"))
-  (let* ((fill-char-width (- width (length text)))
-         (left-width (/ fill-char-width  2))
-         (right-width (- fill-char-width left-width)))
-    (insert (format "%s%s%s"
-                    (make-string left-width fill-char)
-                    text
-                    (make-string right-width fill-char)))))
-
 (provide 'qjp-defuns-misc)
 ;;; qjp-defuns-misc.el ends here
