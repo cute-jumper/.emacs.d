@@ -118,6 +118,7 @@
     (qjp-mode--keychord-remap ";k" "C-k")
     (qjp-mode--keychord-remap ";u" "C-/")
     (qjp-mode--keychord-remap ";y" "C-y")
+    (qjp-mode--keychord-remap ";w" "C-w")
     (qjp-mode--keychord-remap ";1" "C-x 1")
     (qjp-mode--keychord-remap ";2" "C-x 2")
     (qjp-mode--keychord-remap ";3" "C-x 3")
