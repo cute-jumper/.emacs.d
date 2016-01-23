@@ -294,6 +294,7 @@
 ;; smart mode line ;;
 ;; --------------- ;;
 (qjp-misc-config-inline sml
+  (setq sml/theme 'dark)
   (sml/setup)
   (add-to-list 'sml/replacer-regexp-list '("^~/Programs/" ":Pro:") t))
 
