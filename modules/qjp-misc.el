@@ -476,7 +476,7 @@
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
-        gmpl-mode gscholar-bibtex which-key
+        gmpl-mode gscholar-bibtex google-this which-key
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char
