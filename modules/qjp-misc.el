@@ -408,6 +408,13 @@
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
+;; ------- ;;
+;; keyfreq ;;
+;; ------- ;;
+(qjp-misc-config-inline keyfreq
+  (keyfreq-mode +1)
+  (keyfreq-autosave-mode +1))
+
 ;; ----------- ;;
 ;; beacon-mode ;;
 ;; ----------- ;;
@@ -480,7 +487,7 @@
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char
-        key-chord
+        key-chord keyfreq
         lacarte
         magit markdown multiple-cursors
         pdf-tools projectile
