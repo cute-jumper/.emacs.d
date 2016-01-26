@@ -421,6 +421,14 @@
 (qjp-misc-config-inline beacon
   (beacon-mode +1))
 
+;; ------- ;;
+;; paradox ;;
+;; ------- ;;
+(qjp-misc-config-inline paradox
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously t))
+
+
 ;; --------------- ;;
 ;; gscholar-bibtex ;;
 ;; --------------- ;;
@@ -491,7 +499,7 @@
         lacarte
         magit markdown multiple-cursors
         pdf-tools projectile
-        quickrun
+        paradox quickrun
         rebox region-bindings
         sml nyan;; load after sml
         sr-speedbar smartparens
