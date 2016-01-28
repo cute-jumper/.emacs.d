@@ -105,11 +105,15 @@
       (rectangle-mark-mode 1)
       (goto-char mk))))
 
-(defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+(defhydra hydra-rectangle (:body-pre (progn
+                                       (rectangle-mark-mode 1)
+                                       (setq hydra-is-helpful t))
                                      :color pink
-                                     :post (deactivate-mark))
+                                     :post
+                                     (progn (deactivate-mark)
+                                            (setq hydra-is-helpful nil)))
   "
-  ^_k_^     _d_elete    _s_tring
+  ^_k_^     _d_elete    s_t_ring
 _h_   _l_   _o_pen      _y_ank
   ^_j_^     _r_eset     _u_ndo
 ^^^^        _e_xchange  _q_uit
