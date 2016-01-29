@@ -25,6 +25,7 @@
 ;;; Code:
 
 (defalias 'plp 'package-list-packages)
+(defalias 'pup 'paradox-upgrade-packages)
 (defalias 'cp 'company-complete)
 (defalias 'tsi 'text-scale-increase)
 (defalias 'tsd 'text-scale-decrease)
