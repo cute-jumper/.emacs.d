@@ -39,7 +39,8 @@
     (define-key map (kbd "C-o") #'qjp-open-new-line)
     (define-key map [S-up] #'qjp-move-line-up)
     (define-key map [S-down] #'qjp-move-line-down)
-    (define-key map (kbd "M-m") #'qjp-kill-back-to-indentation)
+    ;; Useless since rebinding "M-m"
+    ;; (define-key map (kbd "M-m") #'qjp-kill-back-to-indentation)
     (define-key map (kbd "C-j") #'qjp-join-next-line)
 
     ;; Bindings for `qjp-defuns-misc'
@@ -77,6 +78,19 @@
 (define-key meta-i-map (kbd "M-s") #'center-line)
 (define-key meta-i-map (kbd "M-S") #'center-paragraph)
 
+;; key translation
+(defun qjp--key-translate-swap (k1 k2)
+  (define-key key-translation-map (kbd k1) (kbd k2))
+  (define-key key-translation-map (kbd k2) (kbd k1)))
+
+(qjp--key-translate-swap "M-n" "C-n")
+(qjp--key-translate-swap "M-p" "C-p")
+(qjp--key-translate-swap "M-e" "C-e")
+(qjp--key-translate-swap "M-a" "C-a")
+(define-key key-translation-map (kbd "M-m") (kbd "C-x"))
+(define-key key-translation-map (kbd "M-M") (kbd "C-c"))
+
+;; key remapping
 (defun qjp-mode--keychord-remap (keychord key-seq)
   (key-chord-define-global
    keychord
@@ -111,8 +125,6 @@
     ;;(qjp-key-chord-define qjp-mode-map "bn" #')
     (qjp-mode--keychord-remap ";x" "C-x")
     (qjp-mode--keychord-remap ";c" "C-c")
-    (qjp-mode--keychord-remap ";e" "C-e")
-    (qjp-mode--keychord-remap ";a" "C-a")
     (qjp-mode--keychord-remap ";s" "C-s")
     (qjp-mode--keychord-remap ";g" "C-g")
     (qjp-mode--keychord-remap ";k" "C-k")
@@ -124,7 +136,10 @@
     (qjp-mode--keychord-remap ";3" "C-x 3")
     (qjp-mode--keychord-remap ";0" "C-x 0")
     (qjp-mode--keychord-remap ";o" "C-x o")
-    (qjp-mode--keychord-remap ";;" ";"))
+    (qjp-mode--keychord-remap ";;" ";")
+    ;; Special due to key translation
+    (qjp-mode--keychord-remap ";e" "M-e")
+    (qjp-mode--keychord-remap ";a" "M-a"))
 
   ;; Bindings for `isearch'
   (define-key isearch-mode-map (kbd "C-p") #'isearch-yank-x-selection)
