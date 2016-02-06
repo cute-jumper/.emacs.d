@@ -310,6 +310,7 @@
 ;; -------- ;;
 (qjp-misc-config-inline fcitx
   (ignore-errors
+    (setq fcitx-use-dbus t)
     (fcitx-aggressive-setup)))
 
 ;; --------- ;;
