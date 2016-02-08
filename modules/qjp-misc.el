@@ -105,6 +105,13 @@
 (qjp-misc-config-inline pdf-tools
   (autoload 'pdf-view-mode "pdf-view")
   (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+  (let ((epdfinfo-program (car
+                           (file-expand-wildcards
+                            (concat qjp-base-dir "elpa/pdf-tools-*/epdfinfo")))))
+    (unless (and epdfinfo-program
+                 (file-executable-p epdfinfo-program))
+      (ignore-errors
+        (pdf-tools-install t))))
   (defun qjp-pdf-view-mode-hook ()
     (pdf-tools-enable-minor-modes)
     (key-chord-define-local "jj" nil)
