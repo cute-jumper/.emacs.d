@@ -75,7 +75,7 @@ It should be used after new packages are installed in order
 to maintain the right list."
   (interactive)
   (package-initialize)
-  (setq qjp-installed-package-list)
+  (setq qjp-installed-package-list nil)
   (dolist (pkg package-alist)
     (when (assoc (car pkg) package-archive-contents)
       (add-to-list 'qjp-installed-package-list (car pkg))))

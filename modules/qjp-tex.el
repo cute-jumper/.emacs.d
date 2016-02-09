@@ -172,10 +172,10 @@
     (company-auctex-init))
 
   ;; Settings for magic-latex-buffer
-  (setq magic-latex-enable-block-align)
+  (setq magic-latex-enable-block-align nil)
 
   ;; latex-extra
-  (setq latex/view-after-compile)
+  (setq latex/view-after-compile nil)
   (setq latex/no-fill-environments '("equation"
                                      "equation*"
                                      "align"

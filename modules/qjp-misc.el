@@ -230,7 +230,7 @@
 ;; --------- ;;
 (qjp-misc-config-inline which-key
   (setq which-key-idle-delay 1.0)
-  (setq which-key-special-keys)
+  (setq which-key-special-keys nil)
   (with-eval-after-load 'qjp-mode
     (qjp-key-chord-define qjp-mode-map "??" #'which-key-show-top-level))
   (which-key-mode +1))
@@ -396,7 +396,7 @@
 ;; ---------- ;;
 (qjp-misc-config-inline workgroups2
   (setq wg-emacs-exit-save-behavior 'ask)
-  (setq wg-load-last-workgroup)
+  (setq wg-load-last-workgroup nil)
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "s-z") #'wg-revert-workgroup)
     (define-key qjp-mode-map (kbd "s-/") #'wg-switch-to-workgroup)))

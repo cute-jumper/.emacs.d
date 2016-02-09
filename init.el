@@ -67,7 +67,7 @@
 (add-to-list 'load-path qjp-site-lisp-dir)
 
 ;; Temporarily fix tramp for Emacs 24.5 in Arch Linux
-(setq tramp-ssh-controlmaster-options)
+(setq tramp-ssh-controlmaster-options nil)
 
 ;; Require the init file in each directory
 (qjp-require 'qjp-startup-init)
