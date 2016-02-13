@@ -41,9 +41,9 @@
 (defvar qjp-installed-package-list
   (when (file-exists-p qjp-installed-package-list-filename)
     (read
-     (with-current-buffer
-         (find-file-noselect qjp-installed-package-list-filename)
-       (buffer-substring-no-properties (point-min) (point-max)))))
+     (with-temp-buffer
+       (insert-file-contents qjp-installed-package-list-filename)
+       (buffer-string))))
   "A list of installed packages.")
 
 (defun qjp-install-all-packages ()
