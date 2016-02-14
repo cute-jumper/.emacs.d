@@ -183,7 +183,20 @@
                                      "tabular"
                                      "tikzpicture"
                                      "verbatim"
-                                     "verbatim*")))
+                                     "verbatim*"))
+  (with-eval-after-load 'reftex
+    (dolist (x '(("t"  . reftex-toc)
+                 ("T"  . reftex-toc-recenter)
+                 ("l"  . reftex-label)
+                 ("r"  . reftex-reference)
+                 ("c"  . reftex-citation)
+                 ("i"  . reftex-index)
+                 ("I"  . reftex-display-index)
+                 ("/"  . reftex-index-selection-or-word)
+                 ("\\" . reftex-index-phrase-selection-or-word)
+                 ("|"  . reftex-index-visit-phrases-buffer)
+                 ("v"  . reftex-view-crossref)))
+      (define-key reftex-mode-map (kbd (format "C-c r %s" (car x))) (cdr x)))))
 
 ;; ----- ;;
 ;; Hooks ;;
