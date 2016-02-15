@@ -24,17 +24,6 @@
 
 ;;; Code:
 
-(setq qmltypes-parser-file-list '("/usr/lib/qt/qml/QtQuick/Controls/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/Dialogs/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/Extras/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/Layouts/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/LocalStorage/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/Particles.2/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/PrivateWidgets/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/Window.2/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick/XmlListModel/plugins.qmltypes"
-                                  "/usr/lib/qt/qml/QtQuick.2/plugins.qmltypes"))
-
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-qml))
 
