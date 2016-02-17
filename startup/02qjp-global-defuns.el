@@ -64,6 +64,48 @@
              ,@body)
          (fset ',name ,old)))))
 
+;; key mapping hacks
+(defun qjp--get-key-bindings (prefix ev def)
+  (let (bindings)
+    (if (keymapp def)
+        (progn
+          (mapcar (lambda (x) (concat prefix " " x))
+                  (map-keymap
+                   (lambda (ev1 def1)
+                     (push (qjp--get-key-bindings
+                            (concat prefix " "
+                                    (key-description (list ev)))
+                            ev1 def1)
+                           bindings))
+                   def))
+          (apply #'append bindings))
+      (if (symbolp def)
+          (list (cons (concat prefix " " (key-description (list ev)))
+                      def))))))
+
+(defun qjp-get-c-c-bindings (mode-map)
+  (let ((keymap (lookup-key mode-map "\C-c"))
+        bindings)
+    (when keymap
+      (map-keymap
+       (lambda (ev def)
+         (push (qjp--get-key-bindings "C-c" ev def) bindings))
+       keymap)
+      (apply #'append bindings))))
+
+(defun qjp-c-c-to-m-j (mode-map)
+  (let ((binding-alist (qjp-get-c-c-bindings mode-map)))
+    (dolist (pair binding-alist)
+      (let* ((old-keys (car pair))
+             (new-keys
+              (replace-regexp-in-string
+               "M-M-" "C-M-"
+               (replace-regexp-in-string
+                "C-" "M-"
+                (replace-regexp-in-string "C-c" "M-j" old-keys))))
+             (func (cdr pair)))
+        (define-key mode-map (kbd new-keys) func)))))
+
 ;; From Purcell
 (defun qjp-add-auto-mode (mode &rest patterns)
   "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."

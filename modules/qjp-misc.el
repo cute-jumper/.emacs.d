@@ -223,7 +223,7 @@
     (add-hook 'magit-popup-mode-hook
               (lambda () (setq show-trailing-whitespace nil))))
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x g") 'magit-status)))
+    (define-key meta-m-map "g" #'magit-status)))
 
 ;; --------- ;;
 ;; which-key ;;
@@ -232,7 +232,7 @@
   (setq which-key-idle-delay 1.0)
   (setq which-key-special-keys nil)
   (with-eval-after-load 'qjp-mode
-    (qjp-key-chord-define qjp-mode-map "??" #'which-key-show-top-level))
+    (define-key meta-m-map "?" #'which-key-show-top-level))
   (which-key-mode +1))
 
 ;; ------------------- ;;
@@ -360,14 +360,14 @@
 ;; ------------------ ;;
 (qjp-misc-config-inline anchored-transpose
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose)))
+    (define-key meta-m-map "t" 'anchored-transpose)))
 
 ;; ------- ;;
 ;; lacarte ;;
 ;; ------- ;;
 (qjp-misc-config-inline lacarte
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x M-x") 'lacarte-execute-menu-command)))
+    (define-key meta-m-map (kbd "M-x") 'lacarte-execute-menu-command)))
 
 ;; --------- ;;
 ;; easy-kill ;;
@@ -381,7 +381,7 @@
 ;; ----------- ;;
 (qjp-misc-config-inline google-this
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c g") #'google-this)))
+    (define-key meta-m-funcs-map "g" #'google-this)))
 
 ;; ------------ ;;
 ;; change-inner ;;
@@ -411,8 +411,8 @@
      (if prefix #'quickrun-replace-region
        #'quickrun-region)))
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c q q") #'quickrun)
-    (define-key qjp-mode-map (kbd "C-c q r") #'quickrun-region-dwim))
+    (define-key meta-m-map "qq" #'quickrun)
+    (define-key meta-m-map "qr" #'quickrun-region-dwim))
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
@@ -459,7 +459,7 @@
   (setq bing-dict-add-to-kill-ring t)
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
-    (define-key qjp-mode-map (kbd "C-c D") 'bing-dict-brief)))
+    (define-key meta-m-funcs-map "b" 'bing-dict-brief)))
 
 ;; --------- ;;
 ;; gmpl-mode ;;

@@ -25,13 +25,17 @@
 ;;; Code:
 
 (autoload 'dired-jump "dired-x")
-(global-set-key (kbd "C-x C-j") #'dired-jump)
+(define-key meta-m-map (kbd "M-j") #'dired-jump)
 
 (with-eval-after-load 'dired
   (require 'dired-x)
   (require 'dired+)
   ;; Set files to be ommited
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*")
+  ;; Hunman-readable space
+  (setq dired-listing-switches "-alh")
+  ;; intelligent dired
+  (setq dired-dwim-target t)
 
   (defadvice dired-find-file (around dired-find-file-single-buffer activate)
     "Replace current buffer if file is a directory."
@@ -49,9 +53,6 @@
     (let ((orig (current-buffer)))
       ad-do-it
       (kill-buffer orig)))
-
-  ;; Hunman-readable space
-  (setq dired-listing-switches "-alh")
 
   (defun qjp--human-readable-space (ret)
     (let ((kb (string-to-number ret)))
@@ -105,12 +106,16 @@
   ;; No sort now
   ;; (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
 
+  (define-key dired-mode-map (kbd "M-p") #'dired-prev-marked-file)
+  (define-key dired-mode-map (kbd "M-n") #'dired-next-marked-file)
+
   (defun qjp-dired-mode-hook ()
     (setq dired-guess-shell-alist-user
           ;; fixed rule
           (list (list "\\.pdf$" "okular")))
-    ;; Add stripe-buffer-mode
-    (stripe-listify-buffer))
+    ;; No stripe-buffer-mode
+    ;;(stripe-listify-buffer)
+    )
   (add-hook 'dired-mode-hook #'qjp-dired-mode-hook))
 
 (provide 'qjp-misc-dired)

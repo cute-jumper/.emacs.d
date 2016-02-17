@@ -26,6 +26,22 @@
 
 (setq hydra-is-helpful nil)
 
+;; Replace keychord with hydra
+(defmacro qjp-define-keychord-with-hydra (k1 k2 cmd)
+  (let* ((hydra-name (intern (format "%s-%s-%S" k1 k2 (cadr cmd))))
+         (hydra-pre-name (intern (format "%S-pre" hydra-name)))
+         (hydra-body-name (intern (format "%S/body" hydra-name))))
+    `(progn
+       (defun ,hydra-pre-name ()
+         (insert ,k1)
+         (hydra-timeout 0.5))
+       (defhydra ,hydra-name (:body-pre ,hydra-pre-name
+                                        :color blue
+                                        :hint nil)
+         (,k2 (progn (zap-to-char -1 (string-to-char,k1))
+                     (call-interactively ,cmd))))
+       (global-set-key ,k1 #',hydra-body-name))))
+
 ;; ------------------------ ;;
 ;; My own vi-style bindings ;;
 ;; ------------------------ ;;
@@ -89,9 +105,11 @@
 (defhydra hydra-goto-line (goto-map ""
                                     :pre (nlinum-mode 1)
                                     :post (nlinum-mode -1))
-  "goto-line"
+  "goto-line/goto-error"
   ("g" avy-goto-line "go")
   ("SPC" set-mark-command "mark" :bind nil)
+  ("n" next-error)
+  ("p" previous-error)
   ("q" nil "quit"))
 
 ;; ----------------------------- ;;
@@ -131,27 +149,36 @@ _h_   _l_   _o_pen      _y_ank
          (rectangle-mark-mode 1)) nil)
   ("y" yank-rectangle nil)
   ("u" undo nil)
-  ("s" string-rectangle nil)
+  ("t" string-rectangle nil)
   ("o" open-rectangle nil)
   ("q" nil nil))
 
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-x SPC") 'hydra-rectangle/body))
+  (define-key meta-m-map (kbd "SPC") 'hydra-rectangle/body))
 
 ;; ---------------------- ;;
 ;; Hydra for evil numbers ;;
 ;; ---------------------- ;;
 (defhydra hydra-number
-  (qjp-mode-map "C-c")
+  (meta-m-map "")
   "hydra increase/decrease number"
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))
+
+;; -------------------------- ;;
+;; Hydra for goto-last-change ;;
+;; -------------------------- ;;
+(defhydra hydra-goto-last-change
+  (meta-m-map "")
+  "hydra goto previous/next change"
+  ("\\" goto-last-change)
+  ("|" goto-last-change-reverse))
 
 ;; --------------- ;;
 ;; Hydra for rebox ;;
 ;; --------------- ;;
 (defhydra hydra-rebox
-  (qjp-mode-map "C-x")
+  (meta-m-map "")
   "hydra rebox-cycle"
   (";" rebox-cycle))
 
@@ -159,20 +186,27 @@ _h_   _l_   _o_pen      _y_ank
 ;; Hydra for `other-window' ;;
 ;; ------------------------ ;;
 (defhydra hydra-manage-window
-  (:body-pre (progn
-               (other-window 1)
-               (setq hydra-is-helpful t))
+  (:body-pre (setq hydra-is-helpful t)
              :post (setq hydra-is-helpful))
   "Window"
   ("o" (other-window 1) "next window")
-  ("O" (other-window -1) "previous window")
-  ("D" delete-window "delete window")
-  ("T" delete-other-windows "delete other windows")
-  ("H" split-window-horizontally "split horizontally")
-  ("V" split-window-vertically "split vertically")
-  ("B" helm-mini "switch buffer"))
+  ("d" delete-window "delete window")
+  ("r" delete-other-windows "delete other windows")
+  ("h" split-window-horizontally "split horizontally")
+  ("v" split-window-vertically "split vertically")
+  ("b" helm-mini "switch buffer"))
 
-(define-key qjp-mode-map (kbd "C-x o") #'hydra-manage-window/body)
+(with-eval-after-load 'qjp-mode
+  (define-key meta-m-map (kbd "w") #'hydra-manage-window/body))
+
+(defhydra hydra-winner
+  (:body-pre (winner-undo))
+  "Hydra winner"
+  ("<left>" winner-undo)
+  ("<right>" winner-redo))
+
+(with-eval-after-load 'qjp-mode
+  (define-key meta-m-map (kbd "<left>") #'hydra-winner/body))
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here

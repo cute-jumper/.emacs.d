@@ -211,7 +211,8 @@
   (flyspell-mode +1)
   (flycheck-mode +1)
   (smartparens-mode +1)
-  (qjp-tex-add-LaTeX-environments))
+  (qjp-tex-add-LaTeX-environments)
+  (qjp-c-c-to-m-j LaTeX-mode-map))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
 (add-hook 'latex-mode-hook #'qjp-tex-mode-hook)

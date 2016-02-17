@@ -128,7 +128,7 @@
 
 (with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map
-    (kbd "C-x C-e")
+    (kbd "M-m M-e")
     #'qjp-eval-last-sexp-or-region))
 
 ;; ----------------------- ;;
@@ -165,18 +165,28 @@
 ;; redshank ;;
 ;; -------- ;;
 ;; Must set before redshank is loaded
-(setq redshank-prefix-key "C-c C-r")
+(setq redshank-prefix-key "M-j M-r")
 
 ;; ------------------- ;;
 ;; Emacs lisp and ielm ;;
 ;; ------------------- ;;
-(defun qjp-emacs-lisp-mode-hook ()
+(defun qjp-emacs-lisp-common-hook ()
   (qjp-ielm-mode-hook)
   ;; Unique settings for emacs-lisp-mode
   (redshank-mode +1)
   (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t)
-  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t))
+  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t)
+  (qjp-c-c-to-m-j paredit-mode-map))
+
+(defun qjp-emacs-lisp-mode-hook ()
+  (qjp-emacs-lisp-common-hook)
+  (qjp-c-c-to-m-j emacs-lisp-mode-map)
+  )
+
+(defun qjp-lisp-interaction-mode-hook ()
+  (qjp-emacs-lisp-common-hook)
+  (qjp-c-c-to-m-j lisp-interaction-mode-map))
 
 (defun qjp-ielm-mode-hook ()
   (eldoc-mode +1)
@@ -187,13 +197,13 @@
   (qjp-hippie-expand-setup-for-elisp))
 
 (add-hook 'emacs-lisp-mode-hook #'qjp-emacs-lisp-mode-hook)
-(add-hook 'lisp-interaction-mode-hook #'qjp-emacs-lisp-mode-hook)
+(add-hook 'lisp-interaction-mode-hook #'qjp-lisp-interaction-mode-hook)
 (add-hook 'ielm-mode-hook #'qjp-ielm-mode-hook)
 
 ;; macrostep
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-c C-e") #'macrostep-expand)
-  (define-key lisp-interaction-mode-map (kbd "C-c C-e") #'macrostep-expand))
+  (define-key emacs-lisp-mode-map (kbd "M-j M-e") #'macrostep-expand)
+  (define-key lisp-interaction-mode-map (kbd "M-j M-e") #'macrostep-expand))
 
 ;; switch between ielm and emacs lisp buffer
 (defvar qjp-ielm-from-buffer nil
@@ -213,10 +223,10 @@
     (message "No previous buffer for switching back.")))
 
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-x C-z") #'qjp-switch-to-ielm)
-  (define-key lisp-interaction-mode-map (kbd "C-x C-z") #'qjp-switch-to-ielm))
+  (define-key emacs-lisp-mode-map (kbd "M-m M-z") #'qjp-switch-to-ielm)
+  (define-key lisp-interaction-mode-map (kbd "M-m M-z") #'qjp-switch-to-ielm))
 (with-eval-after-load 'ielm
-  (define-key ielm-map (kbd "C-x C-z") #'qjp-switch-from-ielm))
+  (define-key ielm-map (kbd "M-m M-z") #'qjp-switch-from-ielm))
 
 ;; ------------ ;;
 ;; company-mode ;;
