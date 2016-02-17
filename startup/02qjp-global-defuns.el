@@ -24,6 +24,12 @@
 
 ;;; Code:
 
+;; shorthand for interactive lambdas
+(defmacro µ (&rest body)
+  `(lambda ()
+     (interactive)
+     ,@body))
+
 ;; Filter function
 (defun qjp-filter (condp lst)
   "Use CONDP to filter LST."
