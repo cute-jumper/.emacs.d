@@ -35,10 +35,8 @@
 ;; Basic key binding ;;
 ;; ----------------- ;;
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c l") 'org-store-link)
-  (define-key qjp-mode-map (kbd "C-c c") 'org-capture)
-  (define-key qjp-mode-map (kbd "C-c a") 'org-agenda)
-  (define-key qjp-mode-map (kbd "C-c b") 'org-iswitchb))
+  (define-key qjp-mode-map (kbd "C-c o c") 'org-capture)
+  (define-key qjp-mode-map (kbd "C-c o a") 'org-agenda))
 
 ;; ------------- ;;
 ;; Org-mode hook ;;

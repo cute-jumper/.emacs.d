@@ -70,8 +70,7 @@
   ;; Ruby tools
   (ruby-tools-mode +1)
   ;; key bindings
-  (define-key ruby-mode-map (kbd "C-c C-c") #'ruby-compilation-this-buffer)
-  (qjp-c-c-to-m-j ruby-mode-map))
+  (define-key ruby-mode-map (kbd "C-c C-c") #'ruby-compilation-this-buffer))
 
 (add-hook 'ruby-mode-hook #'qjp-ruby-mode-hook)
 

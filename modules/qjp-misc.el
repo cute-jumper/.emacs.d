@@ -127,9 +127,27 @@
 (qjp-misc-config-inline avy
   (with-eval-after-load 'qjp-mode
     (setq avy-background t)
-    (qjp-key-chord-define qjp-mode-map "jk" 'avy-goto-word-1)
-    (setq avy-keys-alist `((avy-goto-word-1 . ,(number-sequence ?a ?z))))
-    (qjp-key-chord-define qjp-mode-map "jl" 'avy-goto-char-in-line)
+    (setq avy-keys-alist `((avy-goto-word-0 . ,(number-sequence ?a ?z))
+                           (avy-goto-word-1 . ,(number-sequence ?a ?z))
+                           (avy-copy-line . ,(number-sequence ?a ?z))
+                           (avy-move-line . ,(number-sequence ?a ?z))))
+    (defun avy-goto-word-0-in-line (arg)
+      "Jump to a word start in the current line."
+      (interactive "P")
+      (avy-with avy-goto-word-0
+        (avy--generic-jump "\\b\\sw" arg avy-style (line-beginning-position)
+                           (line-end-position))))
+    ;; convenient keychords
+    (qjp-key-chord-define qjp-mode-map "jk" #'avy-goto-word-1)
+    (qjp-key-chord-define qjp-mode-map "jl" #'avy-goto-word-0-in-line)
+    ;; all avy commands
+    (define-prefix-command 'ctrl-c-avy-map)
+    (define-key qjp-mode-map (kbd "C-c a") 'ctrl-c-avy-map)
+    (define-key ctrl-c-avy-map "g" #'avy-goto-char)
+    (define-key ctrl-c-avy-map "G" #'avy-goto-char-2)
+    (define-key ctrl-c-avy-map "c" #'avy-copy-line)
+    (define-key ctrl-c-avy-map "m" #'avy-move-line)
+    (define-key ctrl-c-avy-map "l" #'avy-goto-line)
     (define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
 
 ;; ------- ;;
@@ -177,15 +195,23 @@
 ;; --------- ;;
 (qjp-misc-config-inline jump-char
   (with-eval-after-load 'qjp-mode
-    (qjp-key-chord-define qjp-mode-map "jf" 'jump-char-forward)
-    (qjp-key-chord-define qjp-mode-map "jb" 'jump-char-backward)))
+    (qjp-key-chord-define qjp-mode-map ";f" 'jump-char-forward)
+    (qjp-key-chord-define qjp-mode-map ";j" 'jump-char-backward)))
 
 ;; ------------- ;;
 ;; expand-region ;;
 ;; ------------- ;;
 (qjp-misc-config-inline expand-region
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-=") 'er/expand-region)))
+    (define-key qjp-mode-map (kbd "C-=") #'er/expand-region)
+    (define-key ctrl-c-mark-map "p" #'er/mark-inside-pairs)
+    (define-key ctrl-c-mark-map "q" #'er/mark-inside-quotes)
+    (define-key ctrl-c-mark-map "P" #'er/mark-outside-pairs)
+    (define-key ctrl-c-mark-map "Q" #'er/mark-outside-quotes)
+    (define-key ctrl-c-mark-map "d" #'er/mark-defun)
+    (define-key ctrl-c-mark-map "c" #'er/mark-comment)
+    (define-key ctrl-c-mark-map "e" #'er/mark-text-sentence)
+    (define-key ctrl-c-mark-map "h" #'er/mark-text-paragraph)))
 
 ;; ------ ;;
 ;; ispell ;;
@@ -223,7 +249,7 @@
     (add-hook 'magit-popup-mode-hook
               (lambda () (setq show-trailing-whitespace nil))))
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-map "g" #'magit-status)))
+    (define-key qjp-mode-map (kbd "C-c g") #'magit-status)))
 
 ;; --------- ;;
 ;; which-key ;;
@@ -231,8 +257,13 @@
 (qjp-misc-config-inline which-key
   (setq which-key-idle-delay 1.0)
   (setq which-key-special-keys nil)
+  (setq which-key-sort-order 'which-key-description-order)
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-map "?" #'which-key-show-top-level))
+    (define-key qjp-mode-map (kbd "C-c ?") #'which-key-show-top-level))
+  (which-key-add-key-based-replacements
+    "C-c f" "useful commands")
+  (which-key-add-key-based-replacements
+    "C-c q" "visual replace/quickrun")
   (which-key-mode +1))
 
 ;; ------------------- ;;
@@ -360,28 +391,29 @@
 ;; ------------------ ;;
 (qjp-misc-config-inline anchored-transpose
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-map "t" 'anchored-transpose)))
+    (define-key qjp-mode-map (kbd "C-c t") 'anchored-transpose)))
 
 ;; ------- ;;
 ;; lacarte ;;
 ;; ------- ;;
 (qjp-misc-config-inline lacarte
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-map (kbd "M-x") 'lacarte-execute-menu-command)))
+    (define-key qjp-mode-map (kbd "C-c M-x") 'lacarte-execute-menu-command)))
 
 ;; --------- ;;
 ;; easy-kill ;;
 ;; --------- ;;
 (qjp-misc-config-inline easy-kill
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
+    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)
+    (define-key ctrl-c-mark-map (kbd "SPC") #'easy-mark)))
 
 ;; ----------- ;;
 ;; google-this ;;
 ;; ----------- ;;
 (qjp-misc-config-inline google-this
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-funcs-map "g" #'google-this)))
+    (define-key ctrl-c-extension-map "g" #'google-this)))
 
 ;; ------------ ;;
 ;; change-inner ;;
@@ -390,6 +422,12 @@
   (with-eval-after-load 'qjp-mode
     (define-key meta-i-map (kbd "i") 'change-inner)
     (define-key meta-i-map (kbd "o") 'change-outer)))
+
+;; -------------------- ;;
+;; centered-cursor-mode ;;
+;; -------------------- ;;
+(qjp-misc-config-inline centered-cursor-mode
+  (global-centered-cursor-mode +1))
 
 ;; ---------- ;;
 ;; workgroups ;;
@@ -411,10 +449,16 @@
      (if prefix #'quickrun-replace-region
        #'quickrun-region)))
   (with-eval-after-load 'qjp-mode
-    (define-key meta-m-map "qq" #'quickrun)
-    (define-key meta-m-map "qr" #'quickrun-region-dwim))
+    (define-key qjp-mode-map (kbd "C-c q k") #'quickrun)
+    (define-key qjp-mode-map (kbd "C-c q K") #'quickrun-region-dwim))
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
+
+(qjp-misc-config-inline visual-regexp
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-c q r") #'vr/replace)
+    (define-key qjp-mode-map (kbd "C-c q q") #'vr/query-replace)
+    (define-key qjp-mode-map (kbd "C-c q m") #'vr/mc-mark)))
 
 ;; ------- ;;
 ;; keyfreq ;;
@@ -459,7 +503,7 @@
   (setq bing-dict-add-to-kill-ring t)
   (with-eval-after-load 'qjp-mode
     (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
-    (define-key meta-m-funcs-map "b" 'bing-dict-brief)))
+    (define-key ctrl-c-extension-map "b" 'bing-dict-brief)))
 
 ;; --------- ;;
 ;; gmpl-mode ;;
@@ -499,7 +543,7 @@
         dired diminish diff-hl
         easypg expand-region easy-kill
         flyspell flycheck
-        gmpl-mode gscholar-bibtex google-this which-key
+        gmpl-mode gscholar-bibtex google-this
         helm hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
         ;;jump-char
@@ -513,8 +557,8 @@
         sr-speedbar smartparens
         term
         undo-tree
-        volatile-highlights
-        whitespace-cleanup whole-line-or-region workgroups2
+        visual-regexp volatile-highlights
+        whitespace-cleanup whole-line-or-region workgroups2 which-key
         ;;yasnippet
         )
   "The names for the packages that should be enabled.")

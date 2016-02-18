@@ -154,13 +154,13 @@ _h_   _l_   _o_pen      _y_ank
   ("q" nil nil))
 
 (with-eval-after-load 'qjp-mode
-  (define-key meta-m-map (kbd "SPC") 'hydra-rectangle/body))
+  (define-key ctrl-c-extension-map (kbd "SPC") 'hydra-rectangle/body))
 
 ;; ---------------------- ;;
 ;; Hydra for evil numbers ;;
 ;; ---------------------- ;;
 (defhydra hydra-number
-  (meta-m-map "")
+  (qjp-mode-map "C-c")
   "hydra increase/decrease number"
   ("+" evil-numbers/inc-at-pt)
   ("-" evil-numbers/dec-at-pt))
@@ -169,7 +169,7 @@ _h_   _l_   _o_pen      _y_ank
 ;; Hydra for goto-last-change ;;
 ;; -------------------------- ;;
 (defhydra hydra-goto-last-change
-  (meta-m-map "")
+  (qjp-mode-map "C-c")
   "hydra goto previous/next change"
   ("\\" goto-last-change)
   ("|" goto-last-change-reverse))
@@ -178,7 +178,7 @@ _h_   _l_   _o_pen      _y_ank
 ;; Hydra for rebox ;;
 ;; --------------- ;;
 (defhydra hydra-rebox
-  (meta-m-map "")
+  (qjp-mode-map "C-c")
   "hydra rebox-cycle"
   (";" rebox-cycle))
 
@@ -197,7 +197,7 @@ _h_   _l_   _o_pen      _y_ank
   ("b" helm-mini "switch buffer"))
 
 (with-eval-after-load 'qjp-mode
-  (define-key meta-m-map (kbd "w") #'hydra-manage-window/body))
+  (define-key qjp-mode-map (kbd "C-c w") #'hydra-manage-window/body))
 
 (defhydra hydra-winner
   (:body-pre (winner-undo))
@@ -206,7 +206,7 @@ _h_   _l_   _o_pen      _y_ank
   ("<right>" winner-redo))
 
 (with-eval-after-load 'qjp-mode
-  (define-key meta-m-map (kbd "<left>") #'hydra-winner/body))
+  (define-key qjp-mode-map (kbd "C-c <left>") #'hydra-winner/body))
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here

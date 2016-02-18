@@ -128,7 +128,7 @@
 
 (with-eval-after-load 'lisp-mode
   (define-key emacs-lisp-mode-map
-    (kbd "M-m M-e")
+    (kbd "C-c C-e")
     #'qjp-eval-last-sexp-or-region))
 
 ;; ----------------------- ;;
@@ -165,7 +165,7 @@
 ;; redshank ;;
 ;; -------- ;;
 ;; Must set before redshank is loaded
-(setq redshank-prefix-key "M-j M-r")
+(setq redshank-prefix-key "C-c C-r")
 
 ;; ------------------- ;;
 ;; Emacs lisp and ielm ;;
@@ -176,17 +176,13 @@
   (redshank-mode +1)
   (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t)
-  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t)
-  (qjp-c-c-to-m-j paredit-mode-map))
+  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t))
 
 (defun qjp-emacs-lisp-mode-hook ()
-  (qjp-emacs-lisp-common-hook)
-  (qjp-c-c-to-m-j emacs-lisp-mode-map)
-  )
+  (qjp-emacs-lisp-common-hook))
 
 (defun qjp-lisp-interaction-mode-hook ()
-  (qjp-emacs-lisp-common-hook)
-  (qjp-c-c-to-m-j lisp-interaction-mode-map))
+  (qjp-emacs-lisp-common-hook))
 
 (defun qjp-ielm-mode-hook ()
   (eldoc-mode +1)
@@ -202,8 +198,8 @@
 
 ;; macrostep
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "M-j M-e") #'macrostep-expand)
-  (define-key lisp-interaction-mode-map (kbd "M-j M-e") #'macrostep-expand))
+  (define-key emacs-lisp-mode-map (kbd "C-c C-e") #'macrostep-expand)
+  (define-key lisp-interaction-mode-map (kbd "C-c C-e") #'macrostep-expand))
 
 ;; switch between ielm and emacs lisp buffer
 (defvar qjp-ielm-from-buffer nil
@@ -223,10 +219,10 @@
     (message "No previous buffer for switching back.")))
 
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "M-m M-z") #'qjp-switch-to-ielm)
-  (define-key lisp-interaction-mode-map (kbd "M-m M-z") #'qjp-switch-to-ielm))
+  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'qjp-switch-to-ielm)
+  (define-key lisp-interaction-mode-map (kbd "C-c C-z") #'qjp-switch-to-ielm))
 (with-eval-after-load 'ielm
-  (define-key ielm-map (kbd "M-m M-z") #'qjp-switch-from-ielm))
+  (define-key ielm-map (kbd "C-c C-z") #'qjp-switch-from-ielm))
 
 ;; ------------ ;;
 ;; company-mode ;;
@@ -268,7 +264,7 @@
     (paredit-newline)
     (yank)
     (exchange-point-and-mark))
-  (define-key paredit-mode-map (kbd "C-S-d") 'paredit-duplicate-closest-sexp)
+  (define-key paredit-mode-map (kbd "C-c f D") 'paredit-duplicate-closest-sexp)
   ;; Modify kill-sentence, which is easily confused with the kill-sexp
   ;; binding, but doesn't preserve sexp structure
   (define-key paredit-mode-map [remap kill-sentence] 'paredit-kill))

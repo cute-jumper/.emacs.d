@@ -39,10 +39,10 @@
   (helm-projectile-on))
 
 (with-eval-after-load 'qjp-mode
-  (setq projectile-keymap-prefix (kbd "M-m p"))
-  (define-key meta-m-map "ph" #'helm-projectile)
+  (setq projectile-keymap-prefix (kbd "C-c p"))
+  (define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
   (autoload 'helm-projectile-switch-project "helm-projectile")
-  (define-key meta-m-map "pp" #'helm-projectile-switch-project))
+  (define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project))
 
 (provide 'qjp-misc-projectile)
 ;;; qjp-misc-projectile.el ends here

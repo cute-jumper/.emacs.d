@@ -25,7 +25,7 @@
 ;;; Code:
 
 (autoload 'dired-jump "dired-x")
-(define-key meta-m-map (kbd "M-j") #'dired-jump)
+(define-key qjp-mode-map (kbd "C-x C-j") #'dired-jump)
 
 (with-eval-after-load 'dired
   (require 'dired-x)
