@@ -127,10 +127,15 @@
 (qjp-misc-config-inline avy
   (with-eval-after-load 'qjp-mode
     (setq avy-background t)
-    (setq avy-keys-alist `((avy-goto-word-0 . ,(number-sequence ?a ?z))
-                           (avy-goto-word-1 . ,(number-sequence ?a ?z))
-                           (avy-copy-line . ,(number-sequence ?a ?z))
-                           (avy-move-line . ,(number-sequence ?a ?z))))
+    (setq avy-dispatch-alist '((?c . avy-action-copy)
+                               (?k . avy-action-kill)
+                               (?m . avy-action-mark)))
+    (let* ((all-keys (number-sequence ?a ?z))
+           (keys (qjp-filter (lambda (x) (not (member x '(?c ?k ?m)))) all-keys)))
+      (setq avy-keys-alist `((avy-goto-word-0 . ,keys)
+                             (avy-goto-word-1 . ,keys)
+                             (avy-copy-line . ,keys)
+                             (avy-move-line . ,keys))))
     (defun avy-goto-word-0-in-line (arg)
       "Jump to a word start in the current line."
       (interactive "P")
