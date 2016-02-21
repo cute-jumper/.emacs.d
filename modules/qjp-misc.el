@@ -69,7 +69,10 @@
 ;; ------------ ;;
 (qjp-misc-config-inline company
   (global-company-mode +1)
-  (company-quickhelp-mode +1))
+  (company-quickhelp-mode +1)
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "C-n") #'company-select-next)
+    (define-key company-active-map (kbd "C-p") #'company-select-previous)))
 
 ;; --------- ;;
 ;; yasnippet ;;
