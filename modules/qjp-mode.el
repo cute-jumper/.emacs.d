@@ -94,7 +94,7 @@
   (if on
       (progn
         (define-key key-translation-map (kbd "ESC") (kbd "C-c"))
-        (define-key key-translation-map (kbd "C-<escape>") (kbd "C-g")))
+        (define-key key-translation-map (kbd "<menu>") (kbd "C-x")))
     (define-key key-translation-map (kbd "ESC") (kbd "ESC"))
     (define-key key-translation-map (kbd "C-<escape>") (kbd "C-<escape>"))))
 
