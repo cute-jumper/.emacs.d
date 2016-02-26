@@ -28,8 +28,10 @@ our leader keys without having modal editing!
 
 Remap some common movement key bindings so that all the common movement key
 bindings(that *I* use) are starting with =C-=:
-1. =C-f= to behave like =M-f=, =C-b= to behave like =M-b=
+1. =C-f= is =forward-word= and =C-b= is =backward-word=
 2. =C-h= is =backward-char= and =C-l= is =forward-char=
+3. =M-f= is =forward-sexp= and =M-b= is =backward-sexp=
+4. =C-i= is =undo=, =C-m= is =kill-word= and =M-d= is =down-list=
 
 Use a global minor mode with the highest priority to make sure the key remapping
 always works.
