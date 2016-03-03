@@ -69,16 +69,36 @@
 ;; ------------ ;;
 (qjp-misc-config-inline company
   (global-company-mode +1)
+  (setq company-show-numbers t)
   (company-quickhelp-mode +1)
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-<tab>") #'company-complete))
   (with-eval-after-load 'company
     (define-key company-active-map (kbd "C-n") #'company-select-next)
-    (define-key company-active-map (kbd "C-p") #'company-select-previous)))
+    (define-key company-active-map (kbd "C-p") #'company-select-previous))
+  (with-eval-after-load 'company-quickhelp
+    (define-key company-quickhelp-mode-map (kbd "M-h") nil)))
+
+;; ------------ ;;
+;; helm-company ;;
+;; ------------ ;;
+(qjp-misc-config-inline helm-company
+  (with-eval-after-load 'company
+    (define-key company-mode-map (kbd "C-c h") 'helm-company)
+    (define-key company-active-map (kbd "C-c h") 'helm-company)))
 
 ;; --------- ;;
 ;; yasnippet ;;
 ;; --------- ;;
 (qjp-misc-config-inline yasnippet
-  (yas-global-mode))
+  (autoload 'yas-reload-all "yasnippet")
+  (defun qjp-yasnippet-initialize ()
+    (interactive)
+    (yas-reload-all)
+    (yas-minor-mode +1))
+  (with-eval-after-load 'qjp-mode
+    (define-key ctrl-c-yasnippet-map "i" #'qjp-yasnippet-initialize)
+    (define-key ctrl-c-yasnippet-map "y" #'yas-insert-snippet)))
 
 ;; -------------- ;;
 ;; key-chord mode ;;
