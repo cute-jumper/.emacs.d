@@ -155,6 +155,15 @@ With argument N, make N copies.
 With negative N, comment out original line and use the absolute value."
   (interactive "*p")
   (let ((use-region (use-region-p)))
+    (unless use-region
+      ;; Modified by qjp:
+      ;; delete the current line if empty -- that is, we copy
+      ;; the preivous line
+      (when (string-empty-p (replace-regexp-in-string
+                             "\[[:space:]\r\n\]" ""
+                             (thing-at-point 'line)))
+        (kill-whole-line)
+        (forward-line -1)))
     (save-excursion
       (let ((text (if use-region        ;Get region if active, otherwise line
                       (buffer-substring (region-beginning) (region-end))
