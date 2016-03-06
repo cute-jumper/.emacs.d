@@ -68,18 +68,17 @@
 ;; TODO: generalize it maybe!
 (defun qjp-switch-theme ()
   (interactive)
-  (require 'zenburn-theme)
-  (require 'smart-mode-line)
+  (require 'qjp-basic)
   (let ((word
          (completing-read
           "Choose a theme set(dark or light):"
           '(dark light))))
     (cond
      ((string= word "dark")
-      (load-theme 'zenburn t)
+      (load-theme qjp-theme t)
       (sml/apply-theme 'dark))
      ((string= word "light")
-      (disable-theme 'zenburn)
+      (disable-theme qjp-theme)
       (sml/apply-theme 'light)))))
 
 ;; ------------------ ;;
