@@ -211,10 +211,14 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;; Eval and replace using calc
 (defun qjp-calc-eval-and-replace (&optional prefix start end)
   (interactive "P\nr")
-  (let ((result (calc-eval (buffer-substring-no-properties start end))))
-    (when prefix
-      (kill-region start end))
-    (insert result)))
+  (let* ((expr (buffer-substring-no-properties start end))
+         (result (calc-eval expr)))
+    (if prefix
+        (progn
+          (kill-region start end)
+          (insert result))
+      (kill-new result)
+      (message "%s => %s" expr result))))
 
 ;; --------- ;;
 ;; sudo edit ;;
