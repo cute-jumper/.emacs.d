@@ -38,8 +38,8 @@
 
 (with-eval-after-load 'qjp-mode
   ;; Normal key bindings
-  (define-key qjp-mode-map (kbd "C->") 'mc/mark-next-like-this)
-  (define-key qjp-mode-map (kbd "C-<") 'mc/mark-previous-like-this)
+  (define-key ctrl-c-extension-map (kbd "C->") 'mc/mark-next-like-this)
+  (define-key ctrl-c-extension-map (kbd "C-<") 'mc/mark-previous-like-this)
 
   ;; Using mouse!
   (define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click))

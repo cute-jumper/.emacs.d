@@ -48,7 +48,8 @@
   (qjp-diminish paredit paredit-mode " Par")
   (qjp-diminish eldoc eldoc-mode " ElD")
   (qjp-diminish elisp-slime-nav elisp-slime-nav-mode " SNav")
-  (qjp-diminish company company-mode " Com"))
+  (qjp-diminish company company-mode " Com")
+  (qjp-diminish haskell-mode interactive-haskell-mode " IntHS"))
 
 (defun qjp-misc-diminish-spacemacs ()
   (interactive)
