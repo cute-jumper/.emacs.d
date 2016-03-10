@@ -38,6 +38,12 @@
   (define-key qjp-mode-map (kbd "C-c o c") 'org-capture)
   (define-key qjp-mode-map (kbd "C-c o a") 'org-agenda))
 
+;; --------------------- ;;
+;; org-mode key bindings ;;
+;; --------------------- ;;
+(defun qjp-org-mode-setup-key-bindings ()
+  (define-key org-mode-map (kbd "C-c e n") 'org-table-next-row))
+
 ;; ------------- ;;
 ;; Org-mode hook ;;
 ;; ------------- ;;
@@ -51,6 +57,7 @@
 (add-hook 'org-mode-hook #'qjp-org-mode-hook)
 
 (with-eval-after-load 'org
+  (qjp-org-mode-setup-key-bindings)
   (require 'qjp-org-edit)
   (require 'qjp-org-src)
   (require 'qjp-org-export)
