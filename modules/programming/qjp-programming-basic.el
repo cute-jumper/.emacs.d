@@ -98,11 +98,9 @@ cursor to the new line."
 
 (add-hook 'prog-mode-hook #'qjp-prog-mode-hook)
 
-;; Shell mode hook
-(defun qjp-sh-mode-hook ()
-  (shelldoc-minor-mode-on))
-
-(add-hook 'sh-mode-hook #'qjp-sh-mode-hook)
+;; company-shell
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-shell))
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
