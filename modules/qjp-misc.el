@@ -183,6 +183,7 @@
 ;; ------- ;;
 (qjp-misc-config-inline avy-zap
   (with-eval-after-load 'qjp-mode
+    (setq avy-zap-forward-only t)
     (define-key qjp-mode-map (kbd "M-z") 'avy-zap-to-char-dwim)
     (define-key qjp-mode-map (kbd "M-Z") 'avy-zap-up-to-char-dwim)))
 
