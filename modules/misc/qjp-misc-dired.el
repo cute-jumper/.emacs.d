@@ -36,6 +36,8 @@
   (setq dired-listing-switches "-alh")
   ;; intelligent dired
   (setq dired-dwim-target t)
+  ;; always recursive
+  (setq dired-recursive-copies 'always)
 
   (defadvice dired-find-file (around dired-find-file-single-buffer activate)
     "Replace current buffer if file is a directory."
