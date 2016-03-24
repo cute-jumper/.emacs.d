@@ -110,7 +110,15 @@
 
   (define-key dired-mode-map (kbd "M-p") #'dired-prev-marked-file)
   (define-key dired-mode-map (kbd "M-n") #'dired-next-marked-file)
+
+  ;; ---------------- ;;
+  ;; dired extensions ;;
+  ;; ---------------- ;;
+  ;; dired-narrow
   (define-key dired-mode-map (kbd "/") #'dired-narrow-regexp)
+  ;; dired-subtree
+  (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
+  (define-key dired-mode-map (kbd "<backtab>") #'dired-subtree-cycle)
 
   (defun qjp-dired-mode-hook ()
     (setq dired-guess-shell-alist-user
