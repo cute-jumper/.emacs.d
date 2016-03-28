@@ -90,6 +90,7 @@
     (define-key map [remap count-words-region] #'count-words)
     ;; (define-key map (kbd "M-s r") #'replace-string)
     (define-key map (kbd "M-/") #'hippie-expand)
+    (define-key map (kbd "C-x f") #'mode-line-other-buffer)
 
     ;; -------------------- ;;
     ;; ctrl-c-extension-map ;;
