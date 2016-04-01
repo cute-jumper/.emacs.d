@@ -366,13 +366,6 @@
   (add-to-list 'sml/replacer-regexp-list '("^~/Programs/" ":Pro:") t))
 
 ;; -------- ;;
-;; flycheck ;;
-;; -------- ;;
-(qjp-misc-config-inline flycheck
-  (with-eval-after-load 'flycheck
-    (flycheck-pos-tip-mode +1)))
-
-;; -------- ;;
 ;; fcitx.el ;;
 ;; -------- ;;
 (qjp-misc-config-inline fcitx
