@@ -32,6 +32,8 @@
   (interactive)
   (diminish 'auto-fill-function)
   (diminish 'abbrev-mode)
+  (diminish 'which-key-mode)
+  (diminish 'beacon-mode)
   (qjp-diminish volatile-highlights volatile-highlights-mode)
   (qjp-diminish whole-line-or-region whole-line-or-region-mode)
   (defun qjp-misc-diminish-helm ()
