@@ -156,8 +156,39 @@ _h_   _l_   _o_pen      _y_ank
 (with-eval-after-load 'qjp-mode
   (define-key ctrl-c-extension-map (kbd "SPC") 'hydra-rectangle/body))
 
+;; ----------------------- ;;
+;; Hydra for mark commands ;;
+;; ----------------------- ;;
+(defhydra hydra-mark (:body-pre (progn
+                                  (call-interactively 'set-mark-command)
+                                  (setq hydra-is-helpful t))
+                                :post (setq hydra-is-helpful nil)
+                                :exit t)
+  "hydra for mark commands"
+  ("=" er/expand-region)
+  ("P" er/mark-inside-pairs)
+  ("Q" er/mark-inside-quotes)
+  ("p" er/mark-outside-pairs)
+  ("q" er/mark-outside-quotes)
+  ("d" er/mark-defun)
+  ("c" er/mark-comment)
+  ("." er/mark-text-sentence)
+  ("h" er/mark-text-paragraph)
+  ("u" er/mark-url)
+  ("m" er/mark-email)
+  ("j" (funcall 'set-mark-command '(4)) :exit nil)
+  ("k" (call-interactively 'pop-global-mark) :exit nil)
+  ("w" avy-goto-word-1 "goto word 1")
+  ("W" avy-goto-word-2 "goto word 2")
+  ("i" avy-goto-word-0-in-line "goto word 0 in line")
+  ("I" avy-goto-char-in-line "goto char in line")
+  ("l" avy-goto-line "goto line"))
+
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "C-=") #'hydra-mark/body))
+
 ;; ---------------------- ;;
-;; Hydra for evil numbers ;;
+;; hydra for evil numbers ;;
 ;; ---------------------- ;;
 (defhydra hydra-number
   (qjp-mode-map "C-c")
