@@ -144,40 +144,6 @@
     (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
     (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page)))
 
-;; --- ;;
-;; avy ;;
-;; --- ;;
-(qjp-misc-config-inline avy
-  (with-eval-after-load 'qjp-mode
-    (setq avy-background t)
-    (setq avy-dispatch-alist '((?c . avy-action-copy)
-                               (?k . avy-action-kill)
-                               (?m . avy-action-mark)))
-    (let* ((all-keys (number-sequence ?a ?z))
-           (keys (qjp-filter (lambda (x) (not (member x '(?c ?k ?m)))) all-keys)))
-      (setq avy-keys-alist `((avy-goto-word-0 . ,keys)
-                             (avy-goto-word-1 . ,keys)
-                             (avy-copy-line . ,keys)
-                             (avy-move-line . ,keys))))
-    (defun avy-goto-word-0-in-line (arg)
-      "Jump to a word start in the current line."
-      (interactive "P")
-      (avy-with avy-goto-word-0
-        (avy--generic-jump "\\b\\sw" arg avy-style (line-beginning-position)
-                           (line-end-position))))
-    ;; convenient keychords
-    (qjp-key-chord-define qjp-mode-map "jk" #'avy-goto-word-1)
-    (qjp-key-chord-define qjp-mode-map "jl" #'avy-goto-word-0-in-line)
-    ;; all avy commands
-    (define-prefix-command 'ctrl-c-avy-map)
-    (define-key qjp-mode-map (kbd "C-c a") 'ctrl-c-avy-map)
-    (define-key ctrl-c-avy-map "g" #'avy-goto-char)
-    (define-key ctrl-c-avy-map "G" #'avy-goto-char-2)
-    (define-key ctrl-c-avy-map "c" #'avy-copy-line)
-    (define-key ctrl-c-avy-map "m" #'avy-move-line)
-    (define-key ctrl-c-avy-map "l" #'avy-goto-line)
-    (define-key isearch-mode-map (kbd "C-'") 'avy-isearch)))
-
 ;; ------- ;;
 ;; avy-zap ;;
 ;; ------- ;;
