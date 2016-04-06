@@ -247,7 +247,9 @@
     (add-hook 'magit-popup-mode-hook
               (lambda () (setq show-trailing-whitespace nil))))
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c g") #'magit-status)))
+    (define-key ctrl-c-git-grep-map "g" #'magit-status)
+    (define-key ctrl-c-git-grep-map "c" #'magit-clone)
+    (define-key ctrl-c-git-grep-map "i" #'magit-init)))
 
 ;; --------- ;;
 ;; which-key ;;
@@ -300,8 +302,12 @@
 ;; ------- ;;
 (qjp-misc-config-inline diff-hl
   (global-diff-hl-mode +1)
-  (diff-hl-margin-mode +1)
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
+  (setq diff-hl-side 'right)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (with-eval-after-load 'qjp-mode
+    (define-key ctrl-c-git-grep-map "[" #'diff-hl-previous-hunk)
+    (define-key ctrl-c-git-grep-map "]" #'diff-hl-next-hunk)))
 
 ;; --------- ;;
 ;; term-mode ;;
