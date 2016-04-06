@@ -197,16 +197,19 @@
 ;; expand-region ;;
 ;; ------------- ;;
 (qjp-misc-config-inline expand-region
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-=") #'er/expand-region)
-    (define-key ctrl-c-mark-map "p" #'er/mark-inside-pairs)
-    (define-key ctrl-c-mark-map "q" #'er/mark-inside-quotes)
-    (define-key ctrl-c-mark-map "P" #'er/mark-outside-pairs)
-    (define-key ctrl-c-mark-map "Q" #'er/mark-outside-quotes)
-    (define-key ctrl-c-mark-map "d" #'er/mark-defun)
-    (define-key ctrl-c-mark-map "c" #'er/mark-comment)
-    (define-key ctrl-c-mark-map "e" #'er/mark-text-sentence)
-    (define-key ctrl-c-mark-map "h" #'er/mark-text-paragraph)))
+  (dolist (func '(er/mark-inside-pairs
+                  er/mark-inside-quotes
+                  er/mark-outside-pairs
+                  er/mark-outside-quotes
+                  er/mark-defun
+                  er/mark-comment
+                  er/mark-text-sentence
+                  er/mark-text-paragraph
+                  er/mark-word
+                  er/mark-url
+                  er/mark-email
+                  er/mark-symbol))
+    (autoload func "expand-region")))
 
 ;; ------ ;;
 ;; ispell ;;
