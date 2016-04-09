@@ -166,6 +166,7 @@ _h_   _l_   _o_pen      _y_ank
                                 :exit t)
   "hydra for mark commands"
   ("=" er/expand-region)
+  ("m" er/expand-region)
   ("P" er/mark-inside-pairs)
   ("Q" er/mark-inside-quotes)
   ("p" er/mark-outside-pairs)
@@ -175,7 +176,8 @@ _h_   _l_   _o_pen      _y_ank
   ("." er/mark-text-sentence)
   ("h" er/mark-text-paragraph)
   ("u" er/mark-url)
-  ("m" er/mark-email)
+  ("e" er/mark-email)
+  ("s" er/mark-symbol)
   ("j" (funcall 'set-mark-command '(4)) :exit nil)
   ("k" (call-interactively 'pop-global-mark) :exit nil)
   ("w" avy-goto-word-1 "goto word 1")
@@ -185,7 +187,8 @@ _h_   _l_   _o_pen      _y_ank
   ("l" avy-goto-line "goto line"))
 
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-=") #'hydra-mark/body))
+  (define-key qjp-mode-map (kbd "C-=") #'hydra-mark/body)
+  (define-key qjp-mode-map (kbd "H-m") #'hydra-mark/body))
 
 ;; ---------------------- ;;
 ;; hydra for evil numbers ;;
