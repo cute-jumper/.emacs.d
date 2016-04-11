@@ -70,6 +70,10 @@
              '("N" qjp-org-show-next-heading-tidily))
 (add-to-list 'org-speed-commands-user
              '("P" qjp-org-show-previous-heading-tidily))
+(add-to-list 'org-speed-commands-user
+             '("m" org-mark-subtree))
+(add-to-list 'org-speed-commands-user
+             '("k" org-cut-subtree))
 
 ;; -------- ;;
 ;; org TODO ;;
