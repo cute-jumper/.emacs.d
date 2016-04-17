@@ -56,6 +56,8 @@
 
 (with-eval-after-load 'qjp-mode
   ;; convenient keychords
+  (define-key qjp-mode-map (kbd "C-'") #'avy-goto-word-1)
+  (define-key qjp-mode-map (kbd "C-\"") #'avy-goto-word-0-in-line)
   (qjp-key-chord-define qjp-mode-map "jk" #'avy-goto-word-1)
   (qjp-key-chord-define qjp-mode-map "jl" #'avy-goto-word-0-in-line)
   ;; all avy commands
