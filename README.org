@@ -40,6 +40,44 @@ See [[http://cute-jumper.github.io/emacs/2016/02/22/my-simple-setup-to-avoid-rsi
 all my personal settings shown in this section. Only two most important parts
 are explained.
 
+* New version of key bindings based on =evil-mode= and =god-mode=
+  - In all states, =M-m= to =evil-execute-in-god-state=
+  - In normal/visual state, =SPC= to =evil-execute-in-god-state=
+  - In insert state, key chord =kk= to =evil-execute-in-god-state=, and key
+    chord =jj= to =evil-normal-state=
+  - =M-'= to simulate =C-g=
+  - In helm/isearch, =ESC= and key chord =jj= to =god-mode=
+
+  When in insert mode, use key chords to perform some small actions.
+  | Key Chords | Action                    |
+  |------------+---------------------------|
+  | xf         | find file                 |
+  | xs         | save file                 |
+  | bb         | switch buffers            |
+
+  These key chords are available globally.
+  | Key Chords | Action                    |
+  | ;a         | beginning of line         |
+  | ;e         | end of line               |
+  | ;n         | next line                 |
+  | ;u         | previous line             |
+  | ;f         | forward char              |
+  | ;b         | backward char             |
+  | ;s         | isearch forward           |
+  | ;d         | delete char               |
+  | ;y         | yank                      |
+  | ;w         | kill region               |
+  | ;g         | quit                      |
+  | ;z         | undo                      |
+  | ;;         | insert ';' at end of line |
+  | ;1         | C-x 1                     |
+  | ;2         | C-x 2                     |
+  | ;3         | C-x 3                     |
+  | ;o         | C-x o                     |
+
+** Plugins for Evil
+   - =evil-surround=
+   - =evil
 * Structure
 I prefer using directories to structurally organize my settings.
 There are three main directories under the =.emacs.d=:
