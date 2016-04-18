@@ -120,7 +120,26 @@
 ;; -------------------- ;;
 (qjp-misc-config-inline region-bindings
   (autoload 'region-bindings-mode-enable "region-bindings-mode")
-  (region-bindings-mode-enable))
+  (region-bindings-mode-enable)
+  (defun qjp-region-bindings-mode-on ()
+    "Turn on region bindings mode.
+Don't use this, use `region-bindings-mode-enable'."
+    (and (use-region-p)
+         (or (not region-bindings-mode-enabled-modes)
+             (memq major-mode region-bindings-mode-enabled-modes))
+         (not (memq major-mode region-bindings-mode-disabled-modes))
+         (not (catch 'disable
+                (dolist (pred region-bindings-mode-disable-predicates)
+                  (and (funcall pred)
+                       (throw 'disable t)))))
+         (region-bindings-mode 1)))
+  (fset 'region-bindings-mode-on 'qjp-region-bindings-mode-on))
+
+;; ------------------ ;;
+;; persistent-scratch ;;
+;; ------------------ ;;
+(qjp-misc-config-inline persistent-scratch
+  (persistent-scratch-autosave-mode +1))
 
 ;; --------- ;;
 ;; pdf-tools ;;
@@ -176,7 +195,12 @@
 (qjp-misc-config-inline ace-jump-helm-line
   ;; FIXME
   (with-eval-after-load 'helm
-    (qjp-key-chord-define helm-map "jj" #'ace-jump-helm-line-execute-action)))
+    (setq ace-jump-helm-line-style 'pre)
+    (setq ace-jump-helm-line-default-action 'select)
+    (setq ace-jump-helm-line-select-key ?e)
+    (setq ace-jump-helm-line-move-only-key ?o)
+    (setq ace-jump-helm-line-persistent-key ?p)
+    (define-key helm-map (kbd "C-'") #'ace-jump-helm-line)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -190,8 +214,8 @@
 ;; --------- ;;
 (qjp-misc-config-inline jump-char
   (with-eval-after-load 'qjp-mode
-    (qjp-key-chord-define qjp-mode-map ";f" 'jump-char-forward)
-    (qjp-key-chord-define qjp-mode-map ";j" 'jump-char-backward)))
+    (qjp-key-chord-define qjp-mode-map ";j" 'jump-char-forward)
+    (qjp-key-chord-define qjp-mode-map ";h" 'jump-char-backward)))
 
 ;; ------------- ;;
 ;; expand-region ;;
@@ -247,9 +271,61 @@
     (add-hook 'magit-popup-mode-hook
               (lambda () (setq show-trailing-whitespace nil))))
   (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-git-grep-map "g" #'magit-status)
+    (define-key ctrl-c-git-grep-map "s" #'magit-status)
     (define-key ctrl-c-git-grep-map "c" #'magit-clone)
     (define-key ctrl-c-git-grep-map "i" #'magit-init)))
+
+;; god-mode
+(qjp-misc-config-inline god-mode
+  (with-eval-after-load 'qjp-mode
+    ;; convenient window management key bindings
+    (define-key qjp-mode-map (kbd "C-x C-1") 'delete-other-windows)
+    (define-key qjp-mode-map (kbd "C-x C-2") 'split-window-below)
+    (define-key qjp-mode-map (kbd "C-x C-3") 'split-window-right)
+    (define-key qjp-mode-map (kbd "C-x C-0") 'delete-window)
+    (define-key qjp-mode-map (kbd "C-x C-b") 'helm-mini)
+    (define-key qjp-mode-map (kbd "C-x M-b") 'ibuffer)
+    (define-key qjp-mode-map (kbd "C-x C-;") 'mode-line-other-buffer)
+    (qjp-define-highest-priority-mode-function god-local-mode)
+    (defun qjp-god-mode-enable-hook ()
+      (set (make-local-variable 'input-method-function) nil)
+      (qjp-gain-highest-keys-priority-god-local-mode nil)
+      (if (and (fboundp 'evil-emacs-state-p)
+               (evil-emacs-state-p))
+          (setq evil-emacs-state-cursor 'hollow)
+        (setq cursor-type 'hollow)))
+    (add-hook 'god-mode-enabled-hook 'qjp-god-mode-enable-hook)
+    (defun qjp-god-mode-disable-hook ()
+      (setq input-method-function 'key-chord-input-method)
+      (if (and (fboundp 'evil-emacs-state-p)
+               (evil-emacs-state-p))
+          (setq evil-emacs-state-cursor 'bar)
+        (setq cursor-type 'bar)))
+    (add-hook 'god-mode-disabled-hook 'qjp-god-mode-disable-hook))
+  (with-eval-after-load 'god-mode
+    (define-key god-local-mode-map "m" #'kill-word)
+    (define-key god-local-mode-map "i" #'backward-kill-word)
+    (define-key god-local-mode-map "." #'repeat)
+    ;; isearch god-mode integration
+    (require 'god-mode-isearch)
+    (defun qjp-god-mode-isearch-activate ()
+      (interactive)
+      (set-cursor-color "yellow")
+      (god-mode-isearch-activate))
+    (define-key isearch-mode-map (kbd "<escape>") #'qjp-god-mode-isearch-activate)
+    (qjp-key-chord-define isearch-mode-map "jj" #'qjp-god-mode-isearch-activate)
+    (defun qjp-god-mode-isearch-disable ()
+      (interactive)
+      (set-cursor-color "white")
+      (god-mode-isearch-disable))
+    (define-key god-mode-isearch-map (kbd "<escape>") 'qjp-god-mode-isearch-disable)
+    (add-hook 'isearch-mode-end-hook (lambda () (set-cursor-color "white")))))
+
+;; ------------ ;;
+;; indent-guide ;;
+;; ------------ ;;
+(qjp-misc-config-inline indent-guide
+  (setq indent-guide-delay 0.1))
 
 ;; --------- ;;
 ;; which-key ;;
@@ -539,9 +615,11 @@
         company change-inner
         dired diminish diff-hl
         easypg expand-region easy-kill
+        easypg expand-region easy-kill evil-surround evil
         flyspell flycheck
         gmpl-mode gscholar-bibtex google-this
         helm hs fcitx hydra;; loaded after helm
+        gmpl-mode gscholar-bibtex google-this god-mode
         highlight-symbol ispell
         ;;jump-char
         key-chord keyfreq

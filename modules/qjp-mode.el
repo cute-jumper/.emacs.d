@@ -44,7 +44,9 @@
   (define-key ctrl-c-extension-map "s" #'qjp-isearch-other-window)
   (define-key ctrl-c-extension-map "m" #'qjp-kill-back-to-indentation)
   (define-key ctrl-c-extension-map "r" #'revert-buffer)
-  (define-key ctrl-c-extension-map "p" #'delete-pair)
+  (define-key ctrl-c-extension-map "lf" #'add-file-local-variable)
+  (define-key ctrl-c-extension-map "lp" #'add-file-local-variable-prop-line)
+  (define-key ctrl-c-extension-map "ld" #'add-dir-local-variable)
   (define-key ctrl-c-extension-map (kbd "M-s") #'center-line)
   (define-key ctrl-c-extension-map (kbd "M-S") #'center-paragraph))
 (qjp-mode-define-ctrl-c-extension-map)
@@ -53,8 +55,7 @@
 (defun qjp-mode-define-ctrl-c-git-grep-map ()
   (define-key ctrl-c-git-grep-map "r" #'rgrep)
   (define-key ctrl-c-git-grep-map "d" #'find-grep-dired)
-  (define-key ctrl-c-git-grep-map "n" #'find-name-dired)
-  (define-key ctrl-c-git-grep-map "f" #'grep-dired))
+  (define-key ctrl-c-git-grep-map "n" #'find-name-dired))
 (qjp-mode-define-ctrl-c-git-grep-map)
 
 (define-prefix-command 'ctrl-c-yasnippet-map)
@@ -118,24 +119,22 @@
 (defun qjp-mode-translate-keys (on)
   (if on
       (progn
-        (define-key key-translation-map (kbd "ESC") (kbd "C-c"))
-        (define-key key-translation-map (kbd "<menu>") (kbd "C-x")))
-    (define-key key-translation-map (kbd "ESC") (kbd "ESC"))
+        (define-key key-translation-map (kbd "<menu>") (kbd "C-c")))
     (define-key key-translation-map (kbd "<menu>") (kbd "<menu>"))))
 
 (defun qjp-mode-set-dangerous-ctrl-keys (on)
   (if on
       (progn
-        (define-key input-decode-map (kbd "C-m") (kbd "H-m"))
-        (define-key qjp-mode-map (kbd "H-m") #'kill-word)
         (define-key input-decode-map (kbd "C-[") (kbd "H-["))
         (define-key qjp-mode-map (kbd "H-[") #'recenter-top-bottom)
+        (define-key input-decode-map (kbd "C-m") (kbd "H-m"))
+        (define-key qjp-mode-map (kbd "H-m") #'kill-word)
         (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
-        (define-key qjp-mode-map (kbd "H-i") #'undo-tree-undo))
-    (define-key input-decode-map (kbd "C-m") (kbd "C-m"))
-    (define-key qjp-mode-map (kbd "H-m") nil)
+        (define-key qjp-mode-map (kbd "H-i") #'backward-kill-word))
     (define-key input-decode-map (kbd "C-[") (kbd "C-["))
     (define-key qjp-mode-map (kbd "H-[") nil)
+    (define-key input-decode-map (kbd "C-m") (kbd "C-m"))
+    (define-key qjp-mode-map (kbd "H-m") nil)
     (define-key input-decode-map (kbd "C-i") (kbd "C-i"))
     (define-key qjp-mode-map (kbd "H-i") nil)))
 
@@ -157,22 +156,30 @@
    keychord
    (qjp-push-event key-str)))
 
+(defun qjp-mode-addition-quit (on)
+  (if on
+      (define-key qjp-mode-map (kbd "M-'") (qjp-push-event "C-g"))
+    (define-key qjp-mode-map (kbd "M-'") nil)))
+
 (defun qjp-mode-define-keychords ()
   (with-eval-after-load 'qjp-misc
-    (qjp-key-chord-define qjp-mode-map "bb" #'helm-mini)
-    (qjp-key-chord-define qjp-mode-map "xf" #'helm-find-files)
-    (qjp-key-chord-define qjp-mode-map "xs" #'save-buffer)
-    (qjp-mode--keychord-remap ";s" "C-s")
-    (qjp-mode--keychord-remap ";g" "C-g")
-    (qjp-mode--keychord-remap ";e" "C-e")
-    (qjp-mode--keychord-remap ";a" "C-a")
-    (qjp-mode--keychord-remap ";y" "C-y")
-    (qjp-mode--keychord-remap ";w" "C-w")
-    (qjp-mode--keychord-remap ";1" "C-x 1")
-    (qjp-mode--keychord-remap ";2" "C-x 2")
-    (qjp-mode--keychord-remap ";3" "C-x 3")
-    (qjp-mode--keychord-remap ";o" "C-x o")
-    (qjp-mode--keychord-remap ";;" ";")))
+    (qjp-key-chord-define qjp-mode-map ";;" (µ (end-of-line) (insert ";")))
+    (qjp-key-chord-define qjp-mode-map ";s" #'isearch-forward)
+    (qjp-key-chord-define qjp-mode-map ";d" #'delete-char)
+    (qjp-key-chord-define qjp-mode-map ";z" (kbd "C-/"))
+    (qjp-key-chord-define qjp-mode-map ";g" (kbd "C-g"))
+    (qjp-key-chord-define qjp-mode-map ";f" #'forward-char)
+    (qjp-key-chord-define qjp-mode-map ";b" #'backward-char)
+    (qjp-key-chord-define qjp-mode-map ";e" #'end-of-line)
+    (qjp-key-chord-define qjp-mode-map ";a" #'qjp-back-to-indentation-or-beginning)
+    (qjp-key-chord-define qjp-mode-map ";u" #'previous-line)
+    (qjp-key-chord-define qjp-mode-map ";n" #'next-line)
+    (qjp-key-chord-define qjp-mode-map ";y" #'yank)
+    (qjp-key-chord-define qjp-mode-map ";w" #'kill-region)
+    (qjp-key-chord-define qjp-mode-map ";1" (kbd "C-x 1"))
+    (qjp-key-chord-define qjp-mode-map ";2" (kbd "C-x 2"))
+    (qjp-key-chord-define qjp-mode-map ";3" (kbd "C-x 3"))
+    (qjp-key-chord-define qjp-mode-map ";o" (kbd "C-x o"))))
 
 (defun qjp-mode-define-isearch (on)
   (if on
@@ -216,6 +223,8 @@
   (qjp-mode-define-meta-o t)
   ;; dangerous ctrl-keys
   (qjp-mode-set-dangerous-ctrl-keys t)
+  ;; additional quit
+  (qjp-mode-addition-quit t)
   (qjp-mode +1))
 
 (defun qjp-mode-off ()
@@ -226,21 +235,26 @@
   (qjp-mode-define-isearch nil)
   (qjp-mode-define-meta-o nil)
   (qjp-mode-set-dangerous-ctrl-keys nil)
+  (qjp-mode-addition-quit nil)
   (qjp-mode -1))
 
 (global-qjp-mode +1)
 
 ;; From http://stackoverflow.com/a/5340797
-(add-hook 'after-load-functions 'qjp-gain-highest-keys-priority)
-
-(defun qjp-gain-highest-keys-priority (_file)
-  "Try to ensure that my keybindings retain priority over other minor modes.
+(defmacro qjp-define-highest-priority-mode-function (mode)
+  (let ((fn (intern (format "qjp-gain-highest-keys-priority-%S" mode))))
+    `(defun ,fn (_file)
+       "Try to ensure that my keybindings retain priority over other minor modes.
 
 Called via the `after-load-functions' special hook."
-  (unless (eq (caar minor-mode-map-alist) 'qjp-mode)
-    (let ((mykeys (assq 'qjp-mode minor-mode-map-alist)))
-      (assq-delete-all 'qjp-mode minor-mode-map-alist)
-      (add-to-list 'minor-mode-map-alist mykeys))))
+       (unless (eq (caar minor-mode-map-alist) ',mode)
+         (let ((mykeys (assq ',mode minor-mode-map-alist)))
+           (assq-delete-all ',mode minor-mode-map-alist)
+           (add-to-list 'minor-mode-map-alist mykeys))))))
+
+(qjp-define-highest-priority-mode-function qjp-mode)
+
+(add-hook 'after-load-functions 'qjp-gain-highest-keys-priority-qjp-mode)
 
 (provide 'qjp-mode)
 ;;; qjp-mode.el ends here
