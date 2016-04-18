@@ -77,7 +77,12 @@ are explained.
 
 ** Plugins for Evil
    - =evil-surround=
-   - =evil
+   - =evil-visualstar=
+   - =evil-indent-plus=
+   - =evil-args=
+   - =evil-exchange=
+   - =evil-nerd-commenter=
+
 * Structure
 I prefer using directories to structurally organize my settings.
 There are three main directories under the =.emacs.d=:
