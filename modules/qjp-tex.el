@@ -45,17 +45,25 @@
   (add-to-list 'TeX-command-list
                '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
                  :help "Run LaTeXMK on file"))
-  (push "\\.fdb_latexmk" LaTeX-clean-intermediate-suffixes)
+  (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk")
   ;; Tricks: let synctex work with Okular
-  (push '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory))))
-        TeX-expand-list)
-  (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
-        TeX-view-program-list)
-  (push '(output-pdf "Okular") TeX-view-program-selection)
+  (add-to-list 'TeX-expand-list '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory)))))
+  (add-to-list 'TeX-view-program-list '("Okular" "okular --unique %o#src:%n%(masterdir)./%b"))
+  (add-to-list 'TeX-view-program-selection '(output-pdf "Okular"))
 
   ;; Add hook for pdf-view-mode
   (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
             #'TeX-revert-document-buffer)
+
+  ;; major mode bindings
+  (define-key LaTeX-mode-map (kbd "C-c e e") #'LaTeX-environment)
+  (define-key LaTeX-mode-map (kbd "C-c e s") #'LaTeX-section)
+  (define-key LaTeX-mode-map (kbd "C-c e ]") #'LaTeX-close-environment)
+  (define-key LaTeX-mode-map (kbd "C-c e p") #'qjp-latex-add-usepackage)
+  (define-key LaTeX-mode-map (kbd "C-c e m") #'qjp-latex-maketitle)
+  (define-key LaTeX-mode-map (kbd "C-c e a") #'latex/compile-commands-until-done)
+  (define-key LaTeX-mode-map (kbd "C-c e v") #'TeX-view)
+  (define-key LaTeX-mode-map (kbd "C-c e f") #'TeX-font)
 
   ;; ------ ;;
   ;; reftex ;;
@@ -91,7 +99,7 @@
     (define-key pdf-view-mode-map (kbd "C-x C-z") #'qjp-pdf-view-switch-to-tex-source))
 
   ;; Insert \usepackage in the front of the file
-  (defun qjp-latex-add-pkg (pkg-name pkg-options)
+  (defun qjp-latex-add-usepackage (pkg-name pkg-options)
     (interactive "sPackage: \nsOptions: ")
     (save-match-data
       (save-excursion
@@ -147,7 +155,6 @@
   ;; Local key bindings ;;
   ;; ------------------ ;;
   (defun qjp-tex-set-local-key-bindings ()
-    (local-set-key [(return)] #'newline-and-indent)
     (local-set-key (kbd "C-c ,") #'LaTeX-mark-section)
     (local-set-key (kbd "C-x C-z") #'qjp-latex-switch-to-pdf-view))
 
@@ -195,8 +202,8 @@
                  ("/"  . reftex-index-selection-or-word)
                  ("\\" . reftex-index-phrase-selection-or-word)
                  ("|"  . reftex-index-visit-phrases-buffer)
-                 ("v"  . reftex-view-crossref)))
-      (define-key reftex-mode-map (kbd (format "C-c r %s" (car x))) (cdr x)))))
+                 ("x"  . reftex-view-crossref)))
+      (define-key reftex-mode-map (kbd (format "C-c e %s" (car x))) (cdr x)))))
 
 ;; ----- ;;
 ;; Hooks ;;
