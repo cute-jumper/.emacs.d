@@ -79,6 +79,9 @@
 ;; Show visible bell
 (setq visible-bell t)
 
+;; save abbrevs automatically
+(setq save-abbrevs t)
+
 ;; Now, let's set the fonts for English and Chinese
 (when (display-graphic-p)
   (let (en-font zh-font zh-size unicode-font)
