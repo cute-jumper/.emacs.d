@@ -35,6 +35,7 @@
 ;;; prefix for editting functions
 (define-prefix-command 'ctrl-c-extension-map)
 (defun qjp-mode-define-ctrl-c-extension-map ()
+  (define-key ctrl-c-extension-map "f" #'mode-line-other-buffer)
   (define-key ctrl-c-extension-map "a" #'align-regexp)
   (define-key ctrl-c-extension-map "d" #'qjp-duplicate-line-or-region)
   (define-key ctrl-c-extension-map "e" #'qjp-eval-and-replace)
@@ -44,6 +45,7 @@
   (define-key ctrl-c-extension-map "s" #'qjp-isearch-other-window)
   (define-key ctrl-c-extension-map "m" #'qjp-kill-back-to-indentation)
   (define-key ctrl-c-extension-map "r" #'revert-buffer)
+  (define-key ctrl-c-extension-map "%" #'map-query-replace-regexp)
   (define-key ctrl-c-extension-map "lf" #'add-file-local-variable)
   (define-key ctrl-c-extension-map "lp" #'add-file-local-variable-prop-line)
   (define-key ctrl-c-extension-map "ld" #'add-dir-local-variable)
