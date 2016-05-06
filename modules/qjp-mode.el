@@ -158,11 +158,6 @@
    keychord
    (qjp-push-event key-str)))
 
-(defun qjp-mode-addition-quit (on)
-  (if on
-      (define-key qjp-mode-map (kbd "M-'") (qjp-push-event "C-g"))
-    (define-key qjp-mode-map (kbd "M-'") nil)))
-
 (defun qjp-mode-define-keychords ()
   (with-eval-after-load 'qjp-misc
     (qjp-key-chord-define qjp-mode-map ";;" (µ (end-of-line) (insert ";")))
@@ -226,7 +221,7 @@
   ;; dangerous ctrl-keys
   (qjp-mode-set-dangerous-ctrl-keys t)
   ;; additional quit
-  (qjp-mode-addition-quit t)
+  (define-key key-translation-map (kbd "M-'") (kbd "C-g"))
   (qjp-mode +1))
 
 (defun qjp-mode-off ()
@@ -237,10 +232,16 @@
   (qjp-mode-define-isearch nil)
   (qjp-mode-define-meta-o nil)
   (qjp-mode-set-dangerous-ctrl-keys nil)
-  (qjp-mode-addition-quit nil)
+  (define-key key-translation-map (kbd "M-'") (kbd "M-'"))
   (qjp-mode -1))
 
 (global-qjp-mode +1)
+
+;; Fix the problem when minibuffer first pop up
+(defun qjp-mode-minibuffer-setup-hook ()
+  (remove-hook 'minibuffer-setup-hook #'qjp-mode-minibuffer-setup-hook)
+  (qjp-mode-on))
+(add-hook 'minibuffer-setup-hook #'qjp-mode-minibuffer-setup-hook)
 
 ;; From http://stackoverflow.com/a/5340797
 (defmacro qjp-define-highest-priority-mode-function (mode)
