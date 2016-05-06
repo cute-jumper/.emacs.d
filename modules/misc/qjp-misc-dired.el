@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-(autoload 'dired-jump "dired-x")
+(autoload 'dired-jump "dired-x" nil t)
 (define-key qjp-mode-map (kbd "C-x C-j") #'dired-jump)
 
 (with-eval-after-load 'dired
