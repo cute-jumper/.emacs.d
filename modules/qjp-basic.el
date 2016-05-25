@@ -169,6 +169,20 @@
 ;; ediff in same frame
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
+;; save point postiion in file
+(require 'saveplace)
+
+;; save history
+(savehist-mode +1)
+
+;; save desktop
+(defun qjp-desktop-save-to-home ()
+  (interactive)
+  (require 'cl-lib)
+  (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest _) t)))
+    (desktop-save qjp-base-dir)))
+(add-hook 'kill-emacs-hook 'qjp-desktop-save-to-home)
+
 ;; whitespace-mode
 (setq
  whitespace-line-column 80
@@ -189,12 +203,15 @@
 ;; imenu
 (setq-default imenu-auto-rescan t)
 
-;; tooltip
-(setq tooltip-use-echo-area t)
+;; use Emacs own tooltip since system tooltip only supports text
+(setq x-gtk-use-system-tooltips nil)
 
 ;; grep
 (with-eval-after-load 'grep
   (add-to-list 'grep-find-ignored-files "*.class"))
+
+;; scroll margin to 10
+(setq scroll-margin 10)
 
 ;; hippie expand is dabbrev expand on steroids
 (setq hippie-expand-try-functions-list '(try-complete-file-name-partially
