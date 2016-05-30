@@ -30,8 +30,6 @@
 ;; ------------------------- ;;
 ;; zsh
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-;; qml
-(add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
 
 ;; save point postiion in file
 (require 'saveplace)

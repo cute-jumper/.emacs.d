@@ -24,8 +24,13 @@
 
 ;;; Code:
 
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-qml))
+;; qml
+(add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
+
+(defun qjp-qml-mode-hook ()
+  (add-to-list (make-local-variable 'company-backends) 'company-qml))
+
+(add-hook 'qml-mode-hook 'qjp-qml-mode-hook)
 
 (provide 'qjp-programming-qml)
 ;;; qjp-programming-qml.el ends here
