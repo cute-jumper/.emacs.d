@@ -42,10 +42,10 @@
   (define-key ctrl-c-extension-map "=" #'qjp-calc-eval-and-replace)
   (define-key ctrl-c-extension-map "J" #'qjp-join-next-line)
   (define-key ctrl-c-extension-map "j" #'join-line)
-  (define-key ctrl-c-extension-map "s" #'qjp-isearch-other-window)
+  (define-key ctrl-c-extension-map "s" #'eshell)
+  (define-key ctrl-c-extension-map "S" #'ansi-term)
   (define-key ctrl-c-extension-map "m" #'qjp-kill-back-to-indentation)
   (define-key ctrl-c-extension-map "r" #'revert-buffer)
-  (define-key ctrl-c-extension-map "%" #'map-query-replace-regexp)
   (define-key ctrl-c-extension-map "lf" #'add-file-local-variable)
   (define-key ctrl-c-extension-map "lp" #'add-file-local-variable-prop-line)
   (define-key ctrl-c-extension-map "ld" #'add-dir-local-variable)
@@ -69,10 +69,7 @@
 (defvar qjp-mode-map
   (let ((map (make-sparse-keymap)))
     ;; redefine basic movement
-    (define-key map (kbd "C-h") #'backward-char)
-    (define-key map (kbd "C-l") #'forward-char)
-    (define-key map (kbd "C-b") #'backward-word)
-    (define-key map (kbd "C-f") #'forward-word)
+    (define-key map (kbd "C-h") #'backward-delete-char)
     (define-key map (kbd "M-[") #'beginning-of-defun)
     (define-key map (kbd "M-]") #'end-of-defun)
     ;; Bindings for `qjp-defuns-edit'
@@ -93,7 +90,6 @@
     (define-key map [remap count-words-region] #'count-words)
     ;; (define-key map (kbd "M-s r") #'replace-string)
     (define-key map (kbd "M-/") #'hippie-expand)
-    (define-key map (kbd "C-x f") #'mode-line-other-buffer)
 
     ;; -------------------- ;;
     ;; ctrl-c-extension-map ;;
@@ -109,6 +105,11 @@
     ;; ctrl-c-yasnippet-map ;;
     ;; -------------------- ;;
     (define-key map (kbd "C-c y") 'ctrl-c-yasnippet-map)
+
+    ;; ----- ;;
+    ;; C-c q ;;
+    ;; ----- ;;
+    (define-key map (kbd "C-c q %") #'map-query-replace-regexp)
 
     ;; Mouse clicks are annoying. Globally set mouse 1's single-click events to
     ;; `qjp-nop'. Navigating using doulbe-click is still available.
@@ -219,7 +220,7 @@
   ;; rebind meta-o
   (qjp-mode-define-meta-o t)
   ;; dangerous ctrl-keys
-  (qjp-mode-set-dangerous-ctrl-keys t)
+  ;; (qjp-mode-set-dangerous-ctrl-keys t)
   ;; additional quit
   (define-key key-translation-map (kbd "M-'") (kbd "C-g"))
   (qjp-mode +1))
@@ -231,7 +232,7 @@
   ;; Bindings `qjp-defuns-isearch'
   (qjp-mode-define-isearch nil)
   (qjp-mode-define-meta-o nil)
-  (qjp-mode-set-dangerous-ctrl-keys nil)
+  ;; (qjp-mode-set-dangerous-ctrl-keys nil)
   (define-key key-translation-map (kbd "M-'") (kbd "M-'"))
   (qjp-mode -1))
 
