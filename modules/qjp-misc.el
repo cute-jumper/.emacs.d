@@ -187,7 +187,7 @@ Don't use this, use `region-bindings-mode-enable'."
 ;; ace-link ;;
 ;; -------- ;;
 (qjp-misc-config-inline ace-link
-  (ace-link-setup-default "j"))
+  (ace-link-setup-default "o"))
 
 ;; ------------------ ;;
 ;; ace-jump-helm-line ;;
