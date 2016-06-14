@@ -161,6 +161,9 @@
 ;; winner-mode for window configurations
 (winner-mode +1)
 
+;; `recursive-edit' depth
+(minibuffer-depth-indicate-mode +1)
+
 ;; recentf settings
 ;; ignore magit's commit message files
 (with-eval-after-load 'recentf
