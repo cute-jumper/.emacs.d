@@ -152,7 +152,8 @@
 
 ;; show-paren-mode
 (show-paren-mode +1)
-(setq show-paren-style 'mixed)
+(set-face-attribute 'show-paren-match nil
+                    :foreground "yellow")
 
 ;; uniquify
 (setq uniquify-buffer-name-style 'forward
