@@ -27,7 +27,7 @@
 ;; --- ;;
 ;; Lua ;;
 ;; --- ;;
-(add-hook 'lua-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
+(add-hook 'lua-mode-hook (lambda () (local-set-key [(return)] 'qjp-electrify-return-if-match)))
 
 
 (provide 'qjp-programming-lua)

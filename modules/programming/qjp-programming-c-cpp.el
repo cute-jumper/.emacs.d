@@ -50,8 +50,7 @@
    (t (insert-pair 0 ?\( ?\)))))
 
 (defun qjp-c-cpp-mode-hook ()
-  (local-set-key [(return)] #'electrify-return-if-match)
-  (local-set-key [C-backspace] #'c-hungry-delete)
+  (local-set-key [(return)] #'qjp-electrify-return-if-match)
   (local-set-key (kbd "M-(") #'qjp-insert-parentheses)
   (local-set-key (kbd "C-m") #'up-list))
 

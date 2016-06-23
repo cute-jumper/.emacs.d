@@ -33,7 +33,7 @@
         ;; "|" means generic string fence
         `((,js--regexp-literal-fix (1 "|") (2 "|"))))
   (setq js-font-lock-syntactic-keywords js-font-lock-syntactic-keywords-fix))
-(add-hook 'js-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
+(add-hook 'js-mode-hook (lambda () (local-set-key [(return)] 'qjp-electrify-return-if-match)))
 
 ;;; json-mode
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))

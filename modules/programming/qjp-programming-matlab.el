@@ -32,7 +32,7 @@
 ;; (add-hook 'matlab-mode-hook
 ;;           (lambda ()
 ;;             (local-set-key (kbd "M-;") 'my-comment-dwim-line)
-;;             (local-set-key [return] 'electrify-return-if-match)
+;;             (local-set-key [return] 'qjp-electrify-return-if-match)
 ;;             (define-key matlab-mode-map (kbd "C-h") 'backward-delete-char)
 ;;             (local-set-key (kbd "M-h") 'backward-kill-word)
 ;;             (local-set-key (kbd "C-x I") 'imenu)
