@@ -29,12 +29,18 @@
   (avy-action-copy pt)
   (yank))
 
+(defun qjp-avy-move-text (pt)
+  "Kill and yank sexp starting on PT."
+  (avy-action-kill-stay pt)
+  (yank))
+
 (setq avy-background t)
 (setq avy-dispatch-alist '((?c . avy-action-copy)
                            (?k . avy-action-kill-move)
                            (?K . avy-action-kill-stay)
                            (?m . avy-action-mark)
-                           (?p . qjp-avy-action-copy-and-yank)))
+                           (?p . qjp-avy-action-copy-and-yank)
+                           (?P . qjp-avy-move-text)))
 
 (let* ((all-keys (number-sequence ?a ?z))
        (keys (qjp-filter (lambda (x) (not
@@ -45,7 +51,8 @@
   (setq avy-keys-alist `((avy-goto-word-0 . ,keys)
                          (avy-goto-word-1 . ,keys)
                          (avy-copy-line . ,keys)
-                         (avy-move-line . ,keys))))
+                         (avy-move-line . ,keys))
+        avy-keys keys))
 
 (defun avy-goto-word-0-in-line (arg)
   "Jump to a word start in the current line."
@@ -56,10 +63,9 @@
 
 (with-eval-after-load 'qjp-mode
   ;; convenient keychords
-  (define-key qjp-mode-map (kbd "C-'") #'avy-goto-word-1)
-  (define-key qjp-mode-map (kbd "C-\"") #'avy-goto-word-0-in-line)
-  (qjp-key-chord-define qjp-mode-map "jk" #'avy-goto-word-1)
-  (qjp-key-chord-define qjp-mode-map "jl" #'avy-goto-word-0-in-line)
+  (define-key qjp-mode-map (kbd "C-;") #'avy-goto-word-1)
+  (define-key qjp-mode-map (kbd "C-'") #'avy-goto-word-0-in-line)
+  (define-key qjp-mode-map (kbd "C-\\") #'avy-goto-char)
   ;; all avy commands
   (define-prefix-command 'ctrl-c-avy-map)
   (define-key qjp-mode-map (kbd "C-c a") 'ctrl-c-avy-map)
