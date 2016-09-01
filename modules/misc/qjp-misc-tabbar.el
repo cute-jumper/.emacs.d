@@ -27,8 +27,8 @@
 ;; ----------- ;;
 ;; tabbar-mode ;;
 ;; ----------- ;;
-(require 'tabbar-mode)
-(tabbar-mode t)
+(require 'tabbar)
+(tabbar-mode +1)
 
 ;; Set faces
 (set-face-attribute 'tabbar-default nil
@@ -101,4 +101,5 @@
         (set tabset (sort (cons tab tabs)
                           (lambda (a b) (string< (buffer-name (car a)) (buffer-name (car b))))))))))
 
-(provide 'qjp-misc-tabbar qjp-misc-tabbar.el ends here
+(provide 'qjp-misc-tabbar)
+;;qjp-misc-tabbar.el ends here
