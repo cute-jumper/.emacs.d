@@ -28,20 +28,24 @@
 ;; projectile ;;
 ;; ---------- ;;
 
+(setq projectile-cache-file (expand-file-name "projectile.cache"
+                                              qjp-base-dir))
+(setq projectile-enable-caching t)
+(autoload 'helm-projectile-switch-project "helm-projectile")
+(setq projectile-keymap-prefix (kbd "C-c p"))
+
 (with-eval-after-load 'projectile
-  (setq projectile-cache-file (expand-file-name "projectile.cache"
-                                                qjp-base-dir))
-  (setq projectile-enable-caching t)
-  (projectile-global-mode t)
+  (projectile-global-mode +1)
 
   ;; Helm support
   (setq projectile-compilation-command #'helm)
-  (helm-projectile-on))
+  (helm-projectile-on)
+
+  ;; Must be after `helm-projectile-on'
+  (setq projectile-switch-project-action #'projectile-commander))
 
 (with-eval-after-load 'qjp-mode
-  (setq projectile-keymap-prefix (kbd "C-c p"))
   (define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
-  (autoload 'helm-projectile-switch-project "helm-projectile")
   (define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project))
 
 (provide 'qjp-misc-projectile)
