@@ -25,6 +25,16 @@
 ;;; Code:
 
 (require 'helm-config)
+(define-key helm-command-map "g" #'helm-do-grep-ag)
+(define-key helm-command-map "G" #'helm-google-suggest)
+(define-key helm-command-map "d" #'helm-dash)
+(define-key helm-command-map "k" #'helm-descbinds)
+(define-key helm-command-map "=" #'helm-calcul-expression)
+(define-key helm-command-map "o" #'helm-occur)
+(define-key helm-command-map (kbd "SPC") #'helm-all-mark-rings)
+(define-key helm-command-map (kbd "M-!") #'helm-run-external-command)
+(define-key helm-command-map (kbd "M-:") #'helm-eval-expression)
+(define-key helm-command-map (kbd "M-i") #'helm-multi-swoop)
 
 (with-eval-after-load 'qjp-mode
   (define-key qjp-mode-map (kbd "M-x") #'helm-M-x)
@@ -34,11 +44,7 @@
   (define-key qjp-mode-map (kbd "C-x c") nil)
   (global-unset-key (kbd "C-x c"))
   (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
-  (define-key qjp-mode-map (kbd "C-c i") #'helm-imenu)
-  (define-key helm-command-map "g" #'helm-google-suggest)
-  (define-key helm-command-map "d" #'helm-dash)
-  (define-key helm-command-map "k" #'helm-descbinds)
-  (define-key helm-command-map (kbd "M-i") #'helm-multi-swoop))
+  (define-key qjp-mode-map (kbd "C-c i") #'helm-semantic-or-imenu))
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -60,7 +66,10 @@
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
   ;; list actions using C-z
   (define-key helm-map (kbd "C-z")  'helm-select-action)
-  (helm-mode)
+  ;; use <escape> to entery `god-mode'
+  (define-key helm-map (kbd "<escape>") 'god-local-mode)
+  (qjp-key-chord-define helm-map "jj" 'god-local-mode)
+  (helm-mode +1)
   (helm-autoresize-mode t)
   (helm-descbinds-mode)
   ;; Hide header when only one source
@@ -142,6 +151,11 @@
         (apply orig-func args))))
 
   (advice-add 'helm-ff-kill-or-find-buffer-fname :around #'qjp-helm-ff-try-expand-fname))
+
+(with-eval-after-load 'qjp-mode
+  (define-key ctrl-c-git-grep-map "a" #'helm-ag)
+  (define-key ctrl-c-git-grep-map "h" #'helm-do-ag)
+  (define-key ctrl-c-git-grep-map "p" #'helm-do-ag-project-root))
 
 ;; helm-swoop
 (setq helm-swoop-speed-or-color t) ;; Color needed
