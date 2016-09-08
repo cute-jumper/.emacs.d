@@ -34,9 +34,8 @@
 
 ;; key bindings
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-f") #'sp-forward-sexp)
-  (define-key qjp-mode-map (kbd "M-b") #'sp-backward-sexp)
-  (define-key qjp-mode-map (kbd "M-d") #'sp-down-sexp)
+  (define-key qjp-mode-map (kbd "C-M-f") #'sp-forward-sexp)
+  (define-key qjp-mode-map (kbd "C-M-b") #'sp-backward-sexp)
   (define-key qjp-mode-map (kbd "C-M-e") #'sp-end-of-sexp)
   (define-key qjp-mode-map (kbd "C-M-u") #'sp-backward-up-sexp)
   (define-key qjp-mode-map (kbd "C-M-j") #'sp-up-sexp)
