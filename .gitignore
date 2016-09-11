@@ -17,3 +17,6 @@ url
 /.litable-lists.el
 /image-dired
 /history
+/.emacs.desktop
+/.emacs.desktop.lock
+/.persistent-scratch
