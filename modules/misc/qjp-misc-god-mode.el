@@ -52,8 +52,6 @@
   (add-hook 'god-mode-disabled-hook 'qjp-god-mode-disable-hook))
 (with-eval-after-load 'god-mode
   (define-key god-local-mode-map "i" #'god-local-mode)
-  (define-key god-local-mode-map "m" #'kill-word)
-  (define-key god-local-mode-map "I" #'backward-kill-word)
   (define-key god-local-mode-map "." #'repeat)
   ;; isearch god-mode integration
   (require 'god-mode-isearch)
