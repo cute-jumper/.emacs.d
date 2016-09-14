@@ -72,12 +72,7 @@
   (setq company-show-numbers t)
   (company-quickhelp-mode +1)
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-<tab>") #'company-complete))
-  (with-eval-after-load 'company
-    (define-key company-active-map (kbd "C-n") #'company-select-next)
-    (define-key company-active-map (kbd "C-p") #'company-select-previous))
-  (with-eval-after-load 'company-quickhelp
-    (define-key company-quickhelp-mode-map (kbd "M-h") nil)))
+    (define-key qjp-mode-map (kbd "C-<tab>") #'company-complete)))
 
 ;; ------------ ;;
 ;; helm-company ;;
@@ -98,7 +93,8 @@
     (yas-minor-mode +1))
   (with-eval-after-load 'qjp-mode
     (define-key ctrl-c-yasnippet-map "i" #'qjp-yasnippet-initialize)
-    (define-key ctrl-c-yasnippet-map "y" #'yas-insert-snippet)))
+    (define-key ctrl-c-yasnippet-map "y" #'yas-insert-snippet)
+    (define-key ctrl-c-yasnippet-map (kbd "<tab>") #'company-yasnippet)))
 
 ;; -------------- ;;
 ;; key-chord mode ;;
