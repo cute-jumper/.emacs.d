@@ -32,6 +32,12 @@
 
 (require 'qjp-defuns)
 
+;; key remapping
+(defmacro qjp-push-event (key-str)
+  `(lambda () (interactive)
+     (setq unread-command-events
+           (listify-key-sequence (kbd ,key-str)))))
+
 ;;; prefix for editting functions
 (define-prefix-command 'ctrl-c-extension-map)
 (defun qjp-mode-define-ctrl-c-extension-map ()
@@ -147,12 +153,6 @@
         (global-unset-key (kbd "M-o"))
         (define-key qjp-mode-map (kbd "M-o") #'other-window))
     (global-set-key (kbd "M-o") 'meta-o-map)))
-
-;; key remapping
-(defmacro qjp-push-event (key-str)
-  `(lambda () (interactive)
-     (setq unread-command-events
-           (listify-key-sequence (kbd ,key-str)))))
 
 (defun qjp-mode--keychord-remap (keychord key-str)
   (key-chord-define-global
