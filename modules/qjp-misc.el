@@ -153,7 +153,8 @@ Don't use this, use `region-bindings-mode-enable'."
   (defun qjp-pdf-view-mode-hook ()
     (pdf-tools-enable-minor-modes)
     (key-chord-define-local "jj" nil)
-    (setq pdf-view-display-size 'fit-height))
+    (setq pdf-view-display-size 'fit-height)
+    (auto-revert-mode +1))
   (with-eval-after-load 'pdf-view
     (add-hook 'pdf-view-mode-hook #'qjp-pdf-view-mode-hook)
     (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
