@@ -108,7 +108,7 @@
 
 (qjp-misc-config-inline key-chord
   (key-chord-mode +1)
-  (setq key-chord-two-keys-delay 0.5)
+  (setq key-chord-two-keys-delay 0.3)
   (fset 'key-chord-define 'qjp-key-chord-define))
 
 ;; -------------------- ;;
@@ -116,20 +116,7 @@
 ;; -------------------- ;;
 (qjp-misc-config-inline region-bindings
   (autoload 'region-bindings-mode-enable "region-bindings-mode")
-  (region-bindings-mode-enable)
-  (defun qjp-region-bindings-mode-on ()
-    "Turn on region bindings mode.
-Don't use this, use `region-bindings-mode-enable'."
-    (and (use-region-p)
-         (or (not region-bindings-mode-enabled-modes)
-             (memq major-mode region-bindings-mode-enabled-modes))
-         (not (memq major-mode region-bindings-mode-disabled-modes))
-         (not (catch 'disable
-                (dolist (pred region-bindings-mode-disable-predicates)
-                  (and (funcall pred)
-                       (throw 'disable t)))))
-         (region-bindings-mode 1)))
-  (fset 'region-bindings-mode-on 'qjp-region-bindings-mode-on))
+  (region-bindings-mode-enable))
 
 ;; ------------------ ;;
 ;; persistent-scratch ;;
@@ -197,7 +184,7 @@ Don't use this, use `region-bindings-mode-enable'."
     (setq ace-jump-helm-line-select-key ?e)
     (setq ace-jump-helm-line-move-only-key ?o)
     (setq ace-jump-helm-line-persistent-key ?p)
-    (define-key helm-map (kbd "C-'") #'ace-jump-helm-line)))
+    (define-key helm-map (kbd "C-;") #'ace-jump-helm-line)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
