@@ -10,72 +10,55 @@ My Emacs setup has borrowed a lot from the following sources:
 - [[https://github.com/technomancy/emacs-starter-kit/tree/v2][Emacs Starter Kit v2]]
 - [[http://emacswiki.org/][Emacs Wiki]]
 
-* Important Key Remapping
-At system level:
-1. Use [[https://github.com/alols/xcape][xcape]] to map =Space= to both =Space= and =Ctrl=.
-2. Swap =Caps Lock= and =Escape=.
-3. Swap =Right Alt= and =Menu= so that =Menu= is beside the =Space= key and can
-   be easily reached by the right thumb.
+* Important Key Bindings
+For old key remappings using =Space= as both =Space= and =Ctrl=, see [[http://cute-jumper.github.io/emacs/2016/02/22/my-simple-setup-to-avoid-rsi-in-emacs][this
+article]]. Now I'm using a combination of god-mode and evil-mode, which requires
+much less key mapping tweak.
 
-In Emacs:
-1. Remap =Escape= as =C-c=, pressed by the left pinky.
-2. Remap =Menu= as =C-x=, pressed by the right thumb.
+** New version of key bindings based on =god-mode= and =evil-mode=
+   These key bindings rely heavily on a customized version of =evil-god-state=.
 
-With these two most common prefix keys mapping to only one key, it is much
-easier for me to press key bindings in Emacs. Try out, and you can feel the
-same! Compared to =evil-leader=, it looks like we have =Menu= and =Escape= as
-our leader keys without having modal editing!
+   - In all states, =M-SPC= to =evil-execute-in-god-state=
+   - In normal/visual state, =SPC= to =evil-execute-in-god-state=
+   - In insert state, key chord =kk= to =evil-execute-in-god-state=, and key
+     chord =jj= to =evil-normal-state=
+   - =M-'= to simulate =C-g=
+   - In helm/isearch, =ESC= and key chord =jj= to =god-mode=
 
-Remap some common movement key bindings so that all the common movement key
-bindings(that *I* use) are starting with =C-=:
-1. =C-f= is =forward-word= and =C-b= is =backward-word=
-2. =C-h= is =backward-char= and =C-l= is =forward-char=
-3. =M-f= is =forward-sexp= and =M-b= is =backward-sexp=
-4. =C-i= is =undo=, =C-m= is =kill-word= and =M-d= is =down-list=
+   When in insert mode, use key chords to perform some small actions.
+   | Key Chords | Action                    |
+   |------------+---------------------------|
+   | xf         | find file                 |
+   | xs         | save file                 |
+   | bb         | switch buffers            |
 
-Use a global minor mode with the highest priority to make sure the key remapping
-always works.
-
-See [[http://cute-jumper.github.io/emacs/2016/02/22/my-simple-setup-to-avoid-rsi-in-emacs][this article]] for more details. Note that in that article, I didn't include
-all my personal settings shown in this section. Only two most important parts
-are explained.
-
-* New version of key bindings based on =evil-mode= and =god-mode=
-  - In all states, =M-m= to =evil-execute-in-god-state=
-  - In normal/visual state, =SPC= to =evil-execute-in-god-state=
-  - In insert state, key chord =kk= to =evil-execute-in-god-state=, and key
-    chord =jj= to =evil-normal-state=
-  - =M-'= to simulate =C-g=
-  - In helm/isearch, =ESC= and key chord =jj= to =god-mode=
-
-  When in insert mode, use key chords to perform some small actions.
-  | Key Chords | Action                    |
-  |------------+---------------------------|
-  | xf         | find file                 |
-  | xs         | save file                 |
-  | bb         | switch buffers            |
-
-  These key chords are available globally.
-  | Key Chords | Action                    |
-  | ;a         | beginning of line         |
-  | ;e         | end of line               |
-  | ;n         | next line                 |
-  | ;u         | previous line             |
-  | ;f         | forward char              |
-  | ;b         | backward char             |
-  | ;s         | isearch forward           |
-  | ;d         | delete char               |
-  | ;y         | yank                      |
-  | ;w         | kill region               |
-  | ;g         | quit                      |
-  | ;z         | undo                      |
-  | ;;         | insert ';' at end of line |
-  | ;1         | C-x 1                     |
-  | ;2         | C-x 2                     |
-  | ;3         | C-x 3                     |
-  | ;o         | C-x o                     |
+   These key chords are available globally.
+   | Key Chords | Action                    |
+   | ;a         | beginning of line         |
+   | ;e         | end of line               |
+   | ;n         | next line                 |
+   | ;u         | previous line             |
+   | ;f         | forward char              |
+   | ;b         | backward char             |
+   | ;s         | isearch forward           |
+   | ;d         | delete char               |
+   | ;y         | yank                      |
+   | ;w         | kill region               |
+   | ;g         | quit                      |
+   | ;z         | undo                      |
+   | ;;         | insert ';' at end of line |
+   | ;1         | C-x 1                     |
+   | ;2         | C-x 2                     |
+   | ;3         | C-x 3                     |
+   | ;o         | C-x o                     |
+** Optional Key Tweaks
+   - Using [[https://github.com/alols/xcape][xcape]] to bind CapsLock to both =Ctrl= and =Escape=
+   - Using =xmodmap= to bind the =<menu>= key to the right of the =Space=, and
+     map =<menu>= to be =C-c= in Emacs, which make =C-c= accessible using only
+     one key in all modes.
 
 ** Plugins for Evil
+   - =evil-embrace=
    - =evil-surround=
    - =evil-visualstar=
    - =evil-indent-plus=
