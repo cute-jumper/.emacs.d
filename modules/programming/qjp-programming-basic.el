@@ -96,9 +96,14 @@ cursor to the new line."
 
 (add-hook 'prog-mode-hook #'qjp-prog-mode-hook)
 
-;; company-shell
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-shell))
+;; sh-mode
+;; zsh
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+
+(defun qjp-sh-mode-hook ()
+  (add-to-list (make-local-variable 'company-backends) 'company-shell))
+
+(add-hook 'sh-mode-hook 'qjp-sh-mode-hook)
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
