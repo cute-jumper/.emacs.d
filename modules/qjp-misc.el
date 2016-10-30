@@ -193,6 +193,13 @@
   (setq ace-pinyin-use-avy t)
   (ace-pinyin-global-mode +1))
 
+(qjp-misc-config-inline embrace
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-,") #'embrace-commander))
+  (evil-embrace-enable-evil-surround-integration)
+  (add-hook 'LaTeX-mode-hook 'embrace-LaTeX-mode-hook)
+  (add-hook 'org-mode-hook 'embrace-org-mode-hook))
+
 ;; --------- ;;
 ;; jump-char ;;
 ;; --------- ;;
@@ -258,52 +265,6 @@
     (define-key ctrl-c-git-grep-map "s" #'magit-status)
     (define-key ctrl-c-git-grep-map "c" #'magit-clone)
     (define-key ctrl-c-git-grep-map "i" #'magit-init)))
-
-;; god-mode
-(qjp-misc-config-inline god-mode
-  (with-eval-after-load 'qjp-mode
-    ;; convenient window management key bindings
-    (define-key qjp-mode-map (kbd "C-x C-1") 'delete-other-windows)
-    (define-key qjp-mode-map (kbd "C-x C-2") 'split-window-below)
-    (define-key qjp-mode-map (kbd "C-x C-3") 'split-window-right)
-    (define-key qjp-mode-map (kbd "C-x C-0") 'delete-window)
-    (define-key qjp-mode-map (kbd "C-x C-b") 'helm-mini)
-    (define-key qjp-mode-map (kbd "C-x M-b") 'ibuffer)
-    (define-key qjp-mode-map (kbd "C-x C-;") 'mode-line-other-buffer)
-    (qjp-define-highest-priority-mode-function god-local-mode)
-    (defun qjp-god-mode-enable-hook ()
-      (set (make-local-variable 'input-method-function) nil)
-      (qjp-gain-highest-keys-priority-god-local-mode nil)
-      (if (and (fboundp 'evil-emacs-state-p)
-               (evil-emacs-state-p))
-          (setq evil-emacs-state-cursor 'hollow)
-        (setq cursor-type 'hollow)))
-    (add-hook 'god-mode-enabled-hook 'qjp-god-mode-enable-hook)
-    (defun qjp-god-mode-disable-hook ()
-      (setq input-method-function 'key-chord-input-method)
-      (if (and (fboundp 'evil-emacs-state-p)
-               (evil-emacs-state-p))
-          (setq evil-emacs-state-cursor 'bar)
-        (setq cursor-type 'bar)))
-    (add-hook 'god-mode-disabled-hook 'qjp-god-mode-disable-hook))
-  (with-eval-after-load 'god-mode
-    (define-key god-local-mode-map "m" #'kill-word)
-    (define-key god-local-mode-map "i" #'backward-kill-word)
-    (define-key god-local-mode-map "." #'repeat)
-    ;; isearch god-mode integration
-    (require 'god-mode-isearch)
-    (defun qjp-god-mode-isearch-activate ()
-      (interactive)
-      (set-cursor-color "yellow")
-      (god-mode-isearch-activate))
-    (define-key isearch-mode-map (kbd "<escape>") #'qjp-god-mode-isearch-activate)
-    (qjp-key-chord-define isearch-mode-map "jj" #'qjp-god-mode-isearch-activate)
-    (defun qjp-god-mode-isearch-disable ()
-      (interactive)
-      (set-cursor-color "white")
-      (god-mode-isearch-disable))
-    (define-key god-mode-isearch-map (kbd "<escape>") 'qjp-god-mode-isearch-disable)
-    (add-hook 'isearch-mode-end-hook (lambda () (set-cursor-color "white")))))
 
 ;; ------------ ;;
 ;; indent-guide ;;
