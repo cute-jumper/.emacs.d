@@ -224,7 +224,16 @@
                   er/mark-url
                   er/mark-email
                   er/mark-symbol))
-    (autoload func "expand-region")))
+    (autoload func "expand-region")
+    (with-eval-after-load 'qjp-mode
+      (define-key qjp-mode-map (kbd "C-=") #'er/expand-region))))
+
+;; ------------- ;;
+;; restart-emacs ;;
+;; ------------- ;;
+(qjp-misc-config-inline restart-emacs
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-c q R") #'restart-emacs)))
 
 ;; ------ ;;
 ;; ispell ;;
