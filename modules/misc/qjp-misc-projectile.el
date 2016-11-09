@@ -31,7 +31,7 @@
 (setq projectile-cache-file (expand-file-name "projectile.cache"
                                               qjp-base-dir))
 (setq projectile-enable-caching t)
-(autoload 'helm-projectile-switch-project "helm-projectile")
+(autoload 'helm-projectile-switch-project "helm-projectile" nil t)
 (setq projectile-keymap-prefix (kbd "C-c p"))
 
 (with-eval-after-load 'projectile
