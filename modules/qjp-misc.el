@@ -507,6 +507,12 @@
   (setq paradox-github-token t)
   (setq paradox-execute-asynchronously t))
 
+;; ----- ;;
+;; wgrep ;;
+;; ----- ;;
+(qjp-misc-config-inline wgrep
+  (with-eval-after-load 'wgrep
+    (setq wgrep-enable-key (kbd "C-x C-q"))))
 
 ;; --------------- ;;
 ;; gscholar-bibtex ;;
@@ -566,29 +572,28 @@
 (defvar qjp-enabled-misc-settings-list
   '(avy avy-zap ace-flyspell ace-jump-helm-line ace-link ace-pinyin anchored-transpose anzu auto-insert
         beacon bing-dict
-        company change-inner
+        company change-inner composable
         dired diminish diff-hl
-        easypg expand-region easy-kill
-        easypg expand-region easy-kill evil-surround evil
+        easypg expand-region easy-kill evil-surround evil embrace
         flyspell flycheck
-        gmpl-mode gscholar-bibtex google-this
-        helm hs fcitx hydra;; loaded after helm
         gmpl-mode gscholar-bibtex google-this god-mode
+        helm helm-company hs fcitx hydra;; loaded after helm
         highlight-symbol ispell
-        ;;jump-char
+        indent-guide
+        jump-char
         key-chord keyfreq
-        lacarte
+        lacarte linum-relative
         magit markdown multiple-cursors
-        pdf-tools projectile
+        persistent-scratch pdf-tools projectile
         paradox quickrun
-        rebox region-bindings
+        rebox region-bindings restart-emacs
         sml nyan;; load after sml
         sr-speedbar smartparens
         term
         undo-tree
         visual-regexp volatile-highlights
-        whitespace-cleanup whole-line-or-region workgroups2 which-key
-        ;;yasnippet
+        whitespace-cleanup whole-line-or-region workgroups2 which-key wgrep
+        yasnippet
         )
   "The names for the packages that should be enabled.")
 
