@@ -362,6 +362,13 @@
     (set-face-attribute 'highlight-symbol-face nil
                         :weight 'semi-bold :underline t)))
 
+;; --------------------- ;;
+;; highlight-parentheses ;;
+;; --------------------- ;;
+(qjp-misc-config-inline highlight-parentheses
+  (setq hl-paren-colors nil)
+  (setq hl-paren-background-colors '("Red4" "Red3" "DarkOrange3" "SeaGreen")))
+
 ;; --------------- ;;
 ;; smart mode line ;;
 ;; --------------- ;;
