@@ -62,25 +62,6 @@
     (find-file
      (expand-file-name shell-init-file (getenv "HOME")))))
 
-;; ------------- ;;
-;; Change themes ;;
-;; ------------- ;;
-;; TODO: generalize it maybe!
-(defun qjp-switch-theme ()
-  (interactive)
-  (require 'qjp-basic)
-  (let ((word
-         (completing-read
-          "Choose a theme set(dark or light):"
-          '(dark light))))
-    (cond
-     ((string= word "dark")
-      (load-theme qjp-theme t)
-      (sml/apply-theme 'dark))
-     ((string= word "light")
-      (disable-theme qjp-theme)
-      (sml/apply-theme 'light)))))
-
 ;; ------------------ ;;
 ;;  *scratch* related ;;
 ;; ------------------ ;;

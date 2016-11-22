@@ -51,7 +51,7 @@
                (setq cursor-type 'box)
                (message "Enter hydra-vi"))
              :post (progn
-                     (set-cursor-color "#ffffff")
+                     (set-cursor-color qjp-cursor-color)
                      (setq cursor-type 'bar)
                      (message "Leave hydra-vi")))
   "vi"
@@ -97,20 +97,32 @@
   ("i" nil "quit")
   ("q" nil "quit"))
 
-(with-eval-after-load 'qjp-mode
-  ;;(qjp-define-keychord-with-hydra "j" "i" #'hydra-vi/body)
-  (qjp-key-chord-define qjp-mode-map "jj" #'hydra-vi/body))
+;; (with-eval-after-load 'qjp-mode
+;;   ;;(qjp-define-keychord-with-hydra "j" "i" #'hydra-vi/body)
+;;   (qjp-key-chord-define qjp-mode-map "jj" #'hydra-vi/body))
 
+;; ------------------------ ;;
+;; Hydra for line movements ;;
+;; ------------------------ ;;
 ;; This reserves the behavior for M-g M-g
 (defhydra hydra-goto-line (goto-map ""
                                     :pre (nlinum-mode 1)
                                     :post (nlinum-mode -1))
-  "goto-line/goto-error"
+  "line movements"
   ("g" avy-goto-line "go")
   ("SPC" set-mark-command "mark" :bind nil)
-  ("n" next-error)
-  ("p" previous-error)
   ("q" nil "quit"))
+
+(defhydra hydra-errors (:body-pre (setq hydra-is-helpful t)
+                                  :post (setq hydra-is-helpful nil)t)
+  "Hydra for errors"
+  ("n" next-error "next")
+  ("p" previous-error "previous")
+  ("f" first-error "first"))
+
+(with-eval-after-load 'qjp-mode
+  (define-key qjp-mode-map (kbd "M-g n") #'hydra-errors/next-error)
+  (define-key qjp-mode-map (kbd "M-g p") #'hydra-errors/previous-error))
 
 ;; ----------------------------- ;;
 ;; Hydra for rectangle operation ;;
@@ -166,11 +178,11 @@ _h_   _l_   _o_pen      _y_ank
                                 :exit t)
   "hydra for mark commands"
   ("=" er/expand-region)
-  ("m" er/expand-region)
-  ("P" er/mark-inside-pairs)
-  ("Q" er/mark-inside-quotes)
-  ("p" er/mark-outside-pairs)
-  ("q" er/mark-outside-quotes)
+  ("SPC" er/expand-region)
+  ("ip" er/mark-inside-pairs)
+  ("iq" er/mark-inside-quotes)
+  ("ap" er/mark-outside-pairs)
+  ("aq" er/mark-outside-quotes)
   ("d" er/mark-defun)
   ("c" er/mark-comment)
   ("." er/mark-text-sentence)
@@ -182,13 +194,10 @@ _h_   _l_   _o_pen      _y_ank
   ("k" (call-interactively 'pop-global-mark) :exit nil)
   ("w" avy-goto-word-1 "goto word 1")
   ("W" avy-goto-word-2 "goto word 2")
-  ("i" avy-goto-word-0-in-line "goto word 0 in line")
-  ("I" avy-goto-char-in-line "goto char in line")
   ("l" avy-goto-line "goto line"))
 
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-=") #'hydra-mark/body)
-  (define-key qjp-mode-map (kbd "H-m") #'hydra-mark/body))
+  (define-key qjp-mode-map (kbd "C-SPC") #'hydra-mark/body))
 
 ;; ---------------------- ;;
 ;; hydra for evil numbers ;;
@@ -203,7 +212,7 @@ _h_   _l_   _o_pen      _y_ank
 ;; Hydra for goto-last-change ;;
 ;; -------------------------- ;;
 (defhydra hydra-goto-last-change
-  (qjp-mode-map "C-c")
+  (qjp-mode-map "C-x")
   "hydra goto previous/next change"
   ("\\" goto-last-change)
   ("|" goto-last-change-reverse))
@@ -228,7 +237,8 @@ _h_   _l_   _o_pen      _y_ank
   ("r" delete-other-windows "delete other windows")
   ("h" split-window-horizontally "split horizontally")
   ("v" split-window-vertically "split vertically")
-  ("b" helm-mini "switch buffer"))
+  ("b" helm-mini "switch buffer")
+  ("q" nil "quit"))
 
 (with-eval-after-load 'qjp-mode
   (define-key qjp-mode-map (kbd "C-c w") #'hydra-manage-window/body))

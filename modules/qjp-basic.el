@@ -96,9 +96,7 @@
                  (setq zh-size 18)
                  (setq unicode-font "Arial Unicode MS")))
       (set-frame-font en-font)
-      (setq default-frame-alist
-            `((font . ,en-font)
-              (cursor-color . "white")))
+      (setq default-frame-alist `((font . ,en-font)))
       (set-fontset-font
        (frame-parameter nil 'font)
        'han
@@ -107,7 +105,27 @@
 
 ;; Temporarily, try out another theme other than `zenburn'
 (defvar qjp-theme 'ample)
-(load-theme qjp-theme t)
+(defvar qjp-cursor-color nil)
+;; ------------- ;;
+;; Change themes ;;
+;; ------------- ;;
+;; TODO: generalize it maybe!
+(defun qjp-switch-theme (word)
+  (interactive (list (completing-read
+                      "Choose a theme set(dark or light):"
+                      '(dark light))))
+  (cond
+   ((string= word "dark")
+    (load-theme qjp-theme t)
+    (when (fboundp 'sml/apply-theme)
+      (sml/apply-theme 'dark))
+    (setq qjp-cursor-color (frame-parameter nil 'cursor-color)))
+   ((string= word "light")
+    (disable-theme qjp-theme)
+    (when (fboundp 'sml/apply-theme)
+      (sml/apply-theme 'light))
+    (setq qjp-cursor-color (frame-parameter nil 'cursor-color)))))
+(qjp-switch-theme 'dark)
 ;; Finally, use `zenburn' as the default theme. It's a really cool theme!
 ;;(load-theme 'zenburn t)
 ;; Minor fix for volitile-highlight
