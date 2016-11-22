@@ -347,11 +347,55 @@
   (add-hook 'term-mode-hook (lambda () (yas-minor-mode -1))))
 
 ;; ---------- ;;
+;; composable ;;
+;; ---------- ;;
+(qjp-misc-config-inline composable
+  (autoload 'composable-kill-region "composable" nil t)
+  (with-eval-after-load 'composable
+    (define-key composable-object-mode-map "x" #'mark-sexp)
+    (define-key composable-object-mode-map "s" #'composable-mark-symbol)
+    (define-key composable-object-mode-map "d" #'er/mark-defun)
+    (define-key composable-object-mode-map "i" #'change-inner)
+    (define-key composable-object-mode-map "o" #'change-outer))
+  (with-eval-after-load 'qjp-mode
+    (define-key qjp-mode-map (kbd "C-w") #'composable-kill-region)))
+
+;; ---------- ;;
 ;; rebox-mode ;;
 ;; ---------- ;;
 (qjp-misc-config-inline rebox
   "See the source code to find out styles. Use hydra for key bindings."
   (setq rebox-style-loop '(21 23 25)))
+
+(qjp-misc-config-inline linum-relative
+  (setq linum-relative-plusp-offset 1)
+  (setq linum-relative-current-symbol "1"))
+
+;; ------------- ;;
+;; evil-surround ;;
+;; ------------- ;;
+(qjp-misc-config-inline evil-surround
+  (autoload 'evil-surround-outer-overlay "evil-surround")
+  (autoload 'evil-surround-inner-overlay "evil-surround")
+  (defun qjp-evil-surround-change (char &optional outer inner)
+    (interactive "cOld surround: ")
+    (cond
+     ((and outer inner)
+      (evil-surround-delete char outer inner)
+      (let ((key (read-char "New surround: ")))
+        (evil-surround-region (overlay-start outer)
+                              (overlay-end outer)
+                              nil (if (evil-surround-valid-char-p key) key char))))
+     (t
+      (let* ((outer (evil-surround-outer-overlay char))
+             (inner (evil-surround-inner-overlay char)))
+        (unwind-protect
+            (when (and outer inner)
+              (qjp-evil-surround-change char outer inner))
+          (when outer (delete-overlay outer))
+          (when inner (delete-overlay inner)))))))
+  (with-eval-after-load 'qjp-mode
+    (define-key ctrl-c-extension-map "p" #'qjp-evil-surround-change)))
 
 ;; ---------------- ;;
 ;; highlight-symbol ;;
