@@ -483,8 +483,7 @@
 ;; --------- ;;
 (qjp-misc-config-inline easy-kill
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)
-    (define-key ctrl-c-mark-map (kbd "SPC") #'easy-mark)))
+    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
 
 ;; ----------- ;;
 ;; google-this ;;
