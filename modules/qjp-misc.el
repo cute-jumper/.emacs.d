@@ -288,13 +288,24 @@
   (setq which-key-idle-delay 1.0)
   (setq which-key-special-keys nil)
   (setq which-key-sort-order 'which-key-description-order)
+  (autoload 'which-key--show-keymap "which-key")
+  (defun qjp-which-key-show-major-mode-keymap (&optional initial-input)
+    "Show the top-level bindings in KEYMAP using which-key. KEYMAP
+is selected interactively from all available keymaps."
+    (interactive)
+    (which-key--show-keymap (symbol-name major-mode)
+                            (eval (intern (format "%s-map" major-mode)))))
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c ?") #'which-key-show-top-level))
+    (define-key qjp-mode-map (kbd "C-c ?") #'which-key-show-top-level)
+    (define-key qjp-mode-map (kbd "C-c /") #'qjp-which-key-show-major-mode-keymap))
+  (which-key-add-key-based-replacements
+    "C-c p" "projectile")
   (which-key-add-key-based-replacements
     "C-c f" "useful commands")
   (which-key-add-key-based-replacements
-    "C-c q" "visual replace/quickrun")
-  (which-key-mode +1))
+    "C-c q" "visual replace/quickrun/quit")
+  (which-key-mode +1)
+  (which-key-enable-god-mode-support))
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
