@@ -92,7 +92,7 @@
 ;; ---------------- ;;
 ;; universal key binding
 (with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-m") 'evil-execute-in-god-state))
+  (define-key qjp-mode-map (kbd "M-SPC") 'evil-execute-in-god-state))
 ;; evil mode key bindings
 (define-key evil-normal-state-map (kbd "SPC") 'evil-execute-in-god-state)
 (define-key evil-visual-state-map (kbd "SPC") 'evil-execute-in-god-state)
@@ -305,8 +305,8 @@
 ;; more consistent feel
 (define-key evil-emacs-state-map (kbd "<escape>") #'evil-exit-emacs-state)
 (qjp-key-chord-define evil-emacs-state-map "jj" #'evil-exit-emacs-state)
-;; M-m and kk make no sense to only execute god once in emacs state, so
-(define-key evil-emacs-state-map (kbd "M-m") #'god-local-mode)
+;; M-SPC and kk make no sense to only execute god once in emacs state, so
+(define-key evil-emacs-state-map (kbd "M-SPC") #'god-local-mode)
 (qjp-key-chord-define evil-emacs-state-map "kk" #'god-local-mode)
 (add-to-list 'evil-emacs-state-modes 'dired-mode)
 (setq evil-emacs-state-cursor 'bar)
