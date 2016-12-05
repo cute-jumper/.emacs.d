@@ -49,10 +49,31 @@
    ((not (eq c ?\()) (insert-pair 0 c c))
    (t (insert-pair 0 ?\( ?\)))))
 
+;; `irony-mode'
+(defun qjp-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async)
+  (irony-cdb-autosetup-compile-options)
+  (irony-eldoc +1))
+
+(add-hook 'irony-mode-hook 'qjp-irony-mode-hook)
+
+;; `company-irony' and `company-irony-c-headers'
+(with-eval-after-load 'company
+  (add-to-list 'company-backends '(company-irony company-irony-c-headers)))
+
+;; `flycheck-irony'
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+
 (defun qjp-c-cpp-mode-hook ()
   (local-set-key [(return)] #'qjp-electrify-return-if-match)
   (local-set-key (kbd "M-(") #'qjp-insert-parentheses)
-  (local-set-key (kbd "C-m") #'up-list))
+  (irony-mode +1)
+  (rtags-start-process-unless-running)
+  (rtags-enable-standard-keybindings c-mode-base-map (kbd "C-c r")))
 
 (add-hook 'c-mode-hook #'qjp-c-cpp-mode-hook)
 (add-hook 'c++-mode-hook #'qjp-c-cpp-mode-hook)
