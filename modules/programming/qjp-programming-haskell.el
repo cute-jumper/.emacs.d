@@ -124,7 +124,6 @@
   "My mode hook for haskell-mode."
   (qjp-haskell-mode-basic-hook)
   (haskell-indentation-mode +1)
-  (flycheck-haskell-setup)
   ;; prettify-symbols
   (setq-local prettify-symbols-alist
               qjp-programming-haskell-prettify-symbols-alist)
@@ -149,6 +148,9 @@
 (add-hook 'inferior-haskell-mode-hook #'qjp-haskell-mode-basic-hook)
 (add-hook 'haskell-interactive-mode-hook #'qjp-haskell-mode-basic-hook)
 (add-hook 'haskell-mode-hook #'qjp-haskell-mode-hook)
+
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (provide 'qjp-programming-haskell)
 ;;; qjp-programming-haskell.el ends here
