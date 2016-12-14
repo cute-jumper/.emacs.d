@@ -63,10 +63,10 @@
   (qjp-key-chord-define isearch-mode-map "jj" #'qjp-god-mode-isearch-activate)
   (defun qjp-god-mode-isearch-disable ()
     (interactive)
-    (set-cursor-color "white")
+    (set-cursor-color qjp-cursor-color)
     (god-mode-isearch-disable))
   (define-key god-mode-isearch-map (kbd "<escape>") 'qjp-god-mode-isearch-disable)
-  (add-hook 'isearch-mode-end-hook (lambda () (set-cursor-color "white"))))
+  (add-hook 'isearch-mode-end-hook (lambda () (set-cursor-color qjp-cursor-color))))
 
 (provide 'qjp-misc-god-mode)
 ;;; qjp-misc-god-mode.el ends here
