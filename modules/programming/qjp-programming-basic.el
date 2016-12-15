@@ -25,23 +25,43 @@
 
 ;;; Code:
 
-;; ------------------------- ;;
-;; `auto-mode-alist' related ;;
-;; ------------------------- ;;
-;; zsh
-(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
-
-;; save point postiion in file
-(require 'saveplace)
-
 ;; Enable which-function-mode
 (which-function-mode +1)
+(setq which-func-unknown "n/a")
+;; truncate which-func information
+(defun qjp-which-func-current ()
+  (let ((current (gethash (selected-window) which-func-table)))
+    (if current
+        (string-reverse (truncate-string-to-width (string-reverse current) 20 nil nil "…"))
+      which-func-unknown)))
+(setq which-func-format
+      `("["
+        (:propertize (:eval (qjp-which-func-current))
+                     local-map ,which-func-keymap
+                     face which-func
+                     mouse-face mode-line-highlight
+                     help-echo "mouse-1: go to beginning\n\
+mouse-2: toggle rest visibility\n\
+mouse-3: go to end")
+        "]"))
+;; Move which-function to more important place
+(let ((which-func '(which-func-mode ("" which-func-format " ")))
+      cell)
+  (setq-default mode-line-format (remove which-func mode-line-format))
+  (setq-default mode-line-misc-info (remove which-func mode-line-misc-info))
+  (setq cell (last mode-line-format 8))
+  (setcdr cell
+          (cons which-func
+                (cdr cell)))
+  (setq-default mode-line-format (append (butlast mode-line-format 8)
+                                         cell)))
+(set-face-foreground 'which-func (face-foreground font-lock-function-name-face))
+
 ;; Set which-function-mode to show in header line
 ;; (setq-default header-line-format
 ;;               '((which-func-mode ("" which-func-format " "))))
 ;; (setq mode-line-misc-info
 ;;       (assq-delete-all 'which-func-mode mode-line-misc-info))
-(setq which-func-unknown "n/a")
 
 ;; --------------- ;;
 ;; electriy-return ;;
