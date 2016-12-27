@@ -508,8 +508,8 @@ is selected interactively from all available keymaps."
 ;; ------------ ;;
 (qjp-misc-config-inline change-inner
   (with-eval-after-load 'qjp-mode
-    (define-key meta-i-map (kbd "i") 'change-inner)
-    (define-key meta-i-map (kbd "o") 'change-outer)))
+    (define-key ctrl-c-extension-map (kbd "i") 'change-inner)
+    (define-key ctrl-c-extension-map (kbd "o") 'change-outer)))
 
 ;; -------------------- ;;
 ;; centered-cursor-mode ;;
