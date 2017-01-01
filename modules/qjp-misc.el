@@ -480,7 +480,7 @@ is selected interactively from all available keymaps."
 ;; ------------------ ;;
 (qjp-misc-config-inline anchored-transpose
   (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c t") 'anchored-transpose)))
+    (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose)))
 
 ;; ------- ;;
 ;; lacarte ;;
