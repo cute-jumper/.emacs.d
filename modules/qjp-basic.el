@@ -104,7 +104,7 @@
       (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
 ;; Temporarily, try out another theme other than `zenburn'
-(defvar qjp-theme 'ample)
+(defvar qjp-theme 'ample-flat)
 (defvar qjp-cursor-color nil)
 ;; ------------- ;;
 ;; Change themes ;;
