@@ -21,3 +21,4 @@ url
 /.emacs.desktop.lock
 /.persistent-scratch
 /ensime
+/tldr/
