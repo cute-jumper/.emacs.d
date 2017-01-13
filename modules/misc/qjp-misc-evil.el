@@ -210,6 +210,16 @@
 
 (add-hook 'view-mode-hook 'evil-motion-state)
 
+;; ---- ;;
+;; helm ;;
+;; ---- ;;
+;; From Spacemacs
+(defun qjp-helm-window-hide-cursor ()
+  (with-helm-buffer
+    (setq cursor-in-non-selected-windows nil)))
+
+(add-hook 'helm-after-initialize-hook #'qjp-helm-window-hide-cursor)
+
 ;; ------------------------------ ;;
 ;; pp-eval buffer in insert state ;;
 ;; ------------------------------ ;;
