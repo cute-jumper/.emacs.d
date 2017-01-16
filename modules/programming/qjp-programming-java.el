@@ -27,7 +27,13 @@
 ;; ---- ;;
 ;; Java ;;
 ;; ---- ;;
-(add-hook 'java-mode-hook (lambda () (local-set-key [(return)] 'electrify-return-if-match)))
+(autoload 'ensime-mode "ensime")
+(defun qjp-java-mode-hook ()
+  (ensime-mode +1)
+  (subword-mode +1)
+  (local-set-key [(return)] #'qjp-electrify-return-if-match))
+
+(add-hook 'java-mode-hook #'qjp-java-mode-hook)
 
 (provide 'qjp-programming-java)
 ;;; qjp-programming-java.el ends here
