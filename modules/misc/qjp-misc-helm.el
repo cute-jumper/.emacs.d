@@ -155,7 +155,9 @@
 (with-eval-after-load 'qjp-mode
   (define-key ctrl-c-git-grep-map "a" #'helm-ag)
   (define-key ctrl-c-git-grep-map "h" #'helm-do-ag)
-  (define-key ctrl-c-git-grep-map "p" #'helm-do-ag-project-root))
+  (define-key ctrl-c-git-grep-map "p" #'helm-do-ag-project-root)
+  (define-key ctrl-c-git-grep-map "/" #'helm-find)
+  (define-key ctrl-c-git-grep-map "g" #'helm-grep-do-git-grep))
 
 ;; helm-swoop
 (setq helm-swoop-speed-or-color t) ;; Color needed
