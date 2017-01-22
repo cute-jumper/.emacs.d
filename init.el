@@ -81,9 +81,22 @@
                             qjp-before-init-time)))
 ;; Welcome message
 (setq initial-scratch-message
-      (format "%s;; Your initilization takes %.3f s.
-;; Welcome to Emacs %s, %s:-)\n\n"
+      (format "%s\
+;; %d packages loaded in %.3f.
+;;
+;;  ____________________________
+;; | Welcome to Emacs %s,
+;; |      %s
+;;  ----------------------------
+;;         \\   ^__^
+;;          \\  (oo)\\_______
+;;             (__)\\       )\\/\\
+;;                 ||----w |
+;;                 ||     ||
+
+"
               initial-scratch-message
+              (length package-alist)
               qjp-init-duration
               emacs-version
               user-full-name))
