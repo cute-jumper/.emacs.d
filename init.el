@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+;; (package-initialize)
+
 (defvar qjp-before-init-time (current-time))
 
 ;; Define directories for the very root, the startup code , modules and other
