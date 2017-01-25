@@ -47,50 +47,19 @@
 ;; ---------- ;;
 ;; eldoc mode ;;
 ;; ---------- ;;
-(require 'eldoc)
 
 ;; Source: http://emacswiki.org/emacs/ElDoc
-;; Since `flet' is obsolete, use `qjp--flet' instead(dynamic scoping needed)
-(defadvice eldoc-highlight-function-argument
-    (around my-formatting (sym args index) compile activate preactivate)
-  "Replace original to apply my style of formatting."
-  ;; HACK: intercept the call to eldoc-docstring-format-sym-doc at the
-  ;; end of the adviced function. This is obviously brittle, but the
-  ;; alternative approach of copy/pasting the original also has
-  ;; downsides...
-  (qjp--flet (eldoc-docstring-format-sym-doc
-              (sym doc face)
-              (let* ((function-name (propertize (symbol-name sym)
-                                                'face face))
-                     (spec (format "%s %s" function-name doc))
-                     (docstring (or (eldoc-docstring-first-line
-                                     (documentation sym t))
-                                    "Undocumented."))
-                     (docstring (propertize docstring
-                                            'face 'font-lock-doc-face))
-                     ;; TODO: currently it strips from the start of spec by
-                     ;; character instead of whole arguments at a time.
-                     (fulldoc (format "%s %s" spec docstring))
-                     (ea-width (1- (window-width (minibuffer-window))))
-                     (diff (- (length fulldoc) ea-width)))
-                (cond ((or (<= (length fulldoc) ea-width)
-                           (eq eldoc-echo-area-use-multiline-p t)
-                           (and eldoc-echo-area-use-multiline-p
-                                (> (length docstring) ea-width)))
-                       fulldoc)
-                      ((> (length docstring) ea-width)
-                       (substring docstring 0 ea-width))
-                      ((>= (- (length fulldoc) (length spec)) ea-width)
-                       docstring)
-                      ((<= diff (1+ (length function-name)))
-                       ;; Show the end of the partial symbol name, rather
-                       ;; than the beginning, since the former is more likely
-                       ;; to be unique given package namespace conventions.
-                       (setq spec (substring spec (- (length fulldoc) ea-width)))
-                       (format "%s %s" spec docstring))
-                      (t
-                       (format "%s %s" doc docstring)))))
-    ad-do-it))
+(defadvice elisp-get-fnsym-args-string (after add-docstring activate compile)
+  "Add a 1st line of docstring to ElDoc's function information."
+  (when ad-return-value
+    (let* ((doc (elisp--docstring-first-line (documentation (ad-get-arg 0) t)))
+           (w (frame-width))
+           (color-doc (propertize doc 'face 'font-lock-comment-face)))
+      (when (and doc (not (string= doc "")))
+        (setq ad-return-value (concat ad-return-value " " color-doc))
+        (when (> (length doc) w)
+          (setq ad-return-value (substring ad-return-value 0 (1- w))))))
+    ad-return-value))
 
 ;; ------------------ ;;
 ;; Evaluation related ;;
