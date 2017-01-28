@@ -49,7 +49,7 @@
                  (not (eq (current-buffer) orig)))
         (kill-buffer orig))))
 
-  (defadvice dired-up-directory (around dired-up-directory-single-buffer activate)
+  (defadvice diredp-up-directory (around dired-up-directory-single-buffer activate)
     "Replace current buffer if file is a directory."
     (interactive)
     (let ((orig (current-buffer)))
