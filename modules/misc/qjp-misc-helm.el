@@ -50,13 +50,14 @@
   (setq helm-google-suggest-use-curl-p t))
 
 (setq helm-split-window-in-side-p t
-      helm-buffers-fuzzy-matching t
-      helm-M-x-fuzzy-match t
-      ;;helm-move-to-line-cycle-in-source t
+      ;; helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
       ;; Following is good, but sometimes annoying
       ;;helm-ff-auto-update-initial-value t
-      helm-ff-file-name-history-use-recentf t)
+      helm-ff-file-name-history-use-recentf t
+      ;; ignore case
+      ;; helm-case-fold-search 'smart
+      )
 
 ;; Helm-mode is slow (more than 0.5s to start)
 (with-eval-after-load 'helm
@@ -66,12 +67,10 @@
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
   ;; list actions using C-z
   (define-key helm-map (kbd "C-z")  'helm-select-action)
-  ;; use <escape> to entery `god-mode'
-  (define-key helm-map (kbd "<escape>") 'god-local-mode)
-  (qjp-key-chord-define helm-map "jj" 'god-local-mode)
   (helm-mode +1)
-  (helm-autoresize-mode t)
-  (helm-descbinds-mode)
+  (helm-autoresize-mode +1)
+  (helm-descbinds-mode +1)
+  (helm-flx-mode +1)
   ;; Hide header when only one source
   ;; From: https://www.reddit.com/r/emacs/comments/2z7nbv/lean_helm_window
   (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
@@ -96,7 +95,9 @@
                           :height 0.1)))
   (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
   ;; helm-swoop
-  (require 'helm-swoop))
+  (require 'helm-swoop)
+  ;; helm-projectile
+  (require 'helm-projectile))
 
 (with-eval-after-load 'helm-files
   ;; Let helm support zsh-like path expansion.
@@ -164,6 +165,24 @@
 
 ;; helm-bibtex
 (setq helm-bibtex-bibliography qjp-bibtex-database-file)
+
+;; ----------------------------------------- ;;
+;; fuzzy-match for all helm related packages ;;
+;; ----------------------------------------- ;;
+(setq helm-M-x-fuzzy-match t
+      helm-ff-fuzzy-matching t
+      helm-buffers-fuzzy-matching t
+      helm-apropos-fuzzy-match t
+      helm-completion-in-region-fuzzy-match t
+      helm-file-cache-fuzzy-match t
+      helm-recentf-fuzzy-match t
+      helm-locate-library-fuzzy-match t
+      helm-locate-fuzzy-match t
+      helm-mode-fuzzy-match t
+      ;; third-party
+      helm-swoop-use-fuzzy-match t
+      helm-projectile-fuzzy-match t
+      helm-ag-fuzzy-match t)
 
 (provide 'qjp-misc-helm)
 ;;; qjp-misc-helm.el ends here
