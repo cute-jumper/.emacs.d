@@ -1,6 +1,6 @@
-* My Emacs's Configuration
+* My Emacs Configuration
 This is a repository to place my Emacs configuration, and is inteneded to be
-used only by myself:-)
+used only by myself :-)
 
 * References
 My Emacs setup has borrowed a lot from the following sources:
@@ -10,7 +10,7 @@ My Emacs setup has borrowed a lot from the following sources:
 - [[https://github.com/technomancy/emacs-starter-kit/tree/v2][Emacs Starter Kit v2]]
 - [[http://emacswiki.org/][Emacs Wiki]]
 
-* My Own Key Bindings Mechanism (In case anyone's interested)
+* The Key Bindings Mechanism (In case anyone's interested)
 ** Separate Most of the Customized Key Bindings: =qjp-mode=
    - =qjp-mode= is a minor mode and most of my own key bindings live in this
      minor mode. Turning off =qjp-mode= basically falls back to the key bindings
@@ -19,7 +19,7 @@ My Emacs setup has borrowed a lot from the following sources:
      a file. Thus, no worries about conflicting key bindings from third-party
      packages.
 
-** Key Bindings
+** Key Bindings Overview
    - I switched back to using =evil= again. But only used for text editting.
    - In insert state, I still use Emacs key bindings.
    - I rarely touch key bindings starting with =C-x= or having the form of =C-c
@@ -30,12 +30,13 @@ My Emacs setup has borrowed a lot from the following sources:
      lives in =C-c <letter>=. For example, =C-c p= for all =projectile= key
      bindings, and =C-c h= for =helm= key bindings.
 
-** My own leader mode: =qjp-leader-mode=
+** Key Bindings Improved with Leader Key: =qjp-leader-mode=
 *** Motivation
-    - Avoid =Ctrl= in non-insert state. But since my key bindings are organized
-      in a very Emacsy way, i.e., still using standard key bindings like =C-x
-      C-f= and using =C-c <letter>= for all custom key bindings, I need to take
-      advantage of the leader key feature in =evil=.
+    - Take advantage of the leader key feature in =evil= and *AVOID* =Ctrl= in
+      non-insert state. But since my key bindings are organized in a very Emacsy
+      way, i.e., still using standard key bindings like =C-x C-f= and using =C-c
+      <letter>= for all custom key bindings, I hope using the leader key could
+      be consistent with these key bindings used in insert state.
     - I like the idea of using =SPC= as the leader key, which is exactly what
       =Spacemacs= does, but I don't want to *REBIND* all the key bindings like
       =Spacemacs=. For example, I don't want to use =SPC f f= for =find-file=.
@@ -54,10 +55,10 @@ My Emacs setup has borrowed a lot from the following sources:
 *** Improvement: =qjp-leader-mode= and =evil-qjp-leader-state=
     The last one isn't that good. So I decide to roll my own =god-mode= and
     =evil-god-state=: =qjp-leader-mode= and =evil-qjp-leader-state=. In
-    =qjp-leader-mode=, which has almost identical code to =god-mode=, some of
-    the *special* keys can be interpreted as =C-c <letter>= and other keys are
-    interpreted in the same way as =god-mode=. For example, I make =p= become
-    such a *special* key that is not interpreted in =god-mode='s way, and bind
+    =qjp-leader-mode=, which has almost identical code to =god-mode=, while most
+    of keys are interpreted in the same way as =god-mode=, some *special* keys
+    can be interpreted as =C-c <letter>=. For example, make =p= be such a
+    *special* key that is interpreted as =C-c p= rather than =C-p=, and bind
     =SPC= to =evil-execute-in-qjp-leader-state= instead, then for the previous
     key bindings:
     - =C-x C-f= becomes =SPC x f=
@@ -75,13 +76,13 @@ My Emacs setup has borrowed a lot from the following sources:
 
 *** Used with =god-mode= at the same time
     =qjp-leader-mode= and =evil-qjp-leader-state= are strictly only used to
-    emulate the leader key feature because intepreting =p= in such a way may not
-    be what we want in some circumstances. The good news is that
-    =qjp-leader-mode='s keymap is *NOT* shared with =god-mode='s. So I can still
-    use =god-mode= when it is more natural and convenient. For example, I still
-    use =god-mode= in =helm= sessions and for minibuffer navigation. In a =helm=
-    session, activating =god-mode= make it possible to use =n= and =p= to move
-    down and up, and =z= to access the actions.
+    emulate the leader key feature because intepreting keys like =p= in such a
+    special way may not be what we want in some circumstances. The good news is
+    that =qjp-leader-mode='s keymap is *NOT* shared with =god-mode='s. So I can
+    still use =god-mode= when it is more natural and convenient. For example, I
+    still use =god-mode= in =helm= sessions and for minibuffer navigation. In a
+    =helm= session, activating =god-mode= make it possible to use =n= and =p= to
+    move down and up, and =z= to access the actions.
 
 ** Summary of Key Bindings
    Here is a more complete overview of my current key mappings:
@@ -90,7 +91,7 @@ My Emacs setup has borrowed a lot from the following sources:
      =evil-execute-in-qjp-leader-state=
    - In insert state, key chord =kk= to =evil-execute-in-qjp-leader-state=, and
      key chord =jj= to =evil-normal-state=
-   - =M-'= to simulate =C-g=
+   - =M-'= to emulate =C-g=
    - In helm/minibuffer, =ESC= and key chord =jj= to =god-mode=
 
    When in insert mode, use key chords to perform some small actions.
