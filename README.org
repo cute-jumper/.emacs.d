@@ -10,20 +10,88 @@ My Emacs setup has borrowed a lot from the following sources:
 - [[https://github.com/technomancy/emacs-starter-kit/tree/v2][Emacs Starter Kit v2]]
 - [[http://emacswiki.org/][Emacs Wiki]]
 
-* Important Key Bindings
-For old key remappings using =Space= as both =Space= and =Ctrl=, see [[http://cute-jumper.github.io/emacs/2016/02/22/my-simple-setup-to-avoid-rsi-in-emacs][this
-article]]. Now I'm using a combination of god-mode and evil-mode, which requires
-much less key mapping tweak.
+* My Own Key Bindings Mechanism (In case anyone's interested)
+** Separate Most of the Customized Key Bindings: =qjp-mode=
+   - =qjp-mode= is a minor mode and most of my own key bindings live in this
+     minor mode. Turning off =qjp-mode= basically falls back to the key bindings
+     of vanilla Emacs.
+   - I make sure =qjp-mode='s keymap has the *HIGHEST* priority whenever I open
+     a file. Thus, no worries about conflicting key bindings from third-party
+     packages.
 
-** New version of key bindings based on =god-mode= and =evil-mode=
-   These key bindings rely heavily on a customized version of =evil-god-state=.
+** Key Bindings
+   - I switched back to using =evil= again. But only used for text editting.
+   - In insert state, I still use Emacs key bindings.
+   - I rarely touch key bindings starting with =C-x= or having the form of =C-c
+     C-<letter>=. Those are stardard key bindings and default key bindings
+     provided by third-party packages. For example, =C-x C-f= for =find-file=
+     and =C-c C-c= in =org-mode= to evaluate a code block.
+   - Most of the key bindings I add for my own defuns and third-party packages
+     lives in =C-c <letter>=. For example, =C-c p= for all =projectile= key
+     bindings, and =C-c h= for =helm= key bindings.
 
-   - In all states, =M-SPC= to =evil-execute-in-god-state=
-   - In normal/visual state, =SPC= to =evil-execute-in-god-state=
-   - In insert state, key chord =kk= to =evil-execute-in-god-state=, and key
-     chord =jj= to =evil-normal-state=
+** My own leader mode: =qjp-leader-mode=
+*** Motivation
+    - Avoid =Ctrl= in non-insert state. But since my key bindings are organized
+      in a very Emacsy way, i.e., still using standard key bindings like =C-x
+      C-f= and using =C-c <letter>= for all custom key bindings, I need to take
+      advantage of the leader key feature in =evil=.
+    - I like the idea of using =SPC= as the leader key, which is exactly what
+      =Spacemacs= does, but I don't want to *REBIND* all the key bindings like
+      =Spacemacs=. For example, I don't want to use =SPC f f= for =find-file=.
+
+*** =god-mode= and =evil-god-state= to the rescue
+    Let's bind =SPC= to =evil-execute-in-god-state= in normal state. Then in
+    normal state:
+    - Standard key binding: =C-x C-f= becomes =SPC x f=
+    - Mode-specific key binding: =C-c C-c= becomes =SPC c c=
+    - Custom key binding: =C-;= becomes =SPC ;=
+    - Custom key binding in =C-c= prefix: =C-c p p= becomes =SPC c SPC p p=
+
+    Neat! (At least for the first three.) I don't need to rebind any key
+    bindings!
+
+*** Improvement: =qjp-leader-mode= and =evil-qjp-leader-state=
+    The last one isn't that good. So I decide to roll my own =god-mode= and
+    =evil-god-state=: =qjp-leader-mode= and =evil-qjp-leader-state=. In
+    =qjp-leader-mode=, which has almost identical code to =god-mode=, some of
+    the *special* keys can be interpreted as =C-c <letter>= and other keys are
+    interpreted in the same way as =god-mode=. For example, I make =p= become
+    such a *special* key that is not interpreted in =god-mode='s way, and bind
+    =SPC= to =evil-execute-in-qjp-leader-state= instead, then for the previous
+    key bindings:
+    - =C-x C-f= becomes =SPC x f=
+    - =C-c C-c= becomes =SPC c c=
+    - =C-;= becomes =SPC ;=
+    - =C-c p p= becomes =SPC p p= (this is different now!)
+
+    The first three are the same, but the last one becomes much simpler. In
+    fact, after such a change, the leader key feature we have "looks" quite
+    similar to =Spacemacs=, but actually they are different! Our key bindings
+    are very Emacsy and we don't rebind the keys! When using the leader key
+    feature, we still think in the Emacs way, =SPC x f= for =C-x C-f= and =SPC p
+    p= for =C-c p p=, exactly the same thinking process when under the insert
+    state, where Emacs key bindings are used.
+
+*** Used with =god-mode= at the same time
+    =qjp-leader-mode= and =evil-qjp-leader-state= are strictly only used to
+    emulate the leader key feature because intepreting =p= in such a way may not
+    be what we want in some circumstances. The good news is that
+    =qjp-leader-mode='s keymap is *NOT* shared with =god-mode='s. So I can still
+    use =god-mode= when it is more natural and convenient. For example, I still
+    use =god-mode= in =helm= sessions and for minibuffer navigation. In a =helm=
+    session, activating =god-mode= make it possible to use =n= and =p= to move
+    down and up, and =z= to access the actions.
+
+** Summary of Key Bindings
+   Here is a more complete overview of my current key mappings:
+   - In normal/visual state, =SPC= to =evil-execute-in-qjp-leader-state=
+   - In all states, =M-j= (it is really easy to reach) to
+     =evil-execute-in-qjp-leader-state=
+   - In insert state, key chord =kk= to =evil-execute-in-qjp-leader-state=, and
+     key chord =jj= to =evil-normal-state=
    - =M-'= to simulate =C-g=
-   - In helm/isearch, =ESC= and key chord =jj= to =god-mode=
+   - In helm/minibuffer, =ESC= and key chord =jj= to =god-mode=
 
    When in insert mode, use key chords to perform some small actions.
    | Key Chords | Action                    |
@@ -135,3 +203,7 @@ install the latest version of the packages.
  This module has packages that are not hosted in any package archieves. These
  packages are usually modified by myself and hosted in my own Git repos. Use
  =git-submodule= to manage them.
+* Old Key Bindings without =Evil=
+For old key remappings using =Space= as both =Space= and =Ctrl= and without
+=Evil=, see [[http://cute-jumper.github.io/emacs/2016/02/22/my-simple-setup-to-avoid-rsi-in-emacs][this article]]. Now I'm using a combination of god-mode and evil-mode,
+which requires much less key mapping tweak.
