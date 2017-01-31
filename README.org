@@ -58,9 +58,9 @@ My Emacs setup has borrowed a lot from the following sources:
     =qjp-leader-mode=, which has almost identical code to =god-mode=, while most
     of keys are interpreted in the same way as =god-mode=, some *special* keys
     can be interpreted as =C-c <letter>=. For example, make =p= be such a
-    *special* key that is interpreted as =C-c p= rather than =C-p=, and bind
-    =SPC= to =evil-execute-in-qjp-leader-state= instead, then for the previous
-    key bindings:
+    *special* key that is interpreted as =C-c p= rather than =C-p=, and now
+    =SPC= should be bound to =evil-execute-in-qjp-leader-state= instead of
+    =evil-execute-in-god-state=, then for the previous key bindings:
     - =C-x C-f= becomes =SPC x f=
     - =C-c C-c= becomes =SPC c c=
     - =C-;= becomes =SPC ;=
@@ -89,12 +89,13 @@ My Emacs setup has borrowed a lot from the following sources:
    - In normal/visual state, =SPC= to =evil-execute-in-qjp-leader-state=
    - In all states, =M-j= (it is really easy to reach) to
      =evil-execute-in-qjp-leader-state=
+   - In insert state, use Emacs key bindings
    - In insert state, key chord =kk= to =evil-execute-in-qjp-leader-state=, and
      key chord =jj= to =evil-normal-state=
    - =M-'= to emulate =C-g=
    - In helm/minibuffer, =ESC= and key chord =jj= to =god-mode=
 
-   When in insert mode, use key chords to perform some small actions.
+   When in insert state, use key chords to perform some small actions.
    | Key Chords | Action                    |
    |------------+---------------------------|
    | xf         | find file                 |
