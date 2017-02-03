@@ -103,6 +103,15 @@
   ;; Let helm support zsh-like path expansion.
   (defvar helm-ff-expand-valid-only-p t)
   (defvar helm-ff-sort-expansions-p t)
+  (defvar helm-ff-ignore-case-p t)
+  (defun helm-ff--generate-case-ignore-pattern (pattern)
+    (let ((head (aref pattern 0)))
+      (cond
+       ((and (<= head ?z) (>= head ?a))
+        (format "[%c%c]%s" (upcase head) head (substring pattern 1)))
+       ((and (<= head ?Z) (>= head ?A))
+        (format "[%c%c]%s" head (downcase head) (substring pattern 1)))
+       (:else pattern))))
   (defun helm-ff-try-expand-fname (candidate)
     (let ((dirparts (split-string candidate "/"))
           valid-dir
@@ -133,9 +142,12 @@
                                  `(,(concat f "/" (mapconcat 'identity
                                                              (cdr children)
                                                              "/")))))))
-                    (directory-files parent t (concat "^"
-                                                      (regexp-quote
-                                                       (car children))))))))
+                    (directory-files parent t
+                                     (concat "^"
+                                             (if helm-ff-ignore-case-p
+                                                 (helm-ff--generate-case-ignore-pattern
+                                                  (car children))
+                                               (car children))))))))
       `(,(concat parent (and (file-directory-p parent) "/")))))
 
   (defun qjp-helm-ff-try-expand-fname (orig-func &rest args)
@@ -145,10 +157,8 @@
                (not (file-exists-p candidate)))
           (with-helm-alive-p
             (when (helm-file-completion-source-p)
-              (helm-exit-and-execute-action
-               (lambda (_)
-                 (helm-find-files-1
-                  (helm-comp-read "Expand Path to: " collection))))))
+              (helm-set-pattern
+               (helm-comp-read "Expand Path to: " collection :allow-nest t))))
         (apply orig-func args))))
 
   (advice-add 'helm-ff-kill-or-find-buffer-fname :around #'qjp-helm-ff-try-expand-fname))
