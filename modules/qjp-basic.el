@@ -192,7 +192,9 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 ;; save point postiion in file
-(require 'saveplace)
+(if (version< emacs-version "25.1")
+    (setq save-place +1)
+  (save-place-mode +1))
 
 ;; save history
 (savehist-mode +1)

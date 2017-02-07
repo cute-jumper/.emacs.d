@@ -32,7 +32,7 @@
 (defun qjp-which-func-current ()
   (let ((current (gethash (selected-window) which-func-table)))
     (if current
-        (string-reverse (truncate-string-to-width (string-reverse current) 20 nil nil "…"))
+        (reverse (truncate-string-to-width (reverse current) 20 nil nil "…"))
       which-func-unknown)))
 (setq which-func-format
       `("["
@@ -106,7 +106,6 @@ cursor to the new line."
   (qjp-add-watchwords)
   (abbrev-mode +1)
   (prettify-symbols-mode +1)
-  (setq save-place +1)
   (highlight-symbol-mode +1)
   (highlight-symbol-nav-mode +1)
   (hs-minor-mode +1)
@@ -124,6 +123,21 @@ cursor to the new line."
   (add-to-list (make-local-variable 'company-backends) 'company-shell))
 
 (add-hook 'sh-mode-hook 'qjp-sh-mode-hook)
+
+;; eshell
+(defalias 'eshell/f 'find-file-other-window)
+(defalias 'eshell/d 'dired)
+(defun qjp-eshell-mode-hook ()
+  ;; Use company instead of helm-eshell to complete
+  (define-key eshell-mode-map [remap eshell-pcomplete] #'company-capf)
+  ;; (define-key eshell-mode-map [remap eshell-pcomplete] #'helm-esh-pcomplete)
+  (define-key eshell-mode-map (kbd "M-r") 'helm-eshell-history)
+  ;; Make company-capf use pcomplete
+  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
+  (setup-esh-help-eldoc)
+  (setenv "PAGER" "cat"))
+
+(add-hook 'eshell-mode-hook #'qjp-eshell-mode-hook)
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
