@@ -38,11 +38,8 @@
                  "@"
                  (system-name)))))
 
-;; Show menu bar if `ubuntu', otherwise disable it.
-;; (let ((desktop-env (getenv "DESKTOP_SESSION")))
-;;   (if (string= desktop-env "ubuntu")
-;;       (menu-bar-mode +1)
-;;     (menu-bar-mode -1)))
+;; Disable menu-bar
+(menu-bar-mode -1)
 
 ;; Disable toolbar if not yet
 (tool-bar-mode -1)
@@ -104,30 +101,37 @@
       (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
 ;; Temporarily, try out another theme other than `zenburn'
-(defvar qjp-theme 'ample-flat)
+(defvar qjp-dark-theme nil)
+(defvar qjp-light-theme nil)
 (defvar qjp-cursor-color nil)
 ;; ------------- ;;
 ;; Change themes ;;
 ;; ------------- ;;
 ;; TODO: generalize it maybe!
-(defun qjp-switch-theme (word)
+(defun qjp-switch-theme (theme)
   (interactive (list (completing-read
-                      "Choose a theme set(dark or light):"
+                      "Choose a theme set (dark or light): "
                       '(dark light))))
   (cond
-   ((string= word "dark")
-    (load-theme qjp-theme t)
+   ((string= theme "dark")
+    (when qjp-light-theme
+      (disable-theme qjp-light-theme))
+    (when qjp-dark-theme
+      (load-theme qjp-dark-theme t))
     (when (fboundp 'sml/apply-theme)
       (sml/apply-theme 'dark))
     (setq qjp-cursor-color (frame-parameter nil 'cursor-color)))
-   ((string= word "light")
-    (disable-theme qjp-theme)
+   ((string= theme "light")
+    (when qjp-dark-theme
+      (disable-theme qjp-dark-theme))
+    (when qjp-light-theme
+      (load-theme qjp-light-theme t))
     (when (fboundp 'sml/apply-theme)
       (sml/apply-theme 'light))
     (setq qjp-cursor-color (frame-parameter nil 'cursor-color)))))
+(setq qjp-dark-theme 'moe-dark)
+(setq qjp-light-theme 'moe-light)
 (qjp-switch-theme 'dark)
-;; Finally, use `zenburn' as the default theme. It's a really cool theme!
-;;(load-theme 'zenburn t)
 ;; Minor fix for volitile-highlight
 ;; (custom-theme-set-faces
 ;;  'zenburn
@@ -170,8 +174,8 @@
 
 ;; show-paren-mode
 (show-paren-mode +1)
-(set-face-attribute 'show-paren-match nil
-                    :foreground "yellow")
+;; (set-face-attribute 'show-paren-match nil
+;;                     :foreground "yellow")
 
 ;; uniquify
 (setq uniquify-buffer-name-style 'forward
@@ -185,6 +189,7 @@
 
 ;; recentf settings
 ;; ignore magit's commit message files
+(setq recentf-save-file (expand-file-name "recentf" qjp-base-dir))
 (with-eval-after-load 'recentf
   (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
@@ -234,6 +239,9 @@
 (with-eval-after-load 'grep
   (add-to-list 'grep-find-ignored-files "*.class"))
 
+;; no scroll bar
+(scroll-bar-mode -1)
+
 ;; scroll margin to 10
 (setq scroll-margin 10)
 
@@ -254,6 +262,16 @@
   (turn-on-auto-fill)
   (abbrev-mode +1))
 (add-hook 'text-mode-hook #'qjp-text-mode-hook)
+
+;; ------------------------ ;;
+;; Fix PATH and `exec-path' ;;
+;; ------------------------ ;;
+(defun qjp-fix-path-and-exec-path ()
+  (when (eq system-type 'gnu/linux)
+    (let ((paths (shell-command-to-string
+                  (format "%s -c 'echo -n $PATH'" (getenv "SHELL")))))
+      (setq exec-path (split-string paths ":")))))
+(qjp-fix-path-and-exec-path)
 
 ;; -------------- ;;
 ;; Remove warning ;;
