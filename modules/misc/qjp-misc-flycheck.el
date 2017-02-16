@@ -89,9 +89,8 @@
      ,(plist-get (face-attribute 'flycheck-info :underline) :color)))
 
   ;; key bindings
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "M-N") #'flycheck-next-error)
-    (define-key qjp-mode-map (kbd "M-P") #'flycheck-previous-error))
+  (define-key qjp-mode-map (kbd "M-N") #'flycheck-next-error)
+  (define-key qjp-mode-map (kbd "M-P") #'flycheck-previous-error)
 
   ;; flycheck in pos-tip
   (flycheck-pos-tip-mode +1))

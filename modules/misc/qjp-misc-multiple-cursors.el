@@ -36,9 +36,8 @@
 (define-key region-bindings-mode-map "S" 'mc/mark-all-symbols-like-this-in-defun)
 (define-key region-bindings-mode-map "d" 'mc/mark-all-like-this-dwim)
 
-(with-eval-after-load 'qjp-mode
-  ;; Using mouse!
-  (define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click))
+;; Using mouse!
+(define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
 
 (provide 'qjp-misc-multiple-cursors)
 ;;; qjp-misc-multiple-cursors.el ends here

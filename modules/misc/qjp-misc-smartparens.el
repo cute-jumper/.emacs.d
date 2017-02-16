@@ -27,19 +27,19 @@
 ;; ----------- ;;
 ;; smartparens ;;
 ;; ----------- ;;
-(require 'smartparens-config)
+(with-eval-after-load 'smartparens
+  (require 'smartparens-config))
 (setq sp-base-key-bindings 'paredit)
 (setq sp-autoskip-closing-pair 'always)
 (setq sp-hybrid-kill-entire-symbol nil)
 
 ;; key bindings
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-M-f") #'sp-forward-sexp)
-  (define-key qjp-mode-map (kbd "C-M-b") #'sp-backward-sexp)
-  (define-key qjp-mode-map (kbd "C-M-e") #'sp-end-of-sexp)
-  (define-key qjp-mode-map (kbd "C-M-u") #'sp-backward-up-sexp)
-  (define-key qjp-mode-map (kbd "C-M-j") #'sp-up-sexp)
-  (define-key qjp-mode-map (kbd "C-M-h") #'sp-backward-down-sexp))
+(define-key qjp-mode-map (kbd "C-M-f") #'sp-forward-sexp)
+(define-key qjp-mode-map (kbd "C-M-b") #'sp-backward-sexp)
+(define-key qjp-mode-map (kbd "C-M-e") #'sp-end-of-sexp)
+(define-key qjp-mode-map (kbd "C-M-u") #'sp-backward-up-sexp)
+(define-key qjp-mode-map (kbd "C-M-j") #'sp-up-sexp)
+(define-key qjp-mode-map (kbd "C-M-h") #'sp-backward-down-sexp)
 
 (provide 'qjp-misc-smartparens)
 ;;; qjp-misc-smartparens.el ends here

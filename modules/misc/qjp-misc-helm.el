@@ -31,20 +31,21 @@
 (define-key helm-command-map "k" #'helm-descbinds)
 (define-key helm-command-map "=" #'helm-calcul-expression)
 (define-key helm-command-map "o" #'helm-occur)
+(define-key helm-command-map "p" #'helm-browse-project)
+(define-key helm-command-map "P" #'helm-list-emacs-process)
 (define-key helm-command-map (kbd "SPC") #'helm-all-mark-rings)
 (define-key helm-command-map (kbd "M-!") #'helm-run-external-command)
 (define-key helm-command-map (kbd "M-:") #'helm-eval-expression)
 (define-key helm-command-map (kbd "M-i") #'helm-multi-swoop)
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-x") #'helm-M-x)
-  (define-key qjp-mode-map (kbd "M-y") #'helm-show-kill-ring)
-  (define-key qjp-mode-map (kbd "C-x C-f") #'helm-find-files)
-  (define-key qjp-mode-map (kbd "C-x b") #'helm-mini)
-  (define-key qjp-mode-map (kbd "C-x c") nil)
-  (global-unset-key (kbd "C-x c"))
-  (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
-  (define-key qjp-mode-map (kbd "C-c i") #'helm-semantic-or-imenu))
+(define-key qjp-mode-map (kbd "M-x") #'helm-M-x)
+(define-key qjp-mode-map (kbd "M-y") #'helm-show-kill-ring)
+(define-key qjp-mode-map (kbd "C-x C-f") #'helm-find-files)
+(define-key qjp-mode-map (kbd "C-x b") #'helm-mini)
+(define-key qjp-mode-map (kbd "C-x c") nil)
+(global-unset-key (kbd "C-x c"))
+(define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
+(define-key qjp-mode-map (kbd "C-c i") #'helm-semantic-or-imenu)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -105,13 +106,16 @@
   (defvar helm-ff-sort-expansions-p t)
   (defvar helm-ff-ignore-case-p t)
   (defun helm-ff--generate-case-ignore-pattern (pattern)
-    (let ((head (aref pattern 0)))
-      (cond
-       ((and (<= head ?z) (>= head ?a))
-        (format "[%c%c]%s" (upcase head) head (substring pattern 1)))
-       ((and (<= head ?Z) (>= head ?A))
-        (format "[%c%c]%s" head (downcase head) (substring pattern 1)))
-       (:else pattern))))
+    (let (head (ci-pattern ""))
+      (dotimes (i (length pattern) ci-pattern)
+        (setq head (aref pattern i))
+        (cond
+         ((and (<= head ?z) (>= head ?a))
+          (setq ci-pattern (format "%s[%c%c]" ci-pattern (upcase head) head)))
+         ((and (<= head ?Z) (>= head ?A))
+          (setq ci-pattern (format "%s[%c%c]" ci-pattern head (downcase head))))
+         (:else
+          (setq ci-pattern (format "%s%c" ci-pattern head)))))))
   (defun helm-ff-try-expand-fname (candidate)
     (let ((dirparts (split-string candidate "/"))
           valid-dir
@@ -163,12 +167,11 @@
 
   (advice-add 'helm-ff-kill-or-find-buffer-fname :around #'qjp-helm-ff-try-expand-fname))
 
-(with-eval-after-load 'qjp-mode
-  (define-key ctrl-c-git-grep-map "a" #'helm-ag)
-  (define-key ctrl-c-git-grep-map "h" #'helm-do-ag)
-  (define-key ctrl-c-git-grep-map "p" #'helm-do-ag-project-root)
-  (define-key ctrl-c-git-grep-map "/" #'helm-find)
-  (define-key ctrl-c-git-grep-map "g" #'helm-grep-do-git-grep))
+(define-key ctrl-c-git-grep-map "a" #'helm-ag)
+(define-key ctrl-c-git-grep-map "h" #'helm-do-ag)
+(define-key ctrl-c-git-grep-map "p" #'helm-do-ag-project-root)
+(define-key ctrl-c-git-grep-map "/" #'helm-find)
+(define-key ctrl-c-git-grep-map "g" #'helm-grep-do-git-grep)
 
 ;; helm-swoop
 (setq helm-swoop-speed-or-color t) ;; Color needed

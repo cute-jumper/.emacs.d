@@ -27,6 +27,8 @@
 
 ;;; Code:
 
+(require 'qjp-mode)
+
 ;; ------------------------------- ;;
 ;; Macro and functions definitions ;;
 ;; ------------------------------- ;;
@@ -71,8 +73,7 @@
   (global-company-mode +1)
   (setq company-show-numbers t)
   (company-quickhelp-mode +1)
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-<tab>") #'company-complete)))
+  (define-key qjp-mode-map (kbd "C-<tab>") #'company-complete))
 
 ;; ------------ ;;
 ;; helm-company ;;
@@ -91,10 +92,9 @@
     (interactive)
     (yas-reload-all)
     (yas-minor-mode +1))
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-yasnippet-map "i" #'qjp-yasnippet-initialize)
-    (define-key ctrl-c-yasnippet-map "y" #'yas-insert-snippet)
-    (define-key ctrl-c-yasnippet-map (kbd "<tab>") #'company-yasnippet)))
+  (define-key ctrl-c-avy-yas-map "i" #'qjp-yasnippet-initialize)
+  (define-key ctrl-c-avy-yas-map "y" #'yas-insert-snippet)
+  (define-key ctrl-c-avy-yas-map (kbd "<tab>") #'company-yasnippet))
 
 ;; -------------- ;;
 ;; key-chord mode ;;
@@ -151,18 +151,16 @@
 ;; avy-zap ;;
 ;; ------- ;;
 (qjp-misc-config-inline avy-zap
-  (with-eval-after-load 'qjp-mode
-    (setq avy-zap-forward-only t)
-    (define-key qjp-mode-map (kbd "M-z") 'avy-zap-to-char-dwim)
-    (define-key qjp-mode-map (kbd "M-Z") 'avy-zap-up-to-char-dwim)))
+  (setq avy-zap-forward-only t)
+  (define-key qjp-mode-map (kbd "M-z") 'avy-zap-to-char-dwim)
+  (define-key qjp-mode-map (kbd "M-Z") 'avy-zap-up-to-char-dwim))
 
 ;; ------------ ;;
 ;; ace-flyspell ;;
 ;; ------------ ;;
 (qjp-misc-config-inline ace-flyspell
   ;; This is faster(1 vs 26 ms) than calling setup function. I don't know why
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-.") 'ace-flyspell-dwim))
+  (define-key qjp-mode-map (kbd "C-.") 'ace-flyspell-dwim)
   ;; FIXME
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-.") 'ace-flyspell-dwim)))
@@ -194,9 +192,9 @@
   (ace-pinyin-global-mode +1))
 
 (qjp-misc-config-inline embrace
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-,") #'embrace-commander))
-  (evil-embrace-enable-evil-surround-integration)
+  (define-key ctrl-c-extension-map "," #'embrace-commander)
+  (with-eval-after-load 'evil-surround
+    (evil-embrace-enable-evil-surround-integration))
   (add-hook 'LaTeX-mode-hook 'embrace-LaTeX-mode-hook)
   (add-hook 'org-mode-hook 'embrace-org-mode-hook))
 
@@ -204,9 +202,8 @@
 ;; jump-char ;;
 ;; --------- ;;
 (qjp-misc-config-inline jump-char
-  (with-eval-after-load 'qjp-mode
-    (qjp-key-chord-define qjp-mode-map ";j" 'jump-char-forward)
-    (qjp-key-chord-define qjp-mode-map ";h" 'jump-char-backward)))
+  (qjp-key-chord-define qjp-mode-map ";j" 'jump-char-forward)
+  (qjp-key-chord-define qjp-mode-map ";h" 'jump-char-backward))
 
 ;; ------------- ;;
 ;; expand-region ;;
@@ -225,15 +222,13 @@
                   er/mark-email
                   er/mark-symbol))
     (autoload func "expand-region")
-    (with-eval-after-load 'qjp-mode
-      (define-key qjp-mode-map (kbd "C-=") #'er/expand-region))))
+    (define-key qjp-mode-map (kbd "C-=") #'er/expand-region)))
 
 ;; ------------- ;;
 ;; restart-emacs ;;
 ;; ------------- ;;
 (qjp-misc-config-inline restart-emacs
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c q R") #'restart-emacs)))
+  (define-key qjp-mode-map (kbd "C-c q R") #'restart-emacs))
 
 ;; ------ ;;
 ;; ispell ;;
@@ -270,10 +265,9 @@
   (with-eval-after-load 'magit
     (add-hook 'magit-popup-mode-hook
               (lambda () (setq show-trailing-whitespace nil))))
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-git-grep-map "s" #'magit-status)
-    (define-key ctrl-c-git-grep-map "c" #'magit-clone)
-    (define-key ctrl-c-git-grep-map "i" #'magit-init)))
+  (define-key ctrl-c-git-grep-map "s" #'magit-status)
+  (define-key ctrl-c-git-grep-map "c" #'magit-clone)
+  (define-key ctrl-c-git-grep-map "i" #'magit-init))
 
 ;; ------------ ;;
 ;; indent-guide ;;
@@ -295,9 +289,8 @@ is selected interactively from all available keymaps."
     (interactive)
     (which-key--show-keymap (symbol-name major-mode)
                             (eval (intern (format "%s-map" major-mode)))))
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c ?") #'which-key-show-top-level)
-    (define-key qjp-mode-map (kbd "C-c /") #'qjp-which-key-show-major-mode-keymap))
+  (define-key qjp-mode-map (kbd "C-c ?") #'which-key-show-top-level)
+  (define-key qjp-mode-map (kbd "C-c /") #'qjp-which-key-show-major-mode-keymap)
   (which-key-add-key-based-replacements
     "C-c p" "projectile")
   (which-key-add-key-based-replacements
@@ -326,8 +319,7 @@ is selected interactively from all available keymaps."
 (qjp-misc-config-inline sr-speedbar
   (setq sr-speedbar-right-side nil)
   (setq speedbar-use-images nil)
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map [f8] 'sr-speedbar-toggle)))
+  (define-key qjp-mode-map [f8] 'sr-speedbar-toggle))
 
 ;; --------- ;;
 ;; undo-tree ;;
@@ -346,9 +338,8 @@ is selected interactively from all available keymaps."
   (setq diff-hl-side 'right)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-git-grep-map "[" #'diff-hl-previous-hunk)
-    (define-key ctrl-c-git-grep-map "]" #'diff-hl-next-hunk)))
+  (define-key ctrl-c-git-grep-map "[" #'diff-hl-previous-hunk)
+  (define-key ctrl-c-git-grep-map "]" #'diff-hl-next-hunk))
 
 ;; --------- ;;
 ;; term-mode ;;
@@ -368,8 +359,7 @@ is selected interactively from all available keymaps."
     (define-key composable-object-mode-map "d" #'er/mark-defun)
     (define-key composable-object-mode-map "i" #'change-inner)
     (define-key composable-object-mode-map "o" #'change-outer))
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-w") #'composable-kill-region)))
+  (define-key qjp-mode-map (kbd "C-w") #'composable-kill-region))
 
 ;; ---------- ;;
 ;; rebox-mode ;;
@@ -479,37 +469,32 @@ is selected interactively from all available keymaps."
 ;; anchored-transpose ;;
 ;; ------------------ ;;
 (qjp-misc-config-inline anchored-transpose
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose)))
+  (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose))
 
 ;; ------- ;;
 ;; lacarte ;;
 ;; ------- ;;
 (qjp-misc-config-inline lacarte
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c M-x") 'lacarte-execute-menu-command)))
+  (define-key qjp-mode-map (kbd "C-c M-x") 'lacarte-execute-menu-command))
 
 ;; --------- ;;
 ;; easy-kill ;;
 ;; --------- ;;
 (qjp-misc-config-inline easy-kill
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "M-w") 'easy-kill)))
+  (define-key qjp-mode-map (kbd "M-w") 'easy-kill))
 
 ;; ----------- ;;
 ;; google-this ;;
 ;; ----------- ;;
 (qjp-misc-config-inline google-this
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-extension-map "g" #'google-this)))
+  (define-key ctrl-c-extension-map "g" #'google-this))
 
 ;; ------------ ;;
 ;; change-inner ;;
 ;; ------------ ;;
 (qjp-misc-config-inline change-inner
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-extension-map (kbd "i") 'change-inner)
-    (define-key ctrl-c-extension-map (kbd "o") 'change-outer)))
+  (define-key ctrl-c-extension-map (kbd "i") 'change-inner)
+  (define-key ctrl-c-extension-map (kbd "o") 'change-outer))
 
 ;; -------------------- ;;
 ;; centered-cursor-mode ;;
@@ -523,9 +508,8 @@ is selected interactively from all available keymaps."
 (qjp-misc-config-inline workgroups2
   (setq wg-emacs-exit-save-behavior 'ask)
   (setq wg-load-last-workgroup nil)
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "s-z") #'wg-revert-workgroup)
-    (define-key qjp-mode-map (kbd "s-/") #'wg-switch-to-workgroup)))
+  (define-key qjp-mode-map (kbd "s-z") #'wg-revert-workgroup)
+  (define-key qjp-mode-map (kbd "s-/") #'wg-switch-to-workgroup))
 
 ;; -------- ;;
 ;; quickrun ;;
@@ -536,17 +520,15 @@ is selected interactively from all available keymaps."
     (call-interactively
      (if prefix #'quickrun-replace-region
        #'quickrun-region)))
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c q k") #'quickrun)
-    (define-key qjp-mode-map (kbd "C-c q K") #'quickrun-region-dwim))
+  (define-key qjp-mode-map (kbd "C-c q k") #'quickrun)
+  (define-key qjp-mode-map (kbd "C-c q K") #'quickrun-region-dwim)
   (with-eval-after-load 'evil
     (add-to-list 'evil-emacs-state-modes 'quickrun/mode)))
 
 (qjp-misc-config-inline visual-regexp
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "C-c q r") #'vr/replace)
-    (define-key qjp-mode-map (kbd "C-c q q") #'vr/query-replace)
-    (define-key qjp-mode-map (kbd "C-c q m") #'vr/mc-mark)))
+  (define-key qjp-mode-map (kbd "C-c q r") #'vr/replace)
+  (define-key qjp-mode-map (kbd "C-c q q") #'vr/query-replace)
+  (define-key qjp-mode-map (kbd "C-c q m") #'vr/mc-mark))
 
 ;; ------- ;;
 ;; keyfreq ;;
@@ -594,10 +576,10 @@ is selected interactively from all available keymaps."
         (let ((word (word-at-point)))
           (when word
             (bing-dict-brief word))))))
-  (setq bing-dict-add-to-kill-ring t)
-  (with-eval-after-load 'qjp-mode
-    (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
-    (define-key ctrl-c-extension-map "b" 'bing-dict-brief)))
+  (setq bing-dict-add-to-kill-ring t
+        bing-dict-show-thesaurus 'both)
+  (define-key qjp-mode-map (kbd "<C-mouse-1>") 'qjp-search-word-at-mouse)
+  (define-key ctrl-c-extension-map "b" 'bing-dict-brief))
 
 ;; --------- ;;
 ;; gmpl-mode ;;

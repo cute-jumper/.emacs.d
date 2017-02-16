@@ -29,8 +29,7 @@
 ;; --------------------- ;;
 
 ;; I don't need hideshow-org.el any more with this one
-(with-eval-after-load 'qjp-mode
-  (define-key ctrl-c-extension-map "t" #'hs-toggle-hiding))
+(define-key ctrl-c-extension-map "t" #'hs-toggle-hiding)
 
 ;; Expand when goto-line
 (defadvice goto-line (after expand-after-goto-line

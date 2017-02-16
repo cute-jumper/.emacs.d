@@ -24,6 +24,8 @@
 
 ;;; Code:
 
+(require 'qjp-mode)
+
 (add-to-list 'load-path (concat qjp-modules-dir "/org"))
 
 ;; Quick way to open Personal directory in Dired
@@ -34,15 +36,14 @@
 ;; ----------------- ;;
 ;; Basic key binding ;;
 ;; ----------------- ;;
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c o c") 'org-capture)
-  (define-key qjp-mode-map (kbd "C-c o a") 'org-agenda))
+(define-key qjp-mode-map (kbd "C-c o c") 'org-capture)
+(define-key qjp-mode-map (kbd "C-c o a") 'org-agenda)
 
 ;; --------------------- ;;
 ;; org-mode key bindings ;;
 ;; --------------------- ;;
 (defun qjp-org-mode-setup-key-bindings ()
-  (define-key org-mode-map (kbd "C-c e n") 'org-table-next-row))
+  (define-key org-mode-map (kbd "C-c m n") 'org-table-next-row))
 
 ;; ------------- ;;
 ;; Org-mode hook ;;
@@ -52,7 +53,9 @@
   (turn-on-org-cdlatex)
   ;; highlight current line
   (hl-line-mode +1)
-  (turn-on-stripe-table-mode))
+  (turn-on-stripe-table-mode)
+  ;; Make company-capf use pcomplete
+  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t))
 
 (add-hook 'org-mode-hook #'qjp-org-mode-hook)
 

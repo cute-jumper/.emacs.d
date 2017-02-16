@@ -41,8 +41,7 @@
 ;; smex
 (setq smex-save-file (concat qjp-base-dir ".smex-items"))
 (smex-initialize)
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-x") 'smex))
+(define-key qjp-mode-map (kbd "M-x") 'smex)
 
 (provide 'qjp-misc-ido)
 ;;; qjp-misc-ido.el ends here

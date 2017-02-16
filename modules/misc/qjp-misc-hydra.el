@@ -120,9 +120,8 @@
   ("p" previous-error "previous")
   ("f" first-error "first"))
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-g n") #'hydra-errors/next-error)
-  (define-key qjp-mode-map (kbd "M-g p") #'hydra-errors/previous-error))
+(define-key qjp-mode-map (kbd "M-g n") #'hydra-errors/next-error)
+(define-key qjp-mode-map (kbd "M-g p") #'hydra-errors/previous-error)
 
 ;; ----------------------------- ;;
 ;; Hydra for rectangle operation ;;
@@ -165,8 +164,7 @@ _h_   _l_   _o_pen      _y_ank
   ("o" open-rectangle nil)
   ("q" nil nil))
 
-(with-eval-after-load 'qjp-mode
-  (define-key ctrl-c-extension-map (kbd "SPC") 'hydra-rectangle/body))
+(define-key ctrl-c-extension-map (kbd "SPC") 'hydra-rectangle/body)
 
 ;; ----------------------- ;;
 ;; Hydra for mark commands ;;
@@ -196,8 +194,7 @@ _h_   _l_   _o_pen      _y_ank
   ("W" avy-goto-word-2 "goto word 2")
   ("l" avy-goto-line "goto line"))
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-SPC") #'hydra-mark/body))
+(define-key qjp-mode-map (kbd "C-SPC") #'hydra-mark/body)
 
 ;; ---------------------- ;;
 ;; hydra for evil numbers ;;
@@ -240,8 +237,7 @@ _h_   _l_   _o_pen      _y_ank
   ("b" helm-mini "switch buffer")
   ("q" nil "quit"))
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c w") #'hydra-manage-window/body))
+(define-key ctrl-c-extension-map (kbd "C-c w") #'hydra-manage-window/body)
 
 (defhydra hydra-winner
   (:body-pre (winner-undo))
@@ -249,8 +245,7 @@ _h_   _l_   _o_pen      _y_ank
   ("<left>" winner-undo)
   ("<right>" winner-redo))
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c <left>") #'hydra-winner/body))
+(define-key qjp-mode-map (kbd "C-c <left>") #'hydra-winner/body)
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here

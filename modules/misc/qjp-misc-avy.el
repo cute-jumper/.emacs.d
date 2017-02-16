@@ -61,23 +61,20 @@
     (avy--generic-jump "\\b\\sw" arg avy-style (line-beginning-position)
                        (line-end-position))))
 
-(with-eval-after-load 'qjp-mode
-  ;; convenient keychords
-  (define-key qjp-mode-map (kbd "C-;") #'avy-goto-word-1)
-  (define-key qjp-mode-map (kbd "C-'") #'avy-goto-word-0-in-line)
-  (define-key qjp-mode-map (kbd "C-\\") #'avy-goto-char)
-  ;; all avy commands
-  (define-prefix-command 'ctrl-c-avy-map)
-  (define-key qjp-mode-map (kbd "C-c a") 'ctrl-c-avy-map)
-  (define-key ctrl-c-avy-map "c" #'avy-goto-char)
-  (define-key ctrl-c-avy-map "C" #'avy-goto-char-2)
-  (define-key ctrl-c-avy-map "w" #'avy-goto-word-1)
-  (define-key ctrl-c-avy-map "W" #'avy-goto-word-2)
-  (define-key ctrl-c-avy-map "y" #'avy-copy-line)
-  (define-key ctrl-c-avy-map "m" #'avy-move-line)
-  (define-key ctrl-c-avy-map "l" #'avy-goto-line)
-  (define-key ctrl-c-avy-map "`" #'avy-pop-mark)
-  (define-key isearch-mode-map (kbd "C-'") 'avy-isearch))
+;; convenient keychords
+(define-key qjp-mode-map (kbd "C-,") #'avy-goto-word-1)
+(define-key qjp-mode-map (kbd "C-;") #'avy-goto-char)
+;; all avy commands
+(define-key ctrl-c-avy-yas-map "c" #'avy-goto-char)
+(define-key ctrl-c-avy-yas-map "C" #'avy-goto-char-2)
+(define-key ctrl-c-avy-yas-map "j" #'avy-goto-word-0-in-line)
+(define-key ctrl-c-avy-yas-map "w" #'avy-goto-word-1)
+(define-key ctrl-c-avy-yas-map "W" #'avy-goto-word-2)
+(define-key ctrl-c-avy-yas-map "p" #'avy-copy-line)
+(define-key ctrl-c-avy-yas-map "m" #'avy-move-line)
+(define-key ctrl-c-avy-yas-map "l" #'avy-goto-line)
+(define-key ctrl-c-avy-yas-map "`" #'avy-pop-mark)
+(define-key isearch-mode-map (kbd "C-'") 'avy-isearch)
 
 (provide 'qjp-misc-avy)
 ;;; qjp-misc-avy.el ends here

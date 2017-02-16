@@ -44,9 +44,8 @@
   ;; Must be after `helm-projectile-on'
   (setq projectile-switch-project-action #'projectile-commander))
 
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
-  (define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project))
+(define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
+(define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project)
 
 (provide 'qjp-misc-projectile)
 ;;; qjp-misc-projectile.el ends here
