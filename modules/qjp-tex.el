@@ -56,14 +56,14 @@
             #'TeX-revert-document-buffer)
 
   ;; major mode bindings
-  (define-key LaTeX-mode-map (kbd "C-c e e") #'LaTeX-environment)
-  (define-key LaTeX-mode-map (kbd "C-c e s") #'LaTeX-section)
-  (define-key LaTeX-mode-map (kbd "C-c e ]") #'LaTeX-close-environment)
-  (define-key LaTeX-mode-map (kbd "C-c e p") #'qjp-latex-add-usepackage)
-  (define-key LaTeX-mode-map (kbd "C-c e m") #'qjp-latex-maketitle)
-  (define-key LaTeX-mode-map (kbd "C-c e a") #'latex/compile-commands-until-done)
-  (define-key LaTeX-mode-map (kbd "C-c e v") #'TeX-view)
-  (define-key LaTeX-mode-map (kbd "C-c e f") #'TeX-font)
+  (define-key LaTeX-mode-map (kbd "C-c m m") #'LaTeX-environment)
+  (define-key LaTeX-mode-map (kbd "C-c m s") #'LaTeX-section)
+  (define-key LaTeX-mode-map (kbd "C-c m ]") #'LaTeX-close-environment)
+  (define-key LaTeX-mode-map (kbd "C-c m p") #'qjp-latex-add-usepackage)
+  (define-key LaTeX-mode-map (kbd "C-c m m") #'qjp-latex-maketitle)
+  (define-key LaTeX-mode-map (kbd "C-c m a") #'latex/compile-commands-until-done)
+  (define-key LaTeX-mode-map (kbd "C-c m v") #'TeX-view)
+  (define-key LaTeX-mode-map (kbd "C-c m f") #'TeX-font)
 
   ;; ------ ;;
   ;; reftex ;;
@@ -203,7 +203,7 @@
                  ("\\" . reftex-index-phrase-selection-or-word)
                  ("|"  . reftex-index-visit-phrases-buffer)
                  ("x"  . reftex-view-crossref)))
-      (define-key reftex-mode-map (kbd (format "C-c e %s" (car x))) (cdr x)))))
+      (define-key reftex-mode-map (kbd (format "C-c m %s" (car x))) (cdr x)))))
 
 ;; ----- ;;
 ;; Hooks ;;

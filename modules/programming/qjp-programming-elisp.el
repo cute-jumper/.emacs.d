@@ -95,10 +95,25 @@
       (eval-region (min (point) (mark)) (max (point) (mark)))
     (pp-eval-last-sexp prefix)))
 
+;; key binding for lisp-mode
 (with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map
-    (kbd "C-c C-e")
-    #'qjp-eval-last-sexp-or-region))
+  (dolist (map (list emacs-lisp-mode-map lisp-interaction-mode-map))
+    (define-key map (kbd "C-x C-e") #'qjp-eval-last-sexp-or-region)
+    ;; macrostep
+    (define-key map (kbd "C-c m m") #'macrostep-expand)
+    ;; switch to ielm
+    (define-key map (kbd "C-c m z") #'qjp-switch-to-ielm)
+    ;; major mode bindings
+    (define-key map (kbd "C-c m b") #'eval-buffer)
+    ;; elisp-refs
+    (define-key map (kbd "C-c m r f") #'elisp-refs-function)
+    (define-key map (kbd "C-c m r m") #'elisp-refs-macro)
+    (define-key map (kbd "C-c m r v") #'elisp-refs-variable)
+    (define-key map (kbd "C-c m r l") #'elisp-refs-special)
+    (define-key map (kbd "C-c m r s") #'elisp-refs-symbol)))
+;; key bindings for ielm-mode
+(with-eval-after-load 'ielm
+  (define-key ielm-map (kbd "C-c m z") #'qjp-switch-from-ielm))
 
 ;; ----------------------- ;;
 ;; hippie-expand for elisp ;;
@@ -165,11 +180,6 @@
 (add-hook 'lisp-interaction-mode-hook #'qjp-lisp-interaction-mode-hook)
 (add-hook 'ielm-mode-hook #'qjp-ielm-mode-hook)
 
-;; macrostep
-(with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-c C-e") #'macrostep-expand)
-  (define-key lisp-interaction-mode-map (kbd "C-c C-e") #'macrostep-expand))
-
 ;; switch between ielm and emacs lisp buffer
 (defvar qjp-ielm-from-buffer nil
   "From where we switch to ielm.")
@@ -186,18 +196,6 @@
   (if qjp-ielm-from-buffer
       (switch-to-buffer qjp-ielm-from-buffer)
     (message "No previous buffer for switching back.")))
-
-(with-eval-after-load 'lisp-mode
-  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'qjp-switch-to-ielm)
-  (define-key lisp-interaction-mode-map (kbd "C-c C-z") #'qjp-switch-to-ielm))
-(with-eval-after-load 'ielm
-  (define-key ielm-map (kbd "C-c C-z") #'qjp-switch-from-ielm))
-
-;; ------------ ;;
-;; company-mode ;;
-;; ------------ ;;
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-elisp))
 
 ;; ---------------- ;;
 ;; flycheck-package ;;
