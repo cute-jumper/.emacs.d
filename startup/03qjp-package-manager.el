@@ -74,7 +74,6 @@ Enjoy your journey with Emacs:-)\n")))
 It should be used after new packages are installed in order
 to maintain the right list."
   (interactive)
-  (package-initialize)
   (setq qjp-installed-package-list nil)
   (dolist (pkg package-alist)
     (when (assoc (car pkg) package-archive-contents)
@@ -84,56 +83,6 @@ to maintain the right list."
   (message "Successfully update installed-package-list"))
 
 (add-hook 'kill-emacs-hook #'qjp-update-installed-package-list)
-
-;; -------------------------------------------------- ;;
-;; Deal with orphan packages. Modified from Spacemacs ;;
-;; -------------------------------------------------- ;;
-(defun qjp--get-orphan-packages ()
-  "Return orphan packages."
-  (let ((dependencies (qjp--get-all-packages-dependencies))
-        result)
-    (dolist (pkg package-alist)
-      (when (not (gethash (car pkg) dependencies))
-        (add-to-list 'result pkg)))
-    result))
-
-(defun qjp--get-package-deps-from-alist (pkg-name)
-  "Return the dependencies alist for package with name PKG-NAME."
-  (let ((pkg-desc (assq pkg-name package-alist)))
-    (and pkg-desc (package-desc-reqs (cadr pkg-desc)))))
-
-(defun qjp--get-all-packages-dependencies ()
-  "Return dependencies hash map for all packages in `package-alist'."
-  (let ((result (make-hash-table :size 512)))
-    (dolist (pkg package-alist)
-      (let* ((pkg-sym (car pkg))
-             (deps (qjp--get-package-deps-from-alist pkg-sym)))
-        (dolist (dep deps)
-          (let* ((dep-sym (car dep))
-                 (value (gethash dep-sym result)))
-            (puthash dep-sym
-                     (if value (add-to-list 'value pkg-sym) (list pkg-sym))
-                     result)))))
-    result))
-
-(defun qjp-get-package-dependencies (pkg-name)
-  (interactive "sPackage name: ")
-  (message "%s" (qjp--get-package-deps-from-alist (intern pkg-name))))
-
-(defvar qjp-orphan-packages-buffer "*Orphan Packages*")
-
-;; (defun qjp-list-orphan-packages ()
-;;   (let ((orphans (qjp--get-orphan-packages))
-;;         line)
-;;     (with-current-buffer (get-buffer-create qjp-orphan-packages-buffer)
-;;       (dolist (pkg orphans)
-;;         (insert (format "* %S\n" (car pkg)))
-;;         (or (setq line (package-desc)))))))
-
-;; ---------- ;;
-;; Initialize ;;
-;; ---------- ;;
-(package-initialize)
 
 (when (catch 'break
         (dolist (pkg qjp-installed-package-list)
