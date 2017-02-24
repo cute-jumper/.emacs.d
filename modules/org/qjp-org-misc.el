@@ -24,6 +24,11 @@
 
 ;;; Code:
 
+;; ----------------------- ;;
+;; org-table-sticky-header ;;
+;; ----------------------- ;;
+(add-hook 'org-mode-hook 'org-table-sticky-header-mode)
+
 ;; ------------ ;;
 ;; org protocol ;;
 ;; ------------ ;;
