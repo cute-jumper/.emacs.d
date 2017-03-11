@@ -24,9 +24,13 @@
 
 ;;; Code:
 
+(defvar qjp-diminish-aggressive t)
+
 (defmacro qjp-diminish (file mode-name &optional new-name)
   `(with-eval-after-load ',file
-     (diminish ',mode-name ,new-name)))
+     (if qjp-diminish-aggressive
+         (diminish ',mode-name)
+       (diminish ',mode-name ,new-name))))
 
 (defun qjp-misc-diminish-essential ()
   (interactive)
@@ -51,7 +55,17 @@
   (qjp-diminish eldoc eldoc-mode " ElD")
   (qjp-diminish elisp-slime-nav elisp-slime-nav-mode " SNav")
   (qjp-diminish company company-mode " Com")
-  (qjp-diminish haskell-mode interactive-haskell-mode " IntHS"))
+  (qjp-diminish haskell-mode interactive-haskell-mode " IntHS")
+  (when qjp-diminish-aggressive
+    (diminish 'global-whitespace-mode)
+    (diminish 'auto-revert-mode)
+    (qjp-diminish aggressive-indent aggressive-indent-mode)
+    (qjp-diminish smartparens smartparens-mode)
+    (qjp-diminish highlight-symbol highlight-symbol-mode)
+    (qjp-diminish which-key which-key-mode)
+    (qjp-diminish whitespace-cleanup-mode whitespace-cleanup-mode)
+    (qjp-diminish indent-guide indent-guide-mode)
+    (qjp-diminish highlight-parentheses highlight-parentheses-mode)))
 
 (defun qjp-misc-diminish-spacemacs ()
   (interactive)
