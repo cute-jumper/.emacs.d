@@ -29,14 +29,6 @@
 ;; ------- ;;
 
 ;; Customize the looking! From up to down!
-;; Set title first
-(setq frame-title-format
-      '((:eval
-         (concat (if (buffer-file-name)
-                     (abbreviate-file-name (buffer-file-name))
-                   "%b")
-                 "@"
-                 (system-name)))))
 
 ;; Disable menu-bar
 (menu-bar-mode -1)
