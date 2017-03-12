@@ -37,6 +37,11 @@
 (define-key helm-command-map (kbd "M-!") #'helm-run-external-command)
 (define-key helm-command-map (kbd "M-:") #'helm-eval-expression)
 (define-key helm-command-map (kbd "M-i") #'helm-multi-swoop)
+(define-key helm-command-map (kbd "M m") #'helm-browse-menubar)
+;; helm-mode-manager
+(define-key helm-command-map (kbd "M d") #'helm-disable-minor-mode)
+(define-key helm-command-map (kbd "M e") #'helm-enable-minor-mode)
+(define-key helm-command-map (kbd "M M") #'helm-switch-major-mode)
 
 (define-key qjp-mode-map (kbd "M-x") #'helm-M-x)
 (define-key qjp-mode-map (kbd "M-y") #'helm-show-kill-ring)
@@ -45,7 +50,6 @@
 (define-key qjp-mode-map (kbd "C-x c") nil)
 (global-unset-key (kbd "C-x c"))
 (define-key qjp-mode-map (kbd "C-c h") 'helm-command-prefix)
-(define-key qjp-mode-map (kbd "C-c i") #'helm-semantic-or-imenu)
 
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
@@ -77,7 +81,7 @@
   (defvar helm-source-header-default-background (face-attribute 'helm-source-header :background))
   (defvar helm-source-header-default-foreground (face-attribute 'helm-source-header :foreground))
   (defvar helm-source-header-default-box (face-attribute 'helm-source-header :box))
-  (defvar helm-source-header-default-height (face-attribute 'helm-source-header :height) )
+  (defvar helm-source-header-default-height (face-attribute 'helm-source-header :height))
 
   (defun helm-toggle-header-line ()
     "Hide the `helm' header is there is only one source."
@@ -95,77 +99,11 @@
                           :box nil
                           :height 0.1)))
   (add-hook 'helm-before-initialize-hook 'helm-toggle-header-line)
+
   ;; helm-swoop
   (require 'helm-swoop)
   ;; helm-projectile
   (require 'helm-projectile))
-
-(with-eval-after-load 'helm-files
-  ;; Let helm support zsh-like path expansion.
-  (defvar helm-ff-expand-valid-only-p t)
-  (defvar helm-ff-sort-expansions-p t)
-  (defvar helm-ff-ignore-case-p t)
-  (defun helm-ff--generate-case-ignore-pattern (pattern)
-    (let (head (ci-pattern ""))
-      (dotimes (i (length pattern) ci-pattern)
-        (setq head (aref pattern i))
-        (cond
-         ((and (<= head ?z) (>= head ?a))
-          (setq ci-pattern (format "%s[%c%c]" ci-pattern (upcase head) head)))
-         ((and (<= head ?Z) (>= head ?A))
-          (setq ci-pattern (format "%s[%c%c]" ci-pattern head (downcase head))))
-         (:else
-          (setq ci-pattern (format "%s%c" ci-pattern head)))))))
-  (defun helm-ff-try-expand-fname (candidate)
-    (let ((dirparts (split-string candidate "/"))
-          valid-dir
-          fnames)
-      (catch 'break
-        (while dirparts
-          (if (file-directory-p (concat valid-dir (car dirparts) "/"))
-              (setq valid-dir (concat valid-dir (pop dirparts) "/"))
-            (throw 'break t))))
-      (setq fnames (cons candidate (helm-ff-try-expand-fname-1 valid-dir dirparts)))
-      (if helm-ff-sort-expansions-p
-          (sort fnames
-                (lambda (f1 f2) (or (file-directory-p f1)
-                                (not (file-directory-p f2)))))
-        fnames)))
-
-  (defun helm-ff-try-expand-fname-1 (parent children)
-    (if children
-        (if (equal children '(""))
-            (and (file-directory-p parent) `(,(concat parent "/")))
-          (when (file-directory-p parent)
-            (apply 'nconc
-                   (mapcar
-                    (lambda (f)
-                      (or (helm-ff-try-expand-fname-1 f (cdr children))
-                          (unless helm-ff-expand-valid-only-p
-                            (and (file-directory-p f)
-                                 `(,(concat f "/" (mapconcat 'identity
-                                                             (cdr children)
-                                                             "/")))))))
-                    (directory-files parent t
-                                     (concat "^"
-                                             (if helm-ff-ignore-case-p
-                                                 (helm-ff--generate-case-ignore-pattern
-                                                  (car children))
-                                               (car children))))))))
-      `(,(concat parent (and (file-directory-p parent) "/")))))
-
-  (defun qjp-helm-ff-try-expand-fname (orig-func &rest args)
-    (let* ((candidate (car args))
-           (collection (helm-ff-try-expand-fname candidate)))
-      (if (and (> (length collection) 1)
-               (not (file-exists-p candidate)))
-          (with-helm-alive-p
-            (when (helm-file-completion-source-p)
-              (helm-set-pattern
-               (helm-comp-read "Expand Path to: " collection :allow-nest t))))
-        (apply orig-func args))))
-
-  (advice-add 'helm-ff-kill-or-find-buffer-fname :around #'qjp-helm-ff-try-expand-fname))
 
 (define-key ctrl-c-git-grep-map "a" #'helm-ag)
 (define-key ctrl-c-git-grep-map "h" #'helm-do-ag)
@@ -196,6 +134,16 @@
       helm-swoop-use-fuzzy-match t
       helm-projectile-fuzzy-match t
       helm-ag-fuzzy-match t)
+
+;; ---------- ;;
+;; `helm-ext' ;;
+;; ---------- ;;
+(with-eval-after-load 'helm-files
+  (helm-ext-ff-enable-auto-path-expansion t)
+  (helm-ext-ff-enable-skipping-dots t))
+
+(with-eval-after-load 'helm
+  (helm-ext-minibuffer-enable-header-line-maybe t))
 
 (provide 'qjp-misc-helm)
 ;;; qjp-misc-helm.el ends here
