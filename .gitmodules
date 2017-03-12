@@ -4,6 +4,3 @@
 [submodule "site-lisp/matlab-mode"]
 	path = site-lisp/matlab-mode
 	url = https://github.com/cute-jumper/matlab-mode.git
-[submodule "helm-ext"]
-	path = modules/misc/helm-ext
-	url = git@github.com:cute-jumper/helm-ext.git
