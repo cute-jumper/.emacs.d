@@ -39,11 +39,13 @@
   "The place to save the installed package list.")
 
 (defvar qjp-installed-package-list
-  (when (file-exists-p qjp-installed-package-list-filename)
-    (read
-     (with-temp-buffer
-       (insert-file-contents qjp-installed-package-list-filename)
-       (buffer-string))))
+  (if (version< emacs-version "25")
+      (when (file-exists-p qjp-installed-package-list-filename)
+        (read
+         (with-temp-buffer
+           (insert-file-contents qjp-installed-package-list-filename)
+           (buffer-string))))
+    package-selected-packages)
   "A list of installed packages.")
 
 (defun qjp-install-all-packages ()
@@ -68,21 +70,23 @@ and installs these packages one by one."
     (insert "Package installation is done. \
 Enjoy your journey with Emacs:-)\n")))
 
+;; Not needed in Emacs 25 anymore
 ;; This function should be used when maintaining the settings, not at the first initialization.
-(defun qjp-update-installed-package-list (&rest args)
-  "Update the file with the lastest installed packages' list.
+(when (version< emacs-version "25")
+  (defun qjp-update-installed-package-list (&rest args)
+    "Update the file with the lastest installed packages' list.
 It should be used after new packages are installed in order
 to maintain the right list."
-  (interactive)
-  (setq qjp-installed-package-list nil)
-  (dolist (pkg package-alist)
-    (when (assoc (car pkg) package-archive-contents)
-      (add-to-list 'qjp-installed-package-list (car pkg))))
-  (with-temp-file qjp-installed-package-list-filename
-    (prin1 qjp-installed-package-list (current-buffer)))
-  (message "Successfully update installed-package-list"))
+    (interactive)
+    (setq qjp-installed-package-list nil)
+    (dolist (pkg package-alist)
+      (when (assoc (car pkg) package-archive-contents)
+        (add-to-list 'qjp-installed-package-list (car pkg))))
+    (with-temp-file qjp-installed-package-list-filename
+      (prin1 qjp-installed-package-list (current-buffer)))
+    (message "Successfully update installed-package-list"))
 
-(add-hook 'kill-emacs-hook #'qjp-update-installed-package-list)
+  (add-hook 'kill-emacs-hook #'qjp-update-installed-package-list))
 
 (when (catch 'break
         (dolist (pkg qjp-installed-package-list)
