@@ -30,7 +30,6 @@
 (with-eval-after-load 'smartparens
   (require 'smartparens-config))
 (setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
 (setq sp-hybrid-kill-entire-symbol nil)
 
 ;; key bindings
