@@ -218,16 +218,39 @@ _h_   _l_   _o_pen      _y_ank
 ;; Hydra for rebox ;;
 ;; --------------- ;;
 (defhydra hydra-rebox
-  (qjp-mode-map "C-c")
+  (ctrl-c-extension-map "")
   "hydra rebox-cycle"
   (";" rebox-cycle))
+
+;; ------------------- ;;
+;; Hydra for scrolling ;;
+;; ------------------- ;;
+(defhydra hydra-scrolling-up
+  (:body-pre (progn (setq hydra-is-helpful t)
+                    (scroll-up-command))
+             :post (setq hydra-is-helpful nil))
+  "hydra scrolling"
+  ("n" (scroll-up-command))
+  ("p" (scroll-up-command '-)))
+
+(define-key ctrl-c-extension-map "n" #'hydra-scrolling-up/body)
+
+(defhydra hydra-scrolling-down
+  (:body-pre (progn (setq hydra-is-helpful t)
+                    (scroll-up-command '-))
+             :post (setq hydra-is-helpful nil))
+  "hydra scrolling"
+  ("n" (scroll-up-command))
+  ("p" (scroll-up-command '-)))
+
+(define-key ctrl-c-extension-map "p" #'hydra-scrolling-down/body)
 
 ;; ------------------------ ;;
 ;; Hydra for `other-window' ;;
 ;; ------------------------ ;;
 (defhydra hydra-manage-window
   (:body-pre (setq hydra-is-helpful t)
-             :post (setq hydra-is-helpful))
+             :post (setq hydra-is-helpful nil))
   "Window"
   ("o" (other-window 1) "next window")
   ("d" delete-window "delete window")
