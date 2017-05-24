@@ -105,9 +105,16 @@
      nil))
   (define-key dired-mode-map "E" #'dired-do-eval)
 
+  (defun qjp-dired-goto-file-and-open ()
+    (interactive)
+    (call-interactively 'dired-goto-file)
+    (dired-find-file))
+  (define-key dired-mode-map "e" #'qjp-dired-goto-file-and-open)
+
   ;; No sort now
   ;; (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
 
+  (define-key dired-mode-map (kbd "h") #'diredp-up-directory)
   (define-key dired-mode-map (kbd "M-p") #'dired-prev-marked-file)
   (define-key dired-mode-map (kbd "M-n") #'dired-next-marked-file)
 
@@ -119,6 +126,8 @@
   ;; dired-subtree
   (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
   (define-key dired-mode-map (kbd "<backtab>") #'dired-subtree-cycle)
+  ;; async
+  (dired-async-mode +1)
 
   (defun qjp-dired-mode-hook ()
     (setq dired-guess-shell-alist-user
