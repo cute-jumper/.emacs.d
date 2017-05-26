@@ -36,6 +36,14 @@
 (define-key region-bindings-mode-map "S" 'mc/mark-all-symbols-like-this-in-defun)
 (define-key region-bindings-mode-map "d" 'mc/mark-all-like-this-dwim)
 
+(define-key ctrl-c-extension-map "ma" 'mc/mark-all-like-this)
+(define-key ctrl-c-extension-map "mp" 'mc/mark-previous-like-this)
+(define-key ctrl-c-extension-map "mn" 'mc/mark-next-like-this)
+(define-key ctrl-c-extension-map "me" 'mc/edit-lines)
+(define-key ctrl-c-extension-map "ms" 'mc/mark-all-symbols-like-this)
+(define-key ctrl-c-extension-map "mS" 'mc/mark-all-symbols-like-this-in-defun)
+(define-key ctrl-c-extension-map "md" 'mc/mark-all-like-this-dwim)
+
 ;; Using mouse!
 (define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
 
