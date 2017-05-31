@@ -47,5 +47,10 @@
 (define-key qjp-mode-map (kbd "C-c p h") #'helm-projectile)
 (define-key qjp-mode-map (kbd "C-c p p") #'helm-projectile-switch-project)
 
+(setq projectile-mode-line
+      '(:eval (if (file-remote-p default-directory)
+                  " "
+                (format " [%s]" (projectile-project-name)))))
+
 (provide 'qjp-misc-projectile)
 ;;; qjp-misc-projectile.el ends here
