@@ -24,13 +24,6 @@
 
 ;;; Code:
 
-;; ---------------------------- ;;
-;; Add executable path and PATH ;;
-;; ---------------------------- ;;
-(let ((local-path (expand-file-name "~/.local/bin")))
-  (setenv "PATH" (concat local-path ":" (getenv "PATH")))
-  (add-to-list 'exec-path local-path))
-
 ;; ------------------ ;;
 ;; haskell-cabal-mode ;;
 ;; ------------------ ;;
