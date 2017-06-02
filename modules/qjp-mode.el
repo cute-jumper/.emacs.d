@@ -198,7 +198,7 @@
   "Minor mode designed for Junpeng Qiu!
 
 \\{qjp-mode-map}"
-  nil
+  t ;; See http://emacs.stackexchange.com/questions/16693/auto-enable-minor-modes-in-fundamental-mode
   " QJP"
   qjp-mode-map
   :group qjp-mode)
