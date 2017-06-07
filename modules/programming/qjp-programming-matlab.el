@@ -39,17 +39,21 @@
 ;;             (local-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 ;;             (local-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
 ;;             ))
-(add-to-list 'exec-path "/opt/MATLAB/R2010b/bin")
 (load-library "matlab-load")
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-matlab)
-  (add-to-list 'company-backends 'company-matlab-shell))
 
-(add-hook 'matlab-shell-mode-hook
-          (lambda ()
-            (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)))
-(add-hook 'matlab-mode-hook 'flycheck-mode)
-(with-eval-after-load 'flycheck
+(defun qjp-matlab-mode-hook ()
+  (flycheck-mode +1)
+  (add-to-list (make-local-variable 'company-backends) 'company-matlab))
+
+(add-hook 'matlab-mode-hook 'qjp-matlab-mode-hook)
+
+(defun qjp-matlab-shell-mode-hook ()
+  (define-key matlab-shell-mode-map (kbd "<tab>") 'company-complete)
+  (add-to-list (make-local-variable 'company-backends) 'company-matlab-shell))
+
+(add-hook 'matlab-shell-mode-hook #'qjp-matlab-shell-mode-hook)
+
+(with-eval-after-load 'matlab-mode
   (require 'flycheck-matlab-mlint))
 
 (provide 'qjp-programming-matlab)
