@@ -52,18 +52,16 @@
   (load custom-file))
 
 ;; Start server
-(run-with-idle-timer
- 2
- nil
- (lambda ()
-   (require 'server)
-   (or (server-running-p) (server-start))
-   (add-hook 'server-switch-hook
-             (lambda ()
-               (when (current-local-map)
-                 (use-local-map (copy-keymap (current-local-map))))
-               (when server-buffer-clients
-                 (local-set-key (kbd "C-x k") 'server-edit))))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (or (server-running-p) (server-start))
+            (add-hook 'server-switch-hook
+                      (lambda ()
+                        (when (current-local-map)
+                          (use-local-map (copy-keymap (current-local-map))))
+                        (when server-buffer-clients
+                          (local-set-key (kbd "C-x k") 'server-edit))))))
 
 (provide '01qjp-global-settings)
 ;;; 01qjp-global-settings.el ends here
