@@ -48,7 +48,7 @@
   (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk")
   ;; Tricks: let synctex work with Okular
   (add-to-list 'TeX-expand-list '("%(masterdir)" (lambda nil (expand-file-name (TeX-master-directory)))))
-  (add-to-list 'TeX-view-program-list '("Okular" "okular --unique %o#src:%n%(masterdir)./%b"))
+  (add-to-list 'TeX-view-program-list '("Okular" "okular --unique %o"))
   (add-to-list 'TeX-view-program-selection '(output-pdf "Okular"))
 
   ;; Add hook for pdf-view-mode
