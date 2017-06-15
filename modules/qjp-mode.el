@@ -50,7 +50,6 @@
   (define-key ctrl-c-extension-map "j" #'join-line)
   (define-key ctrl-c-extension-map "s" #'eshell)
   (define-key ctrl-c-extension-map "S" #'ansi-term)
-  (define-key ctrl-c-extension-map "m" #'qjp-kill-back-to-indentation)
   (define-key ctrl-c-extension-map "r" #'revert-buffer)
   (define-key ctrl-c-extension-map "lf" #'add-file-local-variable)
   (define-key ctrl-c-extension-map "lp" #'add-file-local-variable-prop-line)
@@ -66,11 +65,11 @@
   (define-key ctrl-c-git-grep-map "n" #'find-name-dired))
 (qjp-mode-define-ctrl-c-git-grep-map)
 
-(define-prefix-command 'ctrl-c-yasnippet-map)
-(defun qjp-mode-define-ctrl-c-yasnippet-map ()
-  (define-key ctrl-c-yasnippet-map "c" #'aya-create)
-  (define-key ctrl-c-yasnippet-map "e" #'aya-expand))
-(qjp-mode-define-ctrl-c-yasnippet-map)
+(define-prefix-command 'ctrl-c-avy-yas-map)
+(defun qjp-mode-define-ctrl-c-avy-yas-map ()
+  (define-key ctrl-c-avy-yas-map "c" #'aya-create)
+  (define-key ctrl-c-avy-yas-map "e" #'aya-expand))
+(qjp-mode-define-ctrl-c-avy-yas-map)
 
 (defvar qjp-mode-map
   (let ((map (make-sparse-keymap)))
@@ -93,7 +92,6 @@
     ;; Other key bindings ;;
     ;; ------------------ ;;
     (define-key map [remap list-buffers] #'ibuffer)
-    (define-key map [remap back-to-indentation] #'cycle-spacing)
     (define-key map [remap count-words-region] #'count-words)
     ;; (define-key map (kbd "M-s r") #'replace-string)
     (define-key map (kbd "M-/") #'hippie-expand)
@@ -109,9 +107,9 @@
     (define-key map (kbd "C-c g") 'ctrl-c-git-grep-map)
 
     ;; -------------------- ;;
-    ;; ctrl-c-yasnippet-map ;;
+    ;; ctrl-c-avy-yas-map ;;
     ;; -------------------- ;;
-    (define-key map (kbd "C-c y") 'ctrl-c-yasnippet-map)
+    (define-key map (kbd "C-c y") 'ctrl-c-avy-yas-map)
 
     ;; ----- ;;
     ;; C-c q ;;
@@ -152,7 +150,9 @@
   (if on
       (progn
         (global-unset-key (kbd "M-o"))
-        (define-key qjp-mode-map (kbd "M-o") #'other-window))
+        (if (fboundp 'ace-window)
+            (define-key qjp-mode-map (kbd "M-o") #'ace-window)
+          (define-key qjp-mode-map (kbd "M-o") #'other-window)))
     (global-set-key (kbd "M-o") 'meta-o-map)))
 
 (defun qjp-mode--keychord-remap (keychord key-str)
@@ -162,23 +162,23 @@
 
 (defun qjp-mode-define-keychords ()
   (with-eval-after-load 'qjp-misc
-    (qjp-key-chord-define qjp-mode-map ";;" (µ (end-of-line) (insert ";")))
-    (qjp-key-chord-define qjp-mode-map ";s" #'isearch-forward)
-    (qjp-key-chord-define qjp-mode-map ";d" #'delete-char)
-    (qjp-key-chord-define qjp-mode-map ";z" (kbd "C-/"))
-    (qjp-key-chord-define qjp-mode-map ";g" (kbd "C-g"))
-    (qjp-key-chord-define qjp-mode-map ";f" #'forward-char)
-    (qjp-key-chord-define qjp-mode-map ";b" #'backward-char)
-    (qjp-key-chord-define qjp-mode-map ";e" #'end-of-line)
-    (qjp-key-chord-define qjp-mode-map ";a" #'qjp-back-to-indentation-or-beginning)
-    (qjp-key-chord-define qjp-mode-map ";u" #'previous-line)
-    (qjp-key-chord-define qjp-mode-map ";n" #'next-line)
-    (qjp-key-chord-define qjp-mode-map ";y" #'yank)
-    (qjp-key-chord-define qjp-mode-map ";w" #'kill-region)
-    (qjp-key-chord-define qjp-mode-map ";1" (kbd "C-x 1"))
-    (qjp-key-chord-define qjp-mode-map ";2" (kbd "C-x 2"))
-    (qjp-key-chord-define qjp-mode-map ";3" (kbd "C-x 3"))
-    (qjp-key-chord-define qjp-mode-map ";o" (kbd "C-x o"))))
+    ;; (qjp-key-chord-define qjp-mode-map ";;" (µ (end-of-line) (insert ";")))
+    ;; (qjp-key-chord-define qjp-mode-map ";s" (kbd "C-s"))
+    ;; (qjp-key-chord-define qjp-mode-map ";d" (kbd "C-d"))
+    ;; (qjp-key-chord-define qjp-mode-map ";z" (kbd "C-/"))
+    ;; (qjp-key-chord-define qjp-mode-map ";g" (kbd "C-g"))
+    ;; (qjp-key-chord-define qjp-mode-map ";f" (kbd "C-f"))
+    ;; (qjp-key-chord-define qjp-mode-map ";b" (kbd "C-b"))
+    ;; (qjp-key-chord-define qjp-mode-map ";e" (kbd "C-e"))
+    ;; (qjp-key-chord-define qjp-mode-map ";a" (kbd "C-a"))
+    ;; (qjp-key-chord-define qjp-mode-map ";u" (kbd "C-p"))
+    ;; (qjp-key-chord-define qjp-mode-map ";n" (kbd "C-n"))
+    ;; (qjp-key-chord-define qjp-mode-map ";y" (kbd "C-y"))
+    ;; (qjp-key-chord-define qjp-mode-map ";w" (kbd "C-w"))
+    (qjp-key-chord-define qjp-mode-map "j1" (kbd "C-x 1"))
+    (qjp-key-chord-define qjp-mode-map "j2" (kbd "C-x 2"))
+    (qjp-key-chord-define qjp-mode-map "j3" (kbd "C-x 3"))
+    (qjp-key-chord-define qjp-mode-map "jo" (kbd "C-x o"))))
 
 (defun qjp-mode-define-isearch (on)
   (if on
