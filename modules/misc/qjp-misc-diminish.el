@@ -58,7 +58,7 @@
   (qjp-diminish haskell-mode interactive-haskell-mode " IntHS")
   (when qjp-diminish-aggressive
     (diminish 'global-whitespace-mode)
-    (diminish 'auto-revert-mode)
+    (qjp-diminish autorevert auto-revert-mode)
     (qjp-diminish aggressive-indent aggressive-indent-mode)
     (qjp-diminish smartparens smartparens-mode)
     (qjp-diminish highlight-symbol highlight-symbol-mode)
