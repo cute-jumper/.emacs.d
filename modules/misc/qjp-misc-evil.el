@@ -33,11 +33,26 @@
 (evil-mode +1)
 ;; unset all insert mode mappings
 (setcdr evil-insert-state-map nil)
+
 ;; ------------ ;;
 ;; evil plugins ;;
 ;; ------------ ;;
 
 ;; evil surround
+(setq evil-surround-pairs-alist
+      '((?\} . ("( " . " )"))
+        (?\] . ("[ " . " ]"))
+        (?\} . ("{ " . " }"))
+        (?\( . ("(" . ")"))
+        (?\[ . ("[" . "]"))
+        (?\{ . ("{" . "}"))
+        (?# . ("#{" . "}"))
+        (?b . ("(" . ")"))
+        (?B . ("{" . "}"))
+        (?> . ("<" . ">"))
+        (?t . evil-surround-read-tag)
+        (?< . evil-surround-read-tag)
+        (?f . evil-surround-function)))
 (global-evil-surround-mode +1)
 
 ;; evil-paredit
@@ -87,45 +102,25 @@
 (advice-add 'evil-mode :after #'qjp-evil-disable-show-paren-advice)
 (qjp-evil-disable-show-paren-advice)
 
-;; ---------------- ;;
-;; `evil-god-state' ;;
-;; ---------------- ;;
-;; universal key binding
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-SPC") 'evil-execute-in-god-state))
-;; evil mode key bindings
-(define-key evil-normal-state-map (kbd "SPC") 'evil-execute-in-god-state)
-(define-key evil-visual-state-map (kbd "SPC") 'evil-execute-in-god-state)
-(define-key evil-motion-state-map (kbd "SPC") 'evil-execute-in-god-state)
-(qjp-key-chord-define evil-insert-state-map "kk" 'evil-execute-in-god-state)
-(with-eval-after-load 'evil-god-state
-  (defun evil-god-fix-last-command ()
-    "Change `last-command' to be the command before `evil-execute-in-god-state'."
-    (setq last-command evil-god-last-command)
-    (setq last-repeatable-command last-command))
-  (define-key evil-god-state-map [escape] 'evil-god-state-bail)
-  ;; fix visual mode problem in evil-god-state
-  (defun evil-execute-in-god-state ()
-    "Execute the next command in God state."
-    (interactive)
-    (add-hook 'pre-command-hook #'evil-god-fix-last-command t)
-    (add-hook 'post-command-hook #'evil-stop-execute-in-god-state t)
-    (setq evil-execute-in-god-state-buffer (current-buffer))
-    (setq evil-god-last-command last-command)
-    (cond
-     ((evil-visual-state-p)
-      (let ((mrk (mark))
-            (pnt (point)))
-        (evil-god-state)
-        (set-mark mrk)
-        (goto-char (1- pnt))))
-     (t
-      (evil-god-state)))
-    (evil-echo "Switched to God state for the next command ..."))
-  (setq evil-god-state-tag
-        (format " %s " (propertize "<G>" 'face '((:background "white" :foreground "black"))))))
+;; ----------------------- ;;
+;; `evil-qjp-leader-state' ;;
+;; ----------------------- ;;
+(autoload 'evil-execute-in-qjp-leader-state "qjp-leader-mode" nil t)
 
-(autoload 'evil-god-state-p "evil-god-state")
+;; universal key binding
+(define-key qjp-mode-map (kbd "M-j") 'evil-execute-in-qjp-leader-state)
+
+;; evil mode key bindings
+(define-key evil-normal-state-map (kbd "SPC") 'evil-execute-in-qjp-leader-state)
+(define-key evil-visual-state-map (kbd "SPC") 'evil-execute-in-qjp-leader-state)
+(define-key evil-motion-state-map (kbd "SPC") 'evil-execute-in-qjp-leader-state)
+(qjp-key-chord-define evil-insert-state-map "kk" 'evil-execute-in-qjp-leader-state)
+(with-eval-after-load 'qjp-leader-mode
+  (define-key evil-qjp-leader-state-map [escape] 'evil-qjp-leader-state-bail)
+  (setq evil-qjp-leader-state-tag
+        (format " %s " (propertize "<Q>" 'face '((:background "white" :foreground "black"))))))
+
+(autoload 'evil-qjp-leader-state-p "qjp-leader-mode")
 (defun evil-visual-activate-hook (&optional command)
   "Enable Visual state if the region is activated."
   (unless (evil-visual-state-p)
@@ -135,24 +130,24 @@
         '(unless (or (evil-visual-state-p)
                      (evil-insert-state-p)
                      (evil-emacs-state-p)
-                     (evil-god-state-p))
+                     (evil-qjp-leader-state-p))
            (when (and (region-active-p)
                       (not deactivate-mark))
              (evil-visual-state)))
       'post-command-hook nil t
       "evil-activate-visual-state")))
 
-;; ---------------------------------- ;;
-;; `god-mode' evil cursor integration ;;
-;; ---------------------------------- ;;
-(defun qjp-emacs-state-god-mode-cursor ()
+;; ----------------------------------------- ;;
+;; `qjp-leader-mode' evil cursor integration ;;
+;; ----------------------------------------- ;;
+(defun qjp-emacs-state-qjp-leader-mode-cursor ()
   (make-local-variable 'evil-emacs-state-cursor)
   (setq evil-emacs-state-cursor 'hollow))
 (defun qjp-emacs-state-restore-cursor ()
   (setq evil-emacs-state-cursor 'bar))
-(with-eval-after-load 'god-mode
-  (add-hook 'god-mode-enabled-hook #'qjp-emacs-state-god-mode-cursor)
-  (add-hook 'god-mode-disabled-hook #'qjp-emacs-state-restore-cursor))
+(with-eval-after-load 'qjp-leader-mode
+  (add-hook 'qjp-leader-mode-enabled-hook #'qjp-emacs-state-qjp-leader-mode-cursor)
+  (add-hook 'qjp-leader-mode-disabled-hook #'qjp-emacs-state-restore-cursor))
 
 ;; -------------------------------- ;;
 ;; Let evil respect `subword-mode'. ;;
@@ -208,7 +203,7 @@
 ;; ----------------- ;;
 (add-hook 'with-editor-mode-hook #'evil-insert-state)
 
-(add-hook 'view-mode-hook 'evil-motion-state)
+(add-hook 'view-mode-hook #'evil-motion-state)
 
 ;; ---- ;;
 ;; helm ;;
@@ -219,6 +214,12 @@
     (setq cursor-in-non-selected-windows nil)))
 
 (add-hook 'helm-after-initialize-hook #'qjp-helm-window-hide-cursor)
+
+;; --- ;;
+;; avy ;;
+;; --- ;;
+(define-key evil-normal-state-map "," #'avy-goto-word-1)
+(define-key evil-motion-state-map "," #'avy-goto-word-1)
 
 ;; ------------------------------ ;;
 ;; pp-eval buffer in insert state ;;
@@ -231,7 +232,22 @@
 ;; ----------------------- ;;
 ;; haskell-mode interation ;;
 ;; ----------------------- ;;
-(add-to-list 'evil-motion-state-modes 'haskell-error-mode)
+(evil-set-initial-state 'haskell-error-mode 'motion)
+
+;; -------- ;;
+;; profiler ;;
+;; -------- ;;
+(evil-set-initial-state 'profiler-report-mode 'motion)
+
+;; ----------------- ;;
+;; paradox-menu-mode ;;
+;; ----------------- ;;
+(evil-set-initial-state 'paradox-menu-mode 'motion)
+
+;; ----------- ;;
+;; finder-mode ;;
+;; ----------- ;;
+(evil-set-initial-state 'finder-mode 'motion)
 
 ;; ------------- ;;
 ;; Misc settings ;;
@@ -279,7 +295,6 @@
 (define-key evil-normal-state-map [down-mouse-1] 'qjp-nop)
 (define-key evil-normal-state-map "H" #'evil-first-non-blank)
 (define-key evil-normal-state-map "L" #'evil-end-of-line)
-(define-key evil-normal-state-map "," #'repeat)
 (define-key evil-normal-state-map (kbd "M-.") nil)
 ;; avoid ctrl
 (define-key evil-normal-state-map "gz" #'evil-emacs-state)
@@ -290,10 +305,10 @@
 ;; visual ;;
 ;; ------ ;;
 (setq evil-visual-state-cursor 'hbar)
-(define-key evil-visual-state-map "," #'repeat)
 ;; avoid ctrl
 (defun qjp-evil-emacs-state ()
-  "Use wrapper command. I don't know why."
+  "Use wrapper command.  I don't know why.
+Maybe because of the interactive call."
   (interactive)
   (evil-emacs-state))
 (define-key evil-visual-state-map "gz" #'qjp-evil-emacs-state)
@@ -312,13 +327,16 @@
 ;; ----- ;;
 ;; emacs ;;
 ;; ----- ;;
-;; more consistent feel
-(define-key evil-emacs-state-map (kbd "<escape>") #'evil-exit-emacs-state)
-(qjp-key-chord-define evil-emacs-state-map "jj" #'evil-exit-emacs-state)
-;; M-SPC and kk make no sense to only execute god once in emacs state, so
-(define-key evil-emacs-state-map (kbd "M-SPC") #'god-local-mode)
-(qjp-key-chord-define evil-emacs-state-map "kk" #'god-local-mode)
-(add-to-list 'evil-emacs-state-modes 'dired-mode)
+;; Actually we should comment out this line based on the assumption that if
+;; we're already in emacs-state then we probably don't want to use evil at all.
+;; (define-key evil-emacs-state-map (kbd "<escape>") #'evil-exit-emacs-state)
+;; (qjp-key-chord-define evil-emacs-state-map "jj" #'evil-exit-emacs-state)
+
+;; M-SPC and kk make no sense to only execute qjp-leader once in emacs state, so
+(define-key evil-emacs-state-map (kbd "M-SPC") #'qjp-leader-local-mode)
+(qjp-key-chord-define evil-emacs-state-map "kk" #'qjp-leader-local-mode)
+(dolist (mode '(dired-mode calendar-mode))
+  (evil-set-initial-state mode 'emacs))
 (setq evil-emacs-state-cursor 'bar)
 ;; fix visual/emacs state transition
 (defun qjp-evil-emacs-state-entry-hook-from-visual ()
