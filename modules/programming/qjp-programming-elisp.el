@@ -161,6 +161,8 @@
   (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t)
   (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t))
+  ;; add company-backends
+  (add-to-list (make-local-variable 'company-backends) 'company-elisp))
 
 (defun qjp-emacs-lisp-mode-hook ()
   (qjp-emacs-lisp-common-hook))

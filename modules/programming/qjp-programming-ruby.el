@@ -70,13 +70,13 @@
   ;; Ruby tools
   (ruby-tools-mode +1)
   ;; key bindings
-  (define-key ruby-mode-map (kbd "C-c C-c") #'ruby-compilation-this-buffer))
-
-(add-hook 'ruby-mode-hook #'qjp-ruby-mode-hook)
-
-(with-eval-after-load 'company
+  (define-key ruby-mode-map (kbd "C-c C-c") #'ruby-compilation-this-buffer)
+  ;; add company-backends
+  (make-local-variable 'company-backends)
   (add-to-list 'company-backends 'company-robe)
   (add-to-list 'company-backends 'company-inf-ruby))
+
+(add-hook 'ruby-mode-hook #'qjp-ruby-mode-hook)
 
 (provide 'qjp-programming-ruby)
 ;;; qjp-programming-ruby.el ends here

@@ -60,10 +60,6 @@
 
 (add-hook 'irony-mode-hook 'qjp-irony-mode-hook)
 
-;; `company-irony' and `company-irony-c-headers'
-(with-eval-after-load 'company
-  (add-to-list 'company-backends '(company-irony company-irony-c-headers)))
-
 ;; `flycheck-irony'
 (with-eval-after-load 'flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
@@ -73,7 +69,9 @@
   (local-set-key (kbd "M-(") #'qjp-insert-parentheses)
   (irony-mode +1)
   (rtags-start-process-unless-running)
-  (rtags-enable-standard-keybindings c-mode-base-map (kbd "C-c r")))
+  (rtags-enable-standard-keybindings c-mode-base-map (kbd "C-c r"))
+  ;; add company-backends
+  (add-to-list (make-local-variable 'company-backends) '(company-irony company-irony-c-headers)))
 
 (add-hook 'c-mode-hook #'qjp-c-cpp-mode-hook)
 (add-hook 'c++-mode-hook #'qjp-c-cpp-mode-hook)

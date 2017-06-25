@@ -61,7 +61,9 @@
   (indent-guide-mode +1)
   (pyvenv-mode +1)
   (anaconda-mode +1)
-  (anaconda-eldoc-mode +1))
+  (anaconda-eldoc-mode +1)
+  ;; add company-backends
+  (add-to-list (make-local-variable 'company-backends) '(company-anaconda :with company-capf)))
 
 (add-hook 'python-mode-hook #'qjp-python-mode-hook)
 
