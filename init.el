@@ -24,7 +24,7 @@
 
 ;;; Code:
 
-;; (package-initialize)
+(package-initialize)
 
 (defvar qjp-before-init-time (current-time))
 
