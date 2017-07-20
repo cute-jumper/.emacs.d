@@ -534,6 +534,7 @@ is selected interactively from all available keymaps."
 ;; keyfreq ;;
 ;; ------- ;;
 (qjp-misc-config-inline keyfreq
+  (setq keyfreq-file (concat qjp-base-dir "keyfreq"))
   (keyfreq-mode +1)
   (keyfreq-autosave-mode +1))
 
