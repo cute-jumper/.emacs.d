@@ -298,7 +298,8 @@ is selected interactively from all available keymaps."
   (which-key-add-key-based-replacements
     "C-c q" "visual replace/quickrun/quit")
   (which-key-mode +1)
-  (which-key-enable-god-mode-support))
+  ;; (which-key-enable-god-mode-support)
+  )
 
 ;; ------------------- ;;
 ;; volatile-highlights ;;
