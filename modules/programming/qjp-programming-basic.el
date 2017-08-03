@@ -103,6 +103,20 @@ cursor to the new line."
     (newline arg)
     (indent-according-to-mode)))
 
+(defvar qjp-indent-when-closing-pair-modes nil)
+
+(defun qjp-indent-when-closing-pair (orig-func &rest args)
+  (prog1
+      (apply orig-func args)
+    (and (memq major-mode qjp-indent-when-closing-pair-modes)
+         (looking-back "}" nil)
+         (let ((end (point)))
+           (save-excursion
+             (sp-backward-sexp)
+             (indent-region (point) end))))))
+
+(advice-add 'c-electric-brace :around 'qjp-indent-when-closing-pair)
+
 ;; Put *Shell Command Output* buffers into view-mode
 (defadvice shell-command-on-region
     (after qjp-shell-command-in-view-mode
