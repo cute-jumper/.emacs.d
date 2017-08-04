@@ -53,7 +53,6 @@
 ;; For mode line
 (line-number-mode t)
 (column-number-mode t)
-(size-indication-mode t)
 (display-battery-mode)
 
 ;; Draw underline lower
