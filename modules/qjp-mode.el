@@ -177,8 +177,7 @@
     ;; (qjp-key-chord-define qjp-mode-map ";w" (kbd "C-w"))
     (qjp-key-chord-define qjp-mode-map "j1" (kbd "C-x 1"))
     (qjp-key-chord-define qjp-mode-map "j2" (kbd "C-x 2"))
-    (qjp-key-chord-define qjp-mode-map "j3" (kbd "C-x 3"))
-    (qjp-key-chord-define qjp-mode-map "jo" (kbd "C-x o"))))
+    (qjp-key-chord-define qjp-mode-map "j3" (kbd "C-x 3"))))
 
 (defun qjp-mode-define-isearch (on)
   (if on
