@@ -202,6 +202,7 @@
 ;; magit integration ;;
 ;; ----------------- ;;
 (add-hook 'with-editor-mode-hook #'evil-insert-state)
+(evil-set-initial-state 'magit-submodule-list-mode 'insert)
 
 (add-hook 'view-mode-hook #'evil-motion-state)
 
