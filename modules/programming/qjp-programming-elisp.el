@@ -48,13 +48,13 @@
 ;; eldoc mode ;;
 ;; ---------- ;;
 
-;; Source: http://emacswiki.org/emacs/ElDoc
+;; Based on: http://emacswiki.org/emacs/ElDoc
 (defadvice elisp-get-fnsym-args-string (after add-docstring activate compile)
   "Add a 1st line of docstring to ElDoc's function information."
   (when ad-return-value
     (let* ((doc (elisp--docstring-first-line (documentation (ad-get-arg 0) t)))
            (w (frame-width))
-           (color-doc (propertize doc 'face 'font-lock-comment-face)))
+           (color-doc (and doc (propertize doc 'face 'font-lock-comment-face))))
       (when (and doc (not (string= doc "")))
         (setq ad-return-value (concat ad-return-value " " color-doc))
         (when (> (length doc) w)
