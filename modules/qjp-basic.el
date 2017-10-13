@@ -182,7 +182,9 @@
 ;; ignore magit's commit message files
 (setq recentf-save-file (expand-file-name "recentf" qjp-base-dir))
 (with-eval-after-load 'recentf
-  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
+  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'")
+  (add-to-list 'recentf-exclude no-littering-var-directory)
+  (add-to-list 'recentf-exclude no-littering-etc-directory))
 
 ;; ediff in same frame
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)

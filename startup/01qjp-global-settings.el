@@ -24,6 +24,9 @@
 
 ;;; Code:
 
+;; no-littering!
+(require 'no-littering nil :noerror)
+
 ;; User information
 (setq user-full-name "Junpeng Qiu")
 (setq user-mail-address "qjpchmail@gmail.com")
