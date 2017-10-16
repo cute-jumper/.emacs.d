@@ -77,10 +77,9 @@
           #'qjp-eval-expression-minibuffer-setup-hook)
 
 ;; Use pp-eval-expression
-(with-eval-after-load 'qjp-mode
-  (define-key qjp-mode-map (kbd "M-:") 'pp-eval-expression))
+(define-key qjp-mode-map (kbd "M-:") 'pp-eval-expression)
 
-(defadvice pp-display-expression (after sanityinc/make-read-only (expression out-buffer-name) activate)
+(defadvice pp-display-expression (after qjp-pp-eval-make-read-only (expression out-buffer-name) activate)
   "Enable `view-mode' in the output buffer - if any - so it can be closed with `\"q\"."
   (when (get-buffer out-buffer-name)
     (with-current-buffer out-buffer-name
@@ -100,7 +99,7 @@
   (dolist (map (list emacs-lisp-mode-map lisp-interaction-mode-map))
     (define-key map (kbd "C-x C-e") #'qjp-eval-last-sexp-or-region)
     ;; macrostep
-    (define-key map (kbd "C-c m m") #'macrostep-expand)
+    (define-key map (kbd "C-c m e") #'macrostep-expand)
     ;; switch to ielm
     (define-key map (kbd "C-c m z") #'qjp-switch-to-ielm)
     ;; major mode bindings
@@ -160,7 +159,9 @@
   (redshank-mode +1)
   (indent-guide-mode +1)
   (add-hook 'after-save-hook #'check-parens nil t)
-  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t))
+  (add-hook 'after-save-hook #'qjp-byte-compile-current-buffer nil t)
+  ;; Sentences end with double space to please `package-lint'
+  (set (make-local-variable 'sentence-end-double-space) t)
   ;; add company-backends
   (add-to-list (make-local-variable 'company-backends) 'company-elisp))
 
@@ -233,7 +234,7 @@
     (paredit-newline)
     (yank)
     (exchange-point-and-mark))
-  (define-key paredit-mode-map (kbd "C-c f D") 'paredit-duplicate-closest-sexp)
+  (define-key paredit-mode-map (kbd "C-c m d") 'paredit-duplicate-closest-sexp)
   ;; Modify kill-sentence, which is easily confused with the kill-sexp
   ;; binding, but doesn't preserve sexp structure
   (define-key paredit-mode-map [remap kill-sentence] 'paredit-kill))
