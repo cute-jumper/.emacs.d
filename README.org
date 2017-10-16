@@ -2,6 +2,8 @@
 This is a repository to place my Emacs configuration, and is inteneded to be
 used only by myself :-)
 
+Emacs 25 and above is required.
+
 * References
 My Emacs setup has borrowed a lot from the following sources:
 - [[https://github.com/purcell/emacs.d][Purcell's emacs.d]]
