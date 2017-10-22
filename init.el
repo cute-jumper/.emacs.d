@@ -24,6 +24,10 @@
 
 ;;; Code:
 
+;; Initialize packages
+(require 'package)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
 (defvar qjp-before-init-time (current-time))

@@ -24,13 +24,6 @@
 
 ;;; Code:
 
-;; Package sources for Emacs 24
-(require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-;; I don't use melpa-stable often. Don't enable it.
-;;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
-
 ;; Update installed package list and install them at first initialization,
 ;; Besides, they can be used to sync the newly installed packages.
 ;; Idea from: http://blub.co.za/posts/Installing-packages-on-Emacs-startup.html
@@ -69,24 +62,6 @@ and installs these packages one by one."
           (insert "done.\n"))))
     (insert "Package installation is done. \
 Enjoy your journey with Emacs:-)\n")))
-
-;; Not needed in Emacs 25 anymore
-;; This function should be used when maintaining the settings, not at the first initialization.
-(when (version< emacs-version "25")
-  (defun qjp-update-installed-package-list (&rest args)
-    "Update the file with the lastest installed packages' list.
-It should be used after new packages are installed in order
-to maintain the right list."
-    (interactive)
-    (setq qjp-installed-package-list nil)
-    (dolist (pkg package-alist)
-      (when (assoc (car pkg) package-archive-contents)
-        (add-to-list 'qjp-installed-package-list (car pkg))))
-    (with-temp-file qjp-installed-package-list-filename
-      (prin1 qjp-installed-package-list (current-buffer)))
-    (message "Successfully update installed-package-list"))
-
-  (add-hook 'kill-emacs-hook #'qjp-update-installed-package-list))
 
 (when (catch 'break
         (dolist (pkg qjp-installed-package-list)
