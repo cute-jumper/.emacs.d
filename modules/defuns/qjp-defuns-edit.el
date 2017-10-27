@@ -311,7 +311,7 @@ Replaces default behaviour of comment-dwim, when it inserts comment at the end o
 ;; ------------------------ ;;
 (defun qjp-rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
+  (interactive "FNew name: ")
   (let ((name (buffer-name))
         (filename (buffer-file-name)))
     (unless filename
