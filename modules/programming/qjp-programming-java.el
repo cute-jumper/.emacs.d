@@ -28,12 +28,14 @@
 ;; Java ;;
 ;; ---- ;;
 (autoload 'ensime-mode "ensime")
+
 (defun qjp-java-mode-hook ()
   (ensime-mode +1)
   (subword-mode +1)
   (local-set-key [(return)] #'qjp-electrify-return-if-match))
 
 (add-hook 'java-mode-hook #'qjp-java-mode-hook)
+(add-to-list 'qjp-indent-when-closing-pair-modes 'java-mode)
 
 (provide 'qjp-programming-java)
 ;;; qjp-programming-java.el ends here
