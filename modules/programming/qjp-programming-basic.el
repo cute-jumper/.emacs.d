@@ -169,10 +169,57 @@ cursor to the new line."
   (define-key eshell-mode-map (kbd "M-r") 'helm-eshell-history)
   ;; Make company-capf use pcomplete
   (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
-  (setup-esh-help-eldoc)
+  ;; Eldoc
+  (autoload 'esh-help-eldoc-command "esh-help")
+  (set (make-local-variable 'eldoc-documentation-function)
+       'esh-help-eldoc-command)
+  (define-key eshell-mode-map (kbd "M-h") #'esh-help-run-help)
+  ;; No margin
+  (set (make-local-variable 'scroll-margin) 0)
+  ;; Don't scroll to bottom
+  (remove-hook 'eshell-output-filter-functions
+               'eshell-postoutput-scroll-to-bottom)
   (setenv "PAGER" "cat"))
 
 (add-hook 'eshell-mode-hook #'qjp-eshell-mode-hook)
+
+(defface qjp-eshell-dir-face
+  '((t . (:bold t
+                :inherit font-lock-constant-face)))
+  "Face for directory name."
+  :group 'eshell)
+
+(defun qjp-eshell-git-is-dirty ()
+  (let ((output (with-temp-buffer
+                  (call-process "git" nil t nil "status" "--porcelain")
+                  (buffer-string))))
+    (not (string-empty-p output))))
+
+(defun qjp-eshell-prompt ()
+  (require 'magit)
+  (concat
+   "\u250c\u2500["
+   (propertize (eshell/pwd) 'face 'qjp-eshell-dir-face)
+   "]"
+   "\u2500\u2500["
+   (format-time-string "%Y-%m-%d %H:%M" (current-time))
+   "]\n\u2514\u2500>"
+   (let ((branch (magit-get-current-branch)))
+     (if branch
+         (concat " ("
+                 (propertize branch 'face font-lock-function-name-face)
+                 (if (qjp-eshell-git-is-dirty)
+                     (propertize " \u2717" 'face font-lock-warning-face)
+                   "")
+                 ")")
+       ""))
+   (if (= (user-uid) 0)
+       (propertize " #" 'face font-lock-warning-face)
+     " $")
+   " "))
+
+(setq eshell-prompt-function 'qjp-eshell-prompt)
+(setq eshell-highlight-prompt nil)
 
 (provide 'qjp-programming-basic)
 ;;; qjp-programming-basic.el ends here
