@@ -48,12 +48,9 @@
 
 (advice-add 'pyvenv-activate :after #'qjp-pyvenv-activate-after)
 
-(with-eval-after-load 'company
-  (add-to-list 'company-backends '(company-anaconda :with company-capf)))
-
 (with-eval-after-load 'python
-  (define-key python-mode-map (kbd "C-c e d") #'pydoc)
-  (define-key python-mode-map (kbd "C-c e w") #'pyvenv-workon))
+  (define-key python-mode-map (kbd "C-c m d") #'pydoc)
+  (define-key python-mode-map (kbd "C-c m w") #'pyvenv-workon))
 
 ;; Python hook
 (defun qjp-python-mode-hook ()
