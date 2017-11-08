@@ -163,12 +163,12 @@ cursor to the new line."
 (defalias 'eshell/f 'find-file-other-window)
 (defalias 'eshell/d 'dired)
 (defun qjp-eshell-mode-hook ()
-  ;; Use company instead of helm-eshell to complete
-  (define-key eshell-mode-map [remap eshell-pcomplete] #'company-capf)
-  ;; (define-key eshell-mode-map [remap eshell-pcomplete] #'helm-esh-pcomplete)
-  (define-key eshell-mode-map (kbd "M-r") 'helm-eshell-history)
   ;; Make company-capf use pcomplete
-  (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
+  ;; (add-hook 'completion-at-point-functions 'pcomplete-completions-at-point nil t)
+  ;; Use company instead of helm-eshell to complete
+  ;; (define-key eshell-mode-map [remap eshell-pcomplete] #'company-capf)
+  (define-key eshell-mode-map [remap eshell-pcomplete] 'helm-esh-pcomplete)
+  (define-key eshell-mode-map (kbd "M-r") 'helm-eshell-history)
   ;; Eldoc
   (autoload 'esh-help-eldoc-command "esh-help")
   (set (make-local-variable 'eldoc-documentation-function)
