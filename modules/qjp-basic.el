@@ -122,6 +122,7 @@
     (setq qjp-cursor-color (frame-parameter nil 'cursor-color)))))
 (setq qjp-dark-theme 'moe-dark)
 (setq qjp-light-theme 'moe-light)
+(add-to-list 'custom-theme-load-path (let ((default-directory (expand-file-name "~/.emacs.d/elpa"))) (car (file-expand-wildcards "moe-theme-*" t))))
 (qjp-switch-theme 'dark)
 ;; Minor fix for volitile-highlight
 ;; (custom-theme-set-faces
