@@ -267,6 +267,13 @@
       (setq exec-path (split-string paths ":")))))
 (qjp-fix-path-and-exec-path)
 
+;; ----- ;;
+;; shell ;;
+;; ----- ;;
+(with-eval-after-load 'shell
+  ;; See https://www.masteringemacs.org/article/shell-comint-secrets-history-commands
+  (define-key shell-mode-map (kbd "SPC") #'comint-magic-space))
+
 ;; -------------- ;;
 ;; Remove warning ;;
 ;; -------------- ;;
