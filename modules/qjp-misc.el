@@ -175,14 +175,13 @@
 ;; ace-jump-helm-line ;;
 ;; ------------------ ;;
 (qjp-misc-config-inline ace-jump-helm-line
-  ;; FIXME
   (with-eval-after-load 'helm
     (setq ace-jump-helm-line-style 'pre)
     (setq ace-jump-helm-line-default-action 'select)
     (setq ace-jump-helm-line-select-key ?e)
     (setq ace-jump-helm-line-move-only-key ?o)
     (setq ace-jump-helm-line-persistent-key ?p)
-    (define-key helm-map (kbd "C-;") #'ace-jump-helm-line)))
+    (define-key helm-map (kbd "M-j") #'ace-jump-helm-line)))
 
 ;; ---------- ;;
 ;; ace-pinyin ;;
@@ -617,27 +616,28 @@ is selected interactively from all available keymaps."
 (defvar qjp-enabled-misc-settings-list
   '(avy avy-zap ace-flyspell ace-jump-helm-line ace-link ace-pinyin anchored-transpose anzu auto-insert
         beacon bing-dict
-        company change-inner composable
+        company change-inner composable clipmon
         dired diminish diff-hl
-        easypg expand-region easy-kill evil-surround evil embrace
+        easypg expand-region easy-kill evil embrace
         flyspell flycheck
         gmpl-mode gscholar-bibtex google-this god-mode
         helm helm-company hs fcitx hydra;; loaded after helm
-        highlight-symbol ispell
+        ;;highlight-symbol
+        ispell
         indent-guide
-        jump-char
+        ;;jump-char
         key-chord keyfreq
-        lacarte linum-relative
+        linum-relative
         magit markdown multiple-cursors
         persistent-scratch pdf-tools projectile
-        paradox quickrun
+        paradox quickrun qjp-leader-mode
         rebox region-bindings restart-emacs
-        sml nyan;; load after sml
+        sml nyan ;; load after sml
         sr-speedbar smartparens
         term
         undo-tree
         visual-regexp volatile-highlights
-        whitespace-cleanup whole-line-or-region workgroups2 which-key wgrep
+        whitespace-cleanup whole-line-or-region which-key wgrep ;; workgroups2
         yasnippet
         )
   "The names for the packages that should be enabled.")
