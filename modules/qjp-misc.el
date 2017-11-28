@@ -542,7 +542,9 @@ is selected interactively from all available keymaps."
 ;; beacon-mode ;;
 ;; ----------- ;;
 (qjp-misc-config-inline beacon
-  (beacon-mode +1))
+  (beacon-mode +1)
+  (dolist (mode '(eshell-mode term-mode))
+    (add-to-list 'beacon-dont-blink-major-modes mode)))
 
 ;; ------- ;;
 ;; paradox ;;
