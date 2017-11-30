@@ -248,6 +248,12 @@
                  (add-hook 'text-mode-hook 'turn-on-flyspell)))
       (message "[Warning]: Please consider installing %s." hunspell-name))))
 
+;; --------------- ;;
+;; mode-icons-mode ;;
+;; --------------- ;;
+(qjp-misc-config-inline mode-icons
+  (mode-icons-mode +1))
+
 ;; -------- ;;
 ;; flyspell ;;
 ;; -------- ;;
@@ -372,32 +378,6 @@ is selected interactively from all available keymaps."
   (setq linum-relative-plusp-offset 1)
   (setq linum-relative-current-symbol "1"))
 
-;; ------------- ;;
-;; evil-surround ;;
-;; ------------- ;;
-(qjp-misc-config-inline evil-surround
-  (autoload 'evil-surround-outer-overlay "evil-surround")
-  (autoload 'evil-surround-inner-overlay "evil-surround")
-  (defun qjp-evil-surround-change (char &optional outer inner)
-    (interactive "cOld surround: ")
-    (cond
-     ((and outer inner)
-      (evil-surround-delete char outer inner)
-      (let ((key (read-char "New surround: ")))
-        (evil-surround-region (overlay-start outer)
-                              (overlay-end outer)
-                              nil (if (evil-surround-valid-char-p key) key char))))
-     (t
-      (let* ((outer (evil-surround-outer-overlay char))
-             (inner (evil-surround-inner-overlay char)))
-        (unwind-protect
-            (when (and outer inner)
-              (qjp-evil-surround-change char outer inner))
-          (when outer (delete-overlay outer))
-          (when inner (delete-overlay inner)))))))
-  (with-eval-after-load 'qjp-mode
-    (define-key ctrl-c-extension-map "p" #'qjp-evil-surround-change)))
-
 ;; ---------------- ;;
 ;; highlight-symbol ;;
 ;; ---------------- ;;
@@ -472,10 +452,10 @@ is selected interactively from all available keymaps."
   (define-key qjp-mode-map (kbd "C-x t") 'anchored-transpose))
 
 ;; ------- ;;
-;; lacarte ;;
+;; clipmon ;;
 ;; ------- ;;
-(qjp-misc-config-inline lacarte
-  (define-key qjp-mode-map (kbd "C-c M-x") 'lacarte-execute-menu-command))
+(qjp-misc-config-inline clipmon
+  (clipmon-mode-start))
 
 ;; --------- ;;
 ;; easy-kill ;;
