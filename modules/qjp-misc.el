@@ -400,21 +400,25 @@ is selected interactively from all available keymaps."
 (qjp-misc-config-inline sml
   (setq sml/theme 'dark)
   (sml/setup)
-  (add-to-list 'sml/replacer-regexp-list '("^~/Programs/" ":Pro:") t))
+  (add-to-list 'sml/replacer-regexp-list '("^~/Programs/" ":Pro:") t)
+  (setq sml/position-percentage-format '(:eval (if (and nyan-mode
+                                                        (< (window-width) nyan-minimum-window-width))
+                                                   "%p"
+                                                 ""))))
 
 ;; -------- ;;
 ;; fcitx.el ;;
 ;; -------- ;;
 (qjp-misc-config-inline fcitx
   (ignore-errors
-    (setq fcitx-use-dbus t)
     (fcitx-aggressive-setup)))
 
 ;; --------- ;;
 ;; nyan-mode ;;
 ;; --------- ;;
 (qjp-misc-config-inline nyan
-  (nyan-mode))
+  (setq nyan-bar-length 20)
+  (nyan-mode +1))
 
 ;; ------------------ ;;
 ;; whitespace-cleanup ;;
