@@ -105,24 +105,10 @@ My Emacs setup has borrowed a lot from the following sources:
    | bb         | switch buffers            |
 
    These key chords are available globally.
-   | Key Chords | Action                    |
-   | ;a         | beginning of line         |
-   | ;e         | end of line               |
-   | ;n         | next line                 |
-   | ;u         | previous line             |
-   | ;f         | forward char              |
-   | ;b         | backward char             |
-   | ;s         | isearch forward           |
-   | ;d         | delete char               |
-   | ;y         | yank                      |
-   | ;w         | kill region               |
-   | ;g         | quit                      |
-   | ;z         | undo                      |
-   | ;;         | insert ';' at end of line |
-   | ;1         | C-x 1                     |
-   | ;2         | C-x 2                     |
-   | ;3         | C-x 3                     |
-   | ;o         | C-x o                     |
+   | Key Chords | Action |
+   | j1         | C-x 1  |
+   | j2         | C-x 2  |
+   | j3         | C-x 3  |
 ** Optional Key Tweaks
    - Using [[https://github.com/alols/xcape][xcape]] to bind CapsLock to both =Ctrl= and =Escape=
    - Using =xmodmap= to bind the =<menu>= key to the right of the =Space=, and
