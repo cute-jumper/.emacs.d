@@ -150,10 +150,13 @@
   (if on
       (progn
         (global-unset-key (kbd "M-o"))
-        (if (fboundp 'ace-window)
-            (define-key qjp-mode-map (kbd "M-o") #'ace-window)
-          (define-key qjp-mode-map (kbd "M-o") #'other-window)))
-    (global-set-key (kbd "M-o") 'meta-o-map)))
+        (define-key qjp-mode-map (kbd "M-o") #'other-window)
+        (when (fboundp 'ace-window)
+          (define-key qjp-mode-map (kbd "M-O") #'ace-window)))
+    (global-set-key (kbd "M-o") 'meta-o-map)
+    (define-key qjp-mode-map (kbd "M-o") nil)
+    (when (fboundp 'ace-window)
+      (define-key qjp-mode-map (kbd "M-O") nil))))
 
 (defun qjp-mode--keychord-remap (keychord key-str)
   (key-chord-define-global
