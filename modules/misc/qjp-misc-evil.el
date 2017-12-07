@@ -216,12 +216,6 @@
 
 (add-hook 'helm-after-initialize-hook #'qjp-helm-window-hide-cursor)
 
-;; --- ;;
-;; avy ;;
-;; --- ;;
-(define-key evil-normal-state-map "," #'avy-goto-word-1)
-(define-key evil-motion-state-map "," #'avy-goto-word-1)
-
 ;; ------------------------------ ;;
 ;; pp-eval buffer in insert state ;;
 ;; ------------------------------ ;;
@@ -336,7 +330,7 @@ Maybe because of the interactive call."
 ;; M-SPC and kk make no sense to only execute qjp-leader once in emacs state, so
 (define-key evil-emacs-state-map (kbd "M-SPC") #'qjp-leader-local-mode)
 (qjp-key-chord-define evil-emacs-state-map "kk" #'qjp-leader-local-mode)
-(dolist (mode '(dired-mode calendar-mode))
+(dolist (mode '(dired-mode calendar-mode image-mode))
   (evil-set-initial-state mode 'emacs))
 (setq evil-emacs-state-cursor 'bar)
 ;; fix visual/emacs state transition
