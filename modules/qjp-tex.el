@@ -218,6 +218,8 @@
   (flyspell-mode +1)
   (flycheck-mode +1)
   (smartparens-mode +1)
+  (highlight-symbol-mode +1)
+  (highlight-symbol-nav-mode +1)
   (qjp-tex-add-LaTeX-environments))
 
 (add-hook 'LaTeX-mode-hook #'qjp-tex-mode-hook)
