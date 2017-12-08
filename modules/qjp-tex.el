@@ -27,6 +27,9 @@
 ;; --------------- ;;
 ;; AUCTeX settings ;;
 ;; --------------- ;;
+(defvar qjp-latex-from-buffer nil)
+(make-variable-buffer-local 'qjp-latex-from-buffer)
+
 (with-eval-after-load 'latex
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
@@ -75,9 +78,6 @@
   ;; User Defined Functions ;;
   ;; ---------------------- ;;
 
-  (defvar qjp-latex-from-buffer nil)
-  (make-variable-buffer-local 'qjp-latex-from-buffer)
-
   (defun qjp-latex-switch-to-pdf-view ()
     (interactive)
     (let* ((from-buffer (current-buffer))
@@ -120,7 +120,7 @@
       (if (search-backward "\\begin{document}" 0 t)
           (progn
             (save-excursion
-              (previous-line)
+              (forward-line -1)
               (end-of-line)
               (newline-and-indent)
               (insert "\\title{" title "}\n\\author{" author "}\n\\date{" date "}\n"))
