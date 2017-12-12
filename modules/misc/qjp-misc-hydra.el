@@ -254,21 +254,15 @@ _h_   _l_   _o_pen      _y_ank
   "Window"
   ("o" (other-window 1) "next window")
   ("d" delete-window "delete window")
-  ("r" delete-other-windows "delete other windows")
+  ("D" delete-other-windows "delete other windows")
   ("h" split-window-horizontally "split horizontally")
   ("v" split-window-vertically "split vertically")
   ("b" helm-mini "switch buffer")
+  ("u" winner-undo "winner-undo")
+  ("r" winner-redo "winner-redo")
   ("q" nil "quit"))
 
-(define-key ctrl-c-extension-map (kbd "C-c w") #'hydra-manage-window/body)
-
-(defhydra hydra-winner
-  (:body-pre (winner-undo))
-  "Hydra winner"
-  ("<left>" winner-undo)
-  ("<right>" winner-redo))
-
-(define-key qjp-mode-map (kbd "C-c <left>") #'hydra-winner/body)
+(define-key ctrl-c-extension-map (kbd "w") #'hydra-manage-window/body)
 
 (provide 'qjp-misc-hydra)
 ;;; qjp-misc-hydra.el ends here
