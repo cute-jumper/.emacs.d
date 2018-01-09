@@ -43,6 +43,8 @@
 (define-key ctrl-c-extension-map "ms" 'mc/mark-all-symbols-like-this)
 (define-key ctrl-c-extension-map "mS" 'mc/mark-all-symbols-like-this-in-defun)
 (define-key ctrl-c-extension-map "md" 'mc/mark-all-like-this-dwim)
+(define-key ctrl-c-extension-map "m>" 'mc/skip-to-next-like-this)
+(define-key ctrl-c-extension-map "m<" 'mc/skip-to-previous-like-this)
 
 ;; Using mouse!
 (define-key qjp-mode-map (kbd "M-S-<mouse-1>") 'mc/add-cursor-on-click)
