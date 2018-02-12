@@ -210,18 +210,16 @@
 (setq
  whitespace-line-column 80
  whitespace-style '(face tabs empty trailing lines-tail))
-(global-whitespace-mode)
 ;; Disable whitespace-mode in some modes
-(defun qjp-turn-off-whitespace-mode ()
-  (whitespace-mode -1))
-(dolist (hook '(special-mode-hook
-                Info-mode-hook
-                eww-mode-hook
-                term-mode-hook
-                comint-mode-hook
-                compilation-mode-hook
-                minibuffer-setup-hook))
-  (add-hook hook #'qjp-turn-off-whitespace-mode))
+(setq whitespace-global-modes '(not org-mode
+                                    special-mode
+                                    Info-mode
+                                    eww-mode
+                                    term-mode
+                                    comint-mode
+                                    compilation-mode
+                                    minibuffer-setup))
+(global-whitespace-mode)
 
 ;; imenu
 (setq-default imenu-auto-rescan t)
