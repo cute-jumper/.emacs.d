@@ -29,7 +29,7 @@
 
 (with-eval-after-load 'dired
   (require 'dired-x)
-  (require 'dired+)
+  (diredfl-global-mode +1)
   ;; Set files to be ommited
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*")
   ;; Hunman-readable space
@@ -49,7 +49,7 @@
                  (not (eq (current-buffer) orig)))
         (kill-buffer orig))))
 
-  (defadvice diredp-up-directory (around dired-up-directory-single-buffer activate)
+  (defadvice dired-up-directory (around dired-up-directory-single-buffer activate)
     "Replace current buffer if file is a directory."
     (interactive)
     (let ((orig (current-buffer)))
@@ -114,7 +114,7 @@
   ;; No sort now
   ;; (add-hook 'dired-after-readin-hook 'qjp-dired-sort)
 
-  (define-key dired-mode-map (kbd "h") #'diredp-up-directory)
+  (define-key dired-mode-map (kbd "h") #'dired-up-directory)
   (define-key dired-mode-map (kbd "M-p") #'dired-prev-marked-file)
   (define-key dired-mode-map (kbd "M-n") #'dired-next-marked-file)
 
