@@ -386,18 +386,12 @@ Members of the `qjp-leader-exempt-major-modes' list are exempt."
     (when (bound-and-true-p which-key-mode)
       (which-key--hide-popup))))
 (with-eval-after-load 'which-key
-  (defun which-key--update ()
-    "Function run by timer to possibly trigger `which-key--create-buffer-and-show'."
-    (let ((prefix-keys (this-single-command-keys))
-          delay-time)
-      ;; (when (> (length prefix-keys) 0)
-      ;;  (message "key: %s" (key-description prefix-keys)))
-      ;; (when (> (length prefix-keys) 0)
-      ;;  (message "key binding: %s" (key-binding prefix-keys)))
-      ;; Taken from guide-key
-      (when (and (equal prefix-keys [key-chord])
+  (defun which-key--qjp-leader-this-command-keys ()
+    "Version of `this-single-command-keys' corrected for key-chords and god-mode."
+    (let ((this-command-keys (this-single-command-keys)))
+      (when (and (equal this-command-keys [key-chord])
                  (bound-and-true-p key-chord-mode))
-        (setq prefix-keys
+        (setq this-command-keys
               (condition-case nil
                   (let ((rkeys (recent-keys)))
                     (vector 'key-chord
@@ -414,8 +408,14 @@ Members of the `qjp-leader-exempt-major-modes' list are exempt."
       (when (and which-key--qjp-leader-mode-support-enabled
                  (bound-and-true-p qjp-leader-local-mode)
                  (eq this-command 'qjp-leader-mode-self-insert))
-        (setq prefix-keys (when which-key--qjp-leader-mode-key-string
-                            (kbd which-key--qjp-leader-mode-key-string))))
+        (setq this-command-keys (when which-key--qjp-leader-mode-key-string
+                                  (kbd which-key--qjp-leader-mode-key-string))))
+      this-command-keys))
+  (defun which-key--update ()
+    "Function run by timer to possibly trigger
+`which-key--create-buffer-and-show'."
+    (let ((prefix-keys (which-key--qjp-leader-this-command-keys))
+          delay-time)
       (cond ((and (> (length prefix-keys) 0)
                   (or (keymapp (key-binding prefix-keys))
                       ;; Some keymaps are stored here like iso-transl-ctl-x-8-map
@@ -440,26 +440,32 @@ Members of the `qjp-leader-exempt-major-modes' list are exempt."
                            (bound-and-true-p qjp-leader-local-mode)
                            (eq this-command 'qjp-leader-mode-self-insert))
                       (null this-command)))
-             (when (and (not (equal prefix-keys which-key--current-prefix))
+             (when (and (not (equal prefix-keys (which-key--current-prefix)))
                         (or (null which-key-delay-functions)
-                            (null (setq delay-time (run-hook-with-args-until-success
-                                                    'which-key-delay-functions
-                                                    (key-description prefix-keys)
-                                                    (length prefix-keys))))
+                            (null (setq delay-time
+                                        (run-hook-with-args-until-success
+                                         'which-key-delay-functions
+                                         (key-description prefix-keys)
+                                         (length prefix-keys))))
                             (sit-for delay-time)))
+               (setq which-key--automatic-display t)
                (which-key--create-buffer-and-show prefix-keys)
                (when (and which-key-idle-secondary-delay
                           (not which-key--secondary-timer-active))
                  (which-key--start-timer which-key-idle-secondary-delay t))))
+            ((and which-key-show-transient-maps
+                  (keymapp overriding-terminal-local-map)
+                  ;; basic test for it being a hydra
+                  (not (eq (lookup-key overriding-terminal-local-map "\C-u")
+                           'hydra--universal-argument)))
+             (which-key--create-buffer-and-show
+              nil overriding-terminal-local-map))
             ((and which-key-show-operator-state-maps
                   (bound-and-true-p evil-state)
                   (eq evil-state 'operator)
-                  (not which-key--using-show-operator-keymap))
+                  (not (which-key--popup-showing-p)))
              (which-key--show-evil-operator-keymap))
-            ((and which-key--current-page-n
-                  (not which-key--using-top-level)
-                  (not which-key--using-show-operator-keymap)
-                  (not which-key--using-show-keymap))
+            (which-key--automatic-display
              (which-key--hide-popup)))))
   (ad-enable-advice
    'qjp-leader-mode-lookup-command
