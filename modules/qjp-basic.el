@@ -91,6 +91,11 @@
        (font-spec :family zh-font :size zh-size))
       (set-fontset-font "fontset-default" 'unicode unicode-font))))
 
+;; Mac specific
+(when (eq system-type 'darwin)
+  (setq mac-option-modifier 'meta
+        mac-command-modifier 'super))
+
 ;; Temporarily, try out another theme other than `zenburn'
 (defvar qjp-dark-theme nil)
 (defvar qjp-light-theme nil)
