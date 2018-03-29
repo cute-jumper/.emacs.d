@@ -43,7 +43,8 @@
    (concat qjp-modules-dir "/programming/qjp-programming-matlab.el")))
 
 (qjp-site-lisp-deft)
-(qjp-site-lisp-matlab-mode)
+(when (executable-find "matlab")
+  (qjp-site-lisp-matlab-mode))
 
 (provide 'qjp-site-lisp-init)
 ;;; qjp-site-lisp-init.el ends here

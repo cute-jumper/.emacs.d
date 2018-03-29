@@ -39,7 +39,10 @@
 ;;             (local-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 ;;             (local-set-key (kbd "M-/") 'hippie-expand) ;; hippie-expand
 ;;             ))
-(load-library "matlab-load")
+(unless (require 'matlab-load nil t)
+  (let ((default-directory (concat (file-name-as-directory qjp-site-lisp-dir) "matlab-mode")))
+    (call-process "make")
+    (require 'matlab-load)))
 
 (defun qjp-matlab-mode-hook ()
   (flycheck-mode +1)
