@@ -216,7 +216,8 @@
  whitespace-line-column 80
  whitespace-style '(face tabs empty trailing lines-tail))
 ;; Disable whitespace-mode in some modes
-(setq whitespace-global-modes '(not org-mode
+(setq whitespace-global-modes '(not fundamental-mode
+                                    org-mode
                                     special-mode
                                     Info-mode
                                     eww-mode
