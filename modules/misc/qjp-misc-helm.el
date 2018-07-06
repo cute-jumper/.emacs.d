@@ -54,7 +54,7 @@
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
-(setq helm-split-window-in-side-p t
+(setq helm-split-window-inside-p t
       ;; helm-move-to-line-cycle-in-source t
       helm-ff-search-library-in-sexp t
       ;; Following is good, but sometimes annoying
