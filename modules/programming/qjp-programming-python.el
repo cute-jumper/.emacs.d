@@ -64,5 +64,7 @@
 
 (add-hook 'python-mode-hook #'qjp-python-mode-hook)
 
+(put 'flycheck-python-pycompile-executable 'safe-local-variable (lambda (_) t))
+
 (provide 'qjp-programming-python)
 ;;; qjp-programming-python.el ends here

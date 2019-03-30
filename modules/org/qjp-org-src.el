@@ -44,7 +44,7 @@
    (haskell . t)
    (gnuplot . t)
    (clojure . t)
-   (sh . t)
+   (shell . t)
    (ledger . t)
    (org . t)
    (plantuml . t)
