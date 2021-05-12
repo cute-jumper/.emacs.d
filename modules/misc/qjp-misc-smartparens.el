@@ -32,6 +32,9 @@
 (setq sp-base-key-bindings 'paredit)
 (setq sp-hybrid-kill-entire-symbol nil)
 
+(with-eval-after-load 'python-mode
+  (sp-local-pair 'python-mode "(" ")" :unless '(sp-point-before-word-p)))
+
 ;; key bindings
 (define-key qjp-mode-map (kbd "C-M-f") #'sp-forward-sexp)
 (define-key qjp-mode-map (kbd "C-M-b") #'sp-backward-sexp)

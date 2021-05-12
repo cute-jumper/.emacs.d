@@ -114,7 +114,7 @@
   ("q" nil "quit"))
 
 (defhydra hydra-errors (:body-pre (setq hydra-is-helpful t)
-                                  :post (setq hydra-is-helpful nil)t)
+                                  :post (setq hydra-is-helpful nil))
   "Hydra for errors"
   ("n" next-error "next")
   ("p" previous-error "previous")

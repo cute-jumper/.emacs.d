@@ -25,6 +25,7 @@
 ;;; Code:
 
 (require 'helm-config)
+(require 'helm-global-bindings)
 (define-key helm-command-map "g" #'helm-do-grep-ag)
 (define-key helm-command-map "G" #'helm-google-suggest)
 (define-key helm-command-map "d" #'helm-dash)

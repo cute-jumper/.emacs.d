@@ -59,11 +59,15 @@
   (pyvenv-mode +1)
   (anaconda-mode +1)
   (anaconda-eldoc-mode +1)
+  ;; defaults to python3
+  (setq flycheck-python-pycompile-executable "python3")
   ;; add company-backends
   (add-to-list (make-local-variable 'company-backends) '(company-anaconda :with company-capf)))
 
+(setq flycheck-python-mypy-cache-dir 'null-device)
 (add-hook 'python-mode-hook #'qjp-python-mode-hook)
 
+(put 'python-shell-extra-pythonpaths 'safe-local-variable (lambda (_) t))
 (put 'flycheck-python-pycompile-executable 'safe-local-variable (lambda (_) t))
 
 (provide 'qjp-programming-python)
