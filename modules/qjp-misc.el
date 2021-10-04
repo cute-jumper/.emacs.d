@@ -128,24 +128,25 @@
 ;; pdf-tools ;;
 ;; --------- ;;
 (qjp-misc-config-inline pdf-tools
-  (autoload 'pdf-view-mode "pdf-view")
-  (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
-  (let ((epdfinfo-program (car
-                           (file-expand-wildcards
-                            (concat qjp-base-dir "elpa/pdf-tools-*/epdfinfo")))))
-    (unless (and epdfinfo-program
-                 (file-executable-p epdfinfo-program))
-      (ignore-errors
-        (pdf-tools-install t))))
-  (defun qjp-pdf-view-mode-hook ()
-    (pdf-tools-enable-minor-modes)
-    (key-chord-define-local "jj" nil)
-    (setq pdf-view-display-size 'fit-height)
-    (auto-revert-mode +1))
-  (with-eval-after-load 'pdf-view
-    (add-hook 'pdf-view-mode-hook #'qjp-pdf-view-mode-hook)
-    (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
-    (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page)))
+  (when (eq system-type 'gnu/linux)
+    (autoload 'pdf-view-mode "pdf-view")
+    (add-to-list 'auto-mode-alist '("\\.[pP][dD][fF]\\'" . pdf-view-mode))
+    (let ((epdfinfo-program (car
+                             (file-expand-wildcards
+                              (concat qjp-base-dir "elpa/pdf-tools-*/epdfinfo")))))
+      (unless (and epdfinfo-program
+                   (file-executable-p epdfinfo-program))
+        (ignore-errors
+          (pdf-tools-install t))))
+    (defun qjp-pdf-view-mode-hook ()
+      (pdf-tools-enable-minor-modes)
+      (key-chord-define-local "jj" nil)
+      (setq pdf-view-display-size 'fit-height)
+      (auto-revert-mode +1))
+    (with-eval-after-load 'pdf-view
+      (add-hook 'pdf-view-mode-hook #'qjp-pdf-view-mode-hook)
+      (define-key pdf-view-mode-map "j" #'pdf-view-next-line-or-next-page)
+      (define-key pdf-view-mode-map "k" #'pdf-view-previous-line-or-previous-page))))
 
 ;; ------- ;;
 ;; avy-zap ;;
@@ -410,8 +411,9 @@ is selected interactively from all available keymaps."
 ;; fcitx.el ;;
 ;; -------- ;;
 (qjp-misc-config-inline fcitx
+  (when (executable-find "fcitx-remote")
   (ignore-errors
-    (fcitx-aggressive-setup)))
+    (fcitx-aggressive-setup))))
 
 ;; --------- ;;
 ;; nyan-mode ;;
@@ -447,7 +449,7 @@ is selected interactively from all available keymaps."
 ;; whole-line-or-region ;;
 ;; -------------------- ;;
 (qjp-misc-config-inline whole-line-or-region
-  (whole-line-or-region-mode +1))
+  (whole-line-or-region-global-mode +1))
 
 ;; ------------------ ;;
 ;; anchored-transpose ;;
@@ -607,7 +609,7 @@ is selected interactively from all available keymaps."
         easypg expand-region easy-kill evil embrace
         flyspell flycheck
         gmpl-mode gscholar-bibtex google-this god-mode
-        helm helm-company hs fcitx hydra;; loaded after helm
+        helm helm-company hs hydra fcitx;; loaded after helm;
         ;;highlight-symbol
         ispell
         indent-guide
